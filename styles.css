@@ -1,0 +1,472 @@
+/* ============================================
+   VARIABLES & RESET
+   ============================================ */
+
+:root {
+  --bg:          #0A0A0A;
+  --gold:        #C9A84C;
+  --gold-dim:    rgba(201, 168, 76, 0.15);
+  --gold-glow:   rgba(201, 168, 76, 0.35);
+  --cream:       #E8E0D0;
+  --burgundy:    #4A1525;
+  --burgundy-bg: rgba(74, 21, 37, 0.15);
+  --serif:       'Playfair Display', Georgia, 'Times New Roman', serif;
+  --sans:        'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--cream);
+  font-family: var(--sans);
+  font-weight: 300;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--gold);
+  color: var(--bg);
+}
+
+a {
+  color: var(--gold);
+  text-decoration: none;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+a:hover {
+  text-shadow: 0 0 12px var(--gold-glow);
+}
+
+/* ============================================
+   SHARED UTILITIES
+   ============================================ */
+
+/* Reveal animation — elements start hidden and slide up */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Section header with horizontal gold lines */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 4rem;
+  padding: 0 1.5rem;
+}
+
+.section-header__line {
+  flex: 1;
+  max-width: 120px;
+  height: 1px;
+  background: var(--gold);
+}
+
+.section-header__title {
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  white-space: nowrap;
+}
+
+/* ============================================
+   HERO
+   ============================================ */
+
+.hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.hero__particles {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.hero__content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 2rem;
+}
+
+.hero__name {
+  font-family: var(--serif);
+  font-size: clamp(3.5rem, 10vw, 8rem);
+  font-weight: 400;
+  color: var(--gold);
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+}
+
+.hero__subtitle {
+  font-family: var(--sans);
+  font-size: clamp(0.65rem, 1.2vw, 0.85rem);
+  font-weight: 500;
+  letter-spacing: 0.35em;
+  color: var(--cream);
+  margin-bottom: 2.5rem;
+}
+
+.hero__tagline {
+  font-family: var(--serif);
+  font-size: clamp(1rem, 2vw, 1.35rem);
+  font-weight: 400;
+  color: var(--cream);
+  opacity: 0.75;
+  max-width: 550px;
+  margin: 0 auto;
+  line-height: 1.8;
+}
+
+/* Fade-in keyframes for hero elements */
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 1.6s ease forwards;
+}
+.delay-1 { animation-delay: 0.5s; }
+.delay-2 { animation-delay: 1.0s; }
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+/* Restore tagline partial opacity after fade */
+.hero__tagline.fade-in {
+  animation: fadeInPartial 1.6s ease forwards;
+}
+@keyframes fadeInPartial {
+  to { opacity: 0.75; }
+}
+
+/* ============================================
+   MANIFESTO
+   ============================================ */
+
+.manifesto {
+  padding: 8rem 1.5rem 6rem;
+}
+
+.manifesto__statements {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.manifesto__statement {
+  padding: 6rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.manifesto__statement blockquote {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(1.5rem, 3.5vw, 2.4rem);
+  font-weight: 400;
+  color: var(--cream);
+  text-align: center;
+  line-height: 1.6;
+  max-width: 700px;
+}
+
+/* ============================================
+   PROJECTS / THE WORK
+   ============================================ */
+
+.work {
+  padding: 8rem 1.5rem;
+}
+
+.work__projects {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+.project {
+  position: relative;
+  border: 1px solid var(--gold-dim);
+  padding: 3.5rem 3rem;
+  transition: border-color 0.6s ease, box-shadow 0.6s ease;
+  overflow: hidden;
+}
+
+.project.visible {
+  border-color: var(--gold);
+  box-shadow: 0 0 30px var(--gold-dim), inset 0 0 30px rgba(201, 168, 76, 0.03);
+}
+
+.project__number {
+  position: absolute;
+  top: -0.2em;
+  right: 1rem;
+  font-family: var(--serif);
+  font-size: clamp(5rem, 12vw, 9rem);
+  font-weight: 700;
+  color: var(--gold);
+  opacity: 0.06;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+.project__content {
+  position: relative;
+  z-index: 1;
+}
+
+.project__name {
+  font-family: var(--serif);
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 400;
+  color: var(--cream);
+  margin-bottom: 1rem;
+}
+
+.project__description {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--cream);
+  opacity: 0.8;
+  max-width: 600px;
+  margin-bottom: 1.5rem;
+}
+
+.project__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.project__tags span {
+  font-family: var(--sans);
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  color: var(--gold);
+  opacity: 0.7;
+}
+
+/* ============================================
+   BIO / THE PATH
+   ============================================ */
+
+.path {
+  padding: 8rem 1.5rem;
+  background: linear-gradient(
+    180deg,
+    var(--bg) 0%,
+    var(--burgundy-bg) 40%,
+    var(--burgundy-bg) 60%,
+    var(--bg) 100%
+  );
+}
+
+.path__narrative {
+  max-width: 650px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.path__narrative p {
+  font-size: 1.05rem;
+  line-height: 1.9;
+  color: var(--cream);
+  opacity: 0.85;
+}
+
+.year {
+  color: var(--gold);
+  font-weight: 500;
+}
+
+/* ============================================
+   CURRENT FOCUS / RIGHT NOW
+   ============================================ */
+
+.now {
+  padding: 8rem 1.5rem;
+}
+
+.now__placard {
+  max-width: 620px;
+  margin: 0 auto;
+  border: 1px solid var(--gold);
+  padding: 2.5rem 2.5rem 2rem;
+  position: relative;
+}
+
+.now__label {
+  position: absolute;
+  top: -0.55em;
+  left: 2rem;
+  background: var(--bg);
+  padding: 0 0.75rem;
+  font-family: var(--sans);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+}
+
+.now__list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.now__list li {
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: var(--cream);
+  opacity: 0.85;
+  padding-left: 1rem;
+  border-left: 2px solid var(--gold-dim);
+}
+
+/* ============================================
+   CONTACT / CLOSING
+   ============================================ */
+
+.contact {
+  padding: 8rem 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.contact__content {
+  text-align: center;
+  max-width: 550px;
+}
+
+.contact__cta {
+  font-family: var(--serif);
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  font-style: italic;
+  color: var(--cream);
+  opacity: 0.7;
+  margin-bottom: 2.5rem;
+  line-height: 1.8;
+}
+
+.contact__links {
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+}
+
+.contact__link {
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: var(--gold);
+  position: relative;
+}
+
+.contact__link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--gold);
+  transition: width 0.3s ease;
+}
+
+.contact__link:hover::after {
+  width: 100%;
+}
+
+.contact__spacer {
+  height: 40vh;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 768px) {
+  .manifesto__statement {
+    padding: 4rem 0.5rem;
+  }
+
+  .project {
+    padding: 2.5rem 1.5rem;
+  }
+
+  .project__number {
+    font-size: 5rem;
+    right: 0.5rem;
+  }
+
+  .now__placard {
+    padding: 2rem 1.5rem 1.5rem;
+  }
+
+  .contact__links {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .section-header {
+    gap: 1rem;
+  }
+
+  .section-header__line {
+    max-width: 60px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero__subtitle {
+    letter-spacing: 0.2em;
+    font-size: 0.6rem;
+  }
+
+  .manifesto__statement blockquote {
+    font-size: 1.3rem;
+  }
+
+  .project__tags {
+    gap: 0.6rem;
+  }
+}
