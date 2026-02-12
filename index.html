@@ -3,1036 +3,132 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ALEJANDRO</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Cormorant+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    /* ========================================
-       CSS CUSTOM PROPERTIES
-       ======================================== */
-    :root {
-      --black: #000000;
-      --void: #0A0705;
-      --gold-light: #FFD6A0;
-      --gold-bright: #FFC46B;
-      --brown-shadow: #1A0E00;
-      --blood: #3A0A0A;
-      --parchment: #E8D5B7;
-      --font-primary: 'Cormorant Garamond', serif;
-      --font-sc: 'Cormorant SC', serif;
-    }
-
-    /* ========================================
-       RESET & BASE
-       ======================================== */
-    *, *::before, *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-      overflow-x: hidden;
-    }
-
-    body {
-      font-family: var(--font-primary);
-      background: var(--black);
-      color: var(--parchment);
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-      line-height: 1.7;
-    }
-
-    /* ========================================
-       CANDLELIGHT FLICKER ANIMATION
-       ======================================== */
-    @keyframes flicker {
-      0%   { opacity: 1.0; }
-      10%  { opacity: 0.97; }
-      20%  { opacity: 0.99; }
-      30%  { opacity: 0.94; }
-      40%  { opacity: 0.98; }
-      50%  { opacity: 0.96; }
-      60%  { opacity: 1.0; }
-      70%  { opacity: 0.93; }
-      80%  { opacity: 0.98; }
-      90%  { opacity: 0.95; }
-      100% { opacity: 1.0; }
-    }
-
-    @keyframes flicker-alt {
-      0%   { opacity: 0.95; }
-      15%  { opacity: 1.0; }
-      30%  { opacity: 0.96; }
-      45%  { opacity: 0.93; }
-      60%  { opacity: 0.99; }
-      75%  { opacity: 0.94; }
-      90%  { opacity: 0.97; }
-      100% { opacity: 0.95; }
-    }
-
-    @keyframes glow-pulse {
-      0%, 100% { text-shadow: 0 0 20px rgba(255, 196, 107, 0.3), 0 0 40px rgba(255, 196, 107, 0.15), 0 0 80px rgba(255, 196, 107, 0.05); }
-      50%      { text-shadow: 0 0 25px rgba(255, 196, 107, 0.4), 0 0 50px rgba(255, 196, 107, 0.2), 0 0 100px rgba(255, 196, 107, 0.08); }
-    }
-
-    @keyframes frame-draw-top {
-      from { width: 0; } to { width: 100%; }
-    }
-    @keyframes frame-draw-right {
-      from { height: 0; } to { height: 100%; }
-    }
-    @keyframes frame-draw-bottom {
-      from { width: 0; } to { width: 100%; }
-    }
-    @keyframes frame-draw-left {
-      from { height: 0; } to { height: 100%; }
-    }
-
-    @keyframes fade-to-void {
-      from { opacity: 1; }
-      to { opacity: 0; }
-    }
-
-    /* ========================================
-       LIGHT POOL SYSTEM
-       Each section has a pool of light via
-       a ::before pseudo-element with radial
-       gradients, flickering subtly.
-       ======================================== */
-    .light-pool {
-      position: relative;
-    }
-
-    .light-pool::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 0;
-      animation: flicker 8s ease-in-out infinite;
-    }
-
-    .light-pool > * {
-      position: relative;
-      z-index: 1;
-    }
-
-    /* ========================================
-       SECTION BASE: SCROLL REVEAL
-       ======================================== */
-    .section {
-      opacity: 0;
-      transition: opacity 2s ease;
-    }
-
-    .section.revealed {
-      opacity: 1;
-    }
-
-    /* ========================================
-       1. THE VOID / HERO
-       ======================================== */
-    #hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    #hero-canvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 2;
-    }
-
-    #hero::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background:
-        radial-gradient(ellipse at 20% 25%, rgba(255, 214, 160, 0.15) 0%, transparent 50%),
-        radial-gradient(ellipse at 15% 20%, rgba(255, 196, 107, 0.08) 0%, transparent 40%),
-        radial-gradient(ellipse at 30% 35%, rgba(255, 214, 160, 0.05) 0%, transparent 60%);
-      pointer-events: none;
-      z-index: 1;
-      animation: flicker 8s ease-in-out infinite;
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 3;
-      text-align: left;
-      padding: 2rem;
-      max-width: 900px;
-    }
-
-    .hero-name {
-      font-family: var(--font-primary);
-      font-weight: 700;
-      font-size: clamp(3.5rem, 9vw, 10rem);
-      color: var(--gold-bright);
-      line-height: 0.95;
-      letter-spacing: 0.04em;
-      text-shadow:
-        0 0 30px rgba(255, 196, 107, 0.3),
-        0 0 60px rgba(255, 196, 107, 0.15),
-        0 0 120px rgba(255, 196, 107, 0.05);
-      animation: glow-pulse 6s ease-in-out infinite;
-    }
-
-    .hero-subtitle {
-      font-family: var(--font-sc);
-      font-weight: 400;
-      font-size: clamp(0.9rem, 1.8vw, 1.4rem);
-      color: var(--parchment);
-      letter-spacing: 0.3em;
-      margin-top: 1.5rem;
-      opacity: 0.85;
-    }
-
-    .hero-tagline {
-      font-family: var(--font-primary);
-      font-style: italic;
-      font-weight: 400;
-      font-size: clamp(1rem, 1.6vw, 1.3rem);
-      color: var(--parchment);
-      margin-top: 1.8rem;
-      opacity: 0.7;
-      max-width: 600px;
-      line-height: 1.8;
-    }
-
-    /* ========================================
-       DARK GAP — Scroll darkness between rooms
-       ======================================== */
-    .dark-gap {
-      height: 100vh;
-      background: var(--black);
-    }
-
-    .dark-gap-half {
-      height: 50vh;
-      background: var(--black);
-    }
-
-    /* ========================================
-       2. THE CRYPT WALL / MANIFESTO
-       ======================================== */
-    #manifesto {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      padding: 4rem 2rem;
-    }
-
-    #manifesto::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background:
-        radial-gradient(ellipse at 25% 30%, rgba(255, 214, 160, 0.12) 0%, transparent 50%),
-        radial-gradient(ellipse at 20% 25%, rgba(255, 196, 107, 0.06) 0%, transparent 40%);
-      pointer-events: none;
-      z-index: 0;
-      animation: flicker-alt 10s ease-in-out infinite;
-    }
-
-    .manifesto-content {
-      position: relative;
-      z-index: 1;
-      max-width: 800px;
-    }
-
-    .manifesto-statement {
-      font-family: var(--font-primary);
-      font-style: italic;
-      font-weight: 400;
-      font-size: clamp(1.3rem, 2.5vw, 2rem);
-      color: var(--parchment);
-      line-height: 1.7;
-      margin-bottom: 3rem;
-      /* Engraved/embossed text effect: light from upper-left */
-      text-shadow:
-        -1px -1px 1px rgba(255, 214, 160, 0.15),
-        1px 1px 2px rgba(0, 0, 0, 0.8);
-      opacity: 0.85;
-    }
-
-    .manifesto-punchline {
-      font-family: var(--font-primary);
-      font-weight: 600;
-      font-size: clamp(1.6rem, 3vw, 2.5rem);
-      color: var(--gold-bright);
-      margin-top: 1rem;
-      text-shadow:
-        0 0 20px rgba(255, 196, 107, 0.4),
-        0 0 40px rgba(255, 196, 107, 0.2),
-        0 0 80px rgba(255, 196, 107, 0.1);
-    }
-
-    .blood-line {
-      width: 100%;
-      height: 1px;
-      background: var(--blood);
-      margin-top: 3rem;
-      opacity: 0.6;
-    }
-
-    /* ========================================
-       3. THE GALLERY / PROJECTS
-       ======================================== */
-    .project-room {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      padding: 4rem 2rem;
-      overflow: hidden;
-    }
-
-    /* Light variations per room */
-    .project-room:nth-child(1)::before,
-    .project-room.room-1::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background:
-        radial-gradient(ellipse at 20% 25%, rgba(255, 214, 160, 0.13) 0%, transparent 50%),
-        radial-gradient(ellipse at 15% 20%, rgba(255, 196, 107, 0.06) 0%, transparent 35%);
-      pointer-events: none; z-index: 0;
-      animation: flicker 9s ease-in-out infinite;
-    }
-
-    .project-room.room-2::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background:
-        radial-gradient(ellipse at 35% 30%, rgba(255, 214, 160, 0.12) 0%, transparent 50%),
-        radial-gradient(ellipse at 40% 25%, rgba(255, 196, 107, 0.06) 0%, transparent 40%);
-      pointer-events: none; z-index: 0;
-      animation: flicker-alt 11s ease-in-out infinite;
-    }
-
-    .project-room.room-3::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background:
-        radial-gradient(ellipse at 50% 30%, rgba(255, 214, 160, 0.11) 0%, transparent 50%),
-        radial-gradient(ellipse at 45% 35%, rgba(255, 196, 107, 0.05) 0%, transparent 40%);
-      pointer-events: none; z-index: 0;
-      animation: flicker 10s ease-in-out infinite;
-    }
-
-    .project-room.room-4::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background:
-        radial-gradient(ellipse at 60% 35%, rgba(255, 214, 160, 0.12) 0%, transparent 50%),
-        radial-gradient(ellipse at 55% 30%, rgba(255, 196, 107, 0.06) 0%, transparent 45%);
-      pointer-events: none; z-index: 0;
-      animation: flicker-alt 9s ease-in-out infinite;
-    }
-
-    .project-room-number {
-      position: absolute;
-      font-family: var(--font-primary);
-      font-weight: 700;
-      font-size: clamp(10rem, 20vw, 25rem);
-      color: var(--gold-bright);
-      opacity: 0.06;
-      z-index: 0;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      line-height: 1;
-      user-select: none;
-    }
-
-    .project-card {
-      position: relative;
-      z-index: 1;
-      max-width: 600px;
-      padding: 3rem;
-    }
-
-    /* Animated gold frame */
-    .project-frame {
-      position: relative;
-      padding: 2.5rem;
-    }
-
-    .project-frame::before,
-    .project-frame::after,
-    .project-frame .frame-bottom,
-    .project-frame .frame-left {
-      content: '';
-      position: absolute;
-      background: var(--gold-bright);
-      opacity: 0;
-      transition: opacity 0.5s ease;
-    }
-
-    /* Top border */
-    .project-frame::before {
-      top: 0; left: 0;
-      height: 1px;
-      width: 0;
-    }
-
-    /* Right border */
-    .project-frame::after {
-      top: 0; right: 0;
-      width: 1px;
-      height: 0;
-    }
-
-    .project-frame .frame-bottom {
-      bottom: 0; right: 0;
-      height: 1px;
-      width: 0;
-    }
-
-    .project-frame .frame-left {
-      bottom: 0; left: 0;
-      width: 1px;
-      height: 0;
-    }
-
-    /* When revealed, animate the frame drawing */
-    .project-room.revealed .project-frame::before {
-      opacity: 0.6;
-      animation: frame-draw-top 1s ease 0.3s forwards;
-    }
-
-    .project-room.revealed .project-frame::after {
-      opacity: 0.6;
-      animation: frame-draw-right 1s ease 0.8s forwards;
-    }
-
-    .project-room.revealed .project-frame .frame-bottom {
-      opacity: 0.6;
-      animation: frame-draw-bottom 1s ease 1.3s forwards;
-    }
-
-    .project-room.revealed .project-frame .frame-left {
-      opacity: 0.6;
-      animation: frame-draw-left 1s ease 1.8s forwards;
-    }
-
-    /* Warm glow on the frame */
-    .project-room.revealed .project-frame {
-      box-shadow: 0 0 30px rgba(255, 196, 107, 0.03), 0 0 60px rgba(255, 196, 107, 0.015);
-    }
-
-    .project-title {
-      font-family: var(--font-primary);
-      font-weight: 700;
-      font-size: clamp(1.8rem, 3.5vw, 3rem);
-      color: var(--gold-bright);
-      letter-spacing: 0.05em;
-      margin-bottom: 1.2rem;
-      text-shadow:
-        0 0 20px rgba(255, 196, 107, 0.25),
-        0 0 40px rgba(255, 196, 107, 0.1);
-    }
-
-    .project-description {
-      font-family: var(--font-primary);
-      font-style: italic;
-      font-weight: 400;
-      font-size: clamp(1rem, 1.5vw, 1.2rem);
-      color: var(--parchment);
-      line-height: 1.8;
-      margin-bottom: 1.5rem;
-      opacity: 0.85;
-    }
-
-    .project-tags {
-      font-family: var(--font-sc);
-      font-weight: 400;
-      font-size: clamp(0.7rem, 1vw, 0.85rem);
-      color: var(--gold-light);
-      letter-spacing: 0.25em;
-      opacity: 0.6;
-    }
-
-    /* ========================================
-       4. THE CHRONICLE / BACKGROUND
-       ======================================== */
-    #chronicle {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      padding: 6rem 2rem;
-    }
-
-    #chronicle::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background:
-        radial-gradient(ellipse at 35% 30%, rgba(255, 214, 160, 0.14) 0%, transparent 55%),
-        radial-gradient(ellipse at 30% 40%, rgba(255, 196, 107, 0.07) 0%, transparent 50%),
-        radial-gradient(ellipse at 50% 50%, rgba(26, 14, 0, 0.3) 0%, transparent 70%);
-      pointer-events: none; z-index: 0;
-      animation: flicker 12s ease-in-out infinite;
-    }
-
-    .chronicle-content {
-      position: relative;
-      z-index: 1;
-      max-width: 700px;
-    }
-
-    .chronicle-content p {
-      font-family: var(--font-primary);
-      font-weight: 400;
-      font-size: clamp(1.05rem, 1.4vw, 1.2rem);
-      color: var(--parchment);
-      line-height: 1.8;
-      margin-bottom: 2rem;
-      opacity: 0.8;
-    }
-
-    .chronicle-content .gold-highlight {
-      color: var(--gold-bright);
-      font-weight: 600;
-      opacity: 1;
-    }
-
-    /* ========================================
-       5. THE ALTAR / CURRENT FOCUS
-       ======================================== */
-    #altar {
-      min-height: 60vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      padding: 4rem 2rem;
-    }
-
-    #altar::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background:
-        radial-gradient(ellipse at 50% 40%, rgba(255, 214, 160, 0.18) 0%, transparent 40%),
-        radial-gradient(ellipse at 50% 45%, rgba(255, 196, 107, 0.1) 0%, transparent 35%);
-      pointer-events: none; z-index: 0;
-      animation: flicker 7s ease-in-out infinite;
-    }
-
-    .altar-content {
-      position: relative;
-      z-index: 1;
-      text-align: center;
-      max-width: 600px;
-    }
-
-    .altar-heading {
-      font-family: var(--font-sc);
-      font-weight: 600;
-      font-size: clamp(1.2rem, 2vw, 1.6rem);
-      color: var(--gold-bright);
-      letter-spacing: 0.3em;
-      margin-bottom: 2.5rem;
-      text-shadow:
-        0 0 20px rgba(255, 196, 107, 0.35),
-        0 0 40px rgba(255, 196, 107, 0.15);
-    }
-
-    .reliquary {
-      border: 1px solid rgba(255, 196, 107, 0.3);
-      padding: 2.5rem;
-      box-shadow:
-        0 0 30px rgba(255, 196, 107, 0.05),
-        0 0 60px rgba(255, 196, 107, 0.025),
-        inset 0 0 30px rgba(255, 196, 107, 0.015);
-    }
-
-    .reliquary p {
-      font-family: var(--font-primary);
-      font-weight: 400;
-      font-size: clamp(1rem, 1.3vw, 1.15rem);
-      color: var(--parchment);
-      line-height: 1.8;
-      margin-bottom: 1.2rem;
-      opacity: 0.85;
-    }
-
-    .reliquary p:last-child {
-      margin-bottom: 0;
-    }
-
-    /* ========================================
-       6. THE EXIT / CONTACT
-       ======================================== */
-    #exit {
-      min-height: 60vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      padding: 4rem 2rem;
-    }
-
-    #exit::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background:
-        radial-gradient(ellipse at 50% 50%, rgba(255, 214, 160, 0.06) 0%, transparent 40%);
-      pointer-events: none; z-index: 0;
-      animation: flicker-alt 14s ease-in-out infinite;
-    }
-
-    .exit-content {
-      position: relative;
-      z-index: 1;
-      text-align: center;
-      max-width: 600px;
-    }
-
-    .exit-link {
-      font-family: var(--font-primary);
-      font-weight: 400;
-      font-size: clamp(1rem, 1.3vw, 1.15rem);
-      color: var(--parchment);
-      text-decoration: none;
-      display: block;
-      margin-bottom: 1rem;
-      opacity: 0.6;
-      transition: opacity 0.5s ease, color 0.5s ease;
-    }
-
-    .exit-link:hover {
-      opacity: 0.9;
-      color: var(--gold-light);
-    }
-
-    .exit-invitation {
-      font-family: var(--font-primary);
-      font-style: italic;
-      font-weight: 400;
-      font-size: clamp(1rem, 1.4vw, 1.2rem);
-      color: var(--parchment);
-      margin-top: 2.5rem;
-      margin-bottom: 2rem;
-      opacity: 0.55;
-      line-height: 1.8;
-    }
-
-    .exit-location {
-      font-family: var(--font-sc);
-      font-weight: 400;
-      font-size: clamp(0.75rem, 1vw, 0.9rem);
-      color: var(--parchment);
-      letter-spacing: 0.3em;
-      opacity: 0.4;
-    }
-
-    /* The final period */
-    .final-void {
-      height: 200px;
-      display: flex;
-      align-items: flex-start;
-      justify-content: center;
-      padding-top: 3rem;
-      background: var(--black);
-    }
-
-    .final-period {
-      font-family: var(--font-primary);
-      font-weight: 400;
-      font-size: 1.5rem;
-      color: var(--parchment);
-      opacity: 0.3;
-    }
-
-    #fade-out-overlay {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 150px;
-      background: linear-gradient(to bottom, transparent, var(--black));
-      pointer-events: none;
-      z-index: 100;
-      opacity: 0;
-      transition: opacity 0.5s ease;
-    }
-
-    /* ========================================
-       RESPONSIVE — MOBILE
-       ======================================== */
-    @media (max-width: 768px) {
-      /* Center light pools on mobile */
-      #hero::before {
-        background:
-          radial-gradient(ellipse at 50% 40%, rgba(255, 214, 160, 0.15) 0%, transparent 55%),
-          radial-gradient(ellipse at 50% 35%, rgba(255, 196, 107, 0.08) 0%, transparent 45%);
-      }
-
-      #manifesto::before {
-        background:
-          radial-gradient(ellipse at 50% 40%, rgba(255, 214, 160, 0.12) 0%, transparent 55%);
-      }
-
-      .project-room.room-1::before,
-      .project-room.room-2::before,
-      .project-room.room-3::before,
-      .project-room.room-4::before {
-        background:
-          radial-gradient(ellipse at 50% 40%, rgba(255, 214, 160, 0.12) 0%, transparent 55%) !important;
-      }
-
-      #chronicle::before {
-        background:
-          radial-gradient(ellipse at 50% 40%, rgba(255, 214, 160, 0.14) 0%, transparent 55%);
-      }
-
-      .hero-content {
-        text-align: center;
-        padding: 1.5rem;
-      }
-
-      .hero-tagline {
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      .dark-gap {
-        height: 70vh;
-      }
-
-      .dark-gap-half {
-        height: 40vh;
-      }
-
-      .project-frame {
-        padding: 1.5rem;
-      }
-
-      .project-card {
-        padding: 1.5rem;
-      }
-
-      .chronicle-content {
-        padding: 0 0.5rem;
-      }
-    }
-  </style>
+  <title>Alejandro</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-  <!-- ============================================
-       SECTION 1: THE VOID / HERO
-       ============================================ -->
-  <section id="hero" class="section">
-    <canvas id="hero-canvas"></canvas>
-    <div class="hero-content">
-      <h1 class="hero-name">ALEJANDRO</h1>
-      <p class="hero-subtitle">AI Consultant &middot; Economist &middot; Builder</p>
-      <p class="hero-tagline">I work on problems that matter before most people realize they're problems.</p>
-    </div>
-  </section>
-
-  <!-- Dark passage -->
-  <div class="dark-gap"></div>
-
-  <!-- ============================================
-       SECTION 2: THE CRYPT WALL / MANIFESTO
-       ============================================ -->
-  <section id="manifesto" class="section">
-    <div class="manifesto-content">
-      <p class="manifesto-statement">Biosecurity is the most neglected existential risk of our time.</p>
-      <p class="manifesto-statement">Open-source tools can make the world meaningfully safer.</p>
-      <p class="manifesto-statement">The gap between AI capability and AI governance grows every day.</p>
-      <p class="manifesto-punchline">I work in that gap.</p>
-      <div class="blood-line"></div>
-    </div>
-  </section>
-
-  <!-- Dark passage -->
-  <div class="dark-gap"></div>
-
-  <!-- ============================================
-       SECTION 3: THE GALLERY / PROJECTS
-       ============================================ -->
-
-  <!-- Room I: Cliver -->
-  <section class="project-room room-1 section">
-    <div class="project-room-number">I</div>
-    <div class="project-card">
-      <div class="project-frame">
-        <span class="frame-bottom"></span>
-        <span class="frame-left"></span>
-        <h2 class="project-title">CLIVER</h2>
-        <p class="project-description">An open-source AI tool for Know Your Customer screening in DNA synthesis. Making it harder to misuse biology.</p>
-        <p class="project-tags">Biosecurity &middot; Open Source &middot; AI</p>
+  <!-- Navigation -->
+  <nav class="nav">
+    <a href="#">Projects</a>
+    <a href="#">Blog</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+    <div class="nav-dropdown">
+      <a href="#">Over-the-top</a>
+      <div class="nav-dropdown-menu">
+        <a href="shrine/">Shrine</a>
+        <a href="bebop/">Bebop</a>
+        <a href="suprematist/">Suprematist</a>
+        <a href="poetry/">Poetry</a>
+        <a href="caravaggio/">Caravaggio</a>
       </div>
     </div>
-  </section>
+  </nav>
 
-  <div class="dark-gap-half"></div>
+  <!-- Home: Terminal Mockup -->
+  <main class="home-container">
+    <div class="terminal">
 
-  <!-- Room II: Frontiers Evals -->
-  <section class="project-room room-2 section">
-    <div class="project-room-number">II</div>
-    <div class="project-card">
-      <div class="project-frame">
-        <span class="frame-bottom"></span>
-        <span class="frame-left"></span>
-        <h2 class="project-title">FRONTIERS EVALS</h2>
-        <p class="project-description">Research on evaluating frontier AI systems for dangerous capabilities.</p>
-        <p class="project-tags">AI Safety &middot; Research &middot; Evaluation</p>
+      <!-- Title bar -->
+      <div class="terminal-bar">
+        <div class="terminal-dots">
+          <span class="terminal-dot red"></span>
+          <span class="terminal-dot yellow"></span>
+          <span class="terminal-dot green"></span>
+        </div>
+        <span class="terminal-title">claude</span>
+      </div>
+
+      <!-- Terminal body -->
+      <div class="terminal-body">
+
+        <!-- User prompt -->
+        <div class="prompt-line">
+          <span class="prompt-char">❯</span>
+          <span class="prompt-text">Make me an over-the-top (but tasteful) personal website</span>
+        </div>
+
+        <!-- Claude response -->
+        <div class="response-line">
+          <span class="response-bullet">●</span>
+          <span class="response-text">I'd love to help with this — here are five directions, each quite distinct. All of them lean into the "intense but tasteful" brief in genuinely different ways.</span>
+        </div>
+
+        <div class="terminal-divider"></div>
+
+        <!-- Selection menu -->
+        <div class="menu-label">What direction would you like to explore?</div>
+
+        <div class="menu-options">
+
+          <a href="shrine/" class="menu-option active">
+            <span class="menu-selector">❯</span>
+            <span class="menu-number">1.</span>
+            <div class="menu-content">
+              <span class="menu-title">Shrine</span>
+              <span class="menu-desc">A dark, reverent gallery — gold on black, projects as sacred artifacts</span>
+            </div>
+          </a>
+
+          <a href="bebop/" class="menu-option">
+            <span class="menu-selector">❯</span>
+            <span class="menu-number">2.</span>
+            <div class="menu-content">
+              <span class="menu-title">Bebop</span>
+              <span class="menu-desc">Retro-futuristic anime arcs, Cowboy Bebop palette, jazz-noir cool</span>
+            </div>
+          </a>
+
+          <a href="suprematist/" class="menu-option">
+            <span class="menu-selector">❯</span>
+            <span class="menu-number">3.</span>
+            <div class="menu-content">
+              <span class="menu-title">Suprematist</span>
+              <span class="menu-desc">Malevich-inspired geometric abstraction — content inside floating shapes</span>
+            </div>
+          </a>
+
+          <a href="poetry/" class="menu-option">
+            <span class="menu-selector">❯</span>
+            <span class="menu-number">4.</span>
+            <div class="menu-content">
+              <span class="menu-title">Poetry</span>
+              <span class="menu-desc">Pure typography as landscape — words overlapping, scaling, rotating</span>
+            </div>
+          </a>
+
+          <a href="caravaggio/" class="menu-option">
+            <span class="menu-selector">❯</span>
+            <span class="menu-number">5.</span>
+            <div class="menu-content">
+              <span class="menu-title">Caravaggio</span>
+              <span class="menu-desc">Baroque chiaroscuro — content emerging from darkness, lit by candlelight</span>
+            </div>
+          </a>
+
+        </div>
+
+        <div class="terminal-divider"></div>
+
+        <div class="terminal-hints">
+          Enter to select<span>·</span>↑/↓ to navigate<span>·</span>Esc to cancel
+        </div>
+
+        <!-- Blinking cursor -->
+        <div class="cursor-line">
+          <span class="cursor-char">❯</span>
+          <span class="cursor-block"></span>
+        </div>
+
       </div>
     </div>
-  </section>
 
-  <div class="dark-gap-half"></div>
-
-  <!-- Room III: ML4Good -->
-  <section class="project-room room-3 section">
-    <div class="project-room-number">III</div>
-    <div class="project-card">
-      <div class="project-frame">
-        <span class="frame-bottom"></span>
-        <span class="frame-left"></span>
-        <h2 class="project-title">ML4GOOD</h2>
-        <p class="project-description">Teaching machine learning for social impact across Latin America.</p>
-        <p class="project-tags">Education &middot; ML &middot; Latin America</p>
-      </div>
+    <div class="home-tagline">
+      alejandro<span>·</span>bogotá<span>·</span>ai consultant & economist
     </div>
-  </section>
+  </main>
 
-  <div class="dark-gap-half"></div>
-
-  <!-- Room IV: EU AI Act -->
-  <section class="project-room room-4 section">
-    <div class="project-room-number">IV</div>
-    <div class="project-card">
-      <div class="project-frame">
-        <span class="frame-bottom"></span>
-        <span class="frame-left"></span>
-        <h2 class="project-title">EUROPEAN AI ACT ADVISORY</h2>
-        <p class="project-description">Providing technical input to shape AI governance in Europe.</p>
-        <p class="project-tags">Policy &middot; Governance &middot; Europe</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Dark passage -->
-  <div class="dark-gap"></div>
-
-  <!-- ============================================
-       SECTION 4: THE CHRONICLE / BACKGROUND
-       ============================================ -->
-  <section id="chronicle" class="section">
-    <div class="chronicle-content">
-      <p><span class="gold-highlight">At sixteen,</span> I stumbled onto effective altruism and something shifted permanently. The idea that you could be rigorous about doing good — that you could treat impact like an engineering problem — rewired the way I thought about everything.</p>
-      <p><span class="gold-highlight">At university,</span> I studied economics — the discipline that takes messy human behavior and tries to find the levers. I co-founded the EA chapter, gathered people who cared about the same impossible questions, and started building.</p>
-      <p><span class="gold-highlight">In Oxford,</span> the questions got sharper. I researched AI governance, lived in a group house full of people trying to steer the future, and learned that the gap between understanding a problem and actually moving the needle is where most good intentions go to die.</p>
-      <p><span class="gold-highlight">In Bogot&aacute;,</span> I came home. Not to rest — to build. Cliver, ML4Good, consulting work that puts me at the intersection of AI capability and the institutions trying to keep up. The problems I care about don't have geographic boundaries, but the work has to happen somewhere, and I chose here.</p>
-    </div>
-  </section>
-
-  <!-- Dark passage -->
-  <div class="dark-gap"></div>
-
-  <!-- ============================================
-       SECTION 5: THE ALTAR / CURRENT FOCUS
-       ============================================ -->
-  <section id="altar" class="section">
-    <div class="altar-content">
-      <h2 class="altar-heading">Right Now</h2>
-      <div class="reliquary">
-        <p>Building Cliver. Customer development. Convincing the world that DNA screening matters.</p>
-        <p>Teaching ML4Good across Latin America.</p>
-        <p>Writing. Thinking. Sending one more cold email.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Dark passage -->
-  <div class="dark-gap-half"></div>
-
-  <!-- ============================================
-       SECTION 6: THE EXIT / CONTACT
-       ============================================ -->
-  <section id="exit" class="section">
-    <div class="exit-content">
-      <a href="mailto:alejandro@example.com" class="exit-link">alejandro@example.com</a>
-      <a href="https://github.com/alejandro" class="exit-link" target="_blank" rel="noopener">GitHub</a>
-      <p class="exit-invitation">I'm always interested in talking to people who take these problems seriously.</p>
-      <p class="exit-location">Bogot&aacute;, Colombia</p>
-    </div>
-  </section>
-
-  <!-- The final fade to void -->
-  <div class="final-void">
-    <span class="final-period">.</span>
-  </div>
-
-  <div id="fade-out-overlay"></div>
-
-  <!-- ============================================
-       JAVASCRIPT
-       ============================================ -->
-  <script>
-    /* ========================================
-       INTERSECTION OBSERVER — Scroll Reveals
-       Each .section fades in when entering view
-       ======================================== */
-    (function initScrollReveals() {
-      const sections = document.querySelectorAll('.section');
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('revealed');
-          }
-        });
-      }, {
-        threshold: 0.15,
-        rootMargin: '0px 0px -50px 0px'
-      });
-
-      sections.forEach(section => observer.observe(section));
-    })();
-
-    /* ========================================
-       HERO DUST PARTICLES — Canvas
-       Tiny gold dots drifting in the light pool
-       ======================================== */
-    (function initDustParticles() {
-      const canvas = document.getElementById('hero-canvas');
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-
-      let particles = [];
-      const PARTICLE_COUNT = 25;
-
-      function resize() {
-        canvas.width = canvas.offsetWidth;
-        canvas.height = canvas.offsetHeight;
-      }
-
-      function createParticle() {
-        // Concentrate particles in the upper-left light pool area
-        const lightCenterX = canvas.width * 0.25;
-        const lightCenterY = canvas.height * 0.35;
-        const spread = Math.min(canvas.width, canvas.height) * 0.4;
-
-        return {
-          x: lightCenterX + (Math.random() - 0.5) * spread,
-          y: lightCenterY + (Math.random() - 0.5) * spread,
-          size: Math.random() * 1.5 + 0.5,
-          opacity: Math.random() * 0.2 + 0.1,
-          vx: (Math.random() - 0.5) * 0.15,
-          vy: (Math.random() - 0.5) * 0.1 - 0.05,
-          life: Math.random() * 1000
-        };
-      }
-
-      function init() {
-        resize();
-        particles = [];
-        for (let i = 0; i < PARTICLE_COUNT; i++) {
-          particles.push(createParticle());
-        }
-      }
-
-      function update() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        particles.forEach((p, i) => {
-          p.x += p.vx;
-          p.y += p.vy;
-          p.life += 1;
-
-          // Gentle opacity fluctuation
-          const flickerOpacity = p.opacity + Math.sin(p.life * 0.02) * 0.05;
-
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(255, 214, 160, ${Math.max(0, flickerOpacity)})`;
-          ctx.fill();
-
-          // Reset particle if it drifts too far
-          const lightCenterX = canvas.width * 0.25;
-          const lightCenterY = canvas.height * 0.35;
-          const dist = Math.hypot(p.x - lightCenterX, p.y - lightCenterY);
-          const maxDist = Math.min(canvas.width, canvas.height) * 0.45;
-
-          if (dist > maxDist || p.life > 2000) {
-            particles[i] = createParticle();
-          }
-        });
-
-        requestAnimationFrame(update);
-      }
-
-      init();
-      update();
-
-      window.addEventListener('resize', () => {
-        resize();
-      });
-    })();
-
-    /* ========================================
-       FINAL FADE-OUT — near end of page
-       The overlay fades in as user approaches
-       the very bottom, returning to the void
-       ======================================== */
-    (function initFadeOut() {
-      const overlay = document.getElementById('fade-out-overlay');
-      if (!overlay) return;
-
-      window.addEventListener('scroll', () => {
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        const docHeight = document.documentElement.scrollHeight;
-        const winHeight = window.innerHeight;
-        const scrollBottom = docHeight - scrollTop - winHeight;
-
-        // Start fading in the overlay when within 300px of the bottom
-        if (scrollBottom < 300) {
-          const progress = 1 - (scrollBottom / 300);
-          overlay.style.opacity = Math.min(1, progress);
-        } else {
-          overlay.style.opacity = 0;
-        }
-      }, { passive: true });
-    })();
-  </script>
-
+  <script src="script.js"></script>
 </body>
 </html>

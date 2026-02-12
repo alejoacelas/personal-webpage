@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ALEJANDRO — AI Consultant · Economist · Builder</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ========================================
+       CSS RESET & VARIABLES
+       ======================================== */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --white: #F5F3EF;
+      --red: #D62828;
+      --black: #000000;
+      --blue: #1D3557;
+      --yellow: #F4A100;
+      --font: 'Space Grotesk', sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: var(--font);
+      background: var(--white);
+      color: var(--black);
+      overflow-x: hidden;
+      cursor: crosshair;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      cursor: crosshair;
+    }
+
+    /* ========================================
+       COMPOSITION CONTAINER
+       Each composition is a full-viewport scene
+       ======================================== */
+    .composition {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    /* ========================================
+       SHAPE PRIMITIVES
+       ======================================== */
+    .shape {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      transition: transform 0.4s ease, opacity 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .shape:hover {
+      transform: scale(1.02);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.15);
+      z-index: 10;
+    }
+
+    .shape:hover ~ .shape {
+      opacity: 0.85;
+    }
+
+    .shape-text {
+      padding: 2rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* ========================================
+       SCROLL ANIMATION CLASSES
+       Shapes start hidden, animate in on scroll
+       ======================================== */
+    .anim-from-left {
+      opacity: 0;
+      transform: translateX(-120px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    .anim-from-right {
+      opacity: 0;
+      transform: translateX(120px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    .anim-from-bottom {
+      opacity: 0;
+      transform: translateY(120px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    .anim-from-top {
+      opacity: 0;
+      transform: translateY(-120px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    .anim-scale {
+      opacity: 0;
+      transform: scale(0.7);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    .anim-draw {
+      opacity: 0;
+      transition: opacity 1s ease-out;
+    }
+
+    .anim-from-left.visible,
+    .anim-from-right.visible,
+    .anim-from-bottom.visible,
+    .anim-from-top.visible {
+      opacity: 1;
+      transform: translate(0, 0);
+    }
+    .anim-scale.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+    .anim-draw.visible {
+      opacity: 1;
+    }
+
+    /* Staggered delays */
+    .delay-1 { transition-delay: 0.1s; }
+    .delay-2 { transition-delay: 0.25s; }
+    .delay-3 { transition-delay: 0.4s; }
+    .delay-4 { transition-delay: 0.55s; }
+    .delay-5 { transition-delay: 0.7s; }
+
+    /* Subtle continuous breathing animation */
+    @keyframes breathe {
+      0%, 100% { transform: rotate(var(--base-rot, 0deg)); }
+      50% { transform: rotate(calc(var(--base-rot, 0deg) + 0.5deg)); }
+    }
+
+    .breathe {
+      animation: breathe 10s ease-in-out infinite;
+    }
+
+    /* ========================================
+       COMPOSITION I: IDENTITY
+       ======================================== */
+    #identity {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Diagonal blue line across viewport */
+    #identity .diagonal-line {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 150%;
+      height: 2px;
+      background: var(--blue);
+      transform-origin: top left;
+      transform: rotate(35deg);
+      z-index: 0;
+      opacity: 0;
+      transition: opacity 1.2s ease-out 0.5s;
+    }
+    #identity .diagonal-line.visible {
+      opacity: 0.6;
+    }
+
+    /* Large black rectangle */
+    #identity .name-rect {
+      width: 44vw;
+      min-height: 28vh;
+      background: var(--black);
+      --base-rot: -5deg;
+      transform: rotate(-5deg);
+      z-index: 2;
+      left: 15%;
+      top: 22%;
+      padding: 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    #identity .name-rect h1 {
+      font-size: clamp(3rem, 7vw, 7rem);
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.05em;
+      line-height: 0.95;
+    }
+
+    #identity .name-rect .subtitle {
+      font-size: clamp(0.65rem, 1.1vw, 0.95rem);
+      color: #fff;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-top: 1.2rem;
+      font-weight: 500;
+      opacity: 0.85;
+    }
+
+    /* Red circle overlapping bottom-right of rectangle */
+    #identity .location-circle {
+      width: 16vw;
+      height: 16vw;
+      min-width: 120px;
+      min-height: 120px;
+      background: var(--red);
+      border-radius: 50%;
+      z-index: 3;
+      left: 48%;
+      top: 50%;
+    }
+
+    #identity .location-circle .shape-text {
+      color: #fff;
+      font-size: clamp(0.55rem, 0.8vw, 0.75rem);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    /* Small yellow triangle — purely compositional */
+    #identity .yellow-triangle {
+      width: 0;
+      height: 0;
+      border-left: 5vw solid transparent;
+      border-right: 5vw solid transparent;
+      border-bottom: 8vw solid var(--yellow);
+      background: transparent;
+      z-index: 1;
+      right: 10%;
+      bottom: 12%;
+    }
+
+    /* ========================================
+       COMPOSITION II: MANIFESTO
+       ======================================== */
+    #manifesto {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Rotated vertical header */
+    #manifesto .section-label {
+      position: absolute;
+      left: 3vw;
+      top: 50%;
+      transform: rotate(-90deg) translateX(-50%);
+      transform-origin: left center;
+      font-size: clamp(1.5rem, 3vw, 3rem);
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--black);
+      z-index: 5;
+      white-space: nowrap;
+    }
+
+    /* Yellow horizontal line behind shapes */
+    #manifesto .h-line {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 100%;
+      height: 3px;
+      background: var(--yellow);
+      z-index: 0;
+      opacity: 0.5;
+    }
+
+    /* Tall red rectangle */
+    #manifesto .belief-red {
+      width: 17vw;
+      min-width: 180px;
+      height: 42vh;
+      min-height: 280px;
+      background: var(--red);
+      z-index: 2;
+      left: 20%;
+      top: 18%;
+      --base-rot: -3deg;
+      transform: rotate(-3deg);
+    }
+
+    #manifesto .belief-red .shape-text {
+      color: #fff;
+      font-size: clamp(0.8rem, 1vw, 1rem);
+      line-height: 1.7;
+      font-weight: 500;
+      padding: 2.5rem 1.5rem;
+    }
+
+    /* Blue square overlapping the red */
+    #manifesto .belief-blue {
+      width: 22vw;
+      min-width: 200px;
+      height: 22vw;
+      min-height: 200px;
+      background: var(--blue);
+      z-index: 3;
+      left: 33%;
+      top: 30%;
+      --base-rot: 2deg;
+      transform: rotate(2deg);
+    }
+
+    #manifesto .belief-blue .shape-text {
+      color: #fff;
+      font-size: clamp(0.8rem, 1vw, 1rem);
+      line-height: 1.7;
+      font-weight: 500;
+      padding: 2.5rem;
+    }
+
+    /* Black circle overlapping both */
+    #manifesto .belief-black {
+      width: 20vw;
+      min-width: 200px;
+      height: 20vw;
+      min-height: 200px;
+      background: var(--black);
+      border-radius: 50%;
+      z-index: 4;
+      left: 52%;
+      top: 22%;
+    }
+
+    #manifesto .belief-black .shape-text {
+      color: #fff;
+      font-size: clamp(0.7rem, 0.9vw, 0.9rem);
+      line-height: 1.7;
+      font-weight: 400;
+      padding: 3rem;
+    }
+
+    /* ========================================
+       COMPOSITION III: THE WORK
+       ======================================== */
+    #work {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 120vh;
+    }
+
+    /* Large faded background text */
+    #work .bg-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: clamp(8rem, 20vw, 20rem);
+      font-weight: 700;
+      color: var(--black);
+      opacity: 0.04;
+      white-space: nowrap;
+      letter-spacing: 0.05em;
+      z-index: 0;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* Project shapes */
+    #work .project {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      cursor: crosshair;
+    }
+
+    #work .project .project-name {
+      font-size: clamp(1.5rem, 2.5vw, 2.5rem);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.8rem;
+    }
+
+    #work .project .project-desc {
+      font-size: clamp(0.75rem, 0.9vw, 0.9rem);
+      line-height: 1.6;
+      margin-bottom: 1.2rem;
+      font-weight: 400;
+      opacity: 0.9;
+    }
+
+    #work .project .project-tags {
+      font-size: clamp(0.55rem, 0.65vw, 0.7rem);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-weight: 600;
+      opacity: 0.7;
+    }
+
+    /* Cliver: red rectangle */
+    #work .proj-cliver {
+      width: 32vw;
+      min-width: 260px;
+      min-height: 220px;
+      background: var(--red);
+      color: #fff;
+      z-index: 3;
+      left: 8%;
+      top: 12%;
+      --base-rot: 2deg;
+      transform: rotate(2deg);
+      padding: 2.5rem;
+    }
+
+    /* Frontiers Evals: black rectangle */
+    #work .proj-evals {
+      width: 30vw;
+      min-width: 250px;
+      min-height: 200px;
+      background: var(--black);
+      color: #fff;
+      z-index: 4;
+      left: 28%;
+      top: 36%;
+      --base-rot: -1deg;
+      transform: rotate(-1deg);
+      padding: 2.5rem;
+    }
+
+    /* ML4Good: blue square */
+    #work .proj-ml4good {
+      width: 24vw;
+      min-width: 220px;
+      height: 24vw;
+      min-height: 220px;
+      background: var(--blue);
+      color: #fff;
+      z-index: 2;
+      right: 10%;
+      top: 10%;
+      --base-rot: 3deg;
+      transform: rotate(3deg);
+      padding: 2.5rem;
+    }
+
+    /* EU AI Act: yellow rectangle */
+    #work .proj-eu {
+      width: 28vw;
+      min-width: 240px;
+      min-height: 180px;
+      background: var(--yellow);
+      color: var(--black);
+      z-index: 3;
+      right: 15%;
+      bottom: 10%;
+      --base-rot: -2deg;
+      transform: rotate(-2deg);
+      padding: 2.5rem;
+    }
+
+    /* ========================================
+       COMPOSITION IV: THE PATH
+       ======================================== */
+    #path {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* The diagonal timeline line */
+    #path .timeline-line {
+      position: absolute;
+      top: 8%;
+      left: 15%;
+      width: 80%;
+      height: 3px;
+      background: var(--red);
+      transform-origin: top left;
+      transform: rotate(32deg);
+      z-index: 0;
+      opacity: 0;
+      transition: opacity 1s ease-out;
+    }
+    #path .timeline-line.visible {
+      opacity: 0.7;
+    }
+
+    /* Timeline markers positioned along the diagonal */
+    .timeline-marker {
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .timeline-marker .marker-shape {
+      flex-shrink: 0;
+    }
+
+    .timeline-marker .marker-text {
+      font-size: clamp(0.65rem, 0.85vw, 0.85rem);
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      transform: rotate(32deg);
+    }
+
+    /* Marker 1: small black circle */
+    #path .marker-1 {
+      left: 12%;
+      top: 12%;
+    }
+    #path .marker-1 .marker-shape {
+      width: 40px;
+      height: 40px;
+      background: var(--black);
+      border-radius: 50%;
+    }
+
+    /* Marker 2: small blue rectangle */
+    #path .marker-2 {
+      left: 28%;
+      top: 28%;
+    }
+    #path .marker-2 .marker-shape {
+      width: 50px;
+      height: 30px;
+      background: var(--blue);
+    }
+
+    /* Marker 3: small red square */
+    #path .marker-3 {
+      left: 47%;
+      top: 45%;
+    }
+    #path .marker-3 .marker-shape {
+      width: 35px;
+      height: 35px;
+      background: var(--red);
+    }
+
+    /* Marker 4: small yellow triangle */
+    #path .marker-4 {
+      left: 62%;
+      top: 58%;
+    }
+    #path .marker-4 .marker-shape {
+      width: 0;
+      height: 0;
+      border-left: 18px solid transparent;
+      border-right: 18px solid transparent;
+      border-bottom: 32px solid var(--yellow);
+    }
+
+    /* Marker 5: larger black circle at end */
+    #path .marker-5 {
+      left: 75%;
+      top: 72%;
+    }
+    #path .marker-5 .marker-shape {
+      width: 60px;
+      height: 60px;
+      background: var(--black);
+      border-radius: 50%;
+    }
+    #path .marker-5 .marker-now {
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    /* ========================================
+       COMPOSITION V: NOW
+       ======================================== */
+    #now {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    #now .now-header {
+      font-size: clamp(2rem, 4vw, 4rem);
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--black);
+      margin-bottom: 4rem;
+      z-index: 2;
+    }
+
+    #now .now-rect {
+      position: relative;
+      width: 50vw;
+      min-width: 300px;
+      max-width: 700px;
+      background: var(--red);
+      padding: 3.5rem 3rem;
+      z-index: 2;
+    }
+
+    #now .now-rect p {
+      color: #fff;
+      font-size: clamp(0.85rem, 1.1vw, 1.1rem);
+      line-height: 2;
+      font-weight: 500;
+    }
+
+    /* Orbiting circle around the rectangle */
+    #now .orbit-circle {
+      position: absolute;
+      width: 70vw;
+      min-width: 400px;
+      max-width: 900px;
+      height: 50vh;
+      min-height: 350px;
+      border: 1.5px solid var(--black);
+      border-radius: 50%;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 1s ease-out;
+    }
+    #now .orbit-circle.visible {
+      opacity: 0.2;
+    }
+
+    /* ========================================
+       COMPOSITION VI: CONTACT
+       ======================================== */
+    #contact {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* Tiny red dot upper-right */
+    #contact .dot-red {
+      position: absolute;
+      top: 8%;
+      right: 8%;
+      width: 8px;
+      height: 8px;
+      background: var(--red);
+      border-radius: 50%;
+    }
+
+    /* Tiny blue dot lower-left */
+    #contact .dot-blue {
+      position: absolute;
+      bottom: 8%;
+      left: 8%;
+      width: 8px;
+      height: 8px;
+      background: var(--blue);
+      border-radius: 50%;
+    }
+
+    #contact .contact-square {
+      width: 220px;
+      height: 220px;
+      background: var(--black);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      z-index: 2;
+      position: relative;
+    }
+
+    #contact .contact-square a {
+      color: #fff;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    #contact .contact-square a:hover {
+      color: var(--red);
+    }
+
+    #contact .contact-tagline {
+      margin-top: 3rem;
+      font-size: clamp(0.75rem, 0.9vw, 0.9rem);
+      color: var(--black);
+      letter-spacing: 0.05em;
+      font-weight: 400;
+      opacity: 0.7;
+      max-width: 400px;
+      text-align: center;
+      line-height: 1.7;
+    }
+
+    /* ========================================
+       SECTION NUMBER DECORATIONS
+       Large faded numbers in compositions
+       ======================================== */
+    .comp-number {
+      position: absolute;
+      font-size: clamp(6rem, 12vw, 14rem);
+      font-weight: 700;
+      color: var(--black);
+      opacity: 0.04;
+      z-index: 0;
+      pointer-events: none;
+      user-select: none;
+      letter-spacing: 0.05em;
+    }
+
+    /* ========================================
+       RESPONSIVE: MOBILE
+       Simplify rotations, stack shapes vertically
+       ======================================== */
+    @media (max-width: 900px) {
+      .composition {
+        min-height: auto;
+        padding: 8vh 5vw;
+      }
+
+      /* --- IDENTITY --- */
+      #identity {
+        min-height: 100vh;
+        flex-direction: column;
+        padding-top: 15vh;
+      }
+
+      #identity .name-rect {
+        position: relative;
+        left: auto;
+        top: auto;
+        width: 85vw;
+        min-height: 180px;
+        transform: rotate(-2deg);
+        --base-rot: -2deg;
+      }
+
+      #identity .location-circle {
+        position: relative;
+        left: auto;
+        top: auto;
+        width: 120px;
+        height: 120px;
+        min-width: 120px;
+        min-height: 120px;
+        margin-top: -30px;
+        align-self: flex-end;
+        margin-right: 10%;
+      }
+
+      #identity .yellow-triangle {
+        position: relative;
+        right: auto;
+        bottom: auto;
+        margin-top: 3rem;
+        align-self: flex-end;
+        margin-right: 15%;
+        border-left-width: 25px;
+        border-right-width: 25px;
+        border-bottom-width: 40px;
+      }
+
+      #identity .diagonal-line {
+        display: none;
+      }
+
+      /* --- MANIFESTO --- */
+      #manifesto {
+        min-height: auto;
+        flex-direction: column;
+        padding: 10vh 5vw;
+        gap: 2rem;
+      }
+
+      #manifesto .section-label {
+        position: relative;
+        left: auto;
+        top: auto;
+        transform: none;
+        font-size: clamp(1.5rem, 5vw, 2.5rem);
+        margin-bottom: 2rem;
+      }
+
+      #manifesto .h-line {
+        display: none;
+      }
+
+      #manifesto .belief-red,
+      #manifesto .belief-blue,
+      #manifesto .belief-black {
+        position: relative;
+        left: auto;
+        top: auto;
+        width: 85vw;
+        min-width: unset;
+        height: auto;
+        min-height: unset;
+        transform: rotate(-1deg);
+        --base-rot: -1deg;
+      }
+
+      #manifesto .belief-blue {
+        transform: rotate(1deg);
+        --base-rot: 1deg;
+        align-self: flex-end;
+      }
+
+      #manifesto .belief-black {
+        width: 75vw;
+        height: auto;
+        border-radius: 50% / 15%;
+        align-self: center;
+      }
+
+      /* --- WORK --- */
+      #work {
+        min-height: auto;
+        flex-direction: column;
+        padding: 10vh 5vw;
+        gap: 2rem;
+      }
+
+      #work .bg-text {
+        font-size: 15vw;
+      }
+
+      #work .proj-cliver,
+      #work .proj-evals,
+      #work .proj-ml4good,
+      #work .proj-eu {
+        position: relative;
+        left: auto;
+        right: auto;
+        top: auto;
+        bottom: auto;
+        width: 88vw;
+        min-width: unset;
+        height: auto;
+        min-height: unset;
+        transform: rotate(-1deg);
+        --base-rot: -1deg;
+      }
+
+      #work .proj-evals {
+        transform: rotate(1deg);
+        --base-rot: 1deg;
+      }
+
+      #work .proj-ml4good {
+        width: 85vw;
+        height: auto;
+      }
+
+      #work .proj-eu {
+        transform: rotate(-0.5deg);
+        --base-rot: -0.5deg;
+      }
+
+      /* --- PATH --- */
+      #path {
+        min-height: auto;
+        flex-direction: column;
+        padding: 10vh 5vw;
+        gap: 2.5rem;
+        align-items: flex-start;
+      }
+
+      #path .timeline-line {
+        display: none;
+      }
+
+      .timeline-marker {
+        position: relative !important;
+        left: auto !important;
+        top: auto !important;
+      }
+
+      .timeline-marker .marker-text {
+        transform: none;
+        font-size: clamp(0.7rem, 2.5vw, 0.85rem);
+        white-space: normal;
+      }
+
+      /* --- NOW --- */
+      #now {
+        min-height: 80vh;
+      }
+
+      #now .now-rect {
+        width: 85vw;
+        min-width: unset;
+      }
+
+      #now .orbit-circle {
+        display: none;
+      }
+
+      /* --- CONTACT --- */
+      #contact {
+        min-height: 80vh;
+      }
+    }
+
+    @media (max-width: 480px) {
+      #identity .name-rect h1 {
+        font-size: 2.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================
+       COMPOSITION I: IDENTITY
+       The name card — black rectangle, red circle,
+       diagonal blue line, yellow triangle
+       ========================================== -->
+  <section class="composition" id="identity">
+    <!-- Diagonal blue line across viewport -->
+    <div class="diagonal-line anim-draw"></div>
+
+    <!-- Large decorative number -->
+    <span class="comp-number" style="top: 5%; right: 8%;">01</span>
+
+    <!-- Large black rectangle with name -->
+    <div class="shape name-rect anim-from-left breathe">
+      <h1>ALEJANDRO</h1>
+      <div class="subtitle">AI Consultant &middot; Economist &middot; Builder</div>
+    </div>
+
+    <!-- Red circle overlapping bottom-right of rectangle -->
+    <div class="shape location-circle anim-from-bottom delay-2">
+      <div class="shape-text">Bogot&aacute;, Colombia</div>
+    </div>
+
+    <!-- Small yellow triangle — purely compositional -->
+    <div class="yellow-triangle anim-scale delay-3"></div>
+  </section>
+
+
+  <!-- ==========================================
+       COMPOSITION II: MANIFESTO
+       "What I Believe" — three overlapping shapes
+       with conviction statements
+       ========================================== -->
+  <section class="composition" id="manifesto">
+    <!-- Decorative number -->
+    <span class="comp-number" style="bottom: 5%; right: 5%;">02</span>
+
+    <!-- Rotated vertical header -->
+    <div class="section-label">What I Believe</div>
+
+    <!-- Yellow horizontal line behind shapes -->
+    <div class="h-line"></div>
+
+    <!-- Tall red rectangle -->
+    <div class="shape belief-red anim-from-left breathe">
+      <div class="shape-text">
+        Biosecurity is the most neglected existential risk of our time.
+      </div>
+    </div>
+
+    <!-- Blue square overlapping the red -->
+    <div class="shape belief-blue anim-from-bottom delay-2 breathe">
+      <div class="shape-text">
+        Open-source tools can make the world meaningfully safer.
+      </div>
+    </div>
+
+    <!-- Black circle overlapping both -->
+    <div class="shape belief-black anim-from-right delay-3 breathe">
+      <div class="shape-text">
+        The gap between AI capability and AI governance grows every day. I work in that gap.
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==========================================
+       COMPOSITION III: THE WORK
+       Four project blocks as different colored shapes
+       ========================================== -->
+  <section class="composition" id="work">
+    <!-- Large faded background text -->
+    <div class="bg-text">THE WORK</div>
+
+    <!-- Decorative number -->
+    <span class="comp-number" style="top: 3%; left: 5%;">03</span>
+
+    <!-- Cliver: red rectangle -->
+    <div class="shape project proj-cliver anim-from-left breathe">
+      <div class="shape-text">
+        <div class="project-name">CLIVER</div>
+        <div class="project-desc">An open-source AI tool for KYC screening in DNA synthesis. Making it harder to misuse biology.</div>
+        <div class="project-tags">Biosecurity &middot; Open Source &middot; AI</div>
+      </div>
+    </div>
+
+    <!-- Frontiers Evals: black rectangle -->
+    <div class="shape project proj-evals anim-from-bottom delay-2 breathe">
+      <div class="shape-text">
+        <div class="project-name">FRONTIERS EVALS</div>
+        <div class="project-desc">Research on evaluating frontier AI systems for dangerous capabilities.</div>
+        <div class="project-tags">AI Safety &middot; Research &middot; Evaluation</div>
+      </div>
+    </div>
+
+    <!-- ML4Good: blue square -->
+    <div class="shape project proj-ml4good anim-from-right delay-3 breathe">
+      <div class="shape-text">
+        <div class="project-name">ML4GOOD</div>
+        <div class="project-desc">Teaching machine learning for social impact across Latin America.</div>
+        <div class="project-tags">Education &middot; ML &middot; Latin America</div>
+      </div>
+    </div>
+
+    <!-- EU AI Act: yellow rectangle -->
+    <div class="shape project proj-eu anim-from-bottom delay-4 breathe">
+      <div class="shape-text">
+        <div class="project-name">EU AI ACT ADVISORY</div>
+        <div class="project-desc">Providing technical input to shape AI governance in Europe.</div>
+        <div class="project-tags">Policy &middot; Governance &middot; Europe</div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==========================================
+       COMPOSITION IV: THE PATH
+       A diagonal timeline with markers
+       ========================================== -->
+  <section class="composition" id="path">
+    <!-- Decorative number -->
+    <span class="comp-number" style="top: 2%; right: 10%;">04</span>
+
+    <!-- Diagonal red timeline line -->
+    <div class="timeline-line anim-draw"></div>
+
+    <!-- Marker 1: Age 16 — Discovered EA -->
+    <div class="shape timeline-marker marker-1 anim-scale delay-1">
+      <div class="marker-shape"></div>
+      <div class="marker-text">Age 16 &mdash; Discovered EA</div>
+    </div>
+
+    <!-- Marker 2: Universidad de los Andes -->
+    <div class="shape timeline-marker marker-2 anim-scale delay-2">
+      <div class="marker-shape"></div>
+      <div class="marker-text">Universidad de los Andes &mdash; Economics</div>
+    </div>
+
+    <!-- Marker 3: Oxford -->
+    <div class="shape timeline-marker marker-3 anim-scale delay-3">
+      <div class="marker-shape"></div>
+      <div class="marker-text">Oxford &mdash; Group Houses, Community, Research</div>
+    </div>
+
+    <!-- Marker 4: Bogotá — Cliver, ML4Good, Consulting -->
+    <div class="shape timeline-marker marker-4 anim-scale delay-4">
+      <div class="marker-shape"></div>
+      <div class="marker-text">Bogot&aacute; &mdash; Cliver, ML4Good, Consulting</div>
+    </div>
+
+    <!-- Marker 5: Now -->
+    <div class="shape timeline-marker marker-5 anim-scale delay-5">
+      <div class="marker-shape" style="position: relative;">
+        <span class="marker-now">NOW</span>
+      </div>
+      <div class="marker-text"></div>
+    </div>
+  </section>
+
+
+  <!-- ==========================================
+       COMPOSITION V: NOW
+       Single red rectangle — stark, isolated
+       ========================================== -->
+  <section class="composition" id="now">
+    <!-- Decorative number -->
+    <span class="comp-number" style="bottom: 8%; left: 8%;">05</span>
+
+    <div class="now-header anim-from-top">RIGHT NOW</div>
+
+    <div class="now-rect anim-scale delay-2">
+      <p>Building Cliver. Customer development. Cold outreach.</p>
+      <p>Teaching ML4Good bootcamps.</p>
+      <p>Writing about AI safety.</p>
+    </div>
+
+    <!-- Thin orbiting circle -->
+    <div class="orbit-circle anim-draw delay-3"></div>
+  </section>
+
+
+  <!-- ==========================================
+       COMPOSITION VI: CONTACT
+       Minimal — maximum white space
+       ========================================== -->
+  <section class="composition" id="contact">
+    <!-- Decorative number -->
+    <span class="comp-number" style="top: 10%; left: 10%;">06</span>
+
+    <!-- Tiny colored dots -->
+    <div class="dot-red anim-scale delay-3"></div>
+    <div class="dot-blue anim-scale delay-4"></div>
+
+    <!-- Small black square with contact info -->
+    <div class="contact-square anim-scale">
+      <a href="mailto:alejandro@example.com">alejandro@example.com</a>
+      <a href="https://github.com/alejandro" target="_blank" rel="noopener">GitHub</a>
+    </div>
+
+    <div class="contact-tagline anim-from-bottom delay-2">
+      I reduce complex problems to their essential forms.
+    </div>
+  </section>
+
+
+  <!-- ==========================================
+       JAVASCRIPT
+       Intersection Observer for scroll animations,
+       hover interactions, subtle continuous motion
+       ========================================== -->
+  <script>
+    /* ========================================
+       SCROLL-TRIGGERED ANIMATIONS
+       Uses IntersectionObserver to add .visible
+       class when elements enter viewport
+       ======================================== */
+    (function initScrollAnimations() {
+      const animSelectors = [
+        '.anim-from-left',
+        '.anim-from-right',
+        '.anim-from-bottom',
+        '.anim-from-top',
+        '.anim-scale',
+        '.anim-draw'
+      ];
+
+      const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.15,
+        rootMargin: '0px 0px -40px 0px'
+      });
+
+      animSelectors.forEach(function(selector) {
+        document.querySelectorAll(selector).forEach(function(el) {
+          observer.observe(el);
+        });
+      });
+    })();
+
+    /* ========================================
+       HOVER INTERACTIONS FOR PROJECT SHAPES
+       On hover, sibling shapes recede in opacity
+       ======================================== */
+    (function initProjectHovers() {
+      var projects = document.querySelectorAll('#work .project');
+
+      projects.forEach(function(project) {
+        project.addEventListener('mouseenter', function() {
+          projects.forEach(function(other) {
+            if (other !== project) {
+              other.style.opacity = '0.6';
+              other.style.transition = 'opacity 0.4s ease';
+            }
+          });
+        });
+
+        project.addEventListener('mouseleave', function() {
+          projects.forEach(function(other) {
+            other.style.opacity = '1';
+          });
+        });
+      });
+    })();
+
+    /* ========================================
+       TRIGGER IDENTITY ANIMATIONS ON LOAD
+       The first composition animates immediately
+       ======================================== */
+    (function initIdentityOnLoad() {
+      /* Small delay so the page renders first */
+      setTimeout(function() {
+        document.querySelectorAll('#identity .anim-from-left, #identity .anim-from-bottom, #identity .anim-scale, #identity .anim-draw').forEach(function(el) {
+          el.classList.add('visible');
+        });
+      }, 200);
+    })();
+  </script>
+
+</body>
+</html>
