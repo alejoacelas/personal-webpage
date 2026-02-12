@@ -1,113 +1,114 @@
 Build me a single-page personal website in HTML/CSS/JS with the following aesthetic and structure. Make it production-quality, visually stunning, and deployable as a static site.
 
-## Aesthetic: "Main Character Energy" — Cowboy Bebop meets anime portfolio
-The vibe is Cowboy Bebop's retro-futuristic, jazz-noir visual language applied to a personal site. Think: the title cards, the end cards, the warm saturated color palette, the effortless cool of the show's graphic design. My career is presented as episode arcs. The energy is "my life is a story worth watching" — maximalist, deeply personal, but executed with so much style it becomes undeniable.
+## Aesthetic: "Suprematist CV"
+Inspired by Kazimir Malevich, El Lissitzky, and Russian Constructivist graphic design. The site is a living geometric composition — hard-edged shapes (rectangles, circles, triangles) in primary colors floating on a white field, with content living INSIDE the shapes. It should feel like a Suprematist painting that you can read. No photographs, no gradients, no rounded corners, no softness. Just geometry, color, and conviction.
 
-### Visual References from Cowboy Bebop:
-- The bold, flat-color title cards with heavy typography
-- The split-screen compositions and diagonal cuts
-- The warm, smoky color palette — sunset oranges, deep reds, moody blues, cigarette-smoke grays
-- The sans-serif bold typography mixed with handwritten/script elements
-- The jazz-influenced rhythm — some sections dense and fast, others spacious and melancholic
-- The "See You Space Cowboy..." end card energy
-- Session title cards (e.g., "Session #1: Asteroid Blues")
+### Visual References:
+- Malevich's "Suprematist Composition" paintings — floating rectangles and shapes on white
+- El Lissitzky's "Beat the Whites with the Red Wedge" — dynamic diagonal compositions
+- Constructivist propaganda posters — bold type, geometric layouts, diagonal energy
+- The confidence of shapes that don't need to explain themselves
 
-### Color palette:
-- Primary background: deep navy/space blue (#1A1A2E) alternating with warm rust (#8B3A3A)
-- Accent 1: sunset orange (#E07B39)
-- Accent 2: golden yellow (#D4A843)  
-- Accent 3: smoky lavender (#7B6D8D)
-- Text: warm cream (#F0E6D3) on dark backgrounds, deep navy on light sections
-- Occasional electric blue (#4A90D9) for interactive elements
-- Black (#0D0D0D) for high-contrast moments
+### Color Palette:
+- Background: pure white (#FFFFFF) or very light warm gray (#F5F3EF)
+- Red: strong, flat red (#D62828) — the dominant accent
+- Black: true black (#000000) — for primary text and key shapes
+- Blue: deep ultramarine (#1D3557) — secondary shapes
+- Yellow: warm, assertive (#F4A100) — tertiary accent
+- NO other colors. The constraint is the point.
 
 ### Typography:
-- Primary headers: A bold, condensed sans-serif — "Bebas Neue" or "Oswald" from Google Fonts (this captures the Bebop title card feel)
-- Session/episode titles: Same font but HUGE, like 15-20vw, used as background/decorative elements
-- Body text: "Space Grotesk" or "IBM Plex Sans" — slightly retro-futuristic feel
-- Occasional cursive/script accent font for "See you space cowboy" style moments — "Caveat" or "Sacramento"
-- Numbers should be prominent and stylized throughout
+- Primary: "Inter" or "Space Grotesk" in bold/black weight — clean, geometric, modern sans-serif
+- All section labels in ALL CAPS with wide letter-spacing (0.2-0.3em)
+- Some text rotated 90° and placed along the vertical edges of shapes
+- Numbers should be large and prominent — used decoratively (like "01", "02" in huge faded type)
+- NO serif fonts. Everything is constructed, not calligraphed.
+- Text sizes should be extreme — either very large (headers) or quite small (body), with little in between
 
-### Layout & Sections:
+### Layout Philosophy:
+- The page has NO conventional sections stacked vertically. Instead, it's a series of COMPOSITIONS — each viewport is a deliberate arrangement of shapes containing content.
+- Shapes overlap, intersect, and create tension. A red rectangle might partially cover a black circle. Text flows around and inside these collisions.
+- The grid is intentionally broken. Shapes are placed at angles (15°, 30°, 45° rotations). Some text runs vertically.
+- Generous white space is critical — the shapes need room to breathe and the white space IS part of the composition.
+- On scroll, new compositions assemble — shapes slide, rotate, or scale into position.
 
-1. **Cold Open / Hero**
-   - No name at first. Start with a full-screen section in deep navy with a single line in large condensed type:
-     "3... 2... 1... LET'S JAM."
-   - This fades/transitions (like a smash cut) into my name: "ALEJANDRO" in massive bold condensed type, filling the width of the screen
-   - Below it, in script font: "ai consultant, economist, builder of things that matter"
-   - The background should have a subtle animated gradient — shifting slowly between deep navy and dark rust, like a sunset in space
-   - Maybe a few thin diagonal lines cutting across the screen as decorative elements (Bebop's graphic design uses these a lot)
+### Sections (as Compositions):
 
-2. **Session Guide / Episode Select**
-   - Header styled like a Bebop title card: "SESSIONS" in huge condensed type with a colored bar behind it
-   - Each major life/career arc is an "episode" presented as a card/row:
-     - **Session #1: "The Economist Who Looked Up"** — Discovering EA at 16, university, early career
-     - **Session #2: "Oxford Blues"** — Living in Oxford, group houses, the EA community chapter
-     - **Session #3: "Bogotá Calling"** — Return to Colombia, building ML4Good, EA Bogotá
-     - **Session #4: "Know Your Customer"** — Building Cliver, biosecurity, cold outreach, startup grind
-     - **Session #5: "The Frontier"** — Current work on AI evals, safety research, what's next
-   - Each session card has:
-     - Session number in huge faded background type
-     - Episode title in bold condensed font
-     - A one-line synopsis in body text
-     - A color accent unique to each session (orange, yellow, blue, red, lavender)
-     - On hover: the card expands or a diagonal wipe reveals more detail
-   - Clicking/scrolling into a session shows a longer narrative paragraph about that arc
+1. **Composition I: Identity**
+   - A large black rectangle (roughly 40vw × 25vh), rotated about 5°, positioned upper-left of center
+   - Inside it, in white text: "ALEJANDRO" in massive bold type, and below it in smaller caps: "AI CONSULTANT · ECONOMIST · BUILDER"
+   - A red circle (about 15vw diameter) overlapping the bottom-right corner of the rectangle
+   - Inside the red circle, in white, very small text: "BOGOTÁ, COLOMBIA"
+   - A thin blue line (2px) running diagonally from upper right to lower left across the entire viewport, behind everything
+   - A small yellow triangle in the lower right, containing nothing — purely compositional
+   - On scroll-in: the rectangle slides in from the left, the circle from the bottom, the line draws itself
 
-3. **Character Profile Card**
-   - Styled exactly like an anime character introduction screen
-   - A split-screen layout: left side has a stylized silhouette or geometric avatar (not a photo — keep it abstract/cool), right side has stats
-   - Stats presented in a retro-futuristic UI style:
-     - Name: Alejandro
-     - Base: Bogotá, Colombia
-     - Class: AI Consultant / Economist
-     - Affiliation: Effective Altruism
-     - Skills: [presented as a visual bar chart or radar chart with categories like "Machine Learning", "Biosecurity", "Policy", "Economics", "Community Building"]
-     - Status: "Currently grinding customer development"
-   - The whole thing should have scan-lines or a subtle CRT monitor effect
-   - Color scheme: orange and cream on dark navy
+2. **Composition II: Manifesto**
+   - Header: "WHAT I BELIEVE" in black, rotated 90° and pinned to the left edge of the viewport
+   - Three statements, each inside its own shape:
+     - A tall red rectangle (vertical, ~15vw × 40vh): "Biosecurity is the most neglected existential risk of our time."
+     - A blue square (~20vw × 20vw), overlapping the red: "Open-source tools can make the world meaningfully safer."
+     - A black circle (~18vw diameter), overlapping both: "The gap between AI capability and AI governance grows every day. I work in that gap."
+   - Text inside each shape is white, centered, with generous padding
+   - The shapes should create a dynamic cluster — not aligned, not symmetric, but BALANCED in the way a painting is balanced
+   - A yellow horizontal line bisects the viewport behind the shapes
 
-4. **The Work / Bounty Board**
-   - Header: "BOUNTY BOARD" in title card style (a reference to Bebop's bounty hunter premise)
-   - Projects presented as "bounties" — wanted-poster style cards:
-     - **Cliver** — "WANTED: A world where DNA synthesis can't be weaponized. Reward: Safer biology."
-     - **Frontiers Evals** — "WANTED: Understanding what frontier AI can really do. Reward: Better governance."
-     - **ML4Good** — "WANTED: ML talent across Latin America. Reward: Impact at scale."
-     - **EU AI Act Advisory** — "WANTED: Technical clarity in AI regulation. Reward: Policy that works."
-   - Each card has a bold border, the project name in large type, and the playful bounty description
-   - Tags/tech stack in small caps at the bottom of each card
+3. **Composition III: The Work**
+   - "THE WORK" in huge faded gray type (like 20vw font size, opacity 0.08) as a background element
+   - Four project blocks, each a different shape:
+     - **Cliver**: Red rectangle, ~30vw wide, slight rotation. Contains project name in large bold white type, description below in smaller text: "An open-source AI tool for KYC screening in DNA synthesis. Making it harder to misuse biology." Tags at the bottom: "BIOSECURITY · OPEN SOURCE · AI"
+     - **Frontiers Evals**: Black rectangle, overlapping Cliver slightly. "Research on evaluating frontier AI systems for dangerous capabilities." Tags: "AI SAFETY · RESEARCH · EVALUATION"
+     - **ML4Good**: Blue square. "Teaching machine learning for social impact across Latin America." Tags: "EDUCATION · ML · LATIN AMERICA"
+     - **EU AI Act Advisory**: Yellow rectangle with black text (the exception). "Providing technical input to shape AI governance in Europe." Tags: "POLICY · GOVERNANCE · EUROPE"
+   - Each shape enters the viewport from a different direction on scroll
+   - On hover, shapes lift slightly (translateZ / scale) and other shapes recede in opacity
 
-5. **Interlude: The Fridge**
-   - A fun, personal section — a "what's on my mind" space
-   - Styled like a corkboard or fridge with pinned notes
-   - Items like: "Currently watching: [anime]", "Currently reading: [book]", "Currently avoiding: [task]", "Improv class count: [n]"
-   - Handwritten/script font for the notes
-   - Warm, slightly lighter background — like a break between intense sessions
-   - This section makes the site feel human and lived-in
+4. **Composition IV: The Path**
+   - A timeline, but NOT conventional. Instead:
+   - A long diagonal red line running from upper-left to lower-right across the viewport (this is the "timeline")
+   - Key moments are placed as small shapes ALONG this diagonal:
+     - A small black circle at the top: "AGE 16 — DISCOVERED EA" (text beside it, rotated to follow the diagonal)
+     - A small blue rectangle further down: "UNIVERSIDAD DE LOS ANDES — ECONOMICS"
+     - A small red square: "OXFORD — GROUP HOUSES, COMMUNITY, RESEARCH"
+     - A small yellow triangle: "BOGOTÁ — CLIVER, ML4GOOD, CONSULTING"
+     - A larger black circle at the bottom: "NOW"
+   - All text follows the diagonal angle, creating a unified compositional flow
+   - The diagonal line draws itself on scroll
 
-6. **End Card / Contact**
-   - Full-screen navy background
-   - In large script font, centered: "See You Space Cowboy..."
-   - Below it, after a pause/scroll: my email and GitHub in clean sans-serif
-   - A single line in small text: "Bogotá, Colombia · Always looking for the next session"
-   - The ellipsis should blink or pulse very subtly
+5. **Composition V: Now**
+   - "RIGHT NOW" in black caps, centered
+   - A single large red rectangle, centered, containing:
+     - Current focus items in white text, cleanly stacked:
+     - "Building Cliver. Customer development. Cold outreach."
+     - "Teaching ML4Good bootcamps."
+     - "Writing about AI safety."
+   - The rectangle is the only element — stark, isolated, demanding attention
+   - A single thin black circle surrounds it at a distance, like an orbit
+
+6. **Composition VI: Contact**
+   - Almost empty viewport — maximum white space
+   - A small black square in the exact center containing:
+     - Email address in white
+     - GitHub link in white
+   - Below the square, in small black text: "I reduce complex problems to their essential forms."
+   - A tiny red dot in the upper right corner and a tiny blue dot in the lower left — the composition in its most minimal state
+   - The page ends.
 
 ### Interactions & Animation:
-- Bold, confident transitions — diagonal wipes, smash cuts, slide-ins from the sides
-- Session cards should have punchy hover effects (color shifts, scale, diagonal reveal)
-- Text in the hero should animate in with purpose — not gentle fades but CUTS, like title cards
-- The character profile section could have a fake "loading" or "scanning" animation when it enters viewport
-- Scroll-triggered animations throughout, but they should feel RHYTHMIC — like jazz timing. Some fast, some slow.
-- The diagonal line motifs from Bebop should appear as decorative elements between sections
-- A subtle grain/noise texture overlay on the whole page (CSS filter or SVG) to give it that analog, cel-animation warmth
+- Shapes should animate into position on scroll — sliding, rotating, scaling. Use Intersection Observer.
+- Animations should be MECHANICAL, not organic. Linear or ease-in-out timing, no bouncing, no wobble. These are geometric objects, they move with precision.
+- On hover, shapes respond subtly — slight scale increase (1.02), slight shadow, slight opacity change in neighboring shapes
+- Some shapes should have very subtle continuous motion — a slow rotation (like 0.5° over 10 seconds, back and forth) to make the composition feel alive
+- Cursor could change to a crosshair throughout the site (reinforcing the precision/construction metaphor)
 
 ### Technical:
-- Single index.html with embedded CSS and JS (or cleanly separated files)
-- Fully responsive — the bold typography should scale dramatically between mobile and desktop
-- Google Fonts CDN for typography
-- No heavy frameworks — vanilla HTML/CSS/JS. CSS animations and Intersection Observer for scroll triggers.
-- The grain texture can be a CSS pseudo-element with an SVG noise filter
-- Make the code clean and well-commented so I can easily swap content
+- Single index.html file with embedded or cleanly separated CSS/JS
+- Fully responsive — on mobile, compositions should simplify (less rotation, shapes stack more vertically) but maintain the aesthetic
+- Google Fonts CDN
+- Vanilla HTML/CSS/JS — use CSS transforms heavily for rotations and positioning
+- CSS Grid or absolute positioning within relative containers for the compositions
+- Intersection Observer API for scroll-triggered animations
+- Make code clean and well-commented for easy content modification
 
 ### The Feeling:
-Someone visits this site and thinks: "This person has main character energy and the talent to back it up." It should feel like opening credits to something you want to keep watching. Cool, warm, confident, a little melancholic, and deeply stylish. The craftsmanship should make the boldness feel earned.
+Someone visits this site and feels like they're looking at a work of art that happens to contain a career. The geometric precision communicates intellectual rigor. The bold colors communicate courage. The white space communicates confidence — there's no need to fill every pixel. It says: "I see the essential structure of things. That is what I offer."
