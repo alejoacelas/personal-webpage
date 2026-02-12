@@ -1,114 +1,143 @@
 Build me a single-page personal website in HTML/CSS/JS with the following aesthetic and structure. Make it production-quality, visually stunning, and deployable as a static site.
 
-## Aesthetic: "Suprematist CV"
-Inspired by Kazimir Malevich, El Lissitzky, and Russian Constructivist graphic design. The site is a living geometric composition — hard-edged shapes (rectangles, circles, triangles) in primary colors floating on a white field, with content living INSIDE the shapes. It should feel like a Suprematist painting that you can read. No photographs, no gradients, no rounded corners, no softness. Just geometry, color, and conviction.
+## Aesthetic: "Concrete Poetry"
+The entire site is TYPOGRAPHY AND NOTHING ELSE. No images, no shapes, no icons, no colored backgrounds. Just words — arranged spatially, scaled dramatically, overlapping, rotating, flowing across the screen. Inspired by concrete poetry, experimental typography, Emigre magazine, Wolfgang Weingart, and the idea that text itself is a visual medium. The site is the artwork. Every pixel is a letter.
 
 ### Visual References:
-- Malevich's "Suprematist Composition" paintings — floating rectangles and shapes on white
-- El Lissitzky's "Beat the Whites with the Red Wedge" — dynamic diagonal compositions
-- Constructivist propaganda posters — bold type, geometric layouts, diagonal energy
-- The confidence of shapes that don't need to explain themselves
+- Concrete poetry by Eugen Gomringer, Augusto de Campos, and the Noigandres group
+- Wolfgang Weingart's deconstructed Swiss typography
+- Emigre magazine layouts from the 1990s
+- Robert Massin's typographic interpretation of "The Bald Soprano"
+- Typographic posters by Neville Brody and David Carson
+- The feeling of magnetic poetry on a fridge — words as physical, movable objects
 
 ### Color Palette:
-- Background: pure white (#FFFFFF) or very light warm gray (#F5F3EF)
-- Red: strong, flat red (#D62828) — the dominant accent
-- Black: true black (#000000) — for primary text and key shapes
-- Blue: deep ultramarine (#1D3557) — secondary shapes
-- Yellow: warm, assertive (#F4A100) — tertiary accent
-- NO other colors. The constraint is the point.
+- STRICTLY monochrome.
+- Option A (default): Black text (#000000) on white background (#FFFFFF)
+- Some text at very low opacity (0.03-0.08) creating ghost layers behind primary content
+- Some text inverted (white on a black text-block)
+- The ONLY color on the entire site: a single word or phrase in red (#CC0000) that appears once. Just once. This is the thesis statement. Everything else is black and white.
 
 ### Typography:
-- Primary: "Inter" or "Space Grotesk" in bold/black weight — clean, geometric, modern sans-serif
-- All section labels in ALL CAPS with wide letter-spacing (0.2-0.3em)
-- Some text rotated 90° and placed along the vertical edges of shapes
-- Numbers should be large and prominent — used decoratively (like "01", "02" in huge faded type)
-- NO serif fonts. Everything is constructed, not calligraphed.
-- Text sizes should be extreme — either very large (headers) or quite small (body), with little in between
+This site uses MANY fonts deliberately — each serves a role:
+- "Space Mono" — for code-like, systematic text (skill labels, tags)
+- "Playfair Display" — for dramatic, emotional statements (manifesto lines)
+- "Inter" or "Helvetica Neue" — for readable body text (project descriptions)
+- "Bebas Neue" — for massive, architectural display text (name, section headers)
+- "Caveat" — for handwritten, personal moments (asides, notes to the reader)
+- The interplay between these fonts IS the visual design. Treat font choice like color choice.
+- Text sizes range from 8px (barely readable fine print) to 25vw (letters as architecture)
 
 ### Layout Philosophy:
-- The page has NO conventional sections stacked vertically. Instead, it's a series of COMPOSITIONS — each viewport is a deliberate arrangement of shapes containing content.
-- Shapes overlap, intersect, and create tension. A red rectangle might partially cover a black circle. Text flows around and inside these collisions.
-- The grid is intentionally broken. Shapes are placed at angles (15°, 30°, 45° rotations). Some text runs vertically.
-- Generous white space is critical — the shapes need room to breathe and the white space IS part of the composition.
-- On scroll, new compositions assemble — shapes slide, rotate, or scale into position.
+- There is NO conventional layout. No cards, no sections with backgrounds, no containers.
+- The page is a single continuous canvas where text is placed SPATIALLY — words have x,y coordinates, rotations, and scales.
+- Text overlaps. Text runs vertically. Text curves. Text clusters and disperses.
+- White space is used aggressively — some viewports are nearly empty with a single word; others are dense and layered.
+- The scroll experience should feel like walking through a typographic landscape — sometimes intimate (small text you lean in to read), sometimes overwhelming (text so large you can only see a few letters).
+- On mobile, the compositions simplify but maintain spatial play — text still overlaps, rotates, and scales.
 
-### Sections (as Compositions):
+### Sections (as Typographic Compositions):
 
-1. **Composition I: Identity**
-   - A large black rectangle (roughly 40vw × 25vh), rotated about 5°, positioned upper-left of center
-   - Inside it, in white text: "ALEJANDRO" in massive bold type, and below it in smaller caps: "AI CONSULTANT · ECONOMIST · BUILDER"
-   - A red circle (about 15vw diameter) overlapping the bottom-right corner of the rectangle
-   - Inside the red circle, in white, very small text: "BOGOTÁ, COLOMBIA"
-   - A thin blue line (2px) running diagonally from upper right to lower left across the entire viewport, behind everything
-   - A small yellow triangle in the lower right, containing nothing — purely compositional
-   - On scroll-in: the rectangle slides in from the left, the circle from the bottom, the line draws itself
+1. **The Name as Architecture**
+   - "ALEJANDRO" in Bebas Neue at approximately 25vw font size, filling the viewport width
+   - The letters are spaced apart, and BETWEEN each letter, in tiny 10px Inter text, are words that describe you: between A and L: "economist", between L and E: "builder", between E and J: "consultant", etc.
+   - Below the name, in Caveat (handwritten), offset to the right: "from bogotá, working on things that matter"
+   - The name should feel monumental — like you're standing at the base of a building looking up at the letters
+   - On scroll, the large letters slowly drift apart (parallax at different speeds), revealing more of the small text between them
 
-2. **Composition II: Manifesto**
-   - Header: "WHAT I BELIEVE" in black, rotated 90° and pinned to the left edge of the viewport
-   - Three statements, each inside its own shape:
-     - A tall red rectangle (vertical, ~15vw × 40vh): "Biosecurity is the most neglected existential risk of our time."
-     - A blue square (~20vw × 20vw), overlapping the red: "Open-source tools can make the world meaningfully safer."
-     - A black circle (~18vw diameter), overlapping both: "The gap between AI capability and AI governance grows every day. I work in that gap."
-   - Text inside each shape is white, centered, with generous padding
-   - The shapes should create a dynamic cluster — not aligned, not symmetric, but BALANCED in the way a painting is balanced
-   - A yellow horizontal line bisects the viewport behind the shapes
+2. **The Manifesto as Landscape**
+   - A viewport-height section where your beliefs are scattered across the screen at different sizes, angles, and opacities:
+     - "BIOSECURITY" in large Bebas Neue, rotated -5°, upper left
+     - "is the most neglected" in medium Playfair Display italic, center
+     - "EXISTENTIAL RISK" in large Bebas Neue, lower right, overlapping "is the most neglected"
+     - "of our time." in small Inter, tucked under "EXISTENTIAL RISK"
+   - A second belief assembled similarly:
+     - "open source tools" in medium Space Mono, scattered center-left
+     - "CAN MAKE THE WORLD" in large Bebas Neue running vertically along the right edge
+     - "safer" in Caveat, small, gentle, near the bottom center
+   - The third belief: this is the ONE red text on the entire site.
+     - "I WORK IN THE GAP" in Bebas Neue, medium-large, centered, in #CC0000
+     - Surrounding it, in very low opacity (0.05) black text, repeating: "between capability and governance" over and over, creating a texture
+   - On scroll, these elements should have subtle parallax — different layers moving at different speeds, creating depth
 
-3. **Composition III: The Work**
-   - "THE WORK" in huge faded gray type (like 20vw font size, opacity 0.08) as a background element
-   - Four project blocks, each a different shape:
-     - **Cliver**: Red rectangle, ~30vw wide, slight rotation. Contains project name in large bold white type, description below in smaller text: "An open-source AI tool for KYC screening in DNA synthesis. Making it harder to misuse biology." Tags at the bottom: "BIOSECURITY · OPEN SOURCE · AI"
-     - **Frontiers Evals**: Black rectangle, overlapping Cliver slightly. "Research on evaluating frontier AI systems for dangerous capabilities." Tags: "AI SAFETY · RESEARCH · EVALUATION"
-     - **ML4Good**: Blue square. "Teaching machine learning for social impact across Latin America." Tags: "EDUCATION · ML · LATIN AMERICA"
-     - **EU AI Act Advisory**: Yellow rectangle with black text (the exception). "Providing technical input to shape AI governance in Europe." Tags: "POLICY · GOVERNANCE · EUROPE"
-   - Each shape enters the viewport from a different direction on scroll
-   - On hover, shapes lift slightly (translateZ / scale) and other shapes recede in opacity
+3. **The Work as Conversation**
+   - Project information presented as an overlapping, layered typographic collage:
+   - "THE WORK" in Bebas Neue, huge (20vw), very low opacity (0.04), positioned as a background watermark
+   - **Cliver**: 
+     - "CLIVER" in bold Inter, 8vw, positioned left of center
+     - Below and overlapping: "open-source KYC for DNA synthesis" in Playfair Display italic, smaller
+     - Below that: "making it harder to misuse biology" in Space Mono, even smaller
+     - Tags scattered nearby at angles: "biosecurity" "open source" "AI" in tiny Space Mono
+   - **Frontiers Evals**:
+     - Positioned to the right and slightly below Cliver, creating visual dialogue
+     - "FRONTIERS EVALS" in bold Inter
+     - "what can frontier AI actually do?" in Playfair italic
+     - "evaluation · safety · research" in Space Mono, running vertically
+   - **ML4Good**:
+     - "ML4GOOD" overlapping from the left
+     - "machine learning × latin america × impact" flowing in a curved text path
+   - **EU AI Act Advisory**:
+     - Placed lower, more isolated
+     - "POLICY" in huge Bebas Neue, very low opacity, with "making governance technical" in readable Inter overlaid
+   - The projects should feel like a CONVERSATION between text blocks — overlapping, responding to each other, creating visual rhythm
 
-4. **Composition IV: The Path**
-   - A timeline, but NOT conventional. Instead:
-   - A long diagonal red line running from upper-left to lower-right across the viewport (this is the "timeline")
-   - Key moments are placed as small shapes ALONG this diagonal:
-     - A small black circle at the top: "AGE 16 — DISCOVERED EA" (text beside it, rotated to follow the diagonal)
-     - A small blue rectangle further down: "UNIVERSIDAD DE LOS ANDES — ECONOMICS"
-     - A small red square: "OXFORD — GROUP HOUSES, COMMUNITY, RESEARCH"
-     - A small yellow triangle: "BOGOTÁ — CLIVER, ML4GOOD, CONSULTING"
-     - A larger black circle at the bottom: "NOW"
-   - All text follows the diagonal angle, creating a unified compositional flow
-   - The diagonal line draws itself on scroll
+4. **The Path as Concrete Poem**
+   - Your career timeline presented as a literal poem shape:
+   - The text forms a visual pattern — perhaps a downward staircase, a spiral, or a branching tree shape
+   - Each line is a moment:
+ age 16: discovered effective altruism
+   and the world split into before and after
+     universidad de los andes
+       economics because it was the closest thing to
+         understanding everything
+           oxford: group houses, late nights, community
+             the feeling of being in the right room
+               bogotá: home again but different now
+                 building cliver
+                   teaching ML4Good
+                     writing about AI safety
+                       and wondering if it's enough
+   - This should be rendered with each line progressively indented, in Playfair Display italic, medium size
+   - The lines appear one at a time on scroll, building the poem as you descend
+   - In Caveat, at the very end, slightly offset: "(it's never enough. you do it anyway.)"
 
-5. **Composition V: Now**
-   - "RIGHT NOW" in black caps, centered
-   - A single large red rectangle, centered, containing:
-     - Current focus items in white text, cleanly stacked:
-     - "Building Cliver. Customer development. Cold outreach."
-     - "Teaching ML4Good bootcamps."
-     - "Writing about AI safety."
-   - The rectangle is the only element — stark, isolated, demanding attention
-   - A single thin black circle surrounds it at a distance, like an orbit
+5. **Current State as Magnetic Poetry**
+   - A viewport where words and short phrases are scattered across the screen like magnets on a fridge:
+   - Words include: "customer development" "cold outreach" "DNA synthesis" "Cliver" "improv" "anime" "loneliness" "ambition" "Bogotá" "2 AM" "one more email" "is this working?" "keep going"
+   - Each word is in a different font, size, and slight rotation — but all black and white
+   - On hover, words REARRANGE — they drift to new positions, creating new readings and juxtapositions
+   - Some words are in bold Inter (professional), some in Caveat (personal), some in Space Mono (technical) — the font choice reveals the category without labels
+   - One word is upside down. One is barely visible. One is very large. The composition feels alive and unsettled.
 
-6. **Composition VI: Contact**
-   - Almost empty viewport — maximum white space
-   - A small black square in the exact center containing:
-     - Email address in white
-     - GitHub link in white
-   - Below the square, in small black text: "I reduce complex problems to their essential forms."
-   - A tiny red dot in the upper right corner and a tiny blue dot in the lower left — the composition in its most minimal state
-   - The page ends.
+6. **Contact as Whitespace**
+   - After the density of the previous sections, this viewport is almost entirely empty white space
+   - Dead center, in small Inter (14px), simply:
+ alejandro@[email]
+ github.com/[handle]
+   - Above it, in tiny Caveat (11px), barely there: "say hello"
+   - Below it, in Bebas Neue, medium, with wide letter-spacing: "BOGOTÁ, COLOMBIA"
+   - The emptiness after all that density should feel like a deep exhale
 
 ### Interactions & Animation:
-- Shapes should animate into position on scroll — sliding, rotating, scaling. Use Intersection Observer.
-- Animations should be MECHANICAL, not organic. Linear or ease-in-out timing, no bouncing, no wobble. These are geometric objects, they move with precision.
-- On hover, shapes respond subtly — slight scale increase (1.02), slight shadow, slight opacity change in neighboring shapes
-- Some shapes should have very subtle continuous motion — a slow rotation (like 0.5° over 10 seconds, back and forth) to make the composition feel alive
-- Cursor could change to a crosshair throughout the site (reinforcing the precision/construction metaphor)
+- Parallax is essential — text layers at different depths moving at different scroll speeds
+- Text in Section 4 (the poem) appears line by line as user scrolls, building progressively
+- Magnetic poetry words in Section 5 drift on hover (use JS for randomized position transitions)
+- Very subtle: some background text (the low-opacity layers) drifts continuously, very slowly (CSS animation, infinite, linear)
+- NO flashy transitions. Movement should feel like text breathing — slow, organic, continuous
+- On mobile, reduce overlapping layers but maintain the spatial irregularity — text should still be placed unexpectedly, not in neat stacks
+- Consider a subtle text cursor trail effect — as the mouse moves, tiny words appear briefly in its wake and fade (optional, only if performant)
 
 ### Technical:
-- Single index.html file with embedded or cleanly separated CSS/JS
-- Fully responsive — on mobile, compositions should simplify (less rotation, shapes stack more vertically) but maintain the aesthetic
-- Google Fonts CDN
-- Vanilla HTML/CSS/JS — use CSS transforms heavily for rotations and positioning
-- CSS Grid or absolute positioning within relative containers for the compositions
-- Intersection Observer API for scroll-triggered animations
-- Make code clean and well-commented for easy content modification
+- Single index.html with embedded CSS and JS
+- Heavy use of CSS positioning (absolute within relative containers for each composition)
+- CSS transforms for rotation and scale
+- Google Fonts CDN for all fonts
+- Intersection Observer for scroll-triggered reveals
+- Vanilla JS for the magnetic poetry interaction (randomized transforms on hover)
+- Use CSS custom properties for easy font-size and position adjustments
+- The code should be organized by section/composition for easy editing
+- Responsive: use vw/vh units extensively, with media queries to simplify compositions on small screens
+- Performance: keep DOM elements reasonable, use CSS for animations where possible, JS only where needed
 
 ### The Feeling:
-Someone visits this site and feels like they're looking at a work of art that happens to contain a career. The geometric precision communicates intellectual rigor. The bold colors communicate courage. The white space communicates confidence — there's no need to fill every pixel. It says: "I see the essential structure of things. That is what I offer."
+This site should make someone stop and READ — not scan, not skim, but actually engage with words as visual, physical, spatial objects. It says: "I think in language. I build with ideas. And I'm willing to show you the mess of how those ideas live in my head." It's intellectual, personal, and unafraid. The craft of the typography makes it art, not chaos.
