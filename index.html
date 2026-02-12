@@ -47,7 +47,7 @@
     }
 
     /* ========================================
-       CANDLELIGHT FLICKER ANIMATION
+       ANIMATIONS
        ======================================== */
     @keyframes flicker {
       0%   { opacity: 1.0; }
@@ -76,130 +76,131 @@
 
     @keyframes glow-pulse {
       0%, 100% { text-shadow: 0 0 20px rgba(255, 196, 107, 0.3), 0 0 40px rgba(255, 196, 107, 0.15), 0 0 80px rgba(255, 196, 107, 0.05); }
-      50%      { text-shadow: 0 0 25px rgba(255, 196, 107, 0.4), 0 0 50px rgba(255, 196, 107, 0.2), 0 0 100px rgba(255, 196, 107, 0.08); }
+      50%      { text-shadow: 0 0 30px rgba(255, 196, 107, 0.45), 0 0 60px rgba(255, 196, 107, 0.2), 0 0 100px rgba(255, 196, 107, 0.08); }
     }
 
-    @keyframes frame-draw-top {
-      from { width: 0; } to { width: 100%; }
-    }
-    @keyframes frame-draw-right {
-      from { height: 0; } to { height: 100%; }
-    }
-    @keyframes frame-draw-bottom {
-      from { width: 0; } to { width: 100%; }
-    }
-    @keyframes frame-draw-left {
-      from { height: 0; } to { height: 100%; }
-    }
-
-    @keyframes fade-to-void {
-      from { opacity: 1; }
-      to { opacity: 0; }
-    }
+    @keyframes frame-draw-top    { from { width: 0; }  to { width: 100%; } }
+    @keyframes frame-draw-right  { from { height: 0; } to { height: 100%; } }
+    @keyframes frame-draw-bottom { from { width: 0; }  to { width: 100%; } }
+    @keyframes frame-draw-left   { from { height: 0; } to { height: 100%; } }
 
     /* ========================================
-       LIGHT POOL SYSTEM
-       Each section has a pool of light via
-       a ::before pseudo-element with radial
-       gradients, flickering subtly.
+       SCROLL REVEAL BASE
        ======================================== */
-    .light-pool {
-      position: relative;
-    }
-
-    .light-pool::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 0;
-      animation: flicker 8s ease-in-out infinite;
-    }
-
-    .light-pool > * {
-      position: relative;
-      z-index: 1;
-    }
-
-    /* ========================================
-       SECTION BASE: SCROLL REVEAL
-       ======================================== */
-    .section {
+    .scene {
       opacity: 0;
       transition: opacity 2s ease;
     }
-
-    .section.revealed {
+    .scene.revealed {
       opacity: 1;
     }
 
     /* ========================================
-       1. THE VOID / HERO
+       SVG FIGURE STYLING
+       ======================================== */
+    .figure-svg {
+      position: absolute;
+      pointer-events: none;
+      z-index: 1;
+      filter: drop-shadow(0 0 20px rgba(255, 196, 107, 0.15)) drop-shadow(0 0 60px rgba(255, 196, 107, 0.06));
+      transition: transform 2s cubic-bezier(0.25, 0.1, 0.25, 1), opacity 2s ease;
+    }
+
+    /* Gradient mask to dissolve edges into darkness */
+    .figure-fade-right {
+      -webkit-mask-image: linear-gradient(to right, black 50%, transparent 100%);
+      mask-image: linear-gradient(to right, black 50%, transparent 100%);
+    }
+    .figure-fade-left {
+      -webkit-mask-image: linear-gradient(to left, black 50%, transparent 100%);
+      mask-image: linear-gradient(to left, black 50%, transparent 100%);
+    }
+    .figure-fade-bottom {
+      -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+      mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+    }
+    .figure-fade-edges {
+      -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 75%);
+      mask-image: radial-gradient(ellipse at center, black 40%, transparent 75%);
+    }
+
+    /* ========================================
+       DARK GAP
+       ======================================== */
+    .dark-gap {
+      height: 100vh;
+      background: var(--black);
+    }
+    .dark-gap-half {
+      height: 50vh;
+      background: var(--black);
+    }
+
+    /* ========================================
+       SCENE 1: THE CALLING / HERO
        ======================================== */
     #hero {
       min-height: 100vh;
       display: flex;
       align-items: center;
-      justify-content: center;
       position: relative;
       overflow: hidden;
-    }
-
-    #hero-canvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 2;
     }
 
     #hero::before {
       content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0; width: 100%; height: 100%;
       background:
-        radial-gradient(ellipse at 20% 25%, rgba(255, 214, 160, 0.15) 0%, transparent 50%),
-        radial-gradient(ellipse at 15% 20%, rgba(255, 196, 107, 0.08) 0%, transparent 40%),
-        radial-gradient(ellipse at 30% 35%, rgba(255, 214, 160, 0.05) 0%, transparent 60%);
+        radial-gradient(ellipse at 35% 45%, rgba(255, 214, 160, 0.18) 0%, transparent 50%),
+        radial-gradient(ellipse at 25% 40%, rgba(255, 196, 107, 0.1) 0%, transparent 40%),
+        radial-gradient(ellipse at 45% 50%, rgba(255, 214, 160, 0.05) 0%, transparent 60%);
       pointer-events: none;
       z-index: 1;
       animation: flicker 8s ease-in-out infinite;
     }
 
+    #hero-canvas {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    .hero-hand {
+      left: -5%;
+      top: 50%;
+      transform: translateY(-50%) translateX(-40px);
+      width: 45%;
+      height: auto;
+      z-index: 2;
+    }
+    .scene.revealed .hero-hand {
+      transform: translateY(-50%) translateX(0);
+    }
+
     .hero-content {
       position: relative;
-      z-index: 3;
-      text-align: left;
+      z-index: 4;
+      margin-left: 38%;
       padding: 2rem;
-      max-width: 900px;
+      max-width: 600px;
     }
 
     .hero-name {
       font-family: var(--font-primary);
       font-weight: 700;
-      font-size: clamp(3.5rem, 9vw, 10rem);
+      font-size: clamp(3.5rem, 8vw, 9rem);
       color: var(--gold-bright);
       line-height: 0.95;
       letter-spacing: 0.04em;
-      text-shadow:
-        0 0 30px rgba(255, 196, 107, 0.3),
-        0 0 60px rgba(255, 196, 107, 0.15),
-        0 0 120px rgba(255, 196, 107, 0.05);
       animation: glow-pulse 6s ease-in-out infinite;
     }
 
     .hero-subtitle {
       font-family: var(--font-sc);
       font-weight: 400;
-      font-size: clamp(0.9rem, 1.8vw, 1.4rem);
+      font-size: clamp(0.85rem, 1.5vw, 1.3rem);
       color: var(--parchment);
       letter-spacing: 0.3em;
       margin-top: 1.5rem;
@@ -210,69 +211,63 @@
       font-family: var(--font-primary);
       font-style: italic;
       font-weight: 400;
-      font-size: clamp(1rem, 1.6vw, 1.3rem);
+      font-size: clamp(1rem, 1.5vw, 1.25rem);
       color: var(--parchment);
       margin-top: 1.8rem;
       opacity: 0.7;
-      max-width: 600px;
+      max-width: 500px;
       line-height: 1.8;
     }
 
     /* ========================================
-       DARK GAP — Scroll darkness between rooms
-       ======================================== */
-    .dark-gap {
-      height: 100vh;
-      background: var(--black);
-    }
-
-    .dark-gap-half {
-      height: 50vh;
-      background: var(--black);
-    }
-
-    /* ========================================
-       2. THE CRYPT WALL / MANIFESTO
+       SCENE 2: THE WITNESS / MANIFESTO
        ======================================== */
     #manifesto {
       min-height: 100vh;
       display: flex;
       align-items: center;
-      justify-content: center;
       position: relative;
+      overflow: hidden;
       padding: 4rem 2rem;
     }
 
     #manifesto::before {
       content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0; width: 100%; height: 100%;
       background:
-        radial-gradient(ellipse at 25% 30%, rgba(255, 214, 160, 0.12) 0%, transparent 50%),
-        radial-gradient(ellipse at 20% 25%, rgba(255, 196, 107, 0.06) 0%, transparent 40%);
+        radial-gradient(ellipse at 30% 45%, rgba(255, 214, 160, 0.14) 0%, transparent 50%),
+        radial-gradient(ellipse at 25% 40%, rgba(255, 196, 107, 0.06) 0%, transparent 40%);
       pointer-events: none;
       z-index: 0;
       animation: flicker-alt 10s ease-in-out infinite;
     }
 
-    .manifesto-content {
+    .manifesto-layout {
       position: relative;
       z-index: 1;
-      max-width: 800px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+      gap: 3rem;
+    }
+
+    .manifesto-text {
+      flex: 1;
+      max-width: 600px;
     }
 
     .manifesto-statement {
       font-family: var(--font-primary);
       font-style: italic;
       font-weight: 400;
-      font-size: clamp(1.3rem, 2.5vw, 2rem);
+      font-size: clamp(1.2rem, 2.2vw, 1.8rem);
       color: var(--parchment);
       line-height: 1.7;
-      margin-bottom: 3rem;
-      /* Engraved/embossed text effect: light from upper-left */
+      margin-bottom: 2.5rem;
       text-shadow:
         -1px -1px 1px rgba(255, 214, 160, 0.15),
         1px 1px 2px rgba(0, 0, 0, 0.8);
@@ -282,7 +277,7 @@
     .manifesto-punchline {
       font-family: var(--font-primary);
       font-weight: 600;
-      font-size: clamp(1.6rem, 3vw, 2.5rem);
+      font-size: clamp(1.5rem, 2.8vw, 2.3rem);
       color: var(--gold-bright);
       margin-top: 1rem;
       text-shadow:
@@ -299,8 +294,22 @@
       opacity: 0.6;
     }
 
+    .witness-figure {
+      right: 2%;
+      top: 50%;
+      transform: translateY(-50%) translateX(30px);
+      width: 28%;
+      max-width: 350px;
+      height: auto;
+      opacity: 0.7;
+    }
+    .scene.revealed .witness-figure {
+      transform: translateY(-50%) translateX(0);
+      opacity: 0.7;
+    }
+
     /* ========================================
-       3. THE GALLERY / PROJECTS
+       SCENE 3: THE GALLERY / PROJECTS
        ======================================== */
     .project-room {
       min-height: 100vh;
@@ -312,15 +321,13 @@
       overflow: hidden;
     }
 
-    /* Light variations per room */
-    .project-room:nth-child(1)::before,
     .project-room.room-1::before {
       content: '';
       position: absolute;
       top: 0; left: 0; width: 100%; height: 100%;
       background:
-        radial-gradient(ellipse at 20% 25%, rgba(255, 214, 160, 0.13) 0%, transparent 50%),
-        radial-gradient(ellipse at 15% 20%, rgba(255, 196, 107, 0.06) 0%, transparent 35%);
+        radial-gradient(ellipse at 50% 35%, rgba(255, 214, 160, 0.14) 0%, transparent 45%),
+        radial-gradient(ellipse at 50% 30%, rgba(255, 196, 107, 0.06) 0%, transparent 35%);
       pointer-events: none; z-index: 0;
       animation: flicker 9s ease-in-out infinite;
     }
@@ -330,8 +337,8 @@
       position: absolute;
       top: 0; left: 0; width: 100%; height: 100%;
       background:
-        radial-gradient(ellipse at 35% 30%, rgba(255, 214, 160, 0.12) 0%, transparent 50%),
-        radial-gradient(ellipse at 40% 25%, rgba(255, 196, 107, 0.06) 0%, transparent 40%);
+        radial-gradient(ellipse at 50% 30%, rgba(255, 214, 160, 0.16) 0%, transparent 45%),
+        radial-gradient(ellipse at 50% 25%, rgba(255, 196, 107, 0.08) 0%, transparent 35%);
       pointer-events: none; z-index: 0;
       animation: flicker-alt 11s ease-in-out infinite;
     }
@@ -341,8 +348,8 @@
       position: absolute;
       top: 0; left: 0; width: 100%; height: 100%;
       background:
-        radial-gradient(ellipse at 50% 30%, rgba(255, 214, 160, 0.11) 0%, transparent 50%),
-        radial-gradient(ellipse at 45% 35%, rgba(255, 196, 107, 0.05) 0%, transparent 40%);
+        radial-gradient(ellipse at 50% 40%, rgba(255, 214, 160, 0.12) 0%, transparent 45%),
+        radial-gradient(ellipse at 50% 35%, rgba(255, 196, 107, 0.06) 0%, transparent 40%);
       pointer-events: none; z-index: 0;
       animation: flicker 10s ease-in-out infinite;
     }
@@ -352,38 +359,42 @@
       position: absolute;
       top: 0; left: 0; width: 100%; height: 100%;
       background:
-        radial-gradient(ellipse at 60% 35%, rgba(255, 214, 160, 0.12) 0%, transparent 50%),
-        radial-gradient(ellipse at 55% 30%, rgba(255, 196, 107, 0.06) 0%, transparent 45%);
+        radial-gradient(ellipse at 40% 45%, rgba(255, 214, 160, 0.13) 0%, transparent 45%),
+        radial-gradient(ellipse at 35% 40%, rgba(255, 196, 107, 0.06) 0%, transparent 40%);
       pointer-events: none; z-index: 0;
       animation: flicker-alt 9s ease-in-out infinite;
     }
 
-    .project-room-number {
-      position: absolute;
-      font-family: var(--font-primary);
-      font-weight: 700;
-      font-size: clamp(10rem, 20vw, 25rem);
-      color: var(--gold-bright);
-      opacity: 0.06;
-      z-index: 0;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      line-height: 1;
-      user-select: none;
-    }
-
-    .project-card {
+    .project-tableau {
       position: relative;
       z-index: 1;
-      max-width: 600px;
-      padding: 3rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 700px;
+      width: 100%;
+    }
+
+    .project-figure {
+      position: relative;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+
+    .project-figure svg {
+      width: 100%;
+      max-width: 400px;
+      height: auto;
+      filter: drop-shadow(0 0 25px rgba(255, 196, 107, 0.12)) drop-shadow(0 0 60px rgba(255, 196, 107, 0.05));
     }
 
     /* Animated gold frame */
     .project-frame {
       position: relative;
       padding: 2.5rem;
+      width: 100%;
     }
 
     .project-frame::before,
@@ -394,81 +405,38 @@
       position: absolute;
       background: var(--gold-bright);
       opacity: 0;
-      transition: opacity 0.5s ease;
     }
 
-    /* Top border */
-    .project-frame::before {
-      top: 0; left: 0;
-      height: 1px;
-      width: 0;
-    }
+    .project-frame::before { top: 0; left: 0; height: 1px; width: 0; }
+    .project-frame::after  { top: 0; right: 0; width: 1px; height: 0; }
+    .project-frame .frame-bottom { bottom: 0; right: 0; height: 1px; width: 0; }
+    .project-frame .frame-left   { bottom: 0; left: 0; width: 1px; height: 0; }
 
-    /* Right border */
-    .project-frame::after {
-      top: 0; right: 0;
-      width: 1px;
-      height: 0;
-    }
-
-    .project-frame .frame-bottom {
-      bottom: 0; right: 0;
-      height: 1px;
-      width: 0;
-    }
-
-    .project-frame .frame-left {
-      bottom: 0; left: 0;
-      width: 1px;
-      height: 0;
-    }
-
-    /* When revealed, animate the frame drawing */
-    .project-room.revealed .project-frame::before {
-      opacity: 0.6;
-      animation: frame-draw-top 1s ease 0.3s forwards;
-    }
-
-    .project-room.revealed .project-frame::after {
-      opacity: 0.6;
-      animation: frame-draw-right 1s ease 0.8s forwards;
-    }
-
-    .project-room.revealed .project-frame .frame-bottom {
-      opacity: 0.6;
-      animation: frame-draw-bottom 1s ease 1.3s forwards;
-    }
-
-    .project-room.revealed .project-frame .frame-left {
-      opacity: 0.6;
-      animation: frame-draw-left 1s ease 1.8s forwards;
-    }
-
-    /* Warm glow on the frame */
-    .project-room.revealed .project-frame {
-      box-shadow: 0 0 30px rgba(255, 196, 107, 0.03), 0 0 60px rgba(255, 196, 107, 0.015);
-    }
+    .project-room.revealed .project-frame::before { opacity: 0.5; animation: frame-draw-top 1s ease 0.5s forwards; }
+    .project-room.revealed .project-frame::after  { opacity: 0.5; animation: frame-draw-right 1s ease 1s forwards; }
+    .project-room.revealed .project-frame .frame-bottom { opacity: 0.5; animation: frame-draw-bottom 1s ease 1.5s forwards; }
+    .project-room.revealed .project-frame .frame-left   { opacity: 0.5; animation: frame-draw-left 1s ease 2s forwards; }
 
     .project-title {
       font-family: var(--font-primary);
       font-weight: 700;
-      font-size: clamp(1.8rem, 3.5vw, 3rem);
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
       color: var(--gold-bright);
       letter-spacing: 0.05em;
-      margin-bottom: 1.2rem;
-      text-shadow:
-        0 0 20px rgba(255, 196, 107, 0.25),
-        0 0 40px rgba(255, 196, 107, 0.1);
+      margin-bottom: 1rem;
+      text-align: center;
+      text-shadow: 0 0 20px rgba(255, 196, 107, 0.25), 0 0 40px rgba(255, 196, 107, 0.1);
     }
 
     .project-description {
       font-family: var(--font-primary);
       font-style: italic;
       font-weight: 400;
-      font-size: clamp(1rem, 1.5vw, 1.2rem);
+      font-size: clamp(1rem, 1.4vw, 1.15rem);
       color: var(--parchment);
       line-height: 1.8;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.2rem;
+      text-align: center;
       opacity: 0.85;
     }
 
@@ -479,10 +447,22 @@
       color: var(--gold-light);
       letter-spacing: 0.25em;
       opacity: 0.6;
+      text-align: center;
+    }
+
+    /* Figure reveal animations */
+    .project-room .project-figure svg {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 2s ease, transform 2s cubic-bezier(0.25, 0.1, 0.25, 1);
+    }
+    .project-room.revealed .project-figure svg {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     /* ========================================
-       4. THE CHRONICLE / BACKGROUND
+       SCENE 4: THE CHRONICLE / BACKGROUND
        ======================================== */
     #chronicle {
       min-height: 100vh;
@@ -498,45 +478,71 @@
       position: absolute;
       top: 0; left: 0; width: 100%; height: 100%;
       background:
-        radial-gradient(ellipse at 35% 30%, rgba(255, 214, 160, 0.14) 0%, transparent 55%),
-        radial-gradient(ellipse at 30% 40%, rgba(255, 196, 107, 0.07) 0%, transparent 50%),
-        radial-gradient(ellipse at 50% 50%, rgba(26, 14, 0, 0.3) 0%, transparent 70%);
+        radial-gradient(ellipse at 40% 40%, rgba(255, 214, 160, 0.14) 0%, transparent 55%),
+        radial-gradient(ellipse at 35% 50%, rgba(255, 196, 107, 0.07) 0%, transparent 50%);
       pointer-events: none; z-index: 0;
       animation: flicker 12s ease-in-out infinite;
     }
 
-    .chronicle-content {
+    .chronicle-layout {
       position: relative;
       z-index: 1;
-      max-width: 700px;
+      display: flex;
+      max-width: 900px;
+      width: 100%;
+      gap: 3rem;
     }
 
-    .chronicle-content p {
+    .staircase-svg {
+      flex-shrink: 0;
+      width: 60px;
+      height: auto;
+      opacity: 0.35;
+      filter: drop-shadow(0 0 10px rgba(255, 196, 107, 0.1));
+    }
+
+    .chronicle-steps {
+      flex: 1;
+    }
+
+    .chronicle-step {
+      margin-bottom: 3rem;
+      opacity: 0;
+      transform: translateX(15px);
+      transition: opacity 1.5s ease, transform 1.5s ease;
+    }
+
+    .chronicle-step.step-revealed {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .chronicle-step p {
       font-family: var(--font-primary);
       font-weight: 400;
-      font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+      font-size: clamp(1rem, 1.3vw, 1.15rem);
       color: var(--parchment);
       line-height: 1.8;
-      margin-bottom: 2rem;
       opacity: 0.8;
     }
 
-    .chronicle-content .gold-highlight {
+    .chronicle-step .gold-highlight {
       color: var(--gold-bright);
       font-weight: 600;
       opacity: 1;
     }
 
     /* ========================================
-       5. THE ALTAR / CURRENT FOCUS
+       SCENE 5: THE ALTAR / CREATION OF ADAM
        ======================================== */
     #altar {
-      min-height: 60vh;
+      min-height: 70vh;
       display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
       padding: 4rem 2rem;
+      overflow: hidden;
     }
 
     #altar::before {
@@ -544,17 +550,51 @@
       position: absolute;
       top: 0; left: 0; width: 100%; height: 100%;
       background:
-        radial-gradient(ellipse at 50% 40%, rgba(255, 214, 160, 0.18) 0%, transparent 40%),
-        radial-gradient(ellipse at 50% 45%, rgba(255, 196, 107, 0.1) 0%, transparent 35%);
+        radial-gradient(ellipse at 50% 50%, rgba(255, 214, 160, 0.22) 0%, transparent 40%),
+        radial-gradient(ellipse at 50% 50%, rgba(255, 196, 107, 0.12) 0%, transparent 30%);
       pointer-events: none; z-index: 0;
       animation: flicker 7s ease-in-out infinite;
     }
 
-    .altar-content {
+    .altar-layout {
       position: relative;
       z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      max-width: 1000px;
+    }
+
+    .altar-hand {
+      flex-shrink: 0;
+      width: 22%;
+      max-width: 200px;
+      height: auto;
+      filter: drop-shadow(0 0 30px rgba(255, 196, 107, 0.2)) drop-shadow(0 0 80px rgba(255, 196, 107, 0.08));
+    }
+
+    .altar-hand-left {
+      transform: translateX(20px);
+      transition: transform 2s cubic-bezier(0.25, 0.1, 0.25, 1);
+    }
+    .scene.revealed .altar-hand-left {
+      transform: translateX(0);
+    }
+
+    .altar-hand-right {
+      transform: translateX(-20px) scaleX(-1);
+      transition: transform 2s cubic-bezier(0.25, 0.1, 0.25, 1);
+    }
+    .scene.revealed .altar-hand-right {
+      transform: translateX(0) scaleX(-1);
+    }
+
+    .altar-center {
+      flex: 1;
+      max-width: 450px;
       text-align: center;
-      max-width: 600px;
+      padding: 0 1.5rem;
     }
 
     .altar-heading {
@@ -563,45 +603,42 @@
       font-size: clamp(1.2rem, 2vw, 1.6rem);
       color: var(--gold-bright);
       letter-spacing: 0.3em;
-      margin-bottom: 2.5rem;
-      text-shadow:
-        0 0 20px rgba(255, 196, 107, 0.35),
-        0 0 40px rgba(255, 196, 107, 0.15);
+      margin-bottom: 2rem;
+      text-shadow: 0 0 20px rgba(255, 196, 107, 0.4), 0 0 40px rgba(255, 196, 107, 0.2);
     }
 
     .reliquary {
       border: 1px solid rgba(255, 196, 107, 0.3);
-      padding: 2.5rem;
+      padding: 2rem;
       box-shadow:
-        0 0 30px rgba(255, 196, 107, 0.05),
-        0 0 60px rgba(255, 196, 107, 0.025),
+        0 0 30px rgba(255, 196, 107, 0.06),
+        0 0 60px rgba(255, 196, 107, 0.03),
         inset 0 0 30px rgba(255, 196, 107, 0.015);
     }
 
     .reliquary p {
       font-family: var(--font-primary);
       font-weight: 400;
-      font-size: clamp(1rem, 1.3vw, 1.15rem);
+      font-size: clamp(0.95rem, 1.2vw, 1.1rem);
       color: var(--parchment);
       line-height: 1.8;
-      margin-bottom: 1.2rem;
+      margin-bottom: 1rem;
       opacity: 0.85;
     }
-
-    .reliquary p:last-child {
-      margin-bottom: 0;
-    }
+    .reliquary p:last-child { margin-bottom: 0; }
 
     /* ========================================
-       6. THE EXIT / CONTACT
+       SCENE 6: THE EXIT / DEPARTURE
        ======================================== */
     #exit {
-      min-height: 60vh;
+      min-height: 70vh;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       position: relative;
       padding: 4rem 2rem;
+      overflow: hidden;
     }
 
     #exit::before {
@@ -609,16 +646,17 @@
       position: absolute;
       top: 0; left: 0; width: 100%; height: 100%;
       background:
-        radial-gradient(ellipse at 50% 50%, rgba(255, 214, 160, 0.06) 0%, transparent 40%);
+        radial-gradient(ellipse at 50% 40%, rgba(255, 214, 160, 0.07) 0%, transparent 40%);
       pointer-events: none; z-index: 0;
       animation: flicker-alt 14s ease-in-out infinite;
     }
 
     .exit-content {
       position: relative;
-      z-index: 1;
+      z-index: 2;
       text-align: center;
-      max-width: 600px;
+      max-width: 500px;
+      margin-bottom: 3rem;
     }
 
     .exit-link {
@@ -628,11 +666,10 @@
       color: var(--parchment);
       text-decoration: none;
       display: block;
-      margin-bottom: 1rem;
+      margin-bottom: 0.8rem;
       opacity: 0.6;
       transition: opacity 0.5s ease, color 0.5s ease;
     }
-
     .exit-link:hover {
       opacity: 0.9;
       color: var(--gold-light);
@@ -642,10 +679,10 @@
       font-family: var(--font-primary);
       font-style: italic;
       font-weight: 400;
-      font-size: clamp(1rem, 1.4vw, 1.2rem);
+      font-size: clamp(1rem, 1.3vw, 1.15rem);
       color: var(--parchment);
-      margin-top: 2.5rem;
-      margin-bottom: 2rem;
+      margin-top: 2rem;
+      margin-bottom: 1.5rem;
       opacity: 0.55;
       line-height: 1.8;
     }
@@ -659,7 +696,20 @@
       opacity: 0.4;
     }
 
-    /* The final period */
+    .departing-figure {
+      position: relative;
+      z-index: 1;
+      width: 120px;
+      height: auto;
+      opacity: 0.4;
+      filter: drop-shadow(0 0 15px rgba(255, 196, 107, 0.08));
+      transition: opacity 2s ease, transform 2s ease;
+    }
+    .scene.revealed .departing-figure {
+      opacity: 0.4;
+    }
+
+    /* Final void */
     .final-void {
       height: 200px;
       display: flex;
@@ -679,8 +729,7 @@
 
     #fade-out-overlay {
       position: fixed;
-      bottom: 0;
-      left: 0;
+      bottom: 0; left: 0;
       width: 100%;
       height: 150px;
       background: linear-gradient(to bottom, transparent, var(--black));
@@ -691,62 +740,82 @@
     }
 
     /* ========================================
-       RESPONSIVE — MOBILE
+       RESPONSIVE
        ======================================== */
-    @media (max-width: 768px) {
-      /* Center light pools on mobile */
+    @media (max-width: 900px) {
+      .hero-hand {
+        width: 55%;
+        left: -10%;
+        top: 20%;
+        transform: translateY(0) translateX(-40px);
+      }
+      .scene.revealed .hero-hand {
+        transform: translateY(0) translateX(0);
+      }
+      .hero-content {
+        margin-left: 5%;
+        margin-top: 55vh;
+        max-width: 90%;
+      }
+      #hero {
+        flex-direction: column;
+        justify-content: flex-end;
+        padding-bottom: 4rem;
+      }
+
+      .manifesto-layout {
+        flex-direction: column;
+      }
+      .witness-figure {
+        position: relative;
+        right: auto;
+        top: auto;
+        transform: none;
+        width: 50%;
+        max-width: 200px;
+        margin: 2rem auto 0;
+      }
+      .scene.revealed .witness-figure {
+        transform: none;
+      }
+
+      .chronicle-layout {
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+      .staircase-svg {
+        width: 100%;
+        max-width: 200px;
+        height: 40px;
+        margin: 0 auto;
+      }
+
+      .altar-layout {
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+      .altar-hand {
+        width: 35%;
+        max-width: 140px;
+      }
+      .altar-hand-right {
+        transform: scaleX(-1) rotate(180deg);
+      }
+      .scene.revealed .altar-hand-right {
+        transform: scaleX(-1) rotate(180deg);
+      }
+
+      .dark-gap { height: 70vh; }
+      .dark-gap-half { height: 40vh; }
+
       #hero::before {
         background:
-          radial-gradient(ellipse at 50% 40%, rgba(255, 214, 160, 0.15) 0%, transparent 55%),
-          radial-gradient(ellipse at 50% 35%, rgba(255, 196, 107, 0.08) 0%, transparent 45%);
+          radial-gradient(ellipse at 50% 30%, rgba(255, 214, 160, 0.18) 0%, transparent 55%),
+          radial-gradient(ellipse at 50% 25%, rgba(255, 196, 107, 0.1) 0%, transparent 45%);
       }
 
-      #manifesto::before {
-        background:
-          radial-gradient(ellipse at 50% 40%, rgba(255, 214, 160, 0.12) 0%, transparent 55%);
-      }
-
-      .project-room.room-1::before,
-      .project-room.room-2::before,
-      .project-room.room-3::before,
-      .project-room.room-4::before {
-        background:
-          radial-gradient(ellipse at 50% 40%, rgba(255, 214, 160, 0.12) 0%, transparent 55%) !important;
-      }
-
-      #chronicle::before {
-        background:
-          radial-gradient(ellipse at 50% 40%, rgba(255, 214, 160, 0.14) 0%, transparent 55%);
-      }
-
-      .hero-content {
-        text-align: center;
-        padding: 1.5rem;
-      }
-
-      .hero-tagline {
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      .dark-gap {
-        height: 70vh;
-      }
-
-      .dark-gap-half {
-        height: 40vh;
-      }
-
-      .project-frame {
-        padding: 1.5rem;
-      }
-
-      .project-card {
-        padding: 1.5rem;
-      }
-
-      .chronicle-content {
-        padding: 0 0.5rem;
+      .project-figure svg {
+        max-width: 280px;
       }
     }
   </style>
@@ -754,10 +823,38 @@
 <body>
 
   <!-- ============================================
-       SECTION 1: THE VOID / HERO
+       SCENE 1: THE CALLING / HERO
+       A hand extends from darkness, pointing to the name
        ============================================ -->
-  <section id="hero" class="section">
+  <section id="hero" class="scene">
     <canvas id="hero-canvas"></canvas>
+
+    <!-- The Calling Hand — extends from the left -->
+    <svg class="figure-svg hero-hand figure-fade-right" viewBox="0 0 600 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Forearm and wrist -->
+      <path d="M0 220 Q30 210 80 195 Q110 188 140 180 Q170 172 200 168 Q220 165 240 165
+               L240 175 Q260 172 275 168 Q290 160 305 148 Q318 138 328 125 Q335 115 340 108
+               Q345 102 348 100 Q352 99 355 102 Q358 108 355 118 Q350 130 342 142
+               Q332 158 318 172 Q308 180 298 186
+               L310 180 Q330 168 345 158 Q358 148 368 140 Q375 135 380 132
+               Q384 130 387 133 Q390 138 387 148 Q382 160 372 172
+               Q358 186 340 198 Q325 206 312 210
+               L325 205 Q345 195 362 185 Q378 175 390 168 Q398 163 404 160
+               Q408 158 411 162 Q413 167 410 175 Q404 188 392 200
+               Q378 212 360 222 Q340 230 320 235
+               L335 230 Q355 222 372 212 Q388 202 400 195 Q408 190 414 188
+               Q418 186 420 190 Q422 196 418 204 Q410 218 395 230
+               Q375 245 350 252 Q320 260 290 262
+               Q260 264 240 262 Q220 260 200 255 Q170 248 140 240
+               Q100 228 60 222 Q30 218 0 220 Z"
+            fill="var(--gold-light)" opacity="0.85"/>
+      <!-- Thumb -->
+      <path d="M240 175 Q245 185 248 198 Q250 210 248 222 Q245 232 240 238
+               Q235 242 230 240 Q228 235 230 225 Q232 215 232 205 Q232 195 228 185
+               Q225 178 230 172 Q235 168 240 170 Z"
+            fill="var(--gold-light)" opacity="0.75"/>
+    </svg>
+
     <div class="hero-content">
       <h1 class="hero-name">ALEJANDRO</h1>
       <p class="hero-subtitle">AI Consultant &middot; Economist &middot; Builder</p>
@@ -765,33 +862,77 @@
     </div>
   </section>
 
-  <!-- Dark passage -->
   <div class="dark-gap"></div>
 
   <!-- ============================================
-       SECTION 2: THE CRYPT WALL / MANIFESTO
+       SCENE 2: THE WITNESS / MANIFESTO
+       A figure observes the carved statements
        ============================================ -->
-  <section id="manifesto" class="section">
-    <div class="manifesto-content">
-      <p class="manifesto-statement">Biosecurity is the most neglected existential risk of our time.</p>
-      <p class="manifesto-statement">Open-source tools can make the world meaningfully safer.</p>
-      <p class="manifesto-statement">The gap between AI capability and AI governance grows every day.</p>
-      <p class="manifesto-punchline">I work in that gap.</p>
-      <div class="blood-line"></div>
+  <section id="manifesto" class="scene">
+    <div class="manifesto-layout">
+      <div class="manifesto-text">
+        <p class="manifesto-statement">Biosecurity is the most neglected existential risk of our time.</p>
+        <p class="manifesto-statement">Open-source tools can make the world meaningfully safer.</p>
+        <p class="manifesto-statement">The gap between AI capability and AI governance grows every day.</p>
+        <p class="manifesto-punchline">I work in that gap.</p>
+        <div class="blood-line"></div>
+      </div>
     </div>
+
+    <!-- The Witness — head and shoulders silhouette facing the text -->
+    <svg class="figure-svg witness-figure figure-fade-left" viewBox="0 0 300 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Head -->
+      <ellipse cx="150" cy="100" rx="55" ry="68" fill="var(--parchment)" opacity="0.5"/>
+      <!-- Neck -->
+      <path d="M125 160 Q130 185 128 200 L172 200 Q170 185 175 160" fill="var(--parchment)" opacity="0.45"/>
+      <!-- Shoulders and upper body -->
+      <path d="M128 200 Q100 210 60 235 Q30 255 15 280 Q5 300 5 330 L5 500 L295 500 L295 330
+               Q295 300 285 280 Q270 255 240 235 Q200 210 172 200 Z"
+            fill="var(--parchment)" opacity="0.35"/>
+      <!-- Ear (facing left — toward the text) -->
+      <path d="M95 85 Q85 90 82 100 Q80 112 85 120 Q90 125 95 120" fill="var(--parchment)" opacity="0.4"/>
+      <!-- Hair suggestion -->
+      <path d="M100 45 Q120 25 155 22 Q190 22 205 45 Q212 60 210 80 Q208 65 200 50
+               Q185 35 155 33 Q125 35 110 50 Q102 60 100 75 Q98 60 100 45 Z"
+            fill="var(--parchment)" opacity="0.3"/>
+    </svg>
   </section>
 
-  <!-- Dark passage -->
   <div class="dark-gap"></div>
 
   <!-- ============================================
-       SECTION 3: THE GALLERY / PROJECTS
+       SCENE 3: THE GALLERY / PROJECTS
+       Each room has its own dramatic figure
        ============================================ -->
 
-  <!-- Room I: Cliver -->
-  <section class="project-room room-1 section">
-    <div class="project-room-number">I</div>
-    <div class="project-card">
+  <!-- Room I: Cliver — Cupped hands holding/protecting life -->
+  <section class="project-room room-1 scene">
+    <div class="project-tableau">
+      <div class="project-figure">
+        <svg viewBox="0 0 400 250" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Left hand, palm up, cupped -->
+          <path d="M60 180 Q70 170 85 158 Q100 148 115 142 Q125 138 132 140
+                   Q138 142 140 148 Q138 155 132 162 Q125 170 118 175
+                   L135 165 Q148 155 158 148 Q165 144 170 145 Q175 147 174 154
+                   Q172 162 165 170 Q155 180 145 185
+                   L160 178 Q172 168 180 162 Q186 158 190 160 Q193 163 190 170
+                   Q185 180 175 188 Q162 198 148 204
+                   Q130 212 110 218 Q90 222 75 220 Q60 216 50 208 Q42 198 45 188 Q48 182 55 180 Z"
+                fill="var(--gold-light)" opacity="0.8"/>
+          <!-- Right hand, palm up, cupped (mirrored) -->
+          <path d="M340 180 Q330 170 315 158 Q300 148 285 142 Q275 138 268 140
+                   Q262 142 260 148 Q262 155 268 162 Q275 170 282 175
+                   L265 165 Q252 155 242 148 Q235 144 230 145 Q225 147 226 154
+                   Q228 162 235 170 Q245 180 255 185
+                   L240 178 Q228 168 220 162 Q214 158 210 160 Q207 163 210 170
+                   Q215 180 225 188 Q238 198 252 204
+                   Q270 212 290 218 Q310 222 325 220 Q340 216 350 208 Q358 198 355 188 Q352 182 345 180 Z"
+                fill="var(--gold-light)" opacity="0.8"/>
+          <!-- Small glow between hands — what they're protecting -->
+          <circle cx="200" cy="175" r="25" fill="var(--gold-bright)" opacity="0.08"/>
+          <circle cx="200" cy="175" r="12" fill="var(--gold-bright)" opacity="0.12"/>
+        </svg>
+      </div>
       <div class="project-frame">
         <span class="frame-bottom"></span>
         <span class="frame-left"></span>
@@ -804,10 +945,32 @@
 
   <div class="dark-gap-half"></div>
 
-  <!-- Room II: Frontiers Evals -->
-  <section class="project-room room-2 section">
-    <div class="project-room-number">II</div>
-    <div class="project-card">
+  <!-- Room II: Frontiers Evals — Figure holding torch -->
+  <section class="project-room room-2 scene">
+    <div class="project-tableau">
+      <div class="project-figure">
+        <svg viewBox="0 0 400 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Torch flame -->
+          <path d="M200 15 Q210 25 215 40 Q220 55 218 70 Q215 80 210 85
+                   Q215 75 212 60 Q208 45 200 35 Q192 45 188 60 Q185 75 190 85
+                   Q185 80 182 70 Q180 55 185 40 Q190 25 200 15 Z"
+                fill="var(--gold-bright)" opacity="0.6"/>
+          <circle cx="200" cy="55" r="20" fill="var(--gold-bright)" opacity="0.1"/>
+          <circle cx="200" cy="55" r="40" fill="var(--gold-bright)" opacity="0.04"/>
+          <!-- Torch handle -->
+          <rect x="196" y="82" width="8" height="50" rx="3" fill="var(--gold-light)" opacity="0.7"/>
+          <!-- Arm holding torch (extended upward) -->
+          <path d="M196 130 Q190 140 185 155 Q180 170 178 185 Q176 195 175 205"
+                stroke="var(--gold-light)" stroke-width="18" stroke-linecap="round" fill="none" opacity="0.6"/>
+          <!-- Shoulder and torso -->
+          <path d="M175 205 Q165 210 145 225 Q125 240 115 260 Q108 275 110 295 L110 320 L270 320
+                   L270 295 Q272 275 265 260 Q255 240 235 225 Q215 210 205 205
+                   Q200 200 195 198 Q185 200 175 205 Z"
+                fill="var(--gold-light)" opacity="0.35"/>
+          <!-- Head -->
+          <ellipse cx="190" cy="218" rx="28" ry="34" fill="var(--gold-light)" opacity="0.4"/>
+        </svg>
+      </div>
       <div class="project-frame">
         <span class="frame-bottom"></span>
         <span class="frame-left"></span>
@@ -820,10 +983,33 @@
 
   <div class="dark-gap-half"></div>
 
-  <!-- Room III: ML4Good -->
-  <section class="project-room room-3 section">
-    <div class="project-room-number">III</div>
-    <div class="project-card">
+  <!-- Room III: ML4Good — Group of figures -->
+  <section class="project-room room-3 scene">
+    <div class="project-tableau">
+      <div class="project-figure">
+        <svg viewBox="0 0 400 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Figure 1 (left) -->
+          <ellipse cx="80" cy="55" rx="22" ry="27" fill="var(--gold-light)" opacity="0.4"/>
+          <path d="M58 82 Q40 95 28 115 Q20 130 20 150 L20 220 L140 220 L140 150
+                   Q140 130 132 115 Q120 95 102 82 Z"
+                fill="var(--gold-light)" opacity="0.25"/>
+          <!-- Figure 2 (center-left) -->
+          <ellipse cx="160" cy="48" rx="24" ry="29" fill="var(--gold-light)" opacity="0.5"/>
+          <path d="M136 77 Q115 92 105 112 Q98 130 98 150 L98 220 L222 220 L222 150
+                   Q222 130 215 112 Q205 92 184 77 Z"
+                fill="var(--gold-light)" opacity="0.3"/>
+          <!-- Figure 3 (center-right) -->
+          <ellipse cx="240" cy="50" rx="23" ry="28" fill="var(--gold-light)" opacity="0.45"/>
+          <path d="M217 78 Q198 93 188 113 Q182 130 182 150 L182 220 L298 220 L298 150
+                   Q298 130 292 113 Q282 93 263 78 Z"
+                fill="var(--gold-light)" opacity="0.28"/>
+          <!-- Figure 4 (right) -->
+          <ellipse cx="320" cy="58" rx="21" ry="26" fill="var(--gold-light)" opacity="0.35"/>
+          <path d="M299 84 Q282 97 272 117 Q266 132 266 152 L266 220 L380 220 L380 152
+                   Q380 132 372 117 Q362 97 341 84 Z"
+                fill="var(--gold-light)" opacity="0.22"/>
+        </svg>
+      </div>
       <div class="project-frame">
         <span class="frame-bottom"></span>
         <span class="frame-left"></span>
@@ -836,10 +1022,32 @@
 
   <div class="dark-gap-half"></div>
 
-  <!-- Room IV: EU AI Act -->
-  <section class="project-room room-4 section">
-    <div class="project-room-number">IV</div>
-    <div class="project-card">
+  <!-- Room IV: EU AI Act — Scholar at desk -->
+  <section class="project-room room-4 scene">
+    <div class="project-tableau">
+      <div class="project-figure">
+        <svg viewBox="0 0 400 250" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Desk / table surface -->
+          <rect x="60" y="185" width="280" height="5" rx="2" fill="var(--gold-light)" opacity="0.4"/>
+          <!-- Desk legs -->
+          <rect x="75" y="190" width="4" height="60" fill="var(--gold-light)" opacity="0.25"/>
+          <rect x="321" y="190" width="4" height="60" fill="var(--gold-light)" opacity="0.25"/>
+          <!-- Seated figure — head -->
+          <ellipse cx="200" cy="85" rx="28" ry="34" fill="var(--gold-light)" opacity="0.5"/>
+          <!-- Neck -->
+          <path d="M188 115 Q190 128 188 135 L212 135 Q210 128 212 115" fill="var(--gold-light)" opacity="0.4"/>
+          <!-- Torso, leaning forward -->
+          <path d="M188 135 Q170 140 155 150 Q145 158 140 168 Q138 175 140 182 L260 182
+                   Q262 175 260 168 Q255 158 245 150 Q230 140 212 135 Z"
+                fill="var(--gold-light)" opacity="0.3"/>
+          <!-- Arms on desk -->
+          <path d="M140 168 Q130 172 120 178 Q115 180 112 182 L108 185" stroke="var(--gold-light)" stroke-width="14" stroke-linecap="round" fill="none" opacity="0.35"/>
+          <path d="M260 168 Q270 172 280 178 Q285 180 288 182 L292 185" stroke="var(--gold-light)" stroke-width="14" stroke-linecap="round" fill="none" opacity="0.35"/>
+          <!-- Book/papers on desk -->
+          <rect x="160" y="178" width="50" height="6" rx="1" fill="var(--gold-light)" opacity="0.25" transform="rotate(-3, 185, 181)"/>
+          <rect x="220" y="179" width="35" height="5" rx="1" fill="var(--gold-light)" opacity="0.2" transform="rotate(2, 237, 181)"/>
+        </svg>
+      </div>
       <div class="project-frame">
         <span class="frame-bottom"></span>
         <span class="frame-left"></span>
@@ -850,54 +1058,134 @@
     </div>
   </section>
 
-  <!-- Dark passage -->
   <div class="dark-gap"></div>
 
   <!-- ============================================
-       SECTION 4: THE CHRONICLE / BACKGROUND
+       SCENE 4: THE CHRONICLE / BACKGROUND
+       Staircase journey with narrative steps
        ============================================ -->
-  <section id="chronicle" class="section">
-    <div class="chronicle-content">
-      <p><span class="gold-highlight">At sixteen,</span> I stumbled onto effective altruism and something shifted permanently. The idea that you could be rigorous about doing good — that you could treat impact like an engineering problem — rewired the way I thought about everything.</p>
-      <p><span class="gold-highlight">At university,</span> I studied economics — the discipline that takes messy human behavior and tries to find the levers. I co-founded the EA chapter, gathered people who cared about the same impossible questions, and started building.</p>
-      <p><span class="gold-highlight">In Oxford,</span> the questions got sharper. I researched AI governance, lived in a group house full of people trying to steer the future, and learned that the gap between understanding a problem and actually moving the needle is where most good intentions go to die.</p>
-      <p><span class="gold-highlight">In Bogot&aacute;,</span> I came home. Not to rest — to build. Cliver, ML4Good, consulting work that puts me at the intersection of AI capability and the institutions trying to keep up. The problems I care about don't have geographic boundaries, but the work has to happen somewhere, and I chose here.</p>
-    </div>
-  </section>
+  <section id="chronicle" class="scene">
+    <div class="chronicle-layout">
+      <!-- Abstract descending staircase -->
+      <svg class="staircase-svg" viewBox="0 0 60 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="30" y1="0" x2="30" y2="600" stroke="var(--gold-bright)" stroke-width="0.5" opacity="0.3"/>
+        <!-- Step markers -->
+        <line x1="10" y1="50" x2="50" y2="50" stroke="var(--gold-bright)" stroke-width="1" opacity="0.4"/>
+        <circle cx="30" cy="50" r="4" fill="var(--gold-bright)" opacity="0.3"/>
+        <line x1="10" y1="200" x2="50" y2="200" stroke="var(--gold-bright)" stroke-width="1" opacity="0.4"/>
+        <circle cx="30" cy="200" r="4" fill="var(--gold-bright)" opacity="0.3"/>
+        <line x1="10" y1="350" x2="50" y2="350" stroke="var(--gold-bright)" stroke-width="1" opacity="0.4"/>
+        <circle cx="30" cy="350" r="4" fill="var(--gold-bright)" opacity="0.3"/>
+        <line x1="10" y1="500" x2="50" y2="500" stroke="var(--gold-bright)" stroke-width="1" opacity="0.4"/>
+        <circle cx="30" cy="500" r="4" fill="var(--gold-bright)" opacity="0.3"/>
+      </svg>
 
-  <!-- Dark passage -->
-  <div class="dark-gap"></div>
-
-  <!-- ============================================
-       SECTION 5: THE ALTAR / CURRENT FOCUS
-       ============================================ -->
-  <section id="altar" class="section">
-    <div class="altar-content">
-      <h2 class="altar-heading">Right Now</h2>
-      <div class="reliquary">
-        <p>Building Cliver. Customer development. Convincing the world that DNA screening matters.</p>
-        <p>Teaching ML4Good across Latin America.</p>
-        <p>Writing. Thinking. Sending one more cold email.</p>
+      <div class="chronicle-steps">
+        <div class="chronicle-step">
+          <p><span class="gold-highlight">At sixteen,</span> I stumbled onto effective altruism and something shifted permanently. The idea that you could be rigorous about doing good — that you could treat impact like an engineering problem — rewired the way I thought about everything.</p>
+        </div>
+        <div class="chronicle-step">
+          <p><span class="gold-highlight">At university,</span> I studied economics — the discipline that takes messy human behavior and tries to find the levers. I co-founded the EA chapter, gathered people who cared about the same impossible questions, and started building.</p>
+        </div>
+        <div class="chronicle-step">
+          <p><span class="gold-highlight">In Oxford,</span> the questions got sharper. I researched AI governance, lived in a group house full of people trying to steer the future, and learned that the gap between understanding a problem and actually moving the needle is where most good intentions go to die.</p>
+        </div>
+        <div class="chronicle-step">
+          <p><span class="gold-highlight">In Bogot&aacute;,</span> I came home. Not to rest — to build. Cliver, ML4Good, consulting work that puts me at the intersection of AI capability and the institutions trying to keep up. The problems I care about don't have geographic boundaries, but the work has to happen somewhere, and I chose here.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Dark passage -->
+  <div class="dark-gap"></div>
+
+  <!-- ============================================
+       SCENE 5: THE ALTAR / CREATION OF ADAM
+       Two hands reaching toward each other
+       ============================================ -->
+  <section id="altar" class="scene">
+    <div class="altar-layout">
+      <!-- Left hand reaching right -->
+      <svg class="altar-hand altar-hand-left" viewBox="0 0 250 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 110 Q20 105 50 98 Q75 92 100 88 Q115 85 125 86
+                 Q132 88 135 92 Q133 98 128 104 Q120 112 112 116
+                 L130 108 Q142 98 152 92 Q158 88 162 90 Q165 94 162 102
+                 Q158 112 148 120 Q138 128 128 125
+                 L145 118 Q155 110 163 104 Q168 100 172 102 Q175 106 172 114
+                 Q168 124 158 132 Q145 142 130 148
+                 Q115 155 100 158 Q80 160 60 158 Q40 155 25 148
+                 Q12 140 5 130 Q0 122 0 115 Z"
+              fill="var(--gold-light)" opacity="0.85"/>
+        <!-- Index finger extended -->
+        <path d="M135 86 Q148 80 162 75 Q178 70 192 68 Q205 67 215 70
+                 Q222 73 225 78 Q226 84 222 88 Q215 92 205 92
+                 Q195 92 182 88 Q168 85 155 86 Q145 88 138 90"
+              fill="var(--gold-light)" opacity="0.8"/>
+      </svg>
+
+      <div class="altar-center">
+        <h2 class="altar-heading">Right Now</h2>
+        <div class="reliquary">
+          <p>Building Cliver. Customer development. Convincing the world that DNA screening matters.</p>
+          <p>Teaching ML4Good across Latin America.</p>
+          <p>Writing. Thinking. Sending one more cold email.</p>
+        </div>
+      </div>
+
+      <!-- Right hand reaching left (mirrored via scaleX) -->
+      <svg class="altar-hand altar-hand-right" viewBox="0 0 250 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 110 Q20 105 50 98 Q75 92 100 88 Q115 85 125 86
+                 Q132 88 135 92 Q133 98 128 104 Q120 112 112 116
+                 L130 108 Q142 98 152 92 Q158 88 162 90 Q165 94 162 102
+                 Q158 112 148 120 Q138 128 128 125
+                 L145 118 Q155 110 163 104 Q168 100 172 102 Q175 106 172 114
+                 Q168 124 158 132 Q145 142 130 148
+                 Q115 155 100 158 Q80 160 60 158 Q40 155 25 148
+                 Q12 140 5 130 Q0 122 0 115 Z"
+              fill="var(--gold-light)" opacity="0.85"/>
+        <path d="M135 86 Q148 80 162 75 Q178 70 192 68 Q205 67 215 70
+                 Q222 73 225 78 Q226 84 222 88 Q215 92 205 92
+                 Q195 92 182 88 Q168 85 155 86 Q145 88 138 90"
+              fill="var(--gold-light)" opacity="0.8"/>
+      </svg>
+    </div>
+  </section>
+
   <div class="dark-gap-half"></div>
 
   <!-- ============================================
-       SECTION 6: THE EXIT / CONTACT
+       SCENE 6: THE EXIT / DEPARTURE
+       A figure walks away into darkness
        ============================================ -->
-  <section id="exit" class="section">
+  <section id="exit" class="scene">
     <div class="exit-content">
       <a href="mailto:alejandro@example.com" class="exit-link">alejandro@example.com</a>
       <a href="https://github.com/alejandro" class="exit-link" target="_blank" rel="noopener">GitHub</a>
       <p class="exit-invitation">I'm always interested in talking to people who take these problems seriously.</p>
       <p class="exit-location">Bogot&aacute;, Colombia</p>
     </div>
+
+    <!-- Departing figure — walking away, seen from behind -->
+    <svg class="departing-figure figure-fade-bottom" viewBox="0 0 120 350" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Head from behind -->
+      <ellipse cx="60" cy="38" rx="22" ry="28" fill="var(--parchment)" opacity="0.45"/>
+      <!-- Neck -->
+      <rect x="50" y="62" width="20" height="18" rx="6" fill="var(--parchment)" opacity="0.35"/>
+      <!-- Shoulders and back -->
+      <path d="M50 78 Q35 85 20 100 Q10 115 8 135 L8 220 L112 220 L112 135
+               Q110 115 100 100 Q85 85 70 78 Z"
+            fill="var(--parchment)" opacity="0.28"/>
+      <!-- Left leg -->
+      <path d="M30 220 Q28 255 30 290 Q32 310 35 335 Q36 345 38 350 L55 350
+               Q52 340 50 320 Q48 295 48 270 Q48 245 50 220 Z"
+            fill="var(--parchment)" opacity="0.22"/>
+      <!-- Right leg (stepping forward) -->
+      <path d="M62 220 Q65 250 68 275 Q70 295 74 320 Q76 335 80 350 L95 350
+               Q92 335 88 310 Q84 285 82 260 Q80 240 80 220 Z"
+            fill="var(--parchment)" opacity="0.22"/>
+    </svg>
   </section>
 
-  <!-- The final fade to void -->
   <div class="final-void">
     <span class="final-period">.</span>
   </div>
@@ -909,11 +1197,10 @@
        ============================================ -->
   <script>
     /* ========================================
-       INTERSECTION OBSERVER — Scroll Reveals
-       Each .section fades in when entering view
+       INTERSECTION OBSERVER — Scene Reveals
        ======================================== */
     (function initScrollReveals() {
-      const sections = document.querySelectorAll('.section');
+      const scenes = document.querySelectorAll('.scene');
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
@@ -921,112 +1208,133 @@
           }
         });
       }, {
-        threshold: 0.15,
-        rootMargin: '0px 0px -50px 0px'
+        threshold: 0.12,
+        rootMargin: '0px 0px -40px 0px'
       });
-
-      sections.forEach(section => observer.observe(section));
+      scenes.forEach(scene => observer.observe(scene));
     })();
 
     /* ========================================
-       HERO DUST PARTICLES — Canvas
-       Tiny gold dots drifting in the light pool
+       CHRONICLE STEPS — Individual reveals
+       ======================================== */
+    (function initChronicleReveals() {
+      const steps = document.querySelectorAll('.chronicle-step');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('step-revealed');
+          }
+        });
+      }, {
+        threshold: 0.3,
+        rootMargin: '0px 0px -30px 0px'
+      });
+      steps.forEach(step => observer.observe(step));
+    })();
+
+    /* ========================================
+       PARALLAX — Figures move at different
+       scroll rate than text (subtle)
+       ======================================== */
+    (function initParallax() {
+      const parallaxElements = document.querySelectorAll('.figure-svg');
+      let ticking = false;
+
+      function updateParallax() {
+        const scrollY = window.pageYOffset;
+        parallaxElements.forEach(el => {
+          const rect = el.getBoundingClientRect();
+          const elementCenter = rect.top + rect.height / 2;
+          const viewportCenter = window.innerHeight / 2;
+          const offset = (elementCenter - viewportCenter) * 0.04;
+          // Apply subtle parallax only to the Y transform, preserving other transforms
+          el.style.setProperty('--parallax-y', offset + 'px');
+        });
+        ticking = false;
+      }
+
+      window.addEventListener('scroll', () => {
+        if (!ticking) {
+          requestAnimationFrame(updateParallax);
+          ticking = true;
+        }
+      }, { passive: true });
+    })();
+
+    /* ========================================
+       DUST PARTICLES — Canvas in hero
        ======================================== */
     (function initDustParticles() {
       const canvas = document.getElementById('hero-canvas');
       if (!canvas) return;
       const ctx = canvas.getContext('2d');
-
       let particles = [];
-      const PARTICLE_COUNT = 25;
+      const COUNT = 30;
 
       function resize() {
         canvas.width = canvas.offsetWidth;
         canvas.height = canvas.offsetHeight;
       }
 
-      function createParticle() {
-        // Concentrate particles in the upper-left light pool area
-        const lightCenterX = canvas.width * 0.25;
-        const lightCenterY = canvas.height * 0.35;
-        const spread = Math.min(canvas.width, canvas.height) * 0.4;
-
+      function create() {
+        // Particles concentrated between the hand and the name
+        const cx = canvas.width * 0.35;
+        const cy = canvas.height * 0.45;
+        const spread = Math.min(canvas.width, canvas.height) * 0.35;
         return {
-          x: lightCenterX + (Math.random() - 0.5) * spread,
-          y: lightCenterY + (Math.random() - 0.5) * spread,
-          size: Math.random() * 1.5 + 0.5,
-          opacity: Math.random() * 0.2 + 0.1,
-          vx: (Math.random() - 0.5) * 0.15,
-          vy: (Math.random() - 0.5) * 0.1 - 0.05,
-          life: Math.random() * 1000
+          x: cx + (Math.random() - 0.5) * spread,
+          y: cy + (Math.random() - 0.5) * spread,
+          size: Math.random() * 1.5 + 0.3,
+          opacity: Math.random() * 0.25 + 0.05,
+          vx: (Math.random() - 0.5) * 0.12,
+          vy: (Math.random() - 0.5) * 0.08 - 0.03,
+          life: Math.random() * 1500
         };
       }
 
       function init() {
         resize();
         particles = [];
-        for (let i = 0; i < PARTICLE_COUNT; i++) {
-          particles.push(createParticle());
-        }
+        for (let i = 0; i < COUNT; i++) particles.push(create());
       }
 
       function update() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const cx = canvas.width * 0.35;
+        const cy = canvas.height * 0.45;
+        const maxDist = Math.min(canvas.width, canvas.height) * 0.4;
 
         particles.forEach((p, i) => {
           p.x += p.vx;
           p.y += p.vy;
-          p.life += 1;
-
-          // Gentle opacity fluctuation
-          const flickerOpacity = p.opacity + Math.sin(p.life * 0.02) * 0.05;
-
+          p.life++;
+          const flick = p.opacity + Math.sin(p.life * 0.018) * 0.06;
           ctx.beginPath();
           ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(255, 214, 160, ${Math.max(0, flickerOpacity)})`;
+          ctx.fillStyle = `rgba(255, 214, 160, ${Math.max(0, flick)})`;
           ctx.fill();
-
-          // Reset particle if it drifts too far
-          const lightCenterX = canvas.width * 0.25;
-          const lightCenterY = canvas.height * 0.35;
-          const dist = Math.hypot(p.x - lightCenterX, p.y - lightCenterY);
-          const maxDist = Math.min(canvas.width, canvas.height) * 0.45;
-
-          if (dist > maxDist || p.life > 2000) {
-            particles[i] = createParticle();
+          if (Math.hypot(p.x - cx, p.y - cy) > maxDist || p.life > 2000) {
+            particles[i] = create();
           }
         });
-
         requestAnimationFrame(update);
       }
 
       init();
       update();
-
-      window.addEventListener('resize', () => {
-        resize();
-      });
+      window.addEventListener('resize', resize);
     })();
 
     /* ========================================
-       FINAL FADE-OUT — near end of page
-       The overlay fades in as user approaches
-       the very bottom, returning to the void
+       FADE-OUT OVERLAY — near page bottom
        ======================================== */
     (function initFadeOut() {
       const overlay = document.getElementById('fade-out-overlay');
       if (!overlay) return;
-
       window.addEventListener('scroll', () => {
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        const docHeight = document.documentElement.scrollHeight;
-        const winHeight = window.innerHeight;
-        const scrollBottom = docHeight - scrollTop - winHeight;
-
-        // Start fading in the overlay when within 300px of the bottom
+        const scrollBottom = document.documentElement.scrollHeight - window.pageYOffset - window.innerHeight;
         if (scrollBottom < 300) {
-          const progress = 1 - (scrollBottom / 300);
-          overlay.style.opacity = Math.min(1, progress);
+          overlay.style.opacity = Math.min(1, 1 - scrollBottom / 300);
         } else {
           overlay.style.opacity = 0;
         }
