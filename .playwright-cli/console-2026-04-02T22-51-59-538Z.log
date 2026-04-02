@@ -1,0 +1,12 @@
+[     162ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://127.0.0.1:3073/node_modules/.vite/deps/react-dom_client.js?v=d0f29a7a:14336
+[     300ms] [LOG] [sync] noteStack: [] hasMounted: false isPopState: false hash:  @ http://127.0.0.1:3073/src/App.jsx:286
+[     305ms] [LOG] [sync] noteStack: [] hasMounted: true isPopState: false hash:  @ http://127.0.0.1:3073/src/App.jsx:286
+[     320ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://127.0.0.1:3073/favicon.ico:0
+[   19888ms] [LOG] [sync] noteStack: [what-im-like] hasMounted: true isPopState: false hash:  @ http://127.0.0.1:3073/src/App.jsx:286
+[   19891ms] [LOG] [sync] PUSHING: #what-im-like @ http://127.0.0.1:3073/src/App.jsx:298
+[   58025ms] [LOG] [nav] popstate hash:  stack: [] @ http://127.0.0.1:3073/src/App.jsx:305
+[   58041ms] [LOG] [sync] noteStack: [] hasMounted: true isPopState: true hash:  @ http://127.0.0.1:3073/src/App.jsx:286
+[   58042ms] [LOG] [nav] hashchange hash:  stack: [] @ http://127.0.0.1:3073/src/App.jsx:305
+[   58044ms] [LOG] [sync] noteStack: [] hasMounted: true isPopState: true hash:  @ http://127.0.0.1:3073/src/App.jsx:286
+[  110269ms] [LOG] [sync] noteStack: [what-im-like] hasMounted: true isPopState: false hash:  @ http://127.0.0.1:3073/src/App.jsx:286
+[  110269ms] [LOG] [sync] PUSHING: #what-im-like @ http://127.0.0.1:3073/src/App.jsx:298

@@ -1,0 +1,7 @@
+[     236ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://127.0.0.1:3073/node_modules/.vite/deps/react-dom_client.js?v=d0f29a7a:14336
+[     285ms] [LOG] [sync] noteStack: [] hasMounted: false isPopState: false hash:  @ http://127.0.0.1:3073/src/App.jsx?t=1775171395107:321
+[     288ms] [LOG] [sync] noteStack: [] hasMounted: true isPopState: false hash:  @ http://127.0.0.1:3073/src/App.jsx?t=1775171395107:321
+[   23115ms] [LOG] [sync] noteStack: [what-im-like] hasMounted: true isPopState: false hash:  @ http://127.0.0.1:3073/src/App.jsx?t=1775171395107:321
+[   23116ms] [LOG] [sync] PUSHING: #what-im-like @ http://127.0.0.1:3073/src/App.jsx?t=1775171395107:333
+[   32111ms] [LOG] [sync] noteStack: [] hasMounted: true isPopState: false hash: #what-im-like @ http://127.0.0.1:3073/src/App.jsx?t=1775171395107:321
+[   32111ms] [LOG] [sync] PUSHING: / @ http://127.0.0.1:3073/src/App.jsx?t=1775171395107:333

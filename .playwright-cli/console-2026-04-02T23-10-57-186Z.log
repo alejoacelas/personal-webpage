@@ -1,0 +1,6 @@
+[      32ms] [LOG] [nav] hashchange hash: #what-im-like/how-i-work stack: [what-im-like, how-i-work] @ http://127.0.0.1:3073/src/App.jsx?t=1775171395107:340
+[      54ms] [LOG] [sync] noteStack: [what-im-like, how-i-work] hasMounted: true isPopState: true hash: #what-im-like/how-i-work @ http://127.0.0.1:3073/src/App.jsx?t=1775171395107:321
+[   77426ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://127.0.0.1:3073/node_modules/.vite/deps/react-dom_client.js?v=d0f29a7a:14336
+[   77452ms] [LOG] [sync] noteStack: [what-im-like, how-i-work] hasMounted: false isPopState: false hash: #what-im-like/how-i-work @ http://127.0.0.1:3073/src/App.jsx?t=1775171534444:321
+[   77453ms] [LOG] [sync] noteStack: [what-im-like, how-i-work] hasMounted: true isPopState: false hash: #what-im-like/how-i-work @ http://127.0.0.1:3073/src/App.jsx?t=1775171534444:321
+[   77461ms] [LOG] [sync] noteStack: [what-im-like, how-i-work] hasMounted: true isPopState: false hash: #what-im-like/how-i-work @ http://127.0.0.1:3073/src/App.jsx?t=1775171534444:321

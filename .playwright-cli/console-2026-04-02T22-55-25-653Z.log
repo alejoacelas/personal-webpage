@@ -1,0 +1,16 @@
+[      63ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://127.0.0.1:3073/node_modules/.vite/deps/react-dom_client.js?v=d0f29a7a:14336
+[      76ms] [LOG] [sync] noteStack: [] hasMounted: false isPopState: false hash:  @ http://127.0.0.1:3073/src/App.jsx:286
+[      80ms] [LOG] [sync] noteStack: [] hasMounted: true isPopState: false hash:  @ http://127.0.0.1:3073/src/App.jsx:286
+[  477346ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://127.0.0.1:3073/node_modules/.vite/deps/react-dom_client.js?v=d0f29a7a:14336
+[  477429ms] [LOG] [sync] noteStack: [] hasMounted: false isPopState: false hash:  @ http://127.0.0.1:3073/src/App.jsx?t=1775171002338:286
+[  477434ms] [LOG] [sync] noteStack: [] hasMounted: true isPopState: false hash:  @ http://127.0.0.1:3073/src/App.jsx?t=1775171002338:286
+[  554023ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://127.0.0.1:3073/node_modules/.vite/deps/react-dom_client.js?v=d0f29a7a:14336
+[  554072ms] [LOG] [sync] noteStack: [] hasMounted: false isPopState: false hash:  @ http://127.0.0.1:3073/src/App.jsx?t=1775171079371:301
+[  554077ms] [LOG] [sync] noteStack: [] hasMounted: true isPopState: false hash:  @ http://127.0.0.1:3073/src/App.jsx?t=1775171079371:301
+[  655606ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://127.0.0.1:3073/node_modules/.vite/deps/react-dom_client.js?v=d0f29a7a:14336
+[  655708ms] [LOG] [sync] noteStack: [] hasMounted: false isPopState: false hash:  @ http://127.0.0.1:3073/src/App.jsx?t=1775171179958:302
+[  655712ms] [LOG] [sync] noteStack: [] hasMounted: true isPopState: false hash:  @ http://127.0.0.1:3073/src/App.jsx?t=1775171179958:302
+[  869737ms] [LOG] [sync] noteStack: [] hasMounted: false isPopState: false hash:  @ http://127.0.0.1:3073/src/App.jsx?t=1775171395089:321
+[  869996ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://127.0.0.1:3073/node_modules/.vite/deps/react-dom_client.js?v=d0f29a7a:14336
+[  870016ms] [LOG] [sync] noteStack: [] hasMounted: false isPopState: false hash:  @ http://127.0.0.1:3073/src/App.jsx?t=1775171395107:321
+[  870017ms] [LOG] [sync] noteStack: [] hasMounted: true isPopState: false hash:  @ http://127.0.0.1:3073/src/App.jsx?t=1775171395107:321

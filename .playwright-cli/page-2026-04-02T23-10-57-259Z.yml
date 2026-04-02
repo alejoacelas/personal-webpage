@@ -1,0 +1,78 @@
+- generic [ref=e5]:
+  - generic [ref=e60]:
+    - generic [ref=e61]:
+      - button "Back" [ref=e62] [cursor=pointer]
+      - heading "What I'm Like" [level=2] [ref=e63]
+    - generic [ref=e64]:
+      - paragraph [ref=e65]:
+        - text: I'm a
+        - strong [ref=e66]: fast learner
+        - text: . I pick things up quickly and I'm not afraid of jumping into areas where I don't have deep expertise — that's how I ended up going from economics to ML research to biosecurity to AI policy.
+      - paragraph [ref=e67]:
+        - text: I'm
+        - strong [ref=e68]: responsive
+        - text: . If you message me at 11pm, I'll probably answer. I like the feeling of being the person who shows up.
+      - paragraph [ref=e69]:
+        - text: I'm
+        - strong [ref=e70]: candid
+        - text: . I'd rather tell you what I actually think than say something comfortable. This has gotten me in trouble occasionally, but mostly it builds trust fast.
+      - paragraph [ref=e71]:
+        - text: I'm
+        - strong [ref=e72]: enthusiastic
+        - text: . When something excites me, you'll know. I commit quickly and care deeply — sometimes about things others find niche.
+      - paragraph [ref=e73]: I'm not great at slow-cooking anything. Short deadlines, clear deliverables, fast feedback loops — that's where I thrive. Give me a week and a clear problem over a quarter and a vague mandate.
+      - paragraph [ref=e74]:
+        - text: "See also:"
+        - link "How I work" [ref=e75] [cursor=pointer]:
+          - /url: "#"
+    - generic [ref=e76]:
+      - heading "Linked from" [level=3] [ref=e77]
+      - link "How I WorkBootcamps, policy drafts, and building things — what I've done as evidence of what I can do." [ref=e79] [cursor=pointer]:
+        - /url: "#"
+  - generic [ref=e81]:
+    - generic [ref=e82]:
+      - button "Back" [ref=e83] [cursor=pointer]
+      - heading "How I Work" [level=2] [ref=e84]
+    - generic [ref=e85]:
+      - paragraph [ref=e86]: "Here's what I've done, as evidence of what I can do:"
+      - list [ref=e87]:
+        - listitem [ref=e88]:
+          - text: •
+          - strong [ref=e89]: Ran AI safety bootcamps
+          - text: throughout Latin America (ML4Good, 6 editions, ~10 participants each). Recruited teams, designed curricula, taught the material. This is where I learned to motivate people at speed.
+      - list [ref=e90]:
+        - listitem [ref=e91]:
+          - text: •
+          - strong [ref=e92]: Drafted policy recommendations
+          - text: for the EU AI Act Code of Practice. Writing that had to be precise, useful, and survive review by people who disagreed with each other.
+      - list [ref=e93]:
+        - listitem [ref=e94]:
+          - text: •
+          - strong [ref=e95]: Built things with code
+          - text: — including
+          - link "this website" [ref=e96] [cursor=pointer]:
+            - /url: /
+          - text: and tools for
+          - link "Cliver" [ref=e97] [cursor=pointer]:
+            - /url: https://cliver.bio
+          - text: . I'm not a traditional software engineer, but I can build things that work.
+      - list [ref=e98]:
+        - listitem [ref=e99]:
+          - text: •
+          - strong [ref=e100]: Co-founded Cliver
+          - text: ". Technical co-founder means: system design, paper writing, user research, and a lot of learning on the fly."
+      - paragraph [ref=e101]: "The common thread: I like problems that are important, tractable, and a little bit scary. I don't need permission to start something, and I don't need hand-holding to finish it."
+      - paragraph [ref=e102]:
+        - text: "See also:"
+        - link "What I'm like" [ref=e103] [cursor=pointer]:
+          - /url: "#"
+        - text: ·
+        - link "What's next" [ref=e104] [cursor=pointer]:
+          - /url: "#"
+    - generic [ref=e105]:
+      - heading "Linked from" [level=3] [ref=e106]
+      - generic [ref=e107]:
+        - link "What I'm LikeFast learner, candid, enthusiastic — I'll probably answer your 11pm message." [ref=e108] [cursor=pointer]:
+          - /url: "#"
+        - link "What's NextCurrent focus areas and where Cliver is heading." [ref=e109] [cursor=pointer]:
+          - /url: "#"

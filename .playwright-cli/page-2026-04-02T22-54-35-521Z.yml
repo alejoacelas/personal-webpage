@@ -1,0 +1,88 @@
+- generic [ref=e2]:
+  - generic [ref=e5]:
+    - main [ref=e6]:
+      - generic [ref=e7]:
+        - generic [ref=e8]:
+          - heading "Alejandro Acelas" [level=1] [ref=e9]
+          - paragraph [ref=e10]: or just Alejo (/ah-leh-ho/) if we're friends
+        - group [ref=e12]:
+          - generic "About" [ref=e13] [cursor=pointer]:
+            - heading "About" [level=2] [ref=e14]
+          - generic [ref=e32]:
+            - paragraph [ref=e33]:
+              - text: Based in Bogotá. Economics at Los Andes (cum laude). I co-founded
+              - link "Cliver" [ref=e34] [cursor=pointer]:
+                - /url: https://cliver.bio
+              - text: ", taught AI safety bootcamps across Latin America, and helped draft the EU AI Act Code of Practice."
+            - paragraph [ref=e35]:
+              - text: Curious about the person?
+              - button "What I'm like" [ref=e36] [cursor=pointer]
+              - text: ·
+              - button "How I work" [ref=e37] [cursor=pointer]
+        - group [ref=e17]:
+          - generic "Work" [ref=e18] [cursor=pointer]:
+            - heading "Work" [level=2] [ref=e19]
+        - group [ref=e22]:
+          - generic "Experience" [ref=e23] [cursor=pointer]:
+            - heading "Experience" [level=2] [ref=e24]
+        - group [ref=e27]:
+          - generic "Contact" [ref=e28] [cursor=pointer]:
+            - heading "Contact" [level=2] [ref=e29]
+    - generic [ref=e59]:
+      - generic [ref=e79]: What I'm Like
+      - generic [ref=e60]:
+        - heading "What I'm Like" [level=2] [ref=e62]
+        - generic [ref=e63]:
+          - paragraph [ref=e64]:
+            - text: I'm a
+            - strong [ref=e65]: fast learner
+            - text: . I pick things up quickly and I'm not afraid of jumping into areas where I don't have deep expertise — that's how I ended up going from economics to ML research to biosecurity to AI policy.
+          - paragraph [ref=e66]:
+            - text: I'm
+            - strong [ref=e67]: responsive
+            - text: . If you message me at 11pm, I'll probably answer. I like the feeling of being the person who shows up.
+          - paragraph [ref=e68]:
+            - text: I'm
+            - strong [ref=e69]: candid
+            - text: . I'd rather tell you what I actually think than say something comfortable. This has gotten me in trouble occasionally, but mostly it builds trust fast.
+          - paragraph [ref=e70]:
+            - text: I'm
+            - strong [ref=e71]: enthusiastic
+            - text: . When something excites me, you'll know. I commit quickly and care deeply — sometimes about things others find niche.
+          - paragraph [ref=e72]: I'm not great at slow-cooking anything. Short deadlines, clear deliverables, fast feedback loops — that's where I thrive. Give me a week and a clear problem over a quarter and a vague mandate.
+          - paragraph [ref=e73]:
+            - text: "See also:"
+            - link "How I work" [ref=e74] [cursor=pointer]:
+              - /url: "#"
+        - generic [ref=e75]:
+          - heading "Linked from" [level=3] [ref=e76]
+          - link "How I WorkBootcamps, policy drafts, and building things — what I've done as evidence of what I can do." [ref=e78] [cursor=pointer]:
+            - /url: "#"
+  - generic:
+    - generic:
+      - generic:
+        - heading "How I Work" [level=2]
+        - generic:
+          - paragraph: "Here's what I've done, as evidence of what I can do:"
+          - list:
+            - listitem:
+              - text: •
+              - strong: Ran AI safety bootcamps
+              - text: throughout Latin America (ML4Good, 6 editions, ~10 participants each). Recruited teams, designed curricula, taught the material. This is where I learned to motivate people at speed.
+          - list:
+            - listitem:
+              - text: •
+              - strong: Drafted policy recommendations
+              - text: for the EU AI Act Code of Practice. Writing that had to be precise, useful, and survive review by people who disagreed with each other.
+          - list:
+            - listitem:
+              - text: •
+              - strong: Built things with code
+              - text: — including this website and tools for Cliver. I'm not a traditional software engineer, but I can build things that work.
+          - list:
+            - listitem:
+              - text: •
+              - strong: Co-founded Cliver
+              - text: ". Technical co-founder means: system design, paper writing, user research, and a lot of learning on the fly."
+          - paragraph: "The common thread: I like problems that are important, tractable, and a little bit scary. I don't need permission to start something, and I don't need hand-holding to finish it."
+          - paragraph: "See also: What I'm like · What's next"

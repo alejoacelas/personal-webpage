@@ -1,0 +1,820 @@
+/* ============================================
+   Option C: Two-stage layout
+   Landing (centered root) → Matuschak stacked notes
+   ============================================ */
+
+/* --- Custom Properties --- */
+:root {
+  --muted-yellow-green: #C5C9A4;
+  --sage: #8B9A6B;
+  --warm-brick: #8B5E3C;
+  --overcast-grey: #D4D0C8;
+  --chalk-white: #F5F2EB;
+  --deep-blue: #1B4B6B;
+  --bg-base: #E8E4DB;
+
+  --text: #3A342C;
+  --text-secondary: #7A7062;
+  --text-muted: #8C8C8C;
+  --accent: var(--deep-blue);
+
+  --grain-opacity: 0.04;
+
+  --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-display: Georgia, 'Times New Roman', serif;
+
+  --main-column-width: 640px;
+  --pane-width: 625px;
+  --pane-offset: 40px;
+  --pane-padding: 32px;
+}
+
+/* --- Reset --- */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%; /* 1rem = 10px */
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: 1.8rem;
+  line-height: 1.65;
+  color: var(--text);
+  background: var(--bg-base);
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+/* --- Film grain overlay --- */
+.film-grain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 128px 128px;
+  z-index: 1000;
+}
+
+/* ============================================
+   PAGE ROOT — flex column, full viewport
+   ============================================ */
+.page-root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================================
+   SCROLL CONTAINER — the horizontal/vertical viewport
+   ============================================ */
+.scroll-container {
+  flex: 1;
+  display: flex;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Notes mode: horizontal scroll, no vertical */
+.page-root.notes-mode .scroll-container {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.scroll-container::-webkit-scrollbar {
+  height: 6px;
+}
+.scroll-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scroll-container::-webkit-scrollbar-thumb {
+  background: var(--overcast-grey);
+  border-radius: 3px;
+}
+
+/* ============================================
+   COLUMNS CONTAINER — the inner flex row
+   ============================================ */
+.columns-container {
+  display: flex;
+  min-height: 100%;
+}
+
+/* Landing mode: center the root column */
+.page-root.landing-mode .columns-container {
+  justify-content: center;
+  width: 100%;
+}
+
+/* Notes mode: explicit width with transition */
+.page-root.notes-mode .columns-container {
+  transition: width 100ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+/* Closing mode: spring physics animation (JS-driven transforms) */
+.page-root.closing-mode .scroll-container {
+  overflow-x: hidden;
+}
+.page-root.closing-mode .main-column {
+  position: sticky;
+  left: 0;
+  z-index: 5;
+  height: 100%;
+  overflow-y: auto;
+  will-change: transform;
+}
+
+/* ============================================
+   MAIN COLUMN (root pane)
+   ============================================ */
+.main-column {
+  flex-shrink: 0;
+  width: var(--main-column-width);
+  max-width: var(--main-column-width);
+  padding: 0 2.4rem;
+  transition: all 600ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+/* Notes mode: root becomes sticky, fills height, scrolls internally */
+.page-root.notes-mode .main-column {
+  position: sticky;
+  left: 0;
+  z-index: 5;
+  height: 100%;
+  overflow-y: auto;
+  will-change: transform;
+}
+
+.page-root.notes-mode .main-column::-webkit-scrollbar {
+  width: 4px;
+}
+.page-root.notes-mode .main-column::-webkit-scrollbar-track {
+  background: transparent;
+}
+.page-root.notes-mode .main-column::-webkit-scrollbar-thumb {
+  background: var(--overcast-grey);
+  border-radius: 2px;
+}
+
+.main-column-inner {
+  background: rgba(245, 242, 235, 0.80);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 2px;
+  padding: 8rem 4rem 12rem;
+  margin: 4rem 0;
+  min-height: calc(100vh - 8rem);
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.04),
+    0 8px 40px rgba(0, 0, 0, 0.03);
+}
+
+/* ============================================
+   HERO HEADER
+   ============================================ */
+.hero-header {
+  text-align: center;
+  margin-bottom: 6rem;
+}
+
+.hero-name {
+  font-family: var(--font-display);
+  font-size: clamp(3.6rem, 6vw, 5.4rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin-bottom: 0.8rem;
+  animation: fadeInUp 1.2s ease both;
+}
+
+.hero-subtitle {
+  font-family: var(--font-body);
+  font-size: 1.6rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.01em;
+  animation: fadeInUp 1.2s ease 0.15s both;
+}
+
+.pronunciation {
+  font-family: var(--font-display);
+  font-style: italic;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================
+   EXPANDABLE SECTIONS (robbowen style)
+   ============================================ */
+.body-section {
+  border-top: 1px solid var(--overcast-grey);
+}
+
+.expandable summary {
+  list-style: none;
+}
+
+.expandable summary::-webkit-details-marker {
+  display: none;
+}
+
+.expandable__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2.4rem 0;
+  cursor: pointer;
+  user-select: none;
+}
+
+.expandable__trigger h2 {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  font-weight: 400;
+  color: var(--text);
+  transition: color 0.3s ease;
+}
+
+.expandable__trigger:hover h2 {
+  color: var(--accent);
+}
+
+.expandable__icon {
+  display: block;
+  width: 16px;
+  height: 16px;
+  position: relative;
+  flex-shrink: 0;
+  margin-left: 1.6rem;
+}
+
+.expandable__icon::before,
+.expandable__icon::after {
+  content: '';
+  position: absolute;
+  background: var(--text-secondary);
+  transition: transform 0.35s ease, opacity 0.35s ease;
+}
+
+.expandable__icon::before {
+  width: 16px;
+  height: 1.5px;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+.expandable__icon::after {
+  width: 1.5px;
+  height: 16px;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+}
+
+details[open] .expandable__icon::after {
+  transform: translateX(-50%) rotate(90deg);
+  opacity: 0;
+}
+
+.expandable__content {
+  padding: 0 0 2.4rem;
+}
+
+.expandable__content p {
+  font-size: 1.8rem;
+  line-height: 1.7;
+  color: var(--text);
+}
+
+.expandable__content a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent);
+  transition: opacity 0.3s ease;
+}
+
+.expandable__content a:hover {
+  opacity: 0.7;
+}
+
+/* ============================================
+   WORK SECTION
+   ============================================ */
+.work-list {
+  list-style: none;
+  padding: 0;
+}
+
+.work-list li {
+  padding: 0.6rem 0;
+  font-size: 1.7rem;
+  line-height: 1.5;
+}
+
+.work-list a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent);
+  transition: opacity 0.3s ease;
+}
+
+.work-list a:hover {
+  opacity: 0.7;
+}
+
+.work-list-desc {
+  color: var(--text-secondary);
+}
+
+/* --- Inline note links --- */
+.about-cta {
+  margin-top: 1.2rem;
+  font-size: 1.6rem;
+  color: var(--text-secondary);
+}
+
+.inline-note-link {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: var(--accent);
+  border-bottom: 1px solid var(--accent);
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.inline-note-link:hover {
+  opacity: 0.7;
+}
+
+/* ============================================
+   EXPERIENCE LIST
+   ============================================ */
+.experience-list {
+  list-style: none;
+  padding: 0;
+}
+
+.experience-list li {
+  padding: 1.4rem 0;
+  font-size: 1.6rem;
+  line-height: 1.6;
+  color: var(--text);
+  border-bottom: 1px solid rgba(212, 208, 200, 0.5);
+}
+
+.experience-list li:last-child {
+  border-bottom: none;
+}
+
+.experience-list strong {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.date-range {
+  font-size: 1.3rem;
+  color: var(--text-muted);
+  margin-left: 0.4rem;
+}
+
+/* ============================================
+   CONTACT LINKS
+   ============================================ */
+.contact-links a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent);
+  transition: opacity 0.3s ease;
+}
+
+.contact-links a:hover {
+  opacity: 0.7;
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+.main-footer {
+  margin-top: 6rem;
+  padding-top: 3rem;
+  border-top: 1px solid var(--overcast-grey);
+}
+
+.main-footer p {
+  font-size: 1.4rem;
+  color: var(--text-secondary);
+}
+
+/* ============================================
+   INDIVIDUAL NOTE PANE (Matuschak-style)
+   ============================================ */
+.note-pane {
+  flex-shrink: 0;
+  flex-grow: 1;
+  width: var(--pane-width);
+  max-width: var(--pane-width);
+  height: 100%;
+  position: sticky;
+  top: 0;
+  background: rgba(245, 242, 235, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-left: 1px solid rgba(0, 0, 0, 0.06);
+  overflow-y: auto;
+  overflow-x: hidden;
+  transition:
+    box-shadow 100ms linear,
+    opacity 75ms linear,
+    transform 200ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.note-pane:first-of-type {
+  border-left: none;
+}
+
+/* Pane enter animation */
+@keyframes paneFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.note-pane {
+  animation: paneFadeIn 150ms linear both;
+}
+
+/* --- Scroll states --- */
+.note-pane.overlay {
+  box-shadow: 0px 0px 15px 3px rgba(0, 0, 0, 0.1);
+}
+
+.note-pane.obscured {
+  box-shadow: 0px 0px 15px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Obscured label — vertical text (Matuschak-style) */
+.obscured-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: var(--visible-width, var(--pane-width));
+  writing-mode: vertical-lr;
+  font-family: var(--font-body);
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: var(--text-secondary);
+  line-height: var(--pane-offset);
+  padding-top: 36px;
+  overflow: hidden;
+  cursor: default;
+  pointer-events: none;
+  z-index: 1;
+  opacity: var(--obscured-progress, 0);
+  background: rgba(245, 242, 235, 0.7);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+/* --- Note pane inner content --- */
+.note-pane-inner {
+  position: relative;
+  background: rgb(245, 242, 235);
+  padding: var(--pane-padding);
+  padding-bottom: 80px;
+  min-height: 100%;
+}
+
+/* --- Note header (no close button) --- */
+.note-header {
+  margin-bottom: 28px;
+}
+
+.note-close-button {
+  display: none;
+}
+
+.note-title {
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+  font-weight: 400;
+  line-height: 1.25;
+  color: var(--text);
+  letter-spacing: -0.01em;
+  margin: 0 0 16px 0;
+}
+
+/* --- Note content --- */
+.note-content {
+  font-size: 1.6rem;
+  line-height: 1.7;
+  color: var(--text);
+}
+
+.note-paragraph {
+  margin-top: 0;
+  margin-bottom: 1.1em;
+}
+
+.note-paragraph strong {
+  font-weight: 600;
+  color: var(--warm-brick);
+}
+
+.note-list {
+  list-style: none;
+  margin-bottom: 1.1em;
+  padding-left: 0;
+}
+
+.note-list-item {
+  padding: 0.3em 0;
+  padding-left: 1.2em;
+  position: relative;
+  margin-bottom: 0.5em;
+}
+
+.note-list-item::before {
+  content: '\2022';
+  position: absolute;
+  left: 0;
+  color: var(--text-muted);
+}
+
+/* --- Note links --- */
+.note-link {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(27, 75, 107, 0.25);
+  padding-bottom: 1px;
+  transition: border-color 150ms ease, color 150ms ease, background-color 150ms ease;
+  cursor: pointer;
+}
+
+.note-link:hover {
+  text-decoration: underline;
+  border-bottom-color: transparent;
+}
+
+/* Active link — target note is currently open */
+.note-link.active {
+  background-color: rgba(27, 75, 107, 0.12);
+}
+
+.note-link.broken {
+  color: var(--text-muted);
+  border-bottom-style: dashed;
+  cursor: default;
+}
+
+.external-link {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(27, 75, 107, 0.25);
+  padding-bottom: 1px;
+  transition: border-color 150ms ease, color 150ms ease;
+}
+
+.external-link:hover {
+  text-decoration: underline;
+  border-bottom-color: transparent;
+}
+
+/* --- Backlinks (Matuschak footer style) --- */
+.backlinks-section {
+  margin: 16px;
+  padding: 16px;
+  background-color: rgba(232, 228, 219, 0.5);
+  border-radius: 16px;
+}
+
+.backlinks-title {
+  font-family: var(--font-body);
+  font-size: 1.7rem;
+  line-height: 2.4rem;
+  color: var(--text-muted);
+  margin: 0 0 8px 0;
+}
+
+.backlinks-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.backlink-card {
+  width: 282px;
+  height: 118px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  user-select: none;
+  margin: 8px -8px 0px -8px;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  background-color: transparent;
+  transition: background-color 100ms linear;
+}
+
+.backlink-card:hover {
+  transition: background-color 50ms linear;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.backlink-card:active {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.backlink-title {
+  font-family: var(--font-body);
+  font-size: 1.2rem;
+  line-height: 1.6rem;
+  font-weight: 500;
+  color: var(--text);
+  margin: 0;
+}
+
+.backlink-summary {
+  font-family: var(--font-body);
+  font-size: 1.2rem;
+  line-height: 1.6rem;
+  color: var(--text-muted);
+  margin-top: 0;
+}
+
+/* ============================================
+   HOVER PREVIEW (Matuschak-style popover)
+   ============================================ */
+.hover-preview {
+  position: fixed;
+  z-index: 2000;
+  pointer-events: none;
+  background-color: var(--chalk-white);
+  border-radius: 8px;
+  filter:
+    drop-shadow(0px 0px 10px rgba(0,0,0,0.08))
+    drop-shadow(0 20px 50px rgba(0,0,0,0.04))
+    drop-shadow(0px 0px 1px rgba(0,0,0,0.15));
+  animation: previewFadeIn 150ms linear both;
+}
+
+@keyframes previewFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.hover-preview-inner {
+  --scale-factor: 0.8;
+  --preview-width: calc(var(--pane-width) * var(--scale-factor));  /* 500px */
+  --preview-margin: calc(var(--pane-padding) * var(--scale-factor)); /* 25.6px */
+
+  width: var(--preview-width);
+  max-height: 400px;
+  overflow: hidden;
+  margin: var(--preview-margin);
+}
+
+.hover-preview-content {
+  width: calc((var(--preview-width) - var(--preview-margin) * 2) / var(--scale-factor));
+  transform: scale(var(--scale-factor));
+  transform-origin: top left;
+}
+
+/* Content inside preview reuses note-content styles */
+.hover-preview-content .note-title {
+  font-size: 2.6rem;
+  margin-bottom: 12px;
+}
+
+.hover-preview-content .note-content {
+  font-size: 1.6rem;
+}
+
+/* ============================================
+   NOTE PANE SCROLLBAR
+   ============================================ */
+.note-pane::-webkit-scrollbar {
+  width: 4px;
+}
+
+.note-pane::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.note-pane::-webkit-scrollbar-thumb {
+  background: var(--overcast-grey);
+  border-radius: 2px;
+}
+
+.note-pane::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* ============================================
+   SELECTION
+   ============================================ */
+::selection {
+  background-color: rgba(197, 201, 164, 0.4);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media screen and (max-width: 800px) {
+  .scroll-container {
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+  }
+
+  .columns-container {
+    flex-direction: column;
+    width: 100% !important;
+  }
+
+  .main-column {
+    width: 100%;
+    max-width: 100%;
+    position: relative !important;
+  }
+
+  .main-column-inner {
+    padding: 6rem 2.4rem 8rem;
+  }
+
+  :root {
+    --pane-padding: 16px;
+    --pane-width: 100vw;
+  }
+
+  .notes-mode .main-column,
+  .closing-mode .main-column {
+    display: none;
+  }
+
+  .note-pane {
+    position: relative !important;
+    left: 0 !important;
+    right: auto !important;
+    height: auto;
+    min-height: 100vh;
+    width: 100% !important;
+    max-width: 100% !important;
+    animation: none !important;
+  }
+
+  .obscured-label {
+    display: none;
+  }
+
+  .note-close-button {
+    display: inline-flex;
+    align-items: center;
+    border: none;
+    background: transparent;
+    color: var(--accent);
+    cursor: pointer;
+    font: inherit;
+    font-size: 1.5rem;
+    padding: 0;
+    margin: 0 0 1.6rem;
+  }
+
+  .hover-preview {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+}
