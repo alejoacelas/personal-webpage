@@ -161,7 +161,7 @@ function drawPathIncomplete(ctx, path, colorIndex, baseWidth) {
   for (let i = 0; i < path.length; i++) {
     if (Math.random() < 0.008) {
       if (drawing && i > segStart + 2) {
-        ctx.lineWidth = baseWidth * (0.5 + Math.random() * 0.8)
+        ctx.lineWidth = baseWidth * (0.7 + Math.random() * 0.35)
         ctx.beginPath()
         ctx.moveTo(path[segStart].x, path[segStart].y)
         for (let j = segStart + 1; j < i; j++) {
@@ -178,7 +178,7 @@ function drawPathIncomplete(ctx, path, colorIndex, baseWidth) {
   }
 
   if (drawing && path.length > segStart + 2) {
-    ctx.lineWidth = baseWidth * (0.5 + Math.random() * 0.8)
+    ctx.lineWidth = baseWidth * (0.7 + Math.random() * 0.35)
     ctx.beginPath()
     ctx.moveTo(path[segStart].x, path[segStart].y)
     for (let j = segStart + 1; j < path.length - 1; j++) {
@@ -202,8 +202,10 @@ export default function DifferentialGrowthBg() {
     const dpr = Math.min(window.devicePixelRatio || 1, 2)
 
     function renderCurrentFrame() {
+      const cw = canvas.width / dpr
+      const ch = canvas.height / dpr
       ctx.fillStyle = '#E8E4DB'
-      ctx.fillRect(0, 0, w, h)
+      ctx.fillRect(0, 0, cw, ch)
       const growth = growthRef.current
       if (!growth) return
       for (let i = 0; i < growth.paths.length; i++) {
@@ -261,9 +263,12 @@ export default function DifferentialGrowthBg() {
       growth.addPath(points)
     }
 
-    // Circular seed forms
+    // Circular seed forms, biased toward the sides instead of the center
     for (let c = 0; c < 2; c++) {
-      const cx = w * (0.3 + Math.random() * 0.4)
+      const side = Math.random() < 0.5 ? 'left' : 'right'
+      const cx = side === 'left'
+        ? w * (0.05 + Math.random() * 0.25)
+        : w * (0.7 + Math.random() * 0.25)
       const cy = h * (0.3 + Math.random() * 0.4)
       const r = 30 + Math.random() * 40
       const n = 20
@@ -284,44 +289,59 @@ export default function DifferentialGrowthBg() {
     ctx.fillRect(0, 0, w, h)
 
     let frame = 0
-    const FREEZE_FRAME = 540 // ~1 second before the original's full clear at 600
+    let lastTime = performance.now()
+    let elapsed = 0
+    let growthAccumulator = 0
+    let fadeAccumulator = 0
 
-    function animate() {
+    function animate(now) {
       rafRef.current = requestAnimationFrame(animate)
 
-      // Freeze the canvas once we reach the target frame
-      if (frame >= FREEZE_FRAME) return
+      const dt = Math.min((now - lastTime) / 1000, 0.05)
+      lastTime = now
+      elapsed += dt
 
-      // Grow at original pace (no capacity check — matches original)
-      if (frame % 2 === 0) {
+      // Use wall-clock time so pacing is consistent across machines while
+      // preserving the original visual behavior. The step rate decays over time
+      // instead of cutting to a hard stop.
+      const initialGrowthRate = 30
+      const minimumGrowthRate = 0.35
+      const slowdownTau = 18
+      const growthRate = minimumGrowthRate + (initialGrowthRate - minimumGrowthRate) * Math.exp(-elapsed / slowdownTau)
+      growthAccumulator += dt * growthRate
+
+      while (growthAccumulator >= 1) {
         growth.step()
+        growthAccumulator -= 1
       }
 
-      // Soft fade every 8 frames for ghostly trails
-      if (frame % 8 === 0) {
-        ctx.fillStyle = 'rgba(232, 228, 219, 0.06)'
+      const fadeRate = 0.89 + (growthRate - minimumGrowthRate) / (initialGrowthRate - minimumGrowthRate) * 4.7
+      const fadeAlpha = 0.0156 + (growthRate - minimumGrowthRate) / (initialGrowthRate - minimumGrowthRate) * 0.03
+      fadeAccumulator += dt * fadeRate
+      while (fadeAccumulator >= 1) {
+        ctx.fillStyle = `rgba(232, 228, 219, ${fadeAlpha.toFixed(4)})`
         ctx.fillRect(0, 0, w, h)
+        fadeAccumulator -= 1
       }
 
-      // Draw all paths
       for (let i = 0; i < growth.paths.length; i++) {
         const path = growth.paths[i]
         if (frame < 200) {
-          drawPath(ctx, path, i, 1.2 + Math.random() * 0.5)
+          drawPath(ctx, path, i, 1.24 + Math.random() * 0.24)
         } else {
           if (i % 3 === 0) {
-            drawPathIncomplete(ctx, path, i, 1.0 + Math.random() * 0.5)
+            drawPathIncomplete(ctx, path, i, 1.02 + Math.random() * 0.22)
           } else {
-            drawPath(ctx, path, i, 0.8 + Math.random() * 0.4)
+            drawPath(ctx, path, i, 0.84 + Math.random() * 0.18)
           }
         }
       }
 
-      frame++
+      frame = Math.floor(elapsed * 60)
       frameRef.current = frame
     }
 
-    animate()
+    animate(lastTime)
 
     let resizeTimeout
     function handleResize() {

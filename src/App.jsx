@@ -63,6 +63,7 @@ export default function App() {
   const [preview, setPreview] = useState(null)
   const [scrollStates, setScrollStates] = useState([])
   const [closing, setClosing] = useState(false)
+  const [suppressLayoutTransitions, setSuppressLayoutTransitions] = useState(false)
   const scrollRef = useRef(null)
   const mainColRef = useRef(null)
   const closingRef = useRef(false)
@@ -151,15 +152,16 @@ export default function App() {
     const target = (window.innerWidth - ROOT_WIDTH) / 2 - naturalLeft
     let pos = currentTransform
     let vel = 0
-
-    const stiffness = 35
-    const damping = 10
+    let lastTime = performance.now()
+    const stiffness = 60
+    const damping = 15
     const mass = 1
-    const dt = 1 / 60
 
     mainCol.style.transition = 'none'
 
-    function step() {
+    function step(now) {
+      const dt = Math.min((now - lastTime) / 1000, 1 / 30)
+      lastTime = now
       const displacement = pos - target
       const springForce = -stiffness * displacement
       const dampingForce = -damping * vel
@@ -180,34 +182,32 @@ export default function App() {
     requestAnimationFrame(step)
 
     function finalize() {
-      const springLeft = mainCol.getBoundingClientRect().left
-
-      // Synchronously flush React state to landing mode so we can measure
       flushSync(() => {
+        setSuppressLayoutTransitions(true)
         setNoteStack([])
         setClosing(false)
         setPreview(null)
       })
       closingRef.current = false
 
-      // DOM is now in landing mode. Measure the natural flex-centered position.
+      // Hand the centered column back to landing mode with transitions disabled,
+      // so the spring remains the only visible motion system.
       mainCol.style.transform = 'none'
-      const landingLeft = mainCol.getBoundingClientRect().left
+      mainCol.style.transition = 'none'
 
-      // Bridge: keep column at its spring position, then smoothly transition to natural
-      const delta = springLeft - landingLeft
-      mainCol.style.transform = `translateX(${delta}px)`
-      mainCol.offsetHeight // commit the bridging frame
-
-      mainCol.style.transition = 'transform 120ms ease-out'
-      mainCol.style.transform = ''
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setSuppressLayoutTransitions(false)
+          mainCol.style.transition = ''
+          mainCol.style.transform = ''
+        })
+      })
 
       const cleanup = () => {
         mainCol.style.transition = ''
         mainCol.style.transform = ''
       }
-      mainCol.addEventListener('transitionend', cleanup, { once: true })
-      setTimeout(cleanup, 200) // safety fallback
+      setTimeout(cleanup, 100)
     }
   }, [])
 
@@ -308,7 +308,6 @@ export default function App() {
 
   // Sync note stack to URL hash
   useEffect(() => {
-    console.log('[sync]', 'noteStack:', noteStack, 'hasMounted:', hasMountedRef.current, 'isPopState:', isPopStateRef.current, 'hash:', window.location.hash)
     if (!hasMountedRef.current) {
       hasMountedRef.current = true
       return
@@ -320,15 +319,13 @@ export default function App() {
     const hash = noteStack.length > 0 ? '#' + noteStack.join('/') : ''
     const currentHash = window.location.hash || ''
     if (currentHash !== hash) {
-      console.log('[sync] PUSHING:', hash || window.location.pathname)
       window.history.pushState(null, '', hash || window.location.pathname)
     }
   }, [noteStack])
 
   // Handle browser back/forward
   useEffect(() => {
-    const handlePopState = (e) => {
-      console.log('[nav]', e.type, 'hash:', window.location.hash, 'stack:', getStackFromHash())
+    const handlePopState = () => {
       isPopStateRef.current = true
       justNavigatedRef.current = true
       setTimeout(() => { justNavigatedRef.current = false }, 500)
@@ -370,7 +367,7 @@ export default function App() {
       <div className="film-grain" />
 
       {/* Page root */}
-      <div className={`page-root ${mode}-mode`}>
+      <div className={`page-root ${mode}-mode ${suppressLayoutTransitions ? 'no-layout-transition' : ''}`}>
         {/* Scroll container */}
         <div className="scroll-container" ref={scrollRef}>
           {/* Columns container */}
@@ -463,8 +460,6 @@ export default function App() {
                   </p>
                 </ExpandableSection>
 
-                <footer className="main-footer">
-                </footer>
               </div>
             </main>
 
