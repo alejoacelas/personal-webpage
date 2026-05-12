@@ -130,6 +130,8 @@ const COLORS = [
   { r: 27,  g: 75,  b: 107, a: 0.15 },  // deep blue
 ]
 
+const FREEZE_AFTER_SECONDS = 20
+
 function drawPath(ctx, path, colorIndex, baseWidth) {
   if (path.length < 2) return
   const c = COLORS[colorIndex % COLORS.length]
@@ -300,6 +302,12 @@ export default function DifferentialGrowthBg() {
       const dt = Math.min((now - lastTime) / 1000, 0.05)
       lastTime = now
       elapsed += dt
+
+      if (elapsed >= FREEZE_AFTER_SECONDS) {
+        cancelAnimationFrame(rafRef.current)
+        rafRef.current = null
+        return
+      }
 
       // Use wall-clock time so pacing is consistent across machines while
       // preserving the original visual behavior. The step rate decays over time
