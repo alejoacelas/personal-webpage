@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Favicon symbol board - Alejandro Acelas</title>
+<style>
+  :root {
+    --paper: #E8E4DB;
+    --chalk: #F5F2EB;
+    --blue: #1B4B6B;
+    --sage: #8B9A6B;
+    --lichen: #C5C9A4;
+    --brick: #8B5E3C;
+    --ink: #3A342C;
+    --muted: #746B5F;
+    --line: rgba(58, 52, 44, 0.16);
+    --soft-line: rgba(58, 52, 44, 0.08);
+    --panel: rgba(245, 242, 235, 0.56);
+    --shadow: 0 18px 42px rgba(58, 52, 44, 0.09);
+    --display: Georgia, "Times New Roman", serif;
+    --body: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background:
+      linear-gradient(90deg, rgba(58, 52, 44, 0.035) 1px, transparent 1px) 0 0 / 72px 72px,
+      linear-gradient(180deg, rgba(58, 52, 44, 0.025) 1px, transparent 1px) 0 0 / 72px 72px,
+      var(--paper);
+    color: var(--ink);
+    font-family: var(--body);
+    line-height: 1.45;
+  }
+
+  .page {
+    width: min(1460px, calc(100% - 44px));
+    margin: 0 auto;
+    padding: 48px 0 64px;
+  }
+
+  header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 28px;
+    align-items: end;
+    padding: 0 0 28px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  h1 {
+    margin: 0;
+    font-family: var(--display);
+    font-size: clamp(34px, 5vw, 68px);
+    line-height: 0.95;
+    font-weight: 600;
+    letter-spacing: 0;
+  }
+
+  .lede {
+    max-width: 720px;
+    margin: 16px 0 0;
+    color: var(--muted);
+    font-size: 16px;
+  }
+
+  .key {
+    display: grid;
+    gap: 8px;
+    min-width: 236px;
+    padding: 16px;
+    border: 1px solid var(--line);
+    background: rgba(245, 242, 235, 0.38);
+  }
+
+  .key-row {
+    display: grid;
+    grid-template-columns: 16px 1fr;
+    gap: 9px;
+    align-items: center;
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  .swatch {
+    width: 16px;
+    height: 16px;
+    border: 1px solid rgba(58, 52, 44, 0.18);
+  }
+
+  .board {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(88px, 1fr));
+    gap: 14px;
+    margin-top: 28px;
+  }
+
+  .direction {
+    display: contents;
+  }
+
+  .direction-title {
+    grid-column: span 12;
+    margin-top: 18px;
+    padding: 18px 0 4px;
+    border-top: 1px solid var(--line);
+    font-family: var(--display);
+    font-size: 23px;
+    font-weight: 600;
+  }
+
+  .card {
+    grid-column: span 4;
+    position: relative;
+    display: grid;
+    grid-template-columns: 132px minmax(0, 1fr);
+    gap: 18px;
+    min-height: 268px;
+    padding: 18px;
+    border: 1px solid var(--line);
+    background: var(--panel);
+    box-shadow: none;
+  }
+
+  .card.recommended {
+    border-color: rgba(27, 75, 107, 0.46);
+    background: rgba(245, 242, 235, 0.74);
+    box-shadow: var(--shadow);
+  }
+
+  .recommendation {
+    position: absolute;
+    top: 13px;
+    right: 13px;
+    padding: 4px 8px;
+    border: 1px solid rgba(27, 75, 107, 0.28);
+    background: rgba(232, 228, 219, 0.88);
+    color: var(--blue);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .specimen {
+    display: grid;
+    gap: 12px;
+    align-content: start;
+  }
+
+  .icon-96,
+  .icon-32,
+  .icon-16 {
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--soft-line);
+    background:
+      linear-gradient(135deg, rgba(255,255,255,0.34), rgba(255,255,255,0)),
+      rgba(255,255,255,0.22);
+  }
+
+  .icon-96 { width: 96px; height: 96px; }
+  .icon-32 { width: 32px; height: 32px; }
+  .icon-16 { width: 16px; height: 16px; }
+
+  .scale-row {
+    display: flex;
+    gap: 12px;
+    align-items: end;
+  }
+
+  svg.symbol {
+    display: block;
+    overflow: visible;
+  }
+
+  .icon-96 svg { width: 96px; height: 96px; }
+  .icon-32 svg { width: 32px; height: 32px; }
+  .icon-16 svg { width: 16px; height: 16px; }
+
+  .tab {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 132px;
+    height: 34px;
+    padding: 0 10px 0 8px;
+    border: 1px solid rgba(58, 52, 44, 0.13);
+    border-bottom-color: rgba(58, 52, 44, 0.24);
+    border-radius: 8px 8px 0 0;
+    background: rgba(255, 255, 255, 0.46);
+    color: #5f564b;
+    font-size: 11px;
+    box-shadow: 0 8px 18px rgba(58, 52, 44, 0.055);
+  }
+
+  .tab svg {
+    width: 16px;
+    height: 16px;
+    flex: 0 0 16px;
+  }
+
+  .tab span {
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .meta {
+    min-width: 0;
+    padding-top: 4px;
+  }
+
+  .label {
+    margin: 0 0 8px;
+    padding-right: 78px;
+    font-family: var(--display);
+    font-size: 20px;
+    line-height: 1.08;
+    font-weight: 600;
+  }
+
+  .rationale {
+    margin: 0;
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  .rationale strong {
+    color: var(--ink);
+    font-weight: 650;
+  }
+
+  .notes {
+    margin-top: 30px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  .glyph-bg { fill: var(--blue); }
+  .glyph-bg-paper { fill: var(--chalk); stroke: rgba(58, 52, 44, 0.2); stroke-width: 1; }
+  .stroke-chalk { stroke: var(--chalk); }
+  .stroke-blue { stroke: var(--blue); }
+  .stroke-sage { stroke: var(--sage); }
+  .stroke-brick { stroke: var(--brick); }
+  .stroke-lichen { stroke: var(--lichen); }
+  .fill-chalk { fill: var(--chalk); }
+  .fill-blue { fill: var(--blue); }
+  .fill-sage { fill: var(--sage); }
+  .fill-brick { fill: var(--brick); }
+  .fill-paper { fill: var(--paper); }
+  .fill-ink { fill: var(--ink); }
+  .no-fill { fill: none; }
+
+  @media (max-width: 1120px) {
+    .card {
+      grid-column: span 6;
+    }
+  }
+
+  @media (max-width: 740px) {
+    .page {
+      width: min(100% - 28px, 640px);
+      padding-top: 28px;
+    }
+
+    header {
+      grid-template-columns: 1fr;
+      align-items: start;
+    }
+
+    .key {
+      min-width: 0;
+    }
+
+    .board {
+      display: block;
+    }
+
+    .direction-title {
+      margin-top: 28px;
+    }
+
+    .card {
+      display: grid;
+      grid-template-columns: 118px minmax(0, 1fr);
+      gap: 14px;
+      min-height: 0;
+      margin: 14px 0;
+      padding: 14px;
+    }
+
+    .label {
+      padding-right: 0;
+      font-size: 18px;
+    }
+
+    .recommendation {
+      position: static;
+      width: max-content;
+      margin-bottom: 8px;
+    }
+
+    .tab {
+      width: 118px;
+    }
+  }
+</style>
+</head>
+<body>
+<svg width="0" height="0" aria-hidden="true" focusable="false">
+  <symbol id="living-a-loop" viewBox="0 0 32 32">
+    <rect class="glyph-bg" width="32" height="32" rx="7" />
+    <path class="no-fill stroke-chalk" d="M17.1 6.1C10.6 6.8 6.7 11.2 7.2 16.4c.5 5 4.8 8.7 10 8 4.5-.6 7.4-4 7.1-8.3-.3-3.8-3.3-6.4-7.1-5.9-3.1.4-5.2 2.7-4.9 5.5.3 2.4 2.3 4.1 4.8 3.8 2-.2 3.3-1.7 3.1-3.5" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/>
+    <path class="no-fill stroke-lichen" d="M18.6 9.3c3-1.1 5.3-2.7 6.8-5.2M11.3 13.5C9 12.3 7 10.7 5.6 8.8M20 21.5c2.6 1.2 4.8 2.8 6 5.2" stroke-width="1.45" stroke-linecap="round"/>
+    <circle class="fill-lichen" cx="25.4" cy="4.2" r="1.55"/>
+    <circle class="fill-lichen" cx="5.5" cy="8.7" r="1.25"/>
+    <circle class="fill-lichen" cx="26" cy="26.8" r="1.25"/>
+  </symbol>
+
+  <symbol id="living-a-stem" viewBox="0 0 32 32">
+    <rect class="glyph-bg-paper" width="32" height="32" rx="7" />
+    <path class="no-fill stroke-blue" d="M17.6 4.8c-4 3.1-6.6 6.9-7.2 11-.6 4.3 1.3 7.9 5 8.6 3.8.8 7.3-1.8 7.8-5.7.5-3.8-1.7-6.8-5.1-7-3-.2-5.3 1.8-5.4 4.5-.1 2.2 1.6 3.8 3.8 3.9" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/>
+    <path class="no-fill stroke-sage" d="M17.2 7.1c2.4-.8 4.4-2 5.7-3.5M12.2 14.1c-2.3-.9-4.2-2.1-5.6-3.8M15.5 24.4c-1.5 1.8-3.3 3.1-5.4 3.9" stroke-width="1.5" stroke-linecap="round"/>
+    <circle class="fill-sage" cx="22.9" cy="3.6" r="1.45"/>
+    <circle class="fill-sage" cx="6.6" cy="10.2" r="1.2"/>
+    <circle class="fill-sage" cx="10" cy="28.4" r="1.2"/>
+  </symbol>
+
+  <symbol id="living-a-dark" viewBox="0 0 32 32">
+    <rect class="fill-ink" width="32" height="32" rx="7" />
+    <path class="no-fill stroke-chalk" d="M16.7 5.9c-6.1.5-9.5 4.6-9 9.5.5 4.8 4.7 8.3 9.6 7.7 4.3-.5 6.9-3.7 6.6-7.7-.4-3.6-3.2-5.9-6.6-5.4-2.8.4-4.6 2.5-4.3 5 .2 2 1.9 3.4 4 3.2" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path class="no-fill stroke-brick" d="M18.5 8.7c2.6-.9 4.7-2.2 6.3-4.2M9.7 17.8c-1.9.6-3.8 1.5-5.5 2.8M21 20.8c1.7 1.6 3.6 2.9 5.7 3.9" stroke-width="1.45" stroke-linecap="round"/>
+    <circle class="fill-brick" cx="24.8" cy="4.5" r="1.4"/>
+    <circle class="fill-brick" cx="4.3" cy="20.7" r="1.2"/>
+    <circle class="fill-brick" cx="26.8" cy="24.8" r="1.2"/>
+  </symbol>
+
+  <symbol id="slivers-plain" viewBox="0 0 32 32">
+    <rect class="glyph-bg" width="32" height="32" rx="7" />
+    <path class="fill-sage" d="M10 5h13.5c1 0 1.8.8 1.8 1.8v18.4c0 1-.8 1.8-1.8 1.8H10z"/>
+    <path class="fill-lichen" d="M7.1 7.5h13.3c1 0 1.8.8 1.8 1.8v17.9H7.1z"/>
+    <path class="fill-chalk" d="M4.8 10.3h13.1c1 0 1.8.8 1.8 1.8V27H4.8z"/>
+    <path class="no-fill stroke-blue" d="M9 14.5h7.1M9 18.2h6.2M9 21.9h4.9" stroke-width="1.25" stroke-linecap="round" opacity=".76"/>
+  </symbol>
+
+  <symbol id="slivers-outline" viewBox="0 0 32 32">
+    <rect class="glyph-bg-paper" width="32" height="32" rx="7" />
+    <path class="fill-blue" d="M11 5.4h12.2c1 0 1.8.8 1.8 1.8v19.4H11z"/>
+    <path class="fill-sage" d="M7.9 7.9h12.4c1 0 1.8.8 1.8 1.8v16.9H7.9z"/>
+    <path class="fill-chalk" d="M5.3 10.7h12.5c1 0 1.8.8 1.8 1.8v14.1H5.3z"/>
+    <path class="no-fill stroke-brick" d="M8.8 15h7M8.8 18.4h6.4M8.8 21.8h5.1" stroke-width="1.25" stroke-linecap="round"/>
+  </symbol>
+
+  <symbol id="slivers-tab-a" viewBox="0 0 32 32">
+    <rect class="glyph-bg" width="32" height="32" rx="7" />
+    <path class="fill-sage" d="M18.4 4.9h5.8c1 0 1.8.8 1.8 1.8v20.4h-7.6z"/>
+    <path class="fill-lichen" d="M12.1 7h8.1c1 0 1.8.8 1.8 1.8v18.3h-9.9z"/>
+    <path class="fill-chalk" d="M6.2 9.4h10.1c1 0 1.8.8 1.8 1.8v15.9H6.2z"/>
+    <text x="12.2" y="23.2" text-anchor="middle" font-family="Georgia, serif" font-size="14" font-weight="700" fill="#1B4B6B">a</text>
+  </symbol>
+
+  <symbol id="serif-blue" viewBox="0 0 32 32">
+    <rect class="glyph-bg" width="32" height="32" rx="7" />
+    <text x="15.8" y="24.3" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="25" font-weight="700" font-style="italic" fill="#F5F2EB">a</text>
+  </symbol>
+
+  <symbol id="serif-paper" viewBox="0 0 32 32">
+    <rect class="glyph-bg-paper" width="32" height="32" rx="7" />
+    <text x="15.9" y="24.3" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="25" font-weight="700" font-style="italic" fill="#1B4B6B">a</text>
+  </symbol>
+
+  <symbol id="serif-cut" viewBox="0 0 32 32">
+    <rect class="fill-brick" width="32" height="32" rx="7" />
+    <text x="15.7" y="24.3" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="25" font-weight="700" font-style="italic" fill="#F5F2EB">a</text>
+    <path class="no-fill stroke-lichen" d="M22.6 7.2c-1.2 1-2.6 1.7-4.1 2" stroke-width="1.25" stroke-linecap="round"/>
+  </symbol>
+
+  <symbol id="node-a-sparse" viewBox="0 0 32 32">
+    <rect class="glyph-bg" width="32" height="32" rx="7" />
+    <path class="no-fill stroke-chalk" d="M8 25.5 15.6 6.7 24 25.5M11.2 18h9.7" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
+    <g class="fill-lichen">
+      <circle cx="15.6" cy="6.7" r="2"/>
+      <circle cx="8" cy="25.5" r="1.9"/>
+      <circle cx="24" cy="25.5" r="1.9"/>
+      <circle cx="11.2" cy="18" r="1.45"/>
+      <circle cx="20.9" cy="18" r="1.45"/>
+    </g>
+  </symbol>
+
+  <symbol id="node-a-thread" viewBox="0 0 32 32">
+    <rect class="glyph-bg-paper" width="32" height="32" rx="7" />
+    <path class="no-fill stroke-blue" d="M7.7 25.6 15.8 6.2 24.2 25.6M10.9 18.2h10.2M11.7 16.1 15.8 6.2 20.2 16.1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <g class="fill-sage">
+      <circle cx="15.8" cy="6.2" r="1.85"/>
+      <circle cx="7.7" cy="25.6" r="1.65"/>
+      <circle cx="24.2" cy="25.6" r="1.65"/>
+      <circle cx="10.9" cy="18.2" r="1.25"/>
+      <circle cx="21.1" cy="18.2" r="1.25"/>
+    </g>
+  </symbol>
+
+  <symbol id="node-a-muted" viewBox="0 0 32 32">
+    <rect class="fill-ink" width="32" height="32" rx="7" />
+    <path class="no-fill stroke-chalk" d="M8.1 25.7 15.9 6.5 23.9 25.7M11.3 18.1h9.6" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"/>
+    <g class="fill-brick">
+      <circle cx="15.9" cy="6.5" r="1.85"/>
+      <circle cx="8.1" cy="25.7" r="1.7"/>
+      <circle cx="23.9" cy="25.7" r="1.7"/>
+      <circle cx="11.3" cy="18.1" r="1.25"/>
+      <circle cx="20.9" cy="18.1" r="1.25"/>
+    </g>
+  </symbol>
+</svg>
+
+<main class="page">
+  <header>
+    <div>
+      <h1>Favicon symbol board</h1>
+      <p class="lede">Twelve compact marks for alejoacelas.com, shown at real favicon scales and in a browser tab context. The priority is recognizability at 16px, then fit with the site's organic notes interface.</p>
+    </div>
+    <div class="key" aria-label="Palette">
+      <div class="key-row"><span class="swatch" style="background:#E8E4DB"></span><span>parchment / site ground</span></div>
+      <div class="key-row"><span class="swatch" style="background:#1B4B6B"></span><span>deep blue / identity anchor</span></div>
+      <div class="key-row"><span class="swatch" style="background:#8B9A6B"></span><span>sage / organic signal</span></div>
+      <div class="key-row"><span class="swatch" style="background:#8B5E3C"></span><span>brick / human warmth</span></div>
+    </div>
+  </header>
+
+  <section class="board" aria-label="Favicon options">
+    <div class="direction">
+      <h2 class="direction-title">1. Living "a" mark</h2>
+
+      <article class="card recommended">
+        <span class="recommendation">Recommended</span>
+        <div class="specimen">
+          <div class="icon-96"><svg class="symbol" viewBox="0 0 32 32" aria-hidden="true"><use href="#living-a-loop" /></svg></div>
+          <div class="scale-row">
+            <div class="icon-32"><svg class="symbol" viewBox="0 0 32 32" aria-hidden="true"><use href="#living-a-loop" /></svg></div>
+            <div class="icon-16"><svg class="symbol" viewBox="0 0 32 32" aria-hidden="true"><use href="#living-a-loop" /></svg></div>
+          </div>
+          <div class="tab"><svg class="symbol" viewBox="0 0 32 32" aria-hidden="true"><use href="#living-a-loop" /></svg><span>Alejandro Acelas</span></div>
+        </div>
+        <div class="meta">
+          <h3 class="label">Looping branch</h3>
+          <p class="rationale"><strong>Best balance.</strong> A loose lowercase a with living linework: personal, site-specific, and still bold enough in a tab.</p>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="specimen">
+          <div class="icon-96"><svg class="symbol" viewBox="0 0 32 32" aria-hidden="true"><use href="#living-a-stem" /></svg></div>
+          <div class="scale-row">
+            <div class="icon-32"><svg class="symbol" viewBox="0 0 32 32" aria-hidden="true"><use href="#living-a-stem" /></svg></div>
+            <div class="icon-16"><svg class="symbol" viewBox="0 0 32 32" aria-hidden="true"><use href="#living-a-stem" /></svg></div>
+          </div>
+          <div class="tab"><svg class="symbol" viewBox="0 0 32 32" aria-hidden="true"><use href="#living-a-stem" /></svg><span>Alejandro Acelas</span></div>
+        </div>
+        <div class="meta">
+          <h3 class="label">Parchment stem</h3>
+          <p class="rationale"><strong>Quieter.</strong> More editorial and integrated with the page palette, but lower contrast makes the 16px version less assertive.</p>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="specimen">
+          <div class="icon-96"><svg class="symbol" viewBox="0 0 32 32" aria-hidden="true"><use href="#living-a-dark" /></svg></div>
+          <div class="scale-row">
+            <div class="icon-32"><svg class="symbol" viewBox="0 0 32 32" aria-hidden="true"><use href="#living-a-dark" /></svg></div>
+            <div class="icon-16"><svg class="symbol" viewBox="0 0 32 32" aria-hidden="true"><use href="#living-a-dark" /></svg></div>
+          </div>
+          <div class="tab"><svg class="symbol" viewBox="0 0 32 32" aria-hidden="true"><use href="#living-a-dark" /></svg><span>Alejandro Acelas</span></div>
+        </div>
+        <div class="meta">
+          <h3 class="label">Dark mycelial</h3>
+          <p class="rationale"><strong>Most forceful.</strong> Excellent contrast and a serious mood; trades some of the site's warmth for a heavier signal.</p>
+        </div>
+      </article>
+    </div>
+
+    <div class="direction">
+      <h2 class="direction-title">2. Stacked note slivers</h2>
+
+      <article class="card">
+        <div class="specimen">
+          <div class="icon-96"><svg class="symbol" viewBox="0 0 32 32" aria-hidden="true"><use href="#slivers-plain" /></svg></div>
+          <div class="scale-row">
+            <div class="icon-32"><svg class="symbol" viewBox="0 0 32 32" aria-hidden="true"><use href="#slivers-plain" /></svg></div>
+            <div class="icon-16"><svg class="symbol" viewBox="0 0 32 32" aria-hidden="true"><use href="#slivers-plain" /></svg></div>
+          </div>
+          <div class="tab"><svg class="symbol" viewBox="0 0 32 32" aria-hidden="true"><use href="#slivers-plain" /></svg><span>Alejandro Acelas</span></div>
+        </div>
+        <div class="meta">
+          <h3 class="label">Offset panes</h3>
+          <p class="rationale"><strong>Interface-forward.</strong> Directly references the stacked notes UI; very clear at 32px, a little abstract at 16px.</p>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="specimen">
+          <div class="icon-96"><svg class="symbol" viewBox="0 0 32 32" aria-hidden="true"><use href="#slivers-outline" /></svg></div>
+          <div class="scale-row">
+            <div class="icon-32"><svg class="symbol" viewBox="0 0 32 32" aria-hidden="true"><use href="#slivers-outline" /></svg></div>
+            <div class="icon-16"><svg class="symbol" viewBox="0 0 32 32" aria-hidden="true"><use href="#slivers-outline" /></svg></div>
+          </div>
+          <div class="tab"><svg class="symbol" viewBox="0 0 32 32" aria-hidden="true"><use href="#slivers-outline" /></svg><span>Alejandro Acelas</span></div>
+        </div>
+        <div class="meta">
+          <h3 class="label">Paper stack</h3>
+          <p class="rationale"><strong>Most site-native.</strong> Feels like an excerpt from the page itself; contrast is softer in crowded tab strips.</p>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="specimen">
+          <div class="icon-96"><svg class="symbol" viewBox="0 0 32 32" aria-hidden="true"><use href="#slivers-tab-a" /></svg></div>
+          <div class="scale-row">
+            <div class="icon-32"><svg class="symbol" viewBox="0 0 32 32" aria-hidden="true"><use href="#slivers-tab-a" /></svg></div>
+            <div class="icon-16"><svg class="symbol" viewBox="0 0 32 32" aria-hidden="true"><use href="#slivers-tab-a" /></svg></div>
+          </div>
+          <div class="tab"><svg class="symbol" viewBox="0 0 32 32" aria-hidden="true"><use href="#slivers-tab-a" /></svg><span>Alejandro Acelas</span></div>
+        </div>
+        <div class="meta">
+          <h3 class="label">Pane with a</h3>
+          <p class="rationale"><strong>Explicit.</strong> Combines initials and interface, though the small letter starts to crowd the panes at 16px.</p>
+        </div>
+      </article>
+    </div>
+
+    <div class="direction">
+      <h2 class="direction-title">3. Georgia lowercase a</h2>
+
+      <article class="card">
+        <div class="specimen">
+          <div class="icon-96"><svg class="symbol" viewBox="0 0 32 32" aria-hidden="true"><use href="#serif-blue" /></svg></div>
+          <div class="scale-row">
+            <div class="icon-32"><svg class="symbol" viewBox="0 0 32 32" aria-hidden="true"><use href="#serif-blue" /></svg></div>
+            <div class="icon-16"><svg class="symbol" viewBox="0 0 32 32" aria-hidden="true"><use href="#serif-blue" /></svg></div>
+          </div>
+          <div class="tab"><svg class="symbol" viewBox="0 0 32 32" aria-hidden="true"><use href="#serif-blue" /></svg><span>Alejandro Acelas</span></div>
+        </div>
+        <div class="meta">
+          <h3 class="label">Blue bookplate</h3>
+          <p class="rationale"><strong>Safest.</strong> Scholarly and legible immediately; less distinctive than the organic marks.</p>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="specimen">
+          <div class="icon-96"><svg class="symbol" viewBox="0 0 32 32" aria-hidden="true"><use href="#serif-paper" /></svg></div>
+          <div class="scale-row">
+            <div class="icon-32"><svg class="symbol" viewBox="0 0 32 32" aria-hidden="true"><use href="#serif-paper" /></svg></div>
+            <div class="icon-16"><svg class="symbol" viewBox="0 0 32 32" aria-hidden="true"><use href="#serif-paper" /></svg></div>
+          </div>
+          <div class="tab"><svg class="symbol" viewBox="0 0 32 32" aria-hidden="true"><use href="#serif-paper" /></svg><span>Alejandro Acelas</span></div>
+        </div>
+        <div class="meta">
+          <h3 class="label">Ink on paper</h3>
+          <p class="rationale"><strong>Most literary.</strong> Elegant and calm, but may disappear on light browser chrome without the border.</p>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="specimen">
+          <div class="icon-96"><svg class="symbol" viewBox="0 0 32 32" aria-hidden="true"><use href="#serif-cut" /></svg></div>
+          <div class="scale-row">
+            <div class="icon-32"><svg class="symbol" viewBox="0 0 32 32" aria-hidden="true"><use href="#serif-cut" /></svg></div>
+            <div class="icon-16"><svg class="symbol" viewBox="0 0 32 32" aria-hidden="true"><use href="#serif-cut" /></svg></div>
+          </div>
+          <div class="tab"><svg class="symbol" viewBox="0 0 32 32" aria-hidden="true"><use href="#serif-cut" /></svg><span>Alejandro Acelas</span></div>
+        </div>
+        <div class="meta">
+          <h3 class="label">Brick marginalia</h3>
+          <p class="rationale"><strong>Warmer.</strong> Human and memorable for a text mark; the tiny branch accent is mostly lost at favicon size.</p>
+        </div>
+      </article>
+    </div>
+
+    <div class="direction">
+      <h2 class="direction-title">4. Node constellation A</h2>
+
+      <article class="card">
+        <div class="specimen">
+          <div class="icon-96"><svg class="symbol" viewBox="0 0 32 32" aria-hidden="true"><use href="#node-a-sparse" /></svg></div>
+          <div class="scale-row">
+            <div class="icon-32"><svg class="symbol" viewBox="0 0 32 32" aria-hidden="true"><use href="#node-a-sparse" /></svg></div>
+            <div class="icon-16"><svg class="symbol" viewBox="0 0 32 32" aria-hidden="true"><use href="#node-a-sparse" /></svg></div>
+          </div>
+          <div class="tab"><svg class="symbol" viewBox="0 0 32 32" aria-hidden="true"><use href="#node-a-sparse" /></svg><span>Alejandro Acelas</span></div>
+        </div>
+        <div class="meta">
+          <h3 class="label">Sparse network</h3>
+          <p class="rationale"><strong>Cleanest AI signal.</strong> Reads instantly as A plus connections; risks feeling closer to a generic AI lab mark.</p>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="specimen">
+          <div class="icon-96"><svg class="symbol" viewBox="0 0 32 32" aria-hidden="true"><use href="#node-a-thread" /></svg></div>
+          <div class="scale-row">
+            <div class="icon-32"><svg class="symbol" viewBox="0 0 32 32" aria-hidden="true"><use href="#node-a-thread" /></svg></div>
+            <div class="icon-16"><svg class="symbol" viewBox="0 0 32 32" aria-hidden="true"><use href="#node-a-thread" /></svg></div>
+          </div>
+          <div class="tab"><svg class="symbol" viewBox="0 0 32 32" aria-hidden="true"><use href="#node-a-thread" /></svg><span>Alejandro Acelas</span></div>
+        </div>
+        <div class="meta">
+          <h3 class="label">Threaded A</h3>
+          <p class="rationale"><strong>More subtle.</strong> The parchment ground softens the network motif; the extra internal lines get dense at 16px.</p>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="specimen">
+          <div class="icon-96"><svg class="symbol" viewBox="0 0 32 32" aria-hidden="true"><use href="#node-a-muted" /></svg></div>
+          <div class="scale-row">
+            <div class="icon-32"><svg class="symbol" viewBox="0 0 32 32" aria-hidden="true"><use href="#node-a-muted" /></svg></div>
+            <div class="icon-16"><svg class="symbol" viewBox="0 0 32 32" aria-hidden="true"><use href="#node-a-muted" /></svg></div>
+          </div>
+          <div class="tab"><svg class="symbol" viewBox="0 0 32 32" aria-hidden="true"><use href="#node-a-muted" /></svg><span>Alejandro Acelas</span></div>
+        </div>
+        <div class="meta">
+          <h3 class="label">Muted graph</h3>
+          <p class="rationale"><strong>Serious.</strong> Strong contrast and less startup-glossy color; still the least personal of the four directions.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <p class="notes">Recommendation: use the looping branch as the production candidate, then simplify branch endpoints only if real exported 16px raster tests show blur.</p>
+</main>
+</body>
+</html>
