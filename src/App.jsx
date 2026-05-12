@@ -381,71 +381,80 @@ export default function App() {
               <div className="main-column-inner">
                 <header className="hero-header">
                   <h1 className="hero-name">Alejandro Acelas</h1>
-                  <p className="hero-subtitle">or just Alejo <span className="pronunciation">(/ah-leh-ho/)</span> if we're friends</p>
+                  <p className="hero-subtitle">or just alejo <span className="pronunciation">(/ah-leh-ho/)</span> if we're friends</p>
                 </header>
 
                 <ExpandableSection title="About">
                   <p>
-                    Based in Bogot&aacute;. Economics at Los Andes (cum laude).
-                    I co-founded{' '}
-                    <a href="https://cliver.bio" target="_blank" rel="noopener noreferrer">Cliver</a>,
-                    taught AI safety bootcamps across Latin America,
-                    and helped draft the EU AI Act Code of Practice.
+                    AI <a href="https://wow.pjh.is/consulting" target="_blank" rel="noopener noreferrer">enthusiast</a>.
+                    Not sure if the future will be good, but very excited to push so we can make it.
                   </p>
-                  <p className="about-cta">
-                    Curious about the person?{' '}
-                    <button
-                      className="inline-note-link"
-                      onClick={() => openNote('what-im-like', -1)}
-                      onMouseEnter={(e) => showPreview('what-im-like', e.currentTarget)}
-                      onMouseLeave={hidePreview}
-                    >What I&apos;m like</button>
-                    {' · '}
-                    <button
-                      className="inline-note-link"
-                      onClick={() => openNote('how-i-work', -1)}
-                      onMouseEnter={(e) => showPreview('how-i-work', e.currentTarget)}
-                      onMouseLeave={hidePreview}
-                    >How I work</button>
+                  <p>
+                    Blog author. Very into the{' '}
+                    <a href="https://utilitarianism.net/" target="_blank" rel="noopener noreferrer">intensest form</a> of{' '}
+                    <a href="https://docs.google.com/document/d/1SUPH6K6J67J5pgT_d0H82219RA5brg6lfaoBLtkXSi4/edit" target="_blank" rel="noopener noreferrer">care</a>.
+                  </p>
+                  <p>
+                    Ambitious. Wasted many shots by mismanaging a{' '}
+                    <a href="https://claude.ai/share/44047740-bf81-4ec9-80f7-adf62d442396" target="_blank" rel="noopener noreferrer">health condition</a>,
+                    but still in my prime and hungering for impact.
                   </p>
                 </ExpandableSection>
 
                 <ExpandableSection title="Work">
-                  <ul className="work-list">
+                  <ul className="experience-list">
                     <li>
-                      <a href="https://cliver.bio" target="_blank" rel="noopener noreferrer">Cliver</a>
-                      <span className="work-list-desc"> &mdash; AI-powered DNA synthesis screening</span>
+                      <strong>AI uplift</strong> — Upcoming <span className="date-range">Jun 2026–present</span>
+                      <br />Figure out how to get EA to AI aggressively.
                     </li>
                     <li>
-                      <a href="https://forum.effectivealtruism.org/posts/9nWKhhuuubcwGWEpk/" target="_blank" rel="noopener noreferrer">EA Forum post</a>
-                      <span className="work-list-desc"> &mdash; AI uplift for EA orgs</span>
+                      <strong>Co-founder</strong> — Cliver <span className="date-range">Feb 2025–present</span>
+                      <br />Researched who should not get DNA and how we could spot them. Tried to automate the spotting process.
+                    </li>
+                    <li>
+                      <strong>Writing contractor</strong> — 80,000 Hours <span className="date-range">Sep 2025–present</span>
+                      <br />Fact-checked and drafted footnotes for Ben's book. Could have used AI more.
+                    </li>
+                    <li>
+                      <strong>Program consultant</strong> — LEEP <span className="date-range">May–Sep 2025</span>
+                      <br />Figure out who's selling paint in Colombia and how much. Used LLMs because I'm lazy.
+                    </li>
+                    <li>
+                      <strong>Communications contractor</strong> — FAR AI
+                      <br />Created social media for AI Safety talks. Used LLMs much.
+                    </li>
+                    <li>
+                      <strong>Head teacher</strong> — ML4Good <span className="date-range">Feb 2025–Aug 2025</span>
+                      <br />Loved my students. Taught them some ML, but mostly tried teaching them conviction.
+                    </li>
+                    <li>
+                      <strong>AI policy officer</strong> — Observatorio de Riesgos Catastr&oacute;ficos Globales <span className="date-range">May–Oct 2024</span>
+                      <br />Scoured evals literature to improve the EU AI Act's Code of Practice.
+                      <div className="experience-note">+ a one-month curiosity-driven detour on biorisk</div>
+                    </li>
+                    <li>
+                      <strong>Research fellow</strong> — Swiss Existential Risk Initiative / Independent <span className="date-range">Jun–Aug 2023</span>
+                      <br />Tried to fully grok small Transformers trained to add and count and similar.
+                    </li>
+                    <li>
+                      <strong>Co-founder</strong> — Effective Altruism Uniandes <span className="date-range">Jun 2021–Feb 2023</span>
+                      <br />Had many 1-on-1s. Some of them went really well.
                     </li>
                   </ul>
                 </ExpandableSection>
 
-                <ExpandableSection title="Experience">
-                  <ul className="experience-list">
-                    <li>
-                      <strong>Program consultant</strong> — LEEP <span className="date-range">May–Sep 2025</span>
-                      <br />Market research and LLM prototyping for lead poisoning elimination.
-                    </li>
-                    <li>
-                      <strong>Head teacher</strong> — ML4Good <span className="date-range">Feb 2025–Aug 2025</span>
-                      <br />Led ML and AI safety bootcamps throughout Latin America.
-                    </li>
-                    <li>
-                      <strong>AI policy officer</strong> — Observatorio de Riesgos Catastr&oacute;ficos Globales <span className="date-range">May–Oct 2024</span>
-                      <br />Drafted recommendations for EU AI Act.
-                    </li>
-                    <li>
-                      <strong>Research fellow</strong> — Swiss Existential Risk Initiative <span className="date-range">Jun–Aug 2023</span>
-                      <br />Feature detection for neural networks.
-                    </li>
-                    <li>
-                      <strong>Co-founder</strong> — Effective Altruism Uniandes <span className="date-range">Jun 2021–Feb 2023</span>
-                      <br />University community for high-impact careers.
-                    </li>
-                  </ul>
+                <ExpandableSection title="Writing">
+                  <p>
+                    I have <a href="http://myea.blog" target="_blank" rel="noopener noreferrer">my EA blog</a>!
+                  </p>
+                  <p>
+                    Hope I can add a wiki with everything I've done auto-generated from my Drive.{' '}
+                    <a href="mailto:alejoacelas@gmail.com">Email me</a> if you really want to see it now.
+                  </p>
+                  <p>
+                    Maybe there's also some of my stuff on the{' '}
+                    <a href="https://forum.effectivealtruism.org/users/alejoacelas" target="_blank" rel="noopener noreferrer">EA Forum</a>.
+                  </p>
                 </ExpandableSection>
 
                 <ExpandableSection title="Contact">

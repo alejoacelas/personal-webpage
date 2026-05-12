@@ -14,6 +14,14 @@
   resolved "https://registry.yarnpkg.com/@oxc-project/types/-/types-0.122.0.tgz#2f4e77a3b183c87b2a326affd703ef71ba836601"
   integrity sha512-oLAl5kBpV4w69UtFZ9xqcmTi+GENWOcPF7FCrczTiBbmC0ibXxCwyvZGbO39rCVEuLGAZM84DH0pUIyyv/YJzA==
 
+"@playwright/cli@^0.1.4":
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/@playwright/cli/-/cli-0.1.4.tgz#39ea7dca11d4b6e0fbea087002a5bc1cf2e4bc77"
+  integrity sha512-aT6VgMeJ/tkZxz0HvHYZ4tySeruuypksPkEggZ++eqMK3Tg3Sr/CUm63ExlNVsqQpsyp9FgukmpSYc8T8zFz3A==
+  dependencies:
+    minimist "^1.2.5"
+    playwright "1.60.0-alpha-1775061447000"
+
 "@rolldown/binding-android-arm64@1.0.0-rc.12":
   version "1.0.0-rc.12"
   resolved "https://registry.yarnpkg.com/@rolldown/binding-android-arm64/-/binding-android-arm64-1.0.0-rc.12.tgz#4e6af08b89da02596cc5da4b105082b68673ffec"
@@ -125,6 +133,11 @@ fdir@^6.5.0:
   resolved "https://registry.yarnpkg.com/fdir/-/fdir-6.5.0.tgz#ed2ab967a331ade62f18d077dae192684d50d350"
   integrity sha512-tIbYtZbucOs0BRGqPJkshJUYdL+SDH7dVM8gjy+ERp3WAUjLEFJE+02kanyHtwjWOnwrKYBiwAmM0p4kLJAnXg==
 
+fsevents@2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-2.3.2.tgz#8a526f78b8fdf4623b709e0b975c52c24c02fd1a"
+  integrity sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==
+
 fsevents@~2.3.3:
   version "2.3.3"
   resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-2.3.3.tgz#cac6407785d03675a2a5e1a5305c697b347d90d6"
@@ -204,6 +217,11 @@ lightningcss@^1.32.0:
     lightningcss-win32-arm64-msvc "1.32.0"
     lightningcss-win32-x64-msvc "1.32.0"
 
+minimist@^1.2.5:
+  version "1.2.8"
+  resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.8.tgz#c1a464e7693302e082a075cee0c057741ac4772c"
+  integrity sha512-2yyAR8qBkN3YuheJanUpWC5U3bb5osDywNB8RzDVlDwDHbocAJveqqj1u8+SVD7jkWT4yvsHCpWqqWqAxb0zCA==
+
 nanoid@^3.3.11:
   version "3.3.11"
   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.11.tgz#4f4f112cefbe303202f2199838128936266d185b"
@@ -218,6 +236,20 @@ picomatch@^4.0.3, picomatch@^4.0.4:
   version "4.0.4"
   resolved "https://registry.yarnpkg.com/picomatch/-/picomatch-4.0.4.tgz#fd6f5e00a143086e074dffe4c924b8fb293b0589"
   integrity sha512-QP88BAKvMam/3NxH6vj2o21R6MjxZUAd6nlwAS/pnGvN9IVLocLHxGYIzFhg6fUQ+5th6P4dv4eW9jX3DSIj7A==
+
+playwright-core@1.60.0-alpha-1775061447000:
+  version "1.60.0-alpha-1775061447000"
+  resolved "https://registry.yarnpkg.com/playwright-core/-/playwright-core-1.60.0-alpha-1775061447000.tgz#37ab3a33685b86ef9727e4a9ec067ff33846b629"
+  integrity sha512-8xEKqw04tk+79l/5XlU4HXyf37ngAf8uJUcOd4FLpGjbxwgRpYoqOFlR4wWcQPOxNS5T+22px0QRIF/kZYwEHg==
+
+playwright@1.60.0-alpha-1775061447000:
+  version "1.60.0-alpha-1775061447000"
+  resolved "https://registry.yarnpkg.com/playwright/-/playwright-1.60.0-alpha-1775061447000.tgz#b46d848cc52d9436b4203ba59be25e086a9e6546"
+  integrity sha512-OrClfQgiBMhp55a5d7KTGxKbCcLoevmvu18cUXJQE+pXXQ7yjFj7zbMlrPbIcgNtxJGFtX6sx0PR/1Yk8OlG+g==
+  dependencies:
+    playwright-core "1.60.0-alpha-1775061447000"
+  optionalDependencies:
+    fsevents "2.3.2"
 
 postcss@^8.5.8:
   version "8.5.8"

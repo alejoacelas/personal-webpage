@@ -309,6 +309,11 @@ details[open] .expandable__icon::after {
   font-size: 1.8rem;
   line-height: 1.7;
   color: var(--text);
+  margin: 0 0 1.6rem;
+}
+
+.expandable__content p:last-child {
+  margin-bottom: 0;
 }
 
 .expandable__content a {
@@ -404,6 +409,13 @@ details[open] .expandable__icon::after {
   font-size: 1.3rem;
   color: var(--text-muted);
   margin-left: 0.4rem;
+}
+
+.experience-note {
+  margin-top: 0.6rem;
+  padding-left: 1.8rem;
+  color: var(--text-secondary);
+  font-size: 1.5rem;
 }
 
 /* ============================================

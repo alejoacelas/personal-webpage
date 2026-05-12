@@ -84,16 +84,14 @@ export default function HoverPreview({ note, linkRect }) {
   }
 
   // Vertical: align near link top, clamp to viewport (max preview height ~400px from CSS)
-  const top = linkRect.top - 72
-  const clampedLeft = left
-  const clampedTop = Math.max(8, Math.min(top, window.innerHeight - 416))
+  const top = Math.max(8, Math.min(linkRect.top - 72, window.innerHeight - 416))
 
   return (
     <div
       className="hover-preview"
       style={{
-        left: `${clampedLeft}px`,
-        top: `${clampedTop}px`,
+        left: `${left}px`,
+        top: `${top}px`,
       }}
     >
       <div className="hover-preview-inner">

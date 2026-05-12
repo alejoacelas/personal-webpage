@@ -108,9 +108,9 @@ export default function NotePane({
   onLeaveLink,
   stickyLeft,
 }) {
-  if (!note) return null
-
   const { displayedSlugs } = useContext(NoteStackContext)
+
+  if (!note) return null
 
   return (
     <div
