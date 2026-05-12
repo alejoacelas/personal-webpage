@@ -14,6 +14,7 @@ build/
 .vercel/
 .gstack/
 .playwright-cli/
+output/
 coverage/
 playwright-report/
 test-results/
