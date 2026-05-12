@@ -1,3 +1,0 @@
-[     228ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://127.0.0.1:3073/node_modules/.vite/deps/react-dom_client.js?v=d0f29a7a:14336
-[     265ms] [LOG] [sync] noteStack: [] hasMounted: false isPopState: false hash:  @ http://127.0.0.1:3073/src/App.jsx:286
-[     268ms] [LOG] [sync] noteStack: [] hasMounted: true isPopState: false hash:  @ http://127.0.0.1:3073/src/App.jsx:286
