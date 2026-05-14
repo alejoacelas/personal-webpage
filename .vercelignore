@@ -1,4 +1,6 @@
 output/
+notes/
+lateral-notes/
 .playwright-cli/
 .gstack/
 coverage/

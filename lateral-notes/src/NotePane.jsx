@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { NoteStackContext } from './App.jsx'
+import NoteStackContext from './noteContext.js'
 import notes from './notes.js'
 
 // Parse [[id|label]] links, **bold**, and [text](url) external links in content
@@ -100,10 +100,9 @@ export default function NotePane({
   noteId,
   note,
   index,
-  stackLength,
   scrollState,
   onOpenNote,
-  onCloseNotes,
+  onBack,
   onHoverLink,
   onLeaveLink,
   stickyLeft,
@@ -130,7 +129,7 @@ export default function NotePane({
           <button
             type="button"
             className="note-close-button"
-            onClick={onCloseNotes}
+            onClick={onBack}
           >
             Back
           </button>
@@ -140,6 +139,12 @@ export default function NotePane({
         <div className="note-content">
           {renderContent(note.content, index, onOpenNote, onHoverLink, onLeaveLink, displayedSlugs)}
         </div>
+
+        {note.updated && (
+          <div className="note-footer-meta">
+            Last updated {note.updated}.
+          </div>
+        )}
 
         {note.backlinks && note.backlinks.length > 0 && (
           <div className="backlinks-section">
