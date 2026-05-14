@@ -13,10 +13,16 @@ const PANE_OFFSET = 40
 const ROOT_WIDTH = 640
 const RUNWAY = 100
 
-function ExpandableSection({ title, children }) {
+function ExpandableSection({ title, defaultOpen = false, children }) {
+  const [isOpen, setIsOpen] = useState(defaultOpen)
+
   return (
     <section className="body-section">
-      <details className="expandable">
+      <details
+        className="expandable"
+        open={isOpen}
+        onToggle={(event) => setIsOpen(event.currentTarget.open)}
+      >
         <summary className="expandable__trigger">
           <h2>{title}</h2>
           <span className="expandable__icon" aria-hidden="true"></span>
@@ -384,7 +390,7 @@ export default function App() {
                   <p className="hero-subtitle">or just alejo <span className="pronunciation">(/ah-leh-ho/)</span> if we're friends</p>
                 </header>
 
-                <ExpandableSection title="About">
+                <ExpandableSection title="About" defaultOpen>
                   <p>
                     AI <a href="https://wow.pjh.is/consulting" target="_blank" rel="noopener noreferrer">enthusiast</a>.
                     Not sure if the future will be good, but very excited to push so we can make it.
@@ -395,9 +401,7 @@ export default function App() {
                     <a href="https://docs.google.com/document/d/1SUPH6K6J67J5pgT_d0H82219RA5brg6lfaoBLtkXSi4/edit" target="_blank" rel="noopener noreferrer">care</a>.
                   </p>
                   <p>
-                    Ambitious. Wasted many shots by mismanaging a{' '}
-                    <a href="https://claude.ai/share/44047740-bf81-4ec9-80f7-adf62d442396" target="_blank" rel="noopener noreferrer">health condition</a>,
-                    but still in my prime and hungering for impact.
+                    Ambitious. Revolted by the weakness of my flesh, and actively enlisting friends to find a form worth pressing it into.
                   </p>
                 </ExpandableSection>
 
