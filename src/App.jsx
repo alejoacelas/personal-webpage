@@ -396,7 +396,7 @@ export default function App() {
                     Not sure if the future will be good, but very excited to push so we can make it.
                   </p>
                   <p>
-                    Blog author. Very into the{' '}
+                    Blog writer. Very into the{' '}
                     <a href="https://utilitarianism.net/" target="_blank" rel="noopener noreferrer">intensest form</a> of{' '}
                     <a href="https://docs.google.com/document/d/1SUPH6K6J67J5pgT_d0H82219RA5brg6lfaoBLtkXSi4/edit" target="_blank" rel="noopener noreferrer">care</a>.
                   </p>
