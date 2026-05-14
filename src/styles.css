@@ -17,7 +17,7 @@
   --grain-opacity: 0.04;
   --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   --font-display: Georgia, 'Times New Roman', serif;
-  --main-column-width: 640px;
+  --profile-width: 592px;
 }
 
 *, *::before, *::after {
@@ -28,20 +28,22 @@
 
 html {
   font-size: 62.5%;
+  min-height: 100%;
 }
 
 body {
+  min-height: 100%;
   font-family: var(--font-body);
   font-size: 1.8rem;
   line-height: 1.65;
   color: var(--text);
   background: var(--bg-base);
   -webkit-font-smoothing: antialiased;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
-html, body, #root {
-  height: 100%;
+#root {
+  min-height: 100%;
 }
 
 .film-grain {
@@ -54,56 +56,37 @@ html, body, #root {
   z-index: 1000;
 }
 
-.page-root {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  position: relative;
-  z-index: 1;
-}
-
-.scroll-container {
-  flex: 1;
-  display: flex;
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
-.scroll-container::-webkit-scrollbar {
+::-webkit-scrollbar {
   width: 6px;
 }
 
-.scroll-container::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
   background: transparent;
 }
 
-.scroll-container::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
   background: var(--overcast-grey);
   border-radius: 3px;
 }
 
-.columns-container {
+.site-main {
   display: flex;
   justify-content: center;
-  width: 100%;
-  min-height: 100%;
+  align-items: flex-start;
+  min-height: 100dvh;
+  padding: 4rem 2.4rem 8rem;
+  position: relative;
+  z-index: 1;
 }
 
-.main-column {
-  flex-shrink: 0;
-  width: var(--main-column-width);
-  max-width: var(--main-column-width);
-  padding: 0 2.4rem;
-}
-
-.main-column-inner {
+.profile-panel {
+  width: min(100%, var(--profile-width));
+  min-height: calc(100dvh - 12rem);
   background: rgba(245, 242, 235, 0.8);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   border-radius: 2px;
   padding: 8rem 4rem 12rem;
-  margin: 4rem 0;
-  min-height: calc(100vh - 8rem);
   box-shadow:
     0 1px 3px rgba(0, 0, 0, 0.04),
     0 8px 40px rgba(0, 0, 0, 0.03);
@@ -287,23 +270,13 @@ details[open] .expandable__icon::after {
 }
 
 @media screen and (max-width: 800px) {
-  body {
-    overflow: auto;
+  .site-main {
+    padding: 2rem 1.6rem 6rem;
   }
 
-  .scroll-container {
-    overflow-y: auto;
-  }
-
-  .main-column {
-    width: 100%;
-    max-width: 100%;
-    padding: 0 1.6rem;
-  }
-
-  .main-column-inner {
+  .profile-panel {
+    min-height: calc(100dvh - 8rem);
     padding: 6rem 2.4rem 8rem;
-    margin: 2rem 0;
   }
 }
 
