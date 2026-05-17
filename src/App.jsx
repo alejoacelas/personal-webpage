@@ -47,7 +47,7 @@ export default function App() {
               <a href="https://docs.google.com/document/d/1SUPH6K6J67J5pgT_d0H82219RA5brg6lfaoBLtkXSi4/edit" target="_blank" rel="noopener noreferrer">care</a>.
             </p>
             <p>
-              Ambitious. Revolted by the weakness of my flesh, and actively enlisting friends to find a form worth pressing it into.
+              Ambitious. Revolted by the inherent weakness of my flesh, and actively enlisting friends to find a form worth pressing it into.
             </p>
           </ExpandableSection>
 
