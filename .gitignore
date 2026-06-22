@@ -29,3 +29,6 @@ pnpm-debug.log*
 # OS/editor files
 .DS_Store
 *.swp
+
+.venv/
+.mcp.json
