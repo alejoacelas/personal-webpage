@@ -10,7 +10,7 @@
 ## Deployment
 
 - **Platform:** Vercel
-- **Project:** `website` (org: `alejandros-projects-a115cc74`)
+- **Project:** `alejoacelas-com` (org: `alejandros-projects-a115cc74`)
 - **Domain:** alejoacelas.com
 - **Deploy:** `vercel deploy --prod` from project root
 
