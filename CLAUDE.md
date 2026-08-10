@@ -1,5 +1,7 @@
 # Personal Website — alejoacelas.com
 
+`main` is the sole current version. The root Vite app is what production deploys; `archive/` is lineage only.
+
 ## Stack
 
 - **Framework:** React 19 + Vite 8
@@ -10,7 +12,7 @@
 ## Deployment
 
 - **Platform:** Vercel
-- **Project:** `website` (org: `alejandros-projects-a115cc74`)
+- **Project:** `alejoacelas-com` (org: `alejandros-projects-a115cc74`)
 - **Domain:** alejoacelas.com
 - **Deploy:** `vercel deploy --prod` from project root
 

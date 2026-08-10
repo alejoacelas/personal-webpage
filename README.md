@@ -1,15 +1,10 @@
-# Personal Website Source
+# alejoacelas.com
 
-Private source workspace for Alejo personal website and related notes.
+Canonical source for [alejoacelas.com](https://alejoacelas.com).
 
-## Status
+- `main` is the only active branch and the root Vite app is the only current site.
+- Vercel project `alejoacelas-com` deploys the root to `alejoacelas.com` and `www.alejoacelas.com`.
+- `archive/` contains superseded experiments and is never deployed.
+- `myea.blog` is a separate site in the separate `myea-blog` repository.
 
-Keep private until public website content is separated from notes and drafts.
-
-## Commands
-
-- `yarn install`
-
-## Notes
-
-Keep longer research notes, raw transcripts, and implementation details outside this short README unless they are necessary for first-time orientation.
+Run `yarn install`, `yarn build`, then `vercel deploy --prod`.

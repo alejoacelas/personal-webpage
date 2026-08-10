@@ -1,5 +1,5 @@
 {
-  "name": "option-c",
+  "name": "alejoacelas-com",
   "version": "1.0.0",
   "private": true,
   "license": "MIT",
@@ -7,9 +7,6 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "notes:dev": "vite --config lateral-notes/vite.config.js",
-    "notes:build": "vite build --config lateral-notes/vite.config.js",
-    "notes:preview": "vite preview --config lateral-notes/vite.config.js",
     "playwright": "playwright-cli",
     "playwright:install": "playwright-cli install-browser chromium"
   },
