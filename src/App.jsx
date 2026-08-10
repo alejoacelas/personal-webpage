@@ -395,9 +395,7 @@ export default function App() {
                     <a href="https://docs.google.com/document/d/1SUPH6K6J67J5pgT_d0H82219RA5brg6lfaoBLtkXSi4/edit" target="_blank" rel="noopener noreferrer">care</a>.
                   </p>
                   <p>
-                    Ambitious. Wasted many shots by mismanaging a{' '}
-                    <a href="https://claude.ai/share/44047740-bf81-4ec9-80f7-adf62d442396" target="_blank" rel="noopener noreferrer">health condition</a>,
-                    but still in my prime and hungering for impact.
+                    Ambitious. Revolted by the inherent weakness of my flesh, and actively enlisting friends to find a form worth pressing it into.
                   </p>
                 </ExpandableSection>
 
