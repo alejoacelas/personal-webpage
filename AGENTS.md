@@ -1,6 +1,15 @@
+---
+agent_context:
+  version: 1
+  groups: []
+  visibility: public
+---
+<!-- agent-context:begin sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 -->
+<!-- agent-context:end -->
+
 # Personal Website — alejoacelas.com
 
-`main` is the sole current version. The root Vite app is what production deploys; `archive/` is lineage only.
+`main` is the sole current version. The root Vite app is what production deploys; `~/best/archive/2026-08-website-superseded/` is lineage only.
 
 ## Stack
 
