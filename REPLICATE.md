@@ -54,3 +54,12 @@ The repository root on `main` is the production source.
 5. Confirm that `alejoacelas.com` and `www.alejoacelas.com` resolve to the new production deployment.
 
 On 2026-08-10, the active site was consolidated from competing `main` and `shrine` histories. `main` contained the newer simplified landing page and canonical About sentence, so it became the sole production branch. Superseded files moved to `archive/2026-08-10-superseded/`; obsolete branch tips were preserved by the `archive/pre-main-consolidation-2026-08-10` tag before their branches were removed.
+
+## Retire construction folders
+
+Alejo wanted all `reproduce` folders under `~/best` transitioned to `REPLICATE.md`.
+
+- Consolidated the existing records and updated references for `reproduce`. Preserved scripts, data and maintained procedures in their own folders.
+- Original tracked files remain in Git at `e7900a3321ff50a12af44bdd84a3798be05d3375`; a full local backup, including ignored files, is at `/Users/alejo/.local/state/reproduce-migration/2026-09-19-_qyg4u7a/before/me/sites/website`.
+
+Agent session 01a0bb8d-6d31-76d3-ac4e-aca4c5dfce64 · Commits e06285e11aee8d8ca845a771a60a4d0f651175de
