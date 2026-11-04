@@ -1,12 +1,23 @@
 # Brief
 
-Draft. Lines marked **Open** wait on Alejo's answers.
+Lines marked **Open** wait on Alejo's answers.
 
 ## Purpose
 
-alejoacelas.com is where people Alejo wants to work with get to know Alejo. A visitor
-should leave knowing what Alejo does, convinced Alejo does it well, and knowing the
-next step.
+alejoacelas.com is where people Alejo wants to work with get to know Alejo. A
+visitor should leave knowing what Alejo does, convinced Alejo does it well, and
+ready to send an email.
+
+## Visitors
+
+1. **Employers and collaborators** judging Alejo's track record: hiring managers
+   (e.g. Coefficient Giving), founders, and peers starting projects.
+2. Clients for independent work, and people sent to a single resource. The site
+   serves them without being written for them.
+
+## Next step
+
+Email. Contact is personal and low-key, with no booking widget up front.
 
 ## Situation (November 2026)
 
@@ -16,25 +27,26 @@ next step.
   ranked task list), one-to-one coaching, project discovery and short build
   sprints done together.
 - Track record: about 30 coaching calls with AIM founders and staff, a two-month
-  secondment at 80,000 Hours, and audits of 17 Impact Ops staff. Before that:
-  biosecurity (Cliver, KYC for DNA synthesis), ML4Good teaching, AI policy.
+  secondment at 80,000 Hours, and audits of 17 Impact Ops staff.
 - People find Alejo through an EA Forum post, Slack communities, AI Champions
   calls and referrals. The site is usually the second stop, after a name or link.
 
-## Visitors
+## History shown
 
-- **Open:** who comes first, and what they should do next.
-- Likely visitors: leaders and ops staff at EA and AI safety organisations
-  deciding whether to hire Alejo; hiring managers (e.g. Coefficient Giving); peers
-  and collaborators; people sent to a single resource.
+AI uplift work (AIM, 80,000 Hours, Impact Ops) plus two or three earlier items
+that support it, chosen from Cliver, ML4Good and AI policy at ORCG.
 
 ## Message
 
-- **Open:** the one sentence the site says.
+**Open:** the one sentence the site says. Drafts:
+
+- I help people doing important work use AI to do it better.
+- I teach high-impact teams to work with AI, one task at a time.
+- I find where AI can help a team, then help them use it.
 
 ## Pointers
 
-Candidates, pending which are public:
+Candidates:
 
 - AI task map template (github.com/alejoacelas/ai-task-map-template, public)
 - AI audit template and the audit interview questions that worked
@@ -45,11 +57,9 @@ Candidates, pending which are public:
 
 ## Tone
 
-Candid and warm, and precise about what Alejo has done. People praised the old
-site's candour. **Open:** how much of the old site's personal voice stays.
+Professional and candid, precise about what Alejo has done. Personality lives in
+small touches: asides, details and hidden jokes.
 
 ## Constraints
 
-- Minimal. Every word on key pages chosen deliberately.
-- **Open:** whether to show prices. The UK visa question about paid work is
-  unresolved.
+Minimal. Every word on key pages chosen deliberately.
