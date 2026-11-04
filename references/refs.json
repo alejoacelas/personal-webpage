@@ -3044,5 +3044,933 @@
         "url": "https://csswizardry.com/archive/"
       }
     ]
+  },
+  {
+    "id": "benedict-evans",
+    "name": "Benedict Evans",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "An independent analyst's site that is little more than a dated list of essays, each argued with plain charts and a clear thesis.",
+    "seed": "julian-digital",
+    "source": "agent",
+    "added": "2026-11-04T22:11:08.058Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://www.ben-evans.com/"
+      },
+      {
+        "label": "Essays index",
+        "url": "https://www.ben-evans.com/essays"
+      },
+      {
+        "label": "Essay",
+        "url": "https://www.ben-evans.com/benedictevans/2026/9/3/ai-tools-and-transformation"
+      },
+      {
+        "label": "Presentations",
+        "url": "https://www.ben-evans.com/presentations"
+      }
+    ]
+  },
+  {
+    "id": "josh-comeau",
+    "name": "Josh W. Comeau",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "Tutorials where live, tweakable demos sit inside the prose, plus a whimsical layer of sounds, hover tricks and a cartoon self-portrait.",
+    "seed": "emil-kowalski",
+    "source": "agent",
+    "added": "2026-11-04T22:11:08.058Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://www.joshwcomeau.com/"
+      },
+      {
+        "label": "Interactive essay",
+        "url": "https://www.joshwcomeau.com/animation/a-friendly-introduction-to-spring-physics/"
+      },
+      {
+        "label": "Blog index",
+        "url": "https://www.joshwcomeau.com/blog/"
+      },
+      {
+        "label": "About",
+        "url": "https://www.joshwcomeau.com/about-josh/"
+      }
+    ]
+  },
+  {
+    "id": "tufte-css",
+    "name": "Tufte CSS",
+    "cluster": "Tools & documents",
+    "note": "",
+    "why": "A single document that shows Tufte-style sidenotes, margin figures and an ET Book serif on a cream page, ready to borrow for essays.",
+    "seed": "transformer-circuits",
+    "source": "agent",
+    "added": "2026-11-04T22:11:08.058Z",
+    "pages": [
+      {
+        "label": "Demo document",
+        "url": "https://edwardtufte.github.io/tufte-css/"
+      }
+    ]
+  },
+  {
+    "id": "red-blob-games",
+    "name": "Red Blob Games (Amit Patel)",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "Hand-built interactive explainers where you drag points in the diagrams, written in a patient, humble voice with a 'making of' for each piece.",
+    "seed": "nicky-case",
+    "source": "agent",
+    "added": "2026-11-04T22:11:08.058Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://www.redblobgames.com/"
+      },
+      {
+        "label": "Hexagon grids guide",
+        "url": "https://www.redblobgames.com/grids/hexagons/"
+      },
+      {
+        "label": "A* introduction",
+        "url": "https://www.redblobgames.com/pathfinding/a-star/introduction.html"
+      },
+      {
+        "label": "Making-of page",
+        "url": "https://www.redblobgames.com/making-of/line-drawing/"
+      }
+    ]
+  },
+  {
+    "id": "laurel-schwulst",
+    "name": "Laurel Schwulst",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "A designer-teacher's site that treats itself as a 'shifting house', with odd small entries, a 'today' page and gentle handmade details.",
+    "seed": "lynn-and-tonic",
+    "source": "agent",
+    "added": "2026-11-04T22:11:08.058Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://www.laurelschwulst.com/"
+      },
+      {
+        "label": "Essay on her website",
+        "url": "https://www.laurelschwulst.com/e/my-website-is-a-shifting-house/"
+      },
+      {
+        "label": "Today page",
+        "url": "https://www.laurelschwulst.com/today/"
+      }
+    ]
+  },
+  {
+    "id": "gordon-brander",
+    "name": "Gordon Brander",
+    "cluster": "Notes & work in progress",
+    "note": "",
+    "why": "A garden of short, densely linked notes and tags on systems and strategy, set in one plain sans with nothing else on the page.",
+    "seed": "jzhao-garden",
+    "source": "agent",
+    "added": "2026-11-04T22:11:08.058Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://gordonbrander.com/"
+      },
+      {
+        "label": "Notes index",
+        "url": "https://gordonbrander.com/notes"
+      },
+      {
+        "label": "Note",
+        "url": "https://gordonbrander.com/notes/software-and-seeds/"
+      },
+      {
+        "label": "Tag page",
+        "url": "https://gordonbrander.com/tags/pattern/"
+      }
+    ]
+  },
+  {
+    "id": "giorgia-lupi",
+    "name": "Giorgia Lupi",
+    "cluster": "Data & charts",
+    "note": "",
+    "why": "Hand-drawn 'data humanism' work presented like a personal art portfolio, with a manifesto and an About page that argue for data as personal.",
+    "seed": "visual-cinnamon",
+    "source": "agent",
+    "added": "2026-11-04T22:11:08.058Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://giorgialupi.com/"
+      },
+      {
+        "label": "Work",
+        "url": "https://giorgialupi.com/work"
+      },
+      {
+        "label": "Project",
+        "url": "https://giorgialupi.com/a-data-love-letter-to-the-subway"
+      },
+      {
+        "label": "Manifesto",
+        "url": "https://giorgialupi.com/data-humanism-my-manifesto-for-a-new-data-wold"
+      }
+    ]
+  },
+  {
+    "id": "posthog-handbook",
+    "name": "PostHog Handbook",
+    "cluster": "Tools & documents",
+    "note": "",
+    "why": "A company handbook written openly and candidly, with hedgehog doodles and jokes that keep a long document friendly.",
+    "seed": "linear-method",
+    "source": "agent",
+    "added": "2026-11-04T22:11:08.058Z",
+    "pages": [
+      {
+        "label": "Handbook home",
+        "url": "https://posthog.com/handbook"
+      },
+      {
+        "label": "Why PostHog exists",
+        "url": "https://posthog.com/handbook/why-does-posthog-exist"
+      },
+      {
+        "label": "Company story",
+        "url": "https://posthog.com/handbook/story"
+      },
+      {
+        "label": "Culture",
+        "url": "https://posthog.com/handbook/company/culture"
+      }
+    ]
+  },
+  {
+    "id": "mechanize",
+    "name": "Mechanize",
+    "cluster": "Research organisations",
+    "note": "",
+    "why": "An AI company site that is mostly a blunt mission line and a list of argumentative essays, with hiring pages in the same candid tone.",
+    "seed": "thinking-machines",
+    "source": "agent",
+    "added": "2026-11-04T22:11:08.058Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://www.mechanize.work/"
+      },
+      {
+        "label": "Blog index",
+        "url": "https://www.mechanize.work/blog/"
+      },
+      {
+        "label": "Essay",
+        "url": "https://www.mechanize.work/blog/technological-determinism/"
+      },
+      {
+        "label": "What working here is like",
+        "url": "https://www.mechanize.work/what-working-here-is-like/"
+      }
+    ]
+  },
+  {
+    "id": "jenny-odell",
+    "name": "Jenny Odell",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "A writer-artist's hand-coded site that splits into three short pages for writing, projects and news, each a plain list with no extra framing.",
+    "seed": "celine-nguyen",
+    "source": "agent",
+    "added": "2026-11-04T22:11:08.058Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://www.jennyodell.com/"
+      },
+      {
+        "label": "Writing",
+        "url": "http://www.jennyodell.com/writing.html"
+      },
+      {
+        "label": "Projects",
+        "url": "http://www.jennyodell.com/projects.html"
+      },
+      {
+        "label": "About and news",
+        "url": "http://www.jennyodell.com/about-news.html"
+      }
+    ]
+  },
+  {
+    "id": "evan-miller",
+    "name": "Evan Miller",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "A statistician's site where the home page is one long list of essays and free tools, each a plain serif page that reads like a careful memo.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T22:11:08.058Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://www.evanmiller.org/"
+      },
+      {
+        "label": "Essay",
+        "url": "https://www.evanmiller.org/attention-is-off-by-one.html"
+      },
+      {
+        "label": "Sample size tool",
+        "url": "https://www.evanmiller.org/ab-testing/sample-size.html"
+      }
+    ]
+  },
+  {
+    "id": "austin-kleon",
+    "name": "Austin Kleon",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "A daily blog of short posts, scans from his notebook and newsletter links that makes the writer's process the main content.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T22:11:08.058Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://austinkleon.com/"
+      },
+      {
+        "label": "Year archive",
+        "url": "https://austinkleon.com/2026/"
+      },
+      {
+        "label": "Newsletter",
+        "url": "https://austinkleon.com/newsletter/"
+      },
+      {
+        "label": "About",
+        "url": "https://austinkleon.com/about/"
+      }
+    ]
+  },
+  {
+    "id": "the-point-mag",
+    "name": "The Point",
+    "cluster": "Magazines & journals",
+    "note": "",
+    "why": "A philosophy magazine set in Cormorant Garamond with sober issue pages, where long essays carry the page with almost no decoration.",
+    "seed": "inference-review",
+    "source": "agent",
+    "added": "2026-11-04T22:13:30.468Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://thepointmag.com/"
+      },
+      {
+        "label": "Issue",
+        "url": "https://thepointmag.com/issue/issue-37"
+      },
+      {
+        "label": "Essay",
+        "url": "https://thepointmag.com/criticism/the-perfect-game/"
+      },
+      {
+        "label": "About",
+        "url": "https://thepointmag.com/about/"
+      }
+    ]
+  },
+  {
+    "id": "kyle-chayka",
+    "name": "Kyle Chayka",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "A writer's site that introduces him mostly through a plain list of published pieces by venue, plus short book and info pages.",
+    "seed": "celine-nguyen",
+    "source": "agent",
+    "added": "2026-11-04T22:13:30.468Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://kylechayka.com/"
+      },
+      {
+        "label": "Archive",
+        "url": "https://kylechayka.com/archive"
+      },
+      {
+        "label": "Info",
+        "url": "https://kylechayka.com/info"
+      }
+    ]
+  },
+  {
+    "id": "kwokchain",
+    "name": "Kevin Kwok (kwokchain)",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "A strategist's bare essay list leading to very long strategy essays held together by custom diagrams.",
+    "seed": "julian-digital",
+    "source": "agent",
+    "added": "2026-11-04T22:13:30.468Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://kwokchain.com/"
+      },
+      {
+        "label": "Essay",
+        "url": "https://kwokchain.com/2020/06/19/why-figma-wins/"
+      },
+      {
+        "label": "Archive",
+        "url": "https://kwokchain.com/archive/"
+      }
+    ]
+  },
+  {
+    "id": "samwho",
+    "name": "Sam Rose (samwho.dev)",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "Essays whose playable inline demos show the concept as it is explained, with a small mascot dog adding warmth.",
+    "seed": "emil-kowalski",
+    "source": "agent",
+    "added": "2026-11-04T22:13:30.468Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://samwho.dev/"
+      },
+      {
+        "label": "Interactive essay",
+        "url": "https://samwho.dev/load-balancing/"
+      },
+      {
+        "label": "Interactive essay",
+        "url": "https://samwho.dev/memory-allocation/"
+      },
+      {
+        "label": "Blog index",
+        "url": "https://samwho.dev/blog/"
+      }
+    ]
+  },
+  {
+    "id": "jim-nielsen",
+    "name": "Jim Nielsen's Blog",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "A quiet, dense, text-first blog with a year-by-year archive and short, candid posts about the craft of building websites.",
+    "seed": "macwright",
+    "source": "agent",
+    "added": "2026-11-04T22:13:30.468Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://blog.jim-nielsen.com/"
+      },
+      {
+        "label": "Post",
+        "url": "https://blog.jim-nielsen.com/2024/sanding-ui/"
+      },
+      {
+        "label": "Archive",
+        "url": "https://blog.jim-nielsen.com/archive/"
+      },
+      {
+        "label": "About",
+        "url": "https://blog.jim-nielsen.com/about/"
+      }
+    ]
+  },
+  {
+    "id": "sketchplanations",
+    "name": "Sketchplanations",
+    "cluster": "Notes & work in progress",
+    "note": "",
+    "why": "One hand-drawn sketch per idea, each with a short plain-language explanation, giving a humble, friendly way to explain things.",
+    "seed": "nicky-case",
+    "source": "agent",
+    "added": "2026-11-04T22:13:30.468Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://sketchplanations.com/"
+      },
+      {
+        "label": "Single sketch",
+        "url": "https://sketchplanations.com/buridans-ass"
+      },
+      {
+        "label": "Categories",
+        "url": "https://sketchplanations.com/categories"
+      },
+      {
+        "label": "About",
+        "url": "https://sketchplanations.com/about"
+      }
+    ]
+  },
+  {
+    "id": "tholman",
+    "name": "Tim Holman",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "A one-page index of silly toys and experiments that shows how far small playful details can carry a personal site.",
+    "seed": "lynn-and-tonic",
+    "source": "agent",
+    "added": "2026-11-04T22:13:30.468Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://tholman.com/"
+      }
+    ]
+  },
+  {
+    "id": "omar-rizwan",
+    "name": "Omar Rizwan",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "A plain, hand-built page listing dynamic-medium projects, demos and notes, with a commonplace book and a 'three things' page.",
+    "seed": "bret-victor",
+    "source": "agent",
+    "added": "2026-11-04T22:13:30.468Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://omar.website/"
+      },
+      {
+        "label": "Post",
+        "url": "https://omar.website/posts/against-recognition/"
+      },
+      {
+        "label": "Commonplace",
+        "url": "https://omar.website/commonplace/"
+      },
+      {
+        "label": "Three things",
+        "url": "https://omar.website/three-things/"
+      }
+    ]
+  },
+  {
+    "id": "brad-woods-garden",
+    "name": "Brad Woods' Digital Garden",
+    "cluster": "Notes & work in progress",
+    "note": "",
+    "why": "A digital garden with nested topic notes, illustrated diagrams and playful interactive touches that make it feel like a living notebook.",
+    "seed": "jzhao-garden",
+    "source": "agent",
+    "added": "2026-11-04T22:13:30.468Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://garden.bradwoods.io/"
+      },
+      {
+        "label": "Note",
+        "url": "https://garden.bradwoods.io/notes/design/juice"
+      },
+      {
+        "label": "About",
+        "url": "https://garden.bradwoods.io/about"
+      }
+    ]
+  },
+  {
+    "id": "offscreen-mag",
+    "name": "Offscreen Magazine",
+    "cluster": "Magazines & journals",
+    "note": "",
+    "why": "A one-person independent print magazine whose site explains its purpose, how it is produced and who funds it with unusual candour.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T22:13:30.468Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://www.offscreenmag.com/"
+      },
+      {
+        "label": "Purpose",
+        "url": "https://www.offscreenmag.com/about/purpose"
+      },
+      {
+        "label": "Issues",
+        "url": "https://www.offscreenmag.com/buy/issues"
+      },
+      {
+        "label": "Blog",
+        "url": "https://www.offscreenmag.com/blog"
+      }
+    ]
+  },
+  {
+    "id": "convergent-research",
+    "name": "Convergent Research",
+    "cluster": "Research organisations",
+    "note": "",
+    "why": "A metascience nonprofit that explains a new kind of organisation (FROs) in plain words and presents each spin-out as an ecosystem page.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T22:13:30.468Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://convergentresearch.org/"
+      },
+      {
+        "label": "About FROs",
+        "url": "https://convergentresearch.org/about-fros"
+      },
+      {
+        "label": "Ecosystem",
+        "url": "https://convergentresearch.org/ecosystem"
+      },
+      {
+        "label": "About",
+        "url": "https://convergentresearch.org/about"
+      }
+    ]
+  },
+  {
+    "id": "kalzumeus",
+    "name": "Kalzumeus (Patrick McKenzie)",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "A consultant-writer's deliberately plain blog with a 'greatest hits' page that points newcomers to the essays worth reading first.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T22:13:30.468Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://www.kalzumeus.com/"
+      },
+      {
+        "label": "Greatest hits",
+        "url": "https://www.kalzumeus.com/greatest-hits/"
+      },
+      {
+        "label": "About",
+        "url": "https://www.kalzumeus.com/about/"
+      }
+    ]
+  },
+  {
+    "id": "arcadia-research",
+    "name": "Arcadia Science Research",
+    "cluster": "Research organisations",
+    "note": "",
+    "why": "Research is published as plain web pubs in Atkinson Hyperlegible, and an 'Icebox' page openly lists the projects they shelved and why.",
+    "seed": "goodfire-research",
+    "source": "agent",
+    "added": "2026-11-04T22:15:47.136Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://research.arcadiascience.com/"
+      },
+      {
+        "label": "Icebox of shelved projects",
+        "url": "https://research.arcadiascience.com/icebox"
+      },
+      {
+        "label": "About",
+        "url": "https://research.arcadiascience.com/about"
+      }
+    ]
+  },
+  {
+    "id": "tilde-research",
+    "name": "Tilde Research",
+    "cluster": "Research organisations",
+    "note": "",
+    "why": "A small interpretability lab whose site is a short statement and a research list, sparse and quiet, with no product pitch.",
+    "seed": "physical-intelligence",
+    "source": "agent",
+    "added": "2026-11-04T22:15:47.136Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://www.tilderesearch.com/"
+      },
+      {
+        "label": "Research",
+        "url": "https://www.tilderesearch.com/research"
+      },
+      {
+        "label": "About",
+        "url": "https://www.tilderesearch.com/about"
+      }
+    ]
+  },
+  {
+    "id": "orion-magazine",
+    "name": "Orion Magazine",
+    "cluster": "Magazines & journals",
+    "note": "",
+    "why": "A nature and culture magazine where full-bleed photographs and calm serif essays make each piece feel like a printed issue.",
+    "seed": "emergence-magazine",
+    "source": "agent",
+    "added": "2026-11-04T22:15:47.136Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://orionmagazine.org/"
+      },
+      {
+        "label": "Essay",
+        "url": "https://orionmagazine.org/article/the-walking-tongue/"
+      },
+      {
+        "label": "Issue",
+        "url": "https://orionmagazine.org/issue/autumn-2026/"
+      },
+      {
+        "label": "Contributor page",
+        "url": "https://orionmagazine.org/contributor/brian-doyle/"
+      }
+    ]
+  },
+  {
+    "id": "molly-white",
+    "name": "Molly White",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "A writer's hub that plainly lists projects, press, reading and a micro-blog, so you meet the person through small, honest indexes.",
+    "seed": "celine-nguyen",
+    "source": "agent",
+    "added": "2026-11-04T22:15:47.136Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://www.mollywhite.net/"
+      },
+      {
+        "label": "Projects",
+        "url": "https://www.mollywhite.net/projects"
+      },
+      {
+        "label": "Reading log",
+        "url": "https://www.mollywhite.net/reading"
+      },
+      {
+        "label": "Micro posts",
+        "url": "https://www.mollywhite.net/micro"
+      }
+    ]
+  },
+  {
+    "id": "toby-shorin",
+    "name": "Toby Shorin",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "A strategist's site set in Crimson Pro with a short bio, a bare essay archive and a library page of the books behind the thinking.",
+    "seed": "julian-digital",
+    "source": "agent",
+    "added": "2026-11-04T22:15:47.136Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://tobyshorin.com/"
+      },
+      {
+        "label": "Archive",
+        "url": "https://tobyshorin.com/archive/"
+      },
+      {
+        "label": "Library",
+        "url": "https://tobyshorin.com/library"
+      }
+    ]
+  },
+  {
+    "id": "maxime-heckel",
+    "name": "Maxime Heckel's blog",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "Long craft essays where interactive widgets and live code let you play with each shader or easing curve as it is explained.",
+    "seed": "emil-kowalski",
+    "source": "agent",
+    "added": "2026-11-04T22:15:47.136Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://blog.maximeheckel.com/"
+      },
+      {
+        "label": "Essay: cubic Bézier",
+        "url": "https://blog.maximeheckel.com/posts/cubic-bezier-from-math-to-motion/"
+      },
+      {
+        "label": "Essay: raymarching",
+        "url": "https://blog.maximeheckel.com/posts/painting-with-math-a-gentle-study-of-raymarching/"
+      }
+    ]
+  },
+  {
+    "id": "adactio",
+    "name": "Jeremy Keith (adactio)",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "Twenty-five years of journal, links and notes in one quiet, dense stream, with archives and an about page that explains the site itself.",
+    "seed": "macwright",
+    "source": "agent",
+    "added": "2026-11-04T22:15:47.136Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://adactio.com/"
+      },
+      {
+        "label": "Journal entry",
+        "url": "https://adactio.com/journal/22823"
+      },
+      {
+        "label": "Journal",
+        "url": "https://adactio.com/journal"
+      },
+      {
+        "label": "About",
+        "url": "https://adactio.com/about"
+      }
+    ]
+  },
+  {
+    "id": "henry-codes",
+    "name": "Henry Desroches",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "A designer-developer site with a textured gargoyle, mixed display fonts and a micro-blog, full of small hand-made touches.",
+    "seed": "lynn-and-tonic",
+    "source": "agent",
+    "added": "2026-11-04T22:15:47.136Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://henry.codes/"
+      },
+      {
+        "label": "About",
+        "url": "https://henry.codes/about"
+      },
+      {
+        "label": "Links",
+        "url": "https://henry.codes/links"
+      },
+      {
+        "label": "Micro",
+        "url": "https://henry.codes/micro"
+      }
+    ]
+  },
+  {
+    "id": "jason-santa-maria",
+    "name": "Jason Santa Maria",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "A typographer's site with confident type that keeps every past version of itself (v1–v5) linked as a visible history.",
+    "seed": "frank-chimero",
+    "source": "agent",
+    "added": "2026-11-04T22:15:47.136Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://jasonsantamaria.com/"
+      },
+      {
+        "label": "Blog",
+        "url": "https://jasonsantamaria.com/blog/"
+      },
+      {
+        "label": "Post",
+        "url": "https://jasonsantamaria.com/blog/btw-2-letterforms-edition"
+      }
+    ]
+  },
+  {
+    "id": "bbchallenge",
+    "name": "The Busy Beaver Challenge",
+    "cluster": "Research organisations",
+    "note": "",
+    "why": "An open research collaboration that tells its story, method and dated progress plainly, including the open problems that remain.",
+    "seed": "vesuvius-challenge",
+    "source": "agent",
+    "added": "2026-11-04T22:15:47.136Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://bbchallenge.org/"
+      },
+      {
+        "label": "Story",
+        "url": "https://bbchallenge.org/story"
+      },
+      {
+        "label": "Method",
+        "url": "https://bbchallenge.org/method"
+      }
+    ]
+  },
+  {
+    "id": "melting-asphalt",
+    "name": "Melting Asphalt (Kevin Simler)",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "An essayist's site with few, long pieces and playable simulations embedded in essays like 'Going Critical'.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T22:15:47.136Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://meltingasphalt.com/"
+      },
+      {
+        "label": "Interactive essay",
+        "url": "https://meltingasphalt.com/going-critical/"
+      },
+      {
+        "label": "Archive",
+        "url": "https://meltingasphalt.com/archive/"
+      }
+    ]
+  },
+  {
+    "id": "order-design",
+    "name": "Order",
+    "cluster": "Studios & foundries",
+    "note": "",
+    "why": "A small design studio whose site is a strict typographic index of projects, each opening into a tidy, image-led case page.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T22:15:47.136Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://order.design/"
+      },
+      {
+        "label": "Index",
+        "url": "https://order.design/index"
+      },
+      {
+        "label": "Project",
+        "url": "https://order.design/project/dieter-rams-the-complete-works"
+      }
+    ]
   }
 ]
