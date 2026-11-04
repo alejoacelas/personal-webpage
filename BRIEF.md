@@ -38,17 +38,29 @@ at ORCG. Writing on the EA Forum and myea.blog stays unlinked.
 
 ## Message
 
-**Open:** the one sentence the site says. Alejo's current version: "I want to make
-you better at AI. My plan for that is to pick an ambitious outcome (hopefully
-within the reach of current AI capabilities) and try many things together until
-we crack it." The fuller offer is in the
+TBD. Placeholder: "maybe you could be a power user as well... it takes some
+practice, but practice can be exciting too!"
+
+Alejo's own words to draw from:
+
+- "I want to make you better at AI. My plan for that is to pick an ambitious
+  outcome (hopefully within the reach of current AI capabilities) and try many
+  things together until we crack it."
+- "My goal is to get people into a self-reinforcing loop, where finding useful
+  things to use AI on makes them more confident, which leads them to try more
+  ambitious things, which lets them find even more valuable use cases."
+- "Often it comes down to picking something important enough to you, where you
+  can articulate what a great outcome looks like, and letting AI throw everything
+  but the kitchen sink at it."
+
+Source: the
 [coaching intake doc](https://docs.google.com/document/d/1EuofQaVmkFFnK5REb681Gk5gFKI3v1U3O85vuc6YLlg/edit?tab=t.0#heading=h.he9bssfk3fx).
 
 ## Pointers
 
-Specific outputs Alejo has already shared outside, since being shared is the
-signal that they're useful. Only these get linked. **Open:** a curated list or a
-feed.
+A feed of specific outputs Alejo has already shared outside, to show the breadth
+of the work; being shared is the signal that they're useful, and only these get
+linked. The page structure leads visitors to a few curated favourites first.
 
 ## Tone
 
