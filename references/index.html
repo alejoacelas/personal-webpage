@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>References</title>
+<style>
+  :root {
+    --bg: #161616; --panel: #1f1f1f; --text: #ececec; --muted: #8a8a8a; --accent: #f2c14e;
+    --mono: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text); font: 14px/1.4 var(--mono); overflow: hidden; }
+
+  #stage { position: fixed; inset: 0 0 64px 0; overflow-y: auto; overflow-x: hidden; scroll-behavior: auto; outline: none; }
+  #shot { display: block; margin: 24px auto; box-shadow: 0 0 0 1px #333, 0 12px 40px #0008; transition: transform .28s ease, opacity .28s ease; }
+  #shot.desktop { width: min(96vw, calc((100vh - 112px) * 1.6)); }
+  #shot.full { width: min(96vw, 1200px); }
+  #shot.phone { width: 390px; max-width: 92vw; }
+  #shot.out-left { transform: translateX(-60px); opacity: 0; }
+  #shot.out-right { transform: translateX(60px); opacity: 0; }
+  #shot.out-up { transform: translateY(-30px); opacity: 0; }
+  #shot.out-down { transform: translateY(30px); opacity: 0; }
+  #missing { display: none; margin: 30vh auto; text-align: center; color: var(--muted); }
+
+  #bar { position: fixed; left: 0; right: 0; bottom: 0; height: 64px; background: var(--panel); border-top: 1px solid #2c2c2c;
+         display: flex; align-items: center; gap: 20px; padding: 0 20px; white-space: nowrap; }
+  #name { font-weight: 700; }
+  #page, #view { color: var(--muted); }
+  #page b, #view b { color: var(--accent); font-weight: 400; }
+  #note { flex: 1; overflow: hidden; text-overflow: ellipsis; color: var(--text); font-style: italic; }
+  #note.empty { color: var(--muted); }
+  #count { color: var(--muted); }
+  #dots { display: flex; gap: 5px; }
+  #dots i { width: 7px; height: 7px; border-radius: 50%; background: #444; }
+  #dots i.on { background: var(--accent); }
+
+  #help { position: fixed; right: 20px; bottom: 80px; background: var(--panel); border: 1px solid #333; padding: 14px 18px; display: none; line-height: 1.8; }
+  #help.show { display: block; }
+  kbd { display: inline-block; min-width: 1.8em; text-align: center; border: 1px solid #444; border-radius: 4px; padding: 0 5px; margin-right: 8px; color: var(--accent); }
+</style>
+</head>
+<body>
+<div id="stage" tabindex="0">
+  <img id="shot" alt="">
+  <div id="missing">No screenshot yet. Run <code>node references/capture.mjs <span id="missing-id"></span></code></div>
+</div>
+<div id="bar">
+  <div id="dots"></div>
+  <span id="name"></span>
+  <span id="page"></span>
+  <span id="view"></span>
+  <span id="note"></span>
+  <span id="count"></span>
+  <span style="color:var(--muted)">? keys</span>
+</div>
+<div id="help">
+  <div><kbd>← →</kbd>previous / next reference</div>
+  <div><kbd>↑ ↓</kbd>previous / next page of this reference</div>
+  <div><kbd>1 2 3</kbd>above the fold / full page / phone</div>
+  <div><kbd>v</kbd>cycle view</div>
+  <div><kbd>j k</kbd>scroll down / up</div>
+  <div><kbd>space</kbd>scroll a screen (shift: back)</div>
+  <div><kbd>g G</kbd>top / bottom</div>
+  <div><kbd>o</kbd>open the live page</div>
+  <div><kbd>?</kbd>toggle this help</div>
+</div>
+<script src="refs.js"></script>
+<script>
+  const REFS = window.REFS;
+  const VIEWS = ['desktop', 'full', 'phone'];
+  const VIEW_LABEL = { desktop: 'above the fold', full: 'full page', phone: 'phone' };
+  const $ = id => document.getElementById(id);
+  const stage = $('stage'), shot = $('shot');
+
+  // State lives in the hash so a reload keeps your place: #ref-id/page/view
+  let r = 0, p = 0, v = 0;
+  const [hid, hp, hv] = decodeURIComponent(location.hash.slice(1)).split('/');
+  if (hid) { r = Math.max(0, REFS.findIndex(x => x.id === hid)); p = +hp || 0; v = Math.max(0, VIEWS.indexOf(hv)); }
+
+  function render(dir) {
+    const ref = REFS[r], page = ref.pages[p], view = VIEWS[v];
+    const src = `shots/${ref.id}/${p}-${view}.jpg`;
+    history.replaceState(null, '', `#${ref.id}/${p}/${view}`);
+
+    $('dots').innerHTML = REFS.map((_, i) => `<i class="${i === r ? 'on' : ''}"></i>`).join('');
+    $('name').textContent = ref.name;
+    $('page').innerHTML = ref.pages.length > 1 ? `<b>${page.label}</b> ${p + 1}/${ref.pages.length}` : page.label;
+    $('view').innerHTML = `<b>${VIEW_LABEL[view]}</b>`;
+    $('note').textContent = ref.note || 'no note yet';
+    $('note').classList.toggle('empty', !ref.note);
+    $('count').textContent = `${r + 1}/${REFS.length}`;
+
+    const swap = () => {
+      shot.className = view;
+      shot.onerror = () => { shot.style.display = 'none'; $('missing').style.display = 'block'; $('missing-id').textContent = ref.id; };
+      shot.onload = () => { shot.style.display = 'block'; $('missing').style.display = 'none'; };
+      shot.src = src;
+      stage.scrollTop = 0;
+    };
+    if (dir) {
+      shot.classList.add('out-' + dir);
+      setTimeout(() => {
+        swap();
+        const back = { left: 'out-right', right: 'out-left', up: 'out-down', down: 'out-up' }[dir];
+        shot.classList.add(back);
+        requestAnimationFrame(() => requestAnimationFrame(() => shot.classList.remove(back)));
+      }, 160);
+    } else swap();
+
+    // Preload neighbours so swiping is instant
+    for (const i of [r - 1, r + 1]) {
+      const n = REFS[(i + REFS.length) % REFS.length];
+      new Image().src = `shots/${n.id}/0-${view}.jpg`;
+    }
+  }
+
+  const scrollBy = dy => stage.scrollBy({ top: dy, behavior: 'smooth' });
+
+  addEventListener('keydown', e => {
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    const k = e.key;
+    let handled = true;
+    if (k === 'ArrowRight' || k === 'l') { r = (r + 1) % REFS.length; p = 0; render('left'); }
+    else if (k === 'ArrowLeft' || k === 'h') { r = (r - 1 + REFS.length) % REFS.length; p = 0; render('right'); }
+    else if (k === 'ArrowDown') { const n = REFS[r].pages.length; if (n > 1) { p = (p + 1) % n; render('up'); } }
+    else if (k === 'ArrowUp') { const n = REFS[r].pages.length; if (n > 1) { p = (p - 1 + n) % n; render('down'); } }
+    else if (k >= '1' && k <= '3') { v = +k - 1; render(); }
+    else if (k === 'v') { v = (v + 1) % VIEWS.length; render(); }
+    else if (k === 'j') scrollBy(240);
+    else if (k === 'k') scrollBy(-240);
+    else if (k === ' ') scrollBy((e.shiftKey ? -1 : 1) * stage.clientHeight * 0.85);
+    else if (k === 'g') stage.scrollTo({ top: 0, behavior: 'smooth' });
+    else if (k === 'G') stage.scrollTo({ top: stage.scrollHeight, behavior: 'smooth' });
+    else if (k === 'o') window.open(REFS[r].pages[p].url, '_blank');
+    else if (k === '?') $('help').classList.toggle('show');
+    else if (k === 'Escape') $('help').classList.remove('show');
+    else handled = false;
+    if (handled) e.preventDefault();
+  });
+
+  render();
+  stage.focus();
+</script>
+</body>
+</html>

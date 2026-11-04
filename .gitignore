@@ -33,3 +33,6 @@ pnpm-debug.log*
 .venv/
 .mcp.json
 .env*
+
+# Reference screenshots (regenerate with references/capture.mjs)
+references/shots/
