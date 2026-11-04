@@ -4,7 +4,7 @@
 import { createServer } from 'node:http';
 import { readFileSync, writeFileSync, existsSync, readdirSync, statSync } from 'node:fs';
 import { join, extname, normalize } from 'node:path';
-import { here, readRefs, statusPath, captureMissing } from './capture.mjs';
+import { here, readRefs, isCaptured, captureMissing } from './capture.mjs';
 import * as discover from './discover.mjs';
 
 const PORT = 4321;
@@ -15,8 +15,7 @@ function state() {
   const refs = readRefs().map(r => {
     const dir = join(here, 'shots', r.id);
     const shots = existsSync(dir) ? readdirSync(dir).filter(f => f.endsWith('.jpg')).sort() : [];
-    const st = existsSync(statusPath(r.id)) ? JSON.parse(readFileSync(statusPath(r.id), 'utf8')).state : 'pending';
-    return { ...r, shots, capture: st };
+    return { ...r, shots, capture: isCaptured(r) ? 'done' : 'pending' };
   });
   return {
     refs,

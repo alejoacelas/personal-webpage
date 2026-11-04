@@ -15,9 +15,7 @@
   /* Focus mode: one screenshot */
   #stage { position: fixed; inset: 0 0 var(--bar) 0; overflow-y: auto; overflow-x: hidden; }
   #shot { display: block; margin: 20px auto; box-shadow: 0 0 0 1px #333, 0 12px 40px #0008; transition: transform .22s ease, opacity .22s ease; }
-  #shot.desktop { width: min(96vw, calc((100vh - var(--bar) - 40px) * 1.6)); }
-  #shot.full { width: min(96vw, 1200px); }
-  #shot.phone { width: 390px; max-width: 92vw; }
+  #shot { width: min(96vw, calc((100vh - var(--bar) - 40px) * 1.6)); }
   #shot.out-left { transform: translateX(-50px); opacity: 0; } #shot.out-right { transform: translateX(50px); opacity: 0; }
   #shot.out-up { transform: translateY(-40px); opacity: 0; } #shot.out-down { transform: translateY(40px); opacity: 0; }
   #empty { margin: 30vh auto; text-align: center; color: var(--muted); }
@@ -70,7 +68,7 @@
 </div>
 <div id="help">
   <div><kbd>← → ↑ ↓</kbd>move between sites (rows are kinds of site)</div>
-  <div><kbd>v</kbd>next view of this site (shift+v: previous)</div>
+  <div><kbd>v</kbd>next section of the page, then the site's next page (shift+v: back)</div>
   <div><kbd>f</kbd>favourite: finds more like it</div>
   <div><kbd>z</kbd>zoom out to the whole grid and back</div>
   <div><kbd>j k</kbd>scroll down / up · <kbd>space</kbd>a screen</div>
@@ -80,16 +78,23 @@
 </div>
 <script>
   const $ = id => document.getElementById(id);
-  const VIEW_LABEL = { desktop: 'above the fold', full: 'full page', phone: 'phone' };
-  const VIEW_ORDER = ['desktop', 'full', 'phone'];
   let S = null;            // server state
   let rows = [];           // [{ cluster, items: [ref] }]
   let curId = decodeURIComponent(location.hash.slice(1)) || null;
-  let viewIdx = 0;         // index into the current ref's shot list
+  let pageIdx = 0;         // index into the current ref's captured pages
 
-  // Shots for a ref, ordered by page then view: [{ file, page, view }]
-  const shotsOf = r => r.shots.map(f => { const [p, v] = f.replace('.jpg', '').split('-'); return { file: f, page: +p, view: v }; })
-    .sort((a, b) => a.page - b.page || VIEW_ORDER.indexOf(a.view) - VIEW_ORDER.indexOf(b.view));
+  // One full-page shot per captured page: [{ page, file }]. Shots from the older
+  // three-view format stand in until the page is recaptured.
+  const pagesOf = r => r.pages.map((_, i) => {
+    const file = [`${i}.jpg`, `${i}-full.jpg`, `${i}-desktop.jpg`].find(f => r.shots.includes(f));
+    return file && { page: i, file };
+  }).filter(Boolean);
+  const stage = () => $('stage');
+  const sectionInfo = () => {
+    const el = stage(), n = Math.max(1, Math.ceil((el.scrollHeight - 8) / el.clientHeight));
+    const bottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 8;
+    return [bottom ? n : Math.min(n, Math.floor((el.scrollTop + 8) / el.clientHeight) + 1), n];
+  };
 
   // Rows are clusters in order of first appearance. Within a row, a site found from a
   // favourite sits right after that favourite, so "more like this" stays nearby.
@@ -113,12 +118,13 @@
 
   function renderBar() {
     const r = cur(); if (!r) return;
-    const shots = shotsOf(r), s = shots[viewIdx] || shots[0], page = r.pages[s.page];
+    const pages = pagesOf(r), pg = pages[pageIdx] || pages[0], page = r.pages[pg.page];
     const fav = S.favorites.includes(r.id);
     $('heart').textContent = fav ? '♥' : '';
     $('name').textContent = r.name;
     $('cluster').textContent = r.cluster;
-    $('view').innerHTML = `${r.pages.length > 1 ? page.label + ' · ' : ''}<b>${page.manual ? 'screenshot' : VIEW_LABEL[s.view]}</b> ${viewIdx + 1}/${shots.length}`;
+    const [sec, secs] = sectionInfo();
+    $('view').innerHTML = `<b>${esc(page.label)}</b> page ${pageIdx + 1}/${pages.length} · section ${sec}/${secs}`;
     const seed = r.seed && S.refs.find(x => x.id === r.seed);
     $('l2').innerHTML = [r.note && `<span class="note">${esc(r.note)}</span>`, r.why && esc(r.why), seed && `more like ${esc(seed.name)}`].filter(Boolean).join(' · ') || '&nbsp;';
     const total = rows.reduce((n, row) => n + row.items.length, 0);
@@ -140,7 +146,7 @@
     const [ri, ci] = pos();
     $('overview').innerHTML = rows.map((row, i) => `<div class="ovrow"><h2>${esc(row.cluster)} · ${row.items.length}</h2><div class="items">${
       row.items.map((r, j) => `<div class="tile ${S.seen.includes(r.id) ? 'seen' : ''} ${S.favorites.includes(r.id) ? 'fav' : ''} ${i === ri && j === ci ? 'cur' : ''}" ${i === ri && j === ci ? 'id="curtile"' : ''}>
-        <div class="img" style="background-image:url('shots/${r.id}/${shotsOf(r)[0].file}')"></div><div class="t">${esc(r.name)}</div></div>`).join('')}</div></div>`).join('');
+        <div class="img" style="background-image:url('shots/${r.id}/${pagesOf(r)[0].file}')"></div><div class="t">${esc(r.name)}</div></div>`).join('')}</div></div>`).join('');
     $('curtile')?.scrollIntoView({ block: 'nearest', inline: 'center' });
   }
 
@@ -148,8 +154,12 @@
     const r = cur();
     $('empty').style.display = r ? 'none' : 'block';
     if (!r) return;
-    const shots = shotsOf(r), s = shots[viewIdx] || shots[0];
-    const swap = () => { $('shot').className = s.view; $('shot').src = `shots/${r.id}/${s.file}`; $('stage').scrollTop = 0; };
+    const pages = pagesOf(r), pg = pages[pageIdx] || pages[0];
+    const swap = () => {
+      $('shot').className = '';
+      $('shot').onload = () => { stage().scrollTop = atBottom ? stage().scrollHeight : 0; atBottom = false; renderBar(); };
+      $('shot').src = `shots/${r.id}/${pg.file}`;
+    };
     if (!dir) return swap();
     $('shot').classList.add('out-' + dir);
     setTimeout(() => {
@@ -169,7 +179,7 @@
     renderBar();
     // Preload the neighbours' first shots
     const [ri, ci] = pos();
-    for (const n of [rows[ri].items[ci - 1], rows[ri].items[ci + 1], rows[ri - 1]?.items[0], rows[ri + 1]?.items[0]]) if (n) new Image().src = `shots/${n.id}/${shotsOf(n)[0].file}`;
+    for (const n of [rows[ri].items[ci - 1], rows[ri].items[ci + 1], rows[ri - 1]?.items[0], rows[ri + 1]?.items[0]]) if (n) new Image().src = `shots/${n.id}/${pagesOf(n)[0].file}`;
   }
 
   function move(dr, dc) {
@@ -178,9 +188,20 @@
     else ci = Math.max(0, Math.min(rows[ri].items.length - 1, ci + dc));
     const next = rows[ri].items[ci];
     if (next.id === curId) return;
-    curId = next.id; viewIdx = 0;
+    curId = next.id; pageIdx = 0;
     render(dr > 0 ? 'up' : dr < 0 ? 'down' : dc > 0 ? 'left' : 'right');
   }
+
+  // v: scroll one screen down the page; at the bottom, go to the site's next page.
+  let atBottom = false;
+  function step(dir) {
+    const el = stage(), n = pagesOf(cur()).length;
+    const top = el.scrollTop < 8, bottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 8;
+    if (dir > 0 && !bottom) el.scrollTo({ top: el.scrollTop + el.clientHeight, behavior: 'smooth' });
+    else if (dir < 0 && !top) el.scrollTo({ top: el.scrollTop - el.clientHeight, behavior: 'smooth' });
+    else if (n > 1) { pageIdx = (pageIdx + dir + n) % n; atBottom = dir < 0; renderShot(dir > 0 ? 'up' : 'down'); }
+  }
+  $('stage').addEventListener('scroll', () => renderBar());
 
   const post = (url, data) => fetch(url, { method: 'POST', body: JSON.stringify(data) }).catch(() => {});
 
@@ -196,12 +217,13 @@
   addEventListener('keydown', e => {
     if (e.metaKey || e.ctrlKey || e.altKey || !S) return;
     const k = e.key, stage = $('stage');
+    if (document.body.classList.contains('ov') && (k === 'v' || k === 'V')) return;
     let handled = true;
     if (k === 'ArrowRight') move(0, 1);
     else if (k === 'ArrowLeft') move(0, -1);
     else if (k === 'ArrowDown') move(1, 0);
     else if (k === 'ArrowUp') move(-1, 0);
-    else if (k === 'v' || k === 'V') { const n = shotsOf(cur()).length; viewIdx = (viewIdx + (k === 'V' ? -1 : 1) + n) % n; renderShot(); renderBar(); }
+    else if (k === 'v' || k === 'V') step(k === 'V' ? -1 : 1);
     else if (k === 'f') {
       const id = curId; S.favorites = S.favorites.includes(id) ? S.favorites.filter(x => x !== id) : [...S.favorites, id];
       post('/api/fav', { id }); renderBar(); document.body.classList.contains('ov') ? renderOverview() : renderMini();
@@ -212,7 +234,7 @@
     else if (k === 'k') stage.scrollBy({ top: -260, behavior: 'smooth' });
     else if (k === ' ') stage.scrollBy({ top: (e.shiftKey ? -1 : 1) * stage.clientHeight * 0.85, behavior: 'smooth' });
     else if (k === 't') stage.scrollTo({ top: 0, behavior: 'smooth' });
-    else if (k === 'o') { const r = cur(); window.open(r.pages[(shotsOf(r)[viewIdx] || shotsOf(r)[0]).page].url, '_blank'); }
+    else if (k === 'o') { const r = cur(); window.open(r.pages[(pagesOf(r)[pageIdx] || pagesOf(r)[0]).page].url, '_blank'); }
     else if (k === '?') $('help').classList.toggle('show');
     else if (k === 'Escape') $('help').classList.remove('show');
     else handled = false;

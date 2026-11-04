@@ -7,5 +7,5 @@ This branch, `redesign`, rebuilds the site from scratch and has no code yet; see
 `alejoacelas-com` (organization `alejandros-projects-a115cc74`).
 
 `references/` collects sites Alejo likes for the redesign. Run `npm install && npm start`
-inside it and open http://localhost:4321: arrows move around the grid, `v` changes view,
+inside it and open http://localhost:4321: arrows move around the grid, `v` steps down the page and on to the site's other pages,
 `f` marks a favourite, and a Claude loop keeps adding and screenshotting similar sites.

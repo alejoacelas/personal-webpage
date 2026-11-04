@@ -32,7 +32,7 @@ const SCHEMA = {
           why: { type: 'string', description: 'one short sentence: what is distinctive about its design' },
           seed: { type: ['string', 'null'], description: 'id of the favourite this is "more like", or null for exploration' },
           pages: {
-            type: 'array', minItems: 1, maxItems: 3,
+            type: 'array', minItems: 1, maxItems: 4,
             items: { type: 'object', required: ['label', 'url'], properties: { label: { type: 'string' }, url: { type: 'string' } } },
           },
         },
@@ -67,7 +67,7 @@ Find ${PER_ROUND} NEW websites worth looking at as design references. Use web se
 ${seedShare ? `- At least ${seedShare} must be "more like" a favourite: set seed to that favourite's id, spread across the favourites with more weight on the most recent ones, and pick sites that share what makes the favourite distinctive (its type, layout, tone or structure), not just its topic.` : ''}
 - The rest explore: varied kinds of sites (personal sites of researchers, writers, consultants and designers; independent magazines; research labs; small studios; tools with lovely documents; data stories; digital gardens). Set seed to null.
 - Favour real craft: considered typography, restraint, clear structure, honest voice, small delightful details. Skip generic templates and big corporate marketing sites.
-- Give 1–3 pages per site. Add an inner page (an article, an essay, a note, a project page) when the craft shows there more than on the home page.
+- Give 2–4 pages per site, each showing a different part of it: the home page, then inner pages such as an article or essay, an index or archive, an about page, a project page. Choose the pages where the design does something different.
 - Fetch every URL you give to confirm it loads without a login. Drop any that fail.
 - Use an existing cluster when one fits; create a new cluster name only for a genuinely different kind of site.
 - "why" is one short sentence about what is distinctive in the design.
@@ -75,9 +75,9 @@ ${seedShare ? `- At least ${seedShare} must be "more like" a favourite: set seed
 Return only the structured output.`;
 }
 
-function runClaude(prompt) {
+function runClaude(prompt, schema = SCHEMA) {
   return new Promise((resolve, reject) => {
-    const args = ['-p', prompt, '--model', 'opus', '--output-format', 'json', '--json-schema', JSON.stringify(SCHEMA), '--dangerously-skip-permissions'];
+    const args = ['-p', prompt, '--model', 'opus', '--output-format', 'json', '--json-schema', JSON.stringify(schema), '--dangerously-skip-permissions'];
     const child = spawn('claude', args, { cwd: here, stdio: ['ignore', 'pipe', 'pipe'] });
     let out = '', err = '';
     child.stdout.on('data', d => (out += d));
@@ -87,7 +87,7 @@ function runClaude(prompt) {
       try {
         const res = JSON.parse(out);
         const data = res.structured_output ?? JSON.parse(res.result.slice(res.result.indexOf('{'), res.result.lastIndexOf('}') + 1));
-        resolve(data.refs);
+        resolve(data);
       } catch (e) { reject(new Error(`could not parse output: ${e.message}: ${out.slice(0, 500)}`)); }
     });
   });
@@ -103,7 +103,7 @@ export async function round() {
   const favs = readJson('favorites.json', []);
   log(`round ${status.rounds + 1}: ${refs.length} refs, ${favs.length} favourites`);
   try {
-    const found = await runClaude(buildPrompt(refs, favs));
+    const { refs: found } = await runClaude(buildPrompt(refs, favs));
     const current = readRefs(); // re-read: favourites/notes may have changed meanwhile
     const ids = new Set(current.map(r => r.id));
     const sites = new Set(current.map(r => siteKey(r.pages[0].url)));
@@ -129,9 +129,47 @@ export async function round() {
   }
 }
 
+const ENRICH_SCHEMA = {
+  type: 'object', required: ['sites'],
+  properties: { sites: { type: 'array', items: { type: 'object', required: ['id', 'pages'], properties: {
+    id: { type: 'string' },
+    pages: { type: 'array', maxItems: 3, items: { type: 'object', required: ['label', 'url'], properties: { label: { type: 'string' }, url: { type: 'string' } } } },
+  } } } },
+};
+const ENRICH_BATCH = 10;
+const needsPages = r => r.pages.length < 2 && !r.pages.some(p => p.manual) && !r.enriched;
+
+// Adds 1–3 inner pages to references that only have one page.
+export async function enrich() {
+  const batch = readRefs().filter(needsPages).slice(0, ENRICH_BATCH);
+  if (!batch.length) return false;
+  status.running = true;
+  log(`enrich: ${batch.map(r => r.id).join(', ')}`);
+  const prompt = `These websites are design references for Alejo Acelas's personal-site redesign. Each has only one page collected so far.
+${batch.map(r => `- ${r.id}: ${r.name} — ${r.pages[0].url}`).join('\n')}
+
+For each site, give 1–3 more pages on the same site that show other parts of its design: an article or essay, an index or archive, an about page, a project page. Choose pages where the design does something different from the page already collected. Fetch each URL to confirm it loads without a login; drop any that fail. Label each page in 1–3 words. Return only the structured output.`;
+  try {
+    const { sites } = await runClaude(prompt, ENRICH_SCHEMA);
+    const extra = Object.fromEntries(sites.map(s => [s.id, s.pages]));
+    const current = readRefs();
+    for (const r of current) {
+      if (!batch.some(b => b.id === r.id)) continue;
+      const have = new Set(r.pages.map(p => p.url));
+      r.pages.push(...(extra[r.id] || []).filter(p => !have.has(p.url)));
+      r.enriched = true; // asked once; don't ask again
+    }
+    writeFileSync(join(here, 'refs.json'), JSON.stringify(current, null, 2) + '\n');
+    log(`enrich: added ${Object.values(extra).flat().length} pages`);
+    status.lastError = null;
+  } catch (e) { status.lastError = e.message; log(`enrich error: ${e.message}`); }
+  status.running = false;
+  return true;
+}
+
 // Runs rounds forever, paced by how many references Alejo has not yet seen.
 export async function loop() {
-  let lastFavs = JSON.stringify(readJson('favorites.json', []));
+  let lastFavs = '[]'; // so favourites marked while the server was down still start a round
   for (;;) {
     const refs = readRefs();
     const seen = new Set(readJson('state.json', { seen: [] }).seen);
@@ -142,7 +180,7 @@ export async function loop() {
       lastFavs = favs;
       await round();
       if (status.lastError) await new Promise(r => setTimeout(r, 120000)); // back off after a failure
-    } else {
+    } else if (!(await enrich())) {
       await new Promise(r => setTimeout(r, 15000));
     }
   }

@@ -1616,5 +1616,225 @@
         "url": "https://scrollprize.org/"
       }
     ]
+  },
+  {
+    "id": "fitzcarraldo-editions",
+    "name": "Fitzcarraldo Editions",
+    "cluster": "Studios & foundries",
+    "note": "",
+    "why": "A publisher whose plain, uniform covers in one colour and one typeface make the whole catalogue look like a single, deliberate series.",
+    "seed": "stripe-press",
+    "source": "agent",
+    "added": "2026-11-04T22:00:31.454Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://fitzcarraldoeditions.com/"
+      }
+    ]
+  },
+  {
+    "id": "standards-manual",
+    "name": "Standards Manual",
+    "cluster": "Studios & foundries",
+    "note": "",
+    "why": "A small press that reissues design manuals and presents each book as an archival object, with sparse, exacting product pages.",
+    "seed": "stripe-press",
+    "source": "agent",
+    "added": "2026-11-04T22:00:31.454Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://standardsmanual.com/"
+      }
+    ]
+  },
+  {
+    "id": "unit-editions",
+    "name": "Unit Editions",
+    "cluster": "Studios & foundries",
+    "note": "",
+    "why": "An independent design publisher with a quiet grid of book objects and Swiss-style typographic restraint.",
+    "seed": "stripe-press",
+    "source": "agent",
+    "added": "2026-11-04T22:00:31.454Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://uniteditions.com/"
+      }
+    ]
+  },
+  {
+    "id": "laphams-quarterly",
+    "name": "Lapham's Quarterly",
+    "cluster": "Magazines & journals",
+    "note": "",
+    "why": "Each issue has a single theme and is presented like a collectible book, with classical typography and archival imagery.",
+    "seed": "stripe-press",
+    "source": "agent",
+    "added": "2026-11-04T22:00:31.454Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://www.laphamsquarterly.org/"
+      },
+      {
+        "label": "Issues",
+        "url": "https://www.laphamsquarterly.org/issues"
+      }
+    ]
+  },
+  {
+    "id": "asimov-press",
+    "name": "Asimov Press",
+    "cluster": "Magazines & journals",
+    "note": "",
+    "why": "A biotech-progress publisher of books and essays that treats science writing with editorial, print-like care.",
+    "seed": "stripe-press",
+    "source": "agent",
+    "added": "2026-11-04T22:00:31.454Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://www.asimov.press/"
+      }
+    ]
+  },
+  {
+    "id": "long-now",
+    "name": "The Long Now Foundation",
+    "cluster": "Research organisations",
+    "note": "",
+    "why": "A long-horizon nonprofit with a five-digit year (02026) and an essays-first layout that make it feel calm and timeless.",
+    "seed": "roots-of-progress",
+    "source": "agent",
+    "added": "2026-11-04T22:00:31.454Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://longnow.org/"
+      },
+      {
+        "label": "Ideas",
+        "url": "https://longnow.org/ideas/"
+      }
+    ]
+  },
+  {
+    "id": "speculative-technologies",
+    "name": "Speculative Technologies",
+    "cluster": "Research organisations",
+    "note": "",
+    "why": "A small progress-focused research nonprofit that explains its mission in plain, direct prose on a spare page.",
+    "seed": "roots-of-progress",
+    "source": "agent",
+    "added": "2026-11-04T22:00:31.454Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://spec.tech/"
+      },
+      {
+        "label": "About",
+        "url": "https://spec.tech/about"
+      }
+    ]
+  },
+  {
+    "id": "austin-vernon",
+    "name": "Austin Vernon",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "Long technical essays on energy and industry, set as near-bare text where the arguments carry the whole site.",
+    "seed": "roots-of-progress",
+    "source": "agent",
+    "added": "2026-11-04T22:00:31.454Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://austinvernon.site/"
+      },
+      {
+        "label": "Blog",
+        "url": "https://austinvernon.site/blog/"
+      }
+    ]
+  },
+  {
+    "id": "logic-magazine",
+    "name": "Logic(s) Magazine",
+    "cluster": "Magazines & journals",
+    "note": "",
+    "why": "An independent tech magazine organised into themed issues, with bold covers and essays set like a printed page.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T22:00:31.454Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://logicmag.io/"
+      }
+    ]
+  },
+  {
+    "id": "a-working-library",
+    "name": "A Working Library (Mandy Brown)",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "A coach's personal site where candid, literary essays sit next to a modest, clearly written page about the coaching she offers.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T22:00:31.454Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://aworkinglibrary.com/"
+      },
+      {
+        "label": "Coaching",
+        "url": "https://aworkinglibrary.com/coaching"
+      },
+      {
+        "label": "Essay",
+        "url": "https://aworkinglibrary.com/writing/toolmen"
+      }
+    ]
+  },
+  {
+    "id": "julian-digital",
+    "name": "julian.digital",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "A strategist's essay site with a minimal list of essays and long pieces illustrated with custom diagrams.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T22:00:31.454Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://julian.digital/"
+      },
+      {
+        "label": "Essay",
+        "url": "https://julian.digital/2025/03/27/the-case-against-conversational-interfaces/"
+      }
+    ]
+  },
+  {
+    "id": "robin-rendle",
+    "name": "Robin Rendle",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "A designer-writer's site with warm typography, a personal voice and small playful details throughout.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T22:00:31.454Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://robinrendle.com/"
+      }
+    ]
   }
 ]
