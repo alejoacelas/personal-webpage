@@ -1,7 +1,7 @@
 # Personal Website — alejoacelas.com
 
-`main` is the sole current version. The root Vite app is what production deploys;
-`~/best/archive/2026-08-website-superseded/` is lineage only.
+The `redesign` branch rebuilds the site from scratch; follow [PLAN.md](PLAN.md).
+Production still deploys from `main` until the redesign is merged.
 
 Read [README.md](README.md) for the source layout, local commands and deployment.
 Run `yarn build` and inspect changed UI locally before publishing.
