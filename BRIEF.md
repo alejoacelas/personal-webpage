@@ -62,6 +62,10 @@ A feed of specific outputs Alejo has already shared outside, to show the breadth
 of the work; being shared is the signal that they're useful, and only these get
 linked. The page structure leads visitors to a few curated favourites first.
 
+The candidates are listed in the private desk item
+`~/best/desk/generated/2026-11/2026-11-04-website-pointer-inventory.md`, kept out
+of this public repo.
+
 ## Tone
 
 Professional and candid, precise about what Alejo has done. Personality lives in
