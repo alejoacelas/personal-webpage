@@ -692,5 +692,929 @@
         "url": "https://linear.app/method"
       }
     ]
+  },
+  {
+    "id": "steph-ango",
+    "name": "Steph Ango",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "Tiny, plain-spoken essays on a near-bare page, with a playful colour theme switcher as the one flourish.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:50:00.452Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://stephango.com/"
+      },
+      {
+        "label": "How I use Obsidian",
+        "url": "https://stephango.com/vault"
+      }
+    ]
+  },
+  {
+    "id": "ben-kuhn",
+    "name": "Ben Kuhn",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "EA-adjacent writer whose site is almost pure text: quiet serif, generous margins, footnotes doing the decoration.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:50:00.452Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://www.benkuhn.net/"
+      },
+      {
+        "label": "Essay: Impact, agency and taste",
+        "url": "https://www.benkuhn.net/impact/"
+      }
+    ]
+  },
+  {
+    "id": "frank-chimero",
+    "name": "Frank Chimero",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "Designer's site with confident oversized type and essays that read like carefully set books.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:50:00.452Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://frankchimero.com/"
+      },
+      {
+        "label": "Essay: Everything Easy is Hard Again",
+        "url": "https://frankchimero.com/blog/2018/everything-easy/"
+      }
+    ]
+  },
+  {
+    "id": "brandur",
+    "name": "brandur.org",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "Engineer's site with meticulous typography, photo-led layouts and long-form articles set like a magazine.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:50:00.452Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://brandur.org/"
+      }
+    ]
+  },
+  {
+    "id": "tonsky",
+    "name": "Nikita Prokopov (tonsky.me)",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "Opinionated blog full of small jokes: hand-drawn touches, playful cursor details and a candid first-person voice.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:50:00.452Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://tonsky.me/"
+      },
+      {
+        "label": "Essay: I am sorry, but everyone is getting syntax highlighting wrong",
+        "url": "https://tonsky.me/blog/syntax-highlighting/"
+      }
+    ]
+  },
+  {
+    "id": "lynn-and-tonic",
+    "name": "Lynn Fisher (lynnandtonic)",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "Shows how far cute details can go: the whole site is redesigned every year and every breakpoint hides a surprise.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:50:00.452Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://lynnandtonic.com/"
+      }
+    ]
+  },
+  {
+    "id": "ciechanowski",
+    "name": "Bartosz Ciechanowski",
+    "cluster": "Data & charts",
+    "note": "",
+    "why": "Interactive explainers where every diagram responds to your hand inside a calm, unadorned text column.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:50:00.452Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://ciechanow.ski/"
+      },
+      {
+        "label": "Mechanical Watch",
+        "url": "https://ciechanow.ski/mechanical-watch/"
+      }
+    ]
+  },
+  {
+    "id": "practical-typography",
+    "name": "Butterick's Practical Typography",
+    "cluster": "Tools & documents",
+    "note": "",
+    "why": "A web book that practises what it teaches: custom fonts, perfect measure and clear hierarchy without decoration.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:50:00.452Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://practicaltypography.com/"
+      },
+      {
+        "label": "Summary of key rules",
+        "url": "https://practicaltypography.com/summary-of-key-rules.html"
+      }
+    ]
+  },
+  {
+    "id": "interconnected",
+    "name": "Interconnected (Matt Webb)",
+    "cluster": "Notes & work in progress",
+    "note": "",
+    "why": "Long-running blog that thinks out loud in public, with a dense, slightly scruffy layout and quirky extras like live presence cursors.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:50:00.452Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://interconnected.org/home"
+      }
+    ]
+  },
+  {
+    "id": "jzhao-garden",
+    "name": "Jacky Zhao's garden",
+    "cluster": "Notes & work in progress",
+    "note": "",
+    "why": "A digital garden with backlinks, a graph view and hover previews, all held together by restrained type.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:50:00.452Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://jzhao.xyz/"
+      }
+    ]
+  },
+  {
+    "id": "creative-independent",
+    "name": "The Creative Independent",
+    "cluster": "Magazines & journals",
+    "note": "",
+    "why": "Interview magazine with a stark, almost brutalist grid and big type that leaves the conversations unframed.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:50:00.452Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://thecreativeindependent.com/"
+      }
+    ]
+  },
+  {
+    "id": "new-science",
+    "name": "New Science",
+    "cluster": "Research organisations",
+    "note": "",
+    "why": "Small research nonprofit with a warm editorial look and a mission written in plain, earnest prose.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:50:00.452Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://www.newscience.org/"
+      }
+    ]
+  },
+  {
+    "id": "sivers",
+    "name": "Derek Sivers",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "Almost no design at all: plain text, a short candid About, and a /now page that says exactly what he is doing this month.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:51:27.891Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://sive.rs/"
+      },
+      {
+        "label": "Now page",
+        "url": "https://sive.rs/n"
+      },
+      {
+        "label": "About",
+        "url": "https://sive.rs/about"
+      }
+    ]
+  },
+  {
+    "id": "low-tech-magazine",
+    "name": "Low-tech Magazine (solar edition)",
+    "cluster": "Magazines & journals",
+    "note": "",
+    "why": "Solar-powered site with dithered images and a battery meter, so the constraint becomes the visual identity.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:51:27.891Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://solar.lowtechmagazine.com/"
+      },
+      {
+        "label": "Article",
+        "url": "https://solar.lowtechmagazine.com/2026/04/rediscovering-the-handcart/"
+      },
+      {
+        "label": "About",
+        "url": "https://solar.lowtechmagazine.com/about/"
+      }
+    ]
+  },
+  {
+    "id": "public-domain-review",
+    "name": "The Public Domain Review",
+    "cluster": "Magazines & journals",
+    "note": "",
+    "why": "A warm, bookish serif layout where curious archival images take the lead and the essays read like a well-made print journal.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:51:27.891Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://publicdomainreview.org/"
+      },
+      {
+        "label": "Essay",
+        "url": "https://publicdomainreview.org/essay/philip-sidney-and-the-extreme-disgraces-of-the-parenthesis/"
+      }
+    ]
+  },
+  {
+    "id": "nicky-case",
+    "name": "Nicky Case",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "Hand-drawn doodles and playable explainers give a personal site a playful, humble voice that is still clear.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:51:27.891Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://ncase.me/"
+      },
+      {
+        "label": "The Evolution of Trust",
+        "url": "https://ncase.me/trust/"
+      }
+    ]
+  },
+  {
+    "id": "wattenberger",
+    "name": "Amelia Wattenberger",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "Essays on AI interfaces that embed small interactive sketches, so each argument is shown working as well as written.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:51:27.891Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://wattenberger.com/"
+      },
+      {
+        "label": "Essay: Boo chatbots",
+        "url": "https://wattenberger.com/thoughts/boo-chatbots"
+      }
+    ]
+  },
+  {
+    "id": "macwright",
+    "name": "Tom MacWright",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "A Century Supra serif, tabular lists and a paper-tinted background make a quiet, dense and very readable personal site.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:51:27.891Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://macwright.com/"
+      },
+      {
+        "label": "Writing index",
+        "url": "https://macwright.com/writing"
+      }
+    ]
+  },
+  {
+    "id": "hamel-dev",
+    "name": "Hamel Husain",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "An independent AI consultant's site built as plain notes and long FAQs, which earns trust by being practical rather than by looking polished.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:51:27.891Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://hamel.dev/"
+      },
+      {
+        "label": "Evals FAQ",
+        "url": "https://hamel.dev/blog/posts/evals-faq/"
+      }
+    ]
+  },
+  {
+    "id": "visual-cinnamon",
+    "name": "Visual Cinnamon (Nadieh Bremer)",
+    "cluster": "Data & charts",
+    "note": "",
+    "why": "A data-art studio of one person, with a portfolio of organic, colourful charts and an About page told with personal warmth.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:51:27.891Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://www.visualcinnamon.com/"
+      },
+      {
+        "label": "Portfolio",
+        "url": "https://www.visualcinnamon.com/portfolio/"
+      },
+      {
+        "label": "About",
+        "url": "https://www.visualcinnamon.com/about/"
+      }
+    ]
+  },
+  {
+    "id": "emil-kowalski",
+    "name": "Emil Kowalski",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "A tiny home page plus essays about craft whose interactive demos show the small animation details being discussed.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:51:27.891Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://emilkowal.ski/"
+      },
+      {
+        "label": "Developing taste",
+        "url": "https://emilkowal.ski/ui/developing-taste"
+      }
+    ]
+  },
+  {
+    "id": "astera",
+    "name": "Astera Institute",
+    "cluster": "Research organisations",
+    "note": "",
+    "why": "A research nonprofit that states its vision in plain, confident prose with a calm layout and no corporate gloss.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:51:27.891Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://astera.org/"
+      },
+      {
+        "label": "Vision",
+        "url": "https://astera.org/vision/"
+      }
+    ]
+  },
+  {
+    "id": "datawrapper-blog",
+    "name": "Datawrapper Blog",
+    "cluster": "Data & charts",
+    "note": "",
+    "why": "Friendly, opinionated posts about making charts, with clean examples and a team voice that feels personal.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:51:27.891Z",
+    "pages": [
+      {
+        "label": "Blog",
+        "url": "https://www.datawrapper.de/blog"
+      },
+      {
+        "label": "Colour style guides post",
+        "url": "https://www.datawrapper.de/blog/colors-for-data-vis-style-guides"
+      }
+    ]
+  },
+  {
+    "id": "dense-discovery",
+    "name": "Dense Discovery",
+    "cluster": "Magazines & journals",
+    "note": "",
+    "why": "An independent newsletter with a tidy, grid-based archive and one curator's thoughtful, personal opening note in each issue.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:51:27.891Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://www.densediscovery.com/"
+      },
+      {
+        "label": "Issues archive",
+        "url": "https://www.densediscovery.com/issues/"
+      }
+    ]
+  },
+  {
+    "id": "dynomight",
+    "name": "Dynomight",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "A plain single column with a wry, candid voice, little hand-drawn diagrams and footnotes that feel like asides from a friend.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:52:51.918Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://dynomight.net/"
+      },
+      {
+        "label": "Essay: air purifiers",
+        "url": "https://dynomight.net/air/"
+      }
+    ]
+  },
+  {
+    "id": "nadia-xyz",
+    "name": "Nadia Asparouhova",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "A writer-researcher's site stripped to a short list of essays in calm serif type, with nothing competing for attention.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:52:51.918Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://nadia.xyz/"
+      },
+      {
+        "label": "Essay: Idea machines",
+        "url": "https://nadia.xyz/idea-machines"
+      }
+    ]
+  },
+  {
+    "id": "jefftk",
+    "name": "Jeff Kaufman",
+    "cluster": "Notes & work in progress",
+    "note": "",
+    "why": "An EA writer's deliberately bare, near-unstyled blog whose plainness reads as honest and constantly updated.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:52:51.918Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://www.jefftk.com/"
+      },
+      {
+        "label": "Posts",
+        "url": "https://www.jefftk.com/news"
+      }
+    ]
+  },
+  {
+    "id": "transformer-circuits",
+    "name": "Transformer Circuits Thread",
+    "cluster": "Research organisations",
+    "note": "",
+    "why": "Research published as long, quiet web articles with interactive figures and margin notes instead of PDFs.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:52:51.918Z",
+    "pages": [
+      {
+        "label": "Index",
+        "url": "https://transformer-circuits.pub/"
+      },
+      {
+        "label": "Toy Models of Superposition",
+        "url": "https://transformer-circuits.pub/2022/toy_model/index.html"
+      }
+    ]
+  },
+  {
+    "id": "thinking-machines",
+    "name": "Thinking Machines Lab",
+    "cluster": "Research organisations",
+    "note": "",
+    "why": "An AI lab site with almost no marketing: a short statement and a blog of carefully set technical essays.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:52:51.918Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://thinkingmachines.ai/"
+      },
+      {
+        "label": "Post: nondeterminism in LLM inference",
+        "url": "https://thinkingmachines.ai/blog/defeating-nondeterminism-in-llm-inference/"
+      }
+    ]
+  },
+  {
+    "id": "ifp",
+    "name": "Institute for Progress",
+    "cluster": "Research organisations",
+    "note": "",
+    "why": "A policy think tank that feels editorial rather than institutional, with confident type and clear sections for each research area.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:52:51.918Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://ifp.org/"
+      }
+    ]
+  },
+  {
+    "id": "cabinet-magazine",
+    "name": "Cabinet Magazine",
+    "cluster": "Magazines & journals",
+    "note": "",
+    "why": "An independent magazine with an eccentric, archival feel: dense issue listings and odd, curious themes presented without gloss.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:52:51.918Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://www.cabinetmagazine.org/"
+      }
+    ]
+  },
+  {
+    "id": "parametric-press",
+    "name": "Parametric Press",
+    "cluster": "Data & charts",
+    "note": "",
+    "why": "A digital magazine of explorable essays where each article gets its own interactive layout and diagrams.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:52:51.918Z",
+    "pages": [
+      {
+        "label": "Issue 01",
+        "url": "https://parametric.press/issue-01/"
+      },
+      {
+        "label": "Unraveling the JPEG",
+        "url": "https://parametric.press/issue-01/unraveling-the-jpeg/"
+      }
+    ]
+  },
+  {
+    "id": "quantum-country",
+    "name": "Quantum Country",
+    "cluster": "Tools & documents",
+    "note": "",
+    "why": "An essay that doubles as a tool, with spaced-repetition review cards woven between paragraphs of clean, generous text.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:52:51.918Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://quantum.country/"
+      },
+      {
+        "label": "Essay: Quantum computing for the very curious",
+        "url": "https://quantum.country/qcvc"
+      }
+    ]
+  },
+  {
+    "id": "htmx-essays",
+    "name": "htmx essays",
+    "cluster": "Tools & documents",
+    "note": "",
+    "why": "A tool's documentation with an opinionated, joking voice and plain-HTML essays that argue their case directly.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:52:51.918Z",
+    "pages": [
+      {
+        "label": "Essays",
+        "url": "https://htmx.org/essays/"
+      },
+      {
+        "label": "Hypermedia-driven applications",
+        "url": "https://htmx.org/essays/hypermedia-driven-applications/"
+      }
+    ]
+  },
+  {
+    "id": "ia-net",
+    "name": "iA (Information Architects)",
+    "cluster": "Studios & foundries",
+    "note": "",
+    "why": "A small studio's site built almost entirely from typography and essays, showing restraint as a point of view.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:52:51.918Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://ia.net/"
+      },
+      {
+        "label": "Topics (essays)",
+        "url": "https://ia.net/topics"
+      }
+    ]
+  },
+  {
+    "id": "klim",
+    "name": "Klim Type Foundry",
+    "cluster": "Studios & foundries",
+    "note": "",
+    "why": "A type foundry whose pages are typographic essays, with long, careful notes on how and why each font was made.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:52:51.918Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://klim.co.nz/"
+      },
+      {
+        "label": "National 2 font page",
+        "url": "https://klim.co.nz/retail-fonts/national-2/"
+      }
+    ]
+  },
+  {
+    "id": "tom-critchlow",
+    "name": "Tom Critchlow",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "An independent strategy consultant's plain-text site with an open wiki, so his services read as part of his ongoing thinking.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:54:50.649Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://tomcritchlow.com/"
+      },
+      {
+        "label": "Wiki",
+        "url": "https://tomcritchlow.com/wiki/"
+      }
+    ]
+  },
+  {
+    "id": "komoroske",
+    "name": "Alex Komoroske",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "A bare personal hub that sends readers to his running Google Doc of weekly notes, an unusually candid way to show work in progress.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:54:50.649Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://komoroske.com/"
+      }
+    ]
+  },
+  {
+    "id": "nat-org",
+    "name": "Nat Friedman",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "A single page of short, blunt statements about what he believes and does, with almost no visual styling.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:54:50.649Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://nat.org/"
+      }
+    ]
+  },
+  {
+    "id": "guzey",
+    "name": "Alexey Guzey",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "Long, opinionated essays in a no-frills layout with visible revision notes and a voice that reads like talking to him.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:54:50.649Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://guzey.com/"
+      },
+      {
+        "label": "Essay",
+        "url": "https://guzey.com/how-life-sciences-actually-work/"
+      }
+    ]
+  },
+  {
+    "id": "hundred-rabbits",
+    "name": "Hundred Rabbits",
+    "cluster": "Studios & foundries",
+    "note": "",
+    "why": "A two-person studio living on a sailboat, with a hand-built monochrome wiki, small pixel illustrations and frank notes on how they live.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:54:50.649Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://100r.ca/"
+      },
+      {
+        "label": "Project page",
+        "url": "https://100r.ca/site/orca.html"
+      }
+    ]
+  },
+  {
+    "id": "ohno-type",
+    "name": "OH no Type Company",
+    "cluster": "Studios & foundries",
+    "note": "",
+    "why": "A type foundry whose site is full of jokes, doodles and a chatty first-person voice while staying strictly about the fonts.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:54:50.649Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://ohnotype.co/"
+      }
+    ]
+  },
+  {
+    "id": "teenage-engineering-guides",
+    "name": "Teenage Engineering guides",
+    "cluster": "Tools & documents",
+    "note": "",
+    "why": "Product manuals laid out as tidy grids of short numbered steps with tiny diagrams, so the documents feel like part of the product.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:54:50.649Z",
+    "pages": [
+      {
+        "label": "Guides",
+        "url": "https://teenage.engineering/guides"
+      },
+      {
+        "label": "OP-1 guide",
+        "url": "https://teenage.engineering/guides/op-1"
+      }
+    ]
+  },
+  {
+    "id": "shape-up",
+    "name": "Shape Up (Basecamp)",
+    "cluster": "Tools & documents",
+    "note": "",
+    "why": "A whole book published as calm web chapters, with simple hand-drawn diagrams and an easy table of contents.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:54:50.649Z",
+    "pages": [
+      {
+        "label": "Book home",
+        "url": "https://basecamp.com/shapeup"
+      },
+      {
+        "label": "Chapter",
+        "url": "https://basecamp.com/shapeup/1.1-chapter-02"
+      }
+    ]
+  },
+  {
+    "id": "increment",
+    "name": "Increment",
+    "cluster": "Magazines & journals",
+    "note": "",
+    "why": "Stripe's software magazine, where each issue gets its own colour and illustration style while the article pages stay calm and easy to read.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:54:50.649Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://increment.com/"
+      },
+      {
+        "label": "Issue: Teams",
+        "url": "https://increment.com/teams/"
+      }
+    ]
+  },
+  {
+    "id": "fathom-info",
+    "name": "Fathom Information Design",
+    "cluster": "Data & charts",
+    "note": "",
+    "why": "A data-visualisation studio that shows its projects as quiet, well-captioned case studies instead of a showy reel.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:54:50.649Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://fathom.info/"
+      },
+      {
+        "label": "Projects",
+        "url": "https://fathom.info/projects/"
+      }
+    ]
+  },
+  {
+    "id": "truth-and-beauty",
+    "name": "Truth & Beauty (Moritz Stefaner)",
+    "cluster": "Data & charts",
+    "note": "",
+    "why": "A one-person data-visualisation practice with a spare project index where the work's imagery carries the page.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:54:50.649Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://truth-and-beauty.net/"
+      },
+      {
+        "label": "Projects",
+        "url": "https://truth-and-beauty.net/projects"
+      }
+    ]
+  },
+  {
+    "id": "vesuvius-challenge",
+    "name": "Vesuvius Challenge",
+    "cluster": "Research organisations",
+    "note": "",
+    "why": "A research prize site that tells its story with scroll images and plain progress updates, honest about what is still unsolved.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:54:50.649Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://scrollprize.org/"
+      }
+    ]
   }
 ]
