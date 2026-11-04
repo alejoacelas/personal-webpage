@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Direction A — Lab notebook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --paper: #f8f6f0; --ink: #26231f; --muted: #7a746b; --rule: #e4dfd4; --accent: #b9472a; --grid: #ebe6da; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 17px/1.55 "Newsreader", Georgia, serif; }
+  .mono { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 12.5px; letter-spacing: .02em; }
+  header.top { display: flex; justify-content: space-between; align-items: baseline; padding: 22px 48px; border-bottom: 1px solid var(--rule); }
+  header.top .name { font-family: "IBM Plex Mono", monospace; font-size: 13px; font-weight: 500; }
+  header.top nav a { margin-left: 24px; color: var(--muted); text-decoration: none; }
+  .hero { background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px); background-size: 32px 32px; padding: 96px 48px 80px; border-bottom: 1px solid var(--rule); position: relative; }
+  .hero-card { max-width: 720px; background: var(--paper); padding: 36px 40px; border: 1px solid var(--rule); }
+  h1 { font-weight: 300; font-size: 48px; line-height: 1.12; margin: 0 0 22px; letter-spacing: -.01em; }
+  .hero p { margin: 0 0 14px; max-width: 60ch; }
+  .hero .meta { color: var(--muted); margin-top: 22px; }
+  .stamp { position: absolute; right: 64px; top: 72px; transform: rotate(-6deg); border: 2px solid var(--accent); color: var(--accent); padding: 8px 14px; font-family: "IBM Plex Mono", monospace; font-size: 12px; text-transform: uppercase; letter-spacing: .12em; line-height: 1.4; }
+  .fan { position: absolute; left: 48px; bottom: 26px; }
+  main { padding: 56px 48px 80px; display: grid; grid-template-columns: 180px minmax(0, 760px); gap: 0 48px; }
+  h2 { grid-column: 1 / -1; font-weight: 300; font-size: 28px; margin: 48px 0 18px; display: flex; gap: 12px; align-items: baseline; }
+  h2:first-child { margin-top: 0; }
+  h2 .mono { color: var(--accent); }
+  .log { grid-column: 1 / -1; display: grid; grid-template-columns: 180px minmax(0, 760px); gap: 0 48px; }
+  .log > div { padding: 14px 0; border-top: 1px solid var(--rule); }
+  .log .when { color: var(--muted); }
+  .log .what b { font-weight: 400; }
+  .log .what span { color: var(--muted); }
+  .log .big b { font-size: 21px; }
+  .tag { display: inline-block; border: 1px solid var(--accent); color: var(--accent); padding: 0 6px; margin-left: 8px; font-size: 11px; text-transform: uppercase; vertical-align: 2px; }
+  .services { grid-column: 2; display: grid; grid-template-columns: 1fr 1fr; gap: 18px 32px; }
+  .services div { border-top: 1px solid var(--ink); padding-top: 10px; }
+  .services .mono { color: var(--muted); display: block; margin-bottom: 4px; }
+  .contact { grid-column: 2; font-size: 22px; font-weight: 300; }
+  .contact a { color: var(--accent); }
+  footer { padding: 24px 48px; border-top: 1px solid var(--rule); color: var(--muted); display: flex; justify-content: space-between; }
+  .placeholder { color: var(--muted); font-style: italic; }
+</style>
+</head>
+<body>
+<header class="top">
+  <span class="name">ALEJANDRO ACELAS</span>
+  <nav class="mono"><a href="#work">Work</a><a href="#log">Log</a><a href="#contact">Email</a></nav>
+</header>
+
+<section class="hero">
+  <div class="hero-card">
+    <h1>I help high-impact organisations use AI so their existing work goes better.</h1>
+    <p>My plan: pick an ambitious outcome, hopefully within reach of current AI, and try many things together until we crack it.</p>
+    <p>Finding useful things to use AI on makes people more confident, which leads them to try more ambitious things. I try to start that loop.</p>
+    <div class="meta mono">Independent from 11 Nov 2026 · Before that: Impact Ops, 80,000 Hours, AIM</div>
+  </div>
+  <div class="stamp">Status<br>taking on work</div>
+  <svg class="fan" width="320" height="40" viewBox="0 0 320 40" fill="none" stroke="#b9472a" stroke-width="1.2">
+    <path d="M0 38 L320 6"/><path d="M0 38 L300 12"/><path d="M0 38 L280 18"/><path d="M0 38 L250 24"/><path d="M0 38 L210 29"/><path d="M0 38 L160 33"/>
+  </svg>
+</section>
+
+<main>
+  <h2 id="work"><span class="mono">01</span> What I do</h2>
+  <div class="services">
+    <div><span class="mono">AUDIT</span>A 25-minute call with each person on the team, then a ranked list of tasks where AI helps most.</div>
+    <div><span class="mono">COACHING</span>One-to-one sessions on the work you already do, until the useful habits stick.</div>
+    <div><span class="mono">DISCOVERY</span>Finding the project worth building, and what a great outcome looks like.</div>
+    <div><span class="mono">BUILD SPRINT</span>A short sprint where we build it together, so you can keep it running.</div>
+  </div>
+
+  <h2 id="log"><span class="mono">02</span> Log</h2>
+  <div class="log">
+    <div class="when mono">2026</div><div class="what big"><b>Impact Ops — AI audits of 17 staff</b> <span>— calls with everyone, then a ranked task list.</span></div>
+    <div class="when mono">2026</div><div class="what big"><b>80,000 Hours — two-month secondment</b> <span>— helping the team use AI in its daily work.</span></div>
+    <div class="when mono">2026</div><div class="what big"><b>AIM — about 30 coaching calls</b> <span>— with founders and staff.</span></div>
+    <div class="when mono">2026</div><div class="what"><b>AI task map template</b><span class="tag">public</span> <span>— the spreadsheet behind the audits.</span></div>
+    <div class="when mono">2026</div><div class="what"><b class="placeholder">[pointer from the inventory]</b><span class="tag">in progress</span></div>
+    <div class="when mono">2025</div><div class="what"><b>Cliver, co-founder</b> <span>— who should not get DNA, and how to spot them.</span></div>
+    <div class="when mono">2025</div><div class="what"><b>ML4Good, head teacher</b> <span>— taught some ML, mostly conviction.</span></div>
+    <div class="when mono">2024</div><div class="what"><b>ORCG, AI policy</b> <span>— evals literature for the EU AI Act Code of Practice.</span></div>
+  </div>
+
+  <h2 id="contact"><span class="mono">03</span> Email</h2>
+  <p class="contact">Tell me what you'd like AI to do for your team: <a href="mailto:alejoacelas@gmail.com">alejoacelas@gmail.com</a></p>
+</main>
+<footer class="mono"><span>alejo (/ah-leh-ho/) if we're friends</span><span>Last updated 4 Nov 2026</span></footer>
+</body>
+</html>

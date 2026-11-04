@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Direction C — Small magazine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root { --paper: #fdf6f3; --ink: #141414; --muted: #6d6560; --block: #33337a; --rule: #141414; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 18px/1.55 "Source Serif 4", Georgia, serif; }
+  .mono { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 12px; letter-spacing: .03em; }
+  header { display: flex; align-items: center; gap: 16px; padding: 18px 40px; border-bottom: 1px solid var(--rule); }
+  .portrait { width: 52px; height: 52px; border: 1.5px dashed var(--muted); border-radius: 50%; display: grid; place-items: center; color: var(--muted); font-size: 9px; text-align: center; line-height: 1.1; }
+  .wordmark { font-family: "JetBrains Mono", monospace; font-size: 13px; line-height: 1.15; }
+  header nav { margin-left: auto; display: flex; }
+  header nav a { border: 1px solid var(--rule); border-right: 0; padding: 4px 12px; color: var(--ink); text-decoration: none; }
+  header nav a:last-child { border-right: 1px solid var(--rule); background: var(--ink); color: var(--paper); }
+  .lead { display: grid; grid-template-columns: 1.25fr 1fr; border-bottom: 1px solid var(--rule); }
+  .lead .left { padding: 64px 40px 56px; border-right: 1px solid var(--rule); }
+  .kicker { text-transform: uppercase; margin-bottom: 14px; display: block; }
+  h1 { font-family: "DM Serif Display", Georgia, serif; font-weight: 400; font-size: 58px; line-height: 1.04; margin: 0 0 22px; letter-spacing: -.01em; }
+  .dek { font-size: 21px; color: #2b2b2b; max-width: 34ch; margin: 0 0 22px; }
+  .byline b { font-weight: 600; }
+  .lead .right { background: var(--block); color: #f4f1ff; padding: 64px 40px; display: flex; flex-direction: column; justify-content: space-between; }
+  .lead .right h2 { font-family: "DM Serif Display", serif; font-weight: 400; font-size: 34px; line-height: 1.1; margin: 0 0 16px; }
+  .lead .right p { margin: 0 0 14px; }
+  .lead .right a { color: #fff; }
+  .lead .right .mono { border-top: 1px solid #8f8fd0; padding-top: 10px; }
+  .toc { padding: 48px 40px 72px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 40px; }
+  .toc h3 { grid-column: 1 / -1; font-family: "JetBrains Mono", monospace; font-weight: 600; font-size: 12px; text-transform: uppercase; border-bottom: 1px solid var(--rule); padding-bottom: 8px; margin: 0 0 8px; }
+  .item { padding: 18px 0; border-bottom: 1px solid #d9d0cb; }
+  .item .kicker { color: var(--muted); margin-bottom: 6px; }
+  .item .title { font-family: "DM Serif Display", serif; font-size: 25px; line-height: 1.15; display: block; margin-bottom: 6px; }
+  .item .title i { font-style: italic; }
+  .item p { margin: 0; color: var(--muted); font-size: 16px; }
+  .placeholder { color: var(--muted); font-style: italic; }
+  footer { border-top: 1px solid var(--rule); padding: 16px 40px; display: flex; justify-content: space-between; color: var(--muted); }
+</style>
+</head>
+<body>
+<header>
+  <div class="portrait">pen<br>portrait</div>
+  <div class="wordmark">Alejandro<br>Acelas</div>
+  <nav class="mono"><a href="#work">Work</a><a href="#things">Things</a><a href="mailto:alejoacelas@gmail.com">Email</a></nav>
+</header>
+
+<section class="lead">
+  <div class="left">
+    <span class="kicker mono">Issue 01 · November 2026</span>
+    <h1>Maybe you could be a power user as well.</h1>
+    <p class="dek">I help high-impact organisations use AI so their existing work goes better. It takes some practice, but practice can be exciting too.</p>
+    <div class="byline mono">Words by <b>Alejandro Acelas</b> · independent from 11 Nov 2026</div>
+  </div>
+  <div class="right">
+    <div>
+      <h2>Pick something important. Then let AI throw everything at it.</h2>
+      <p>We choose an ambitious outcome, say what a great result looks like, and try many things together until we crack it.</p>
+    </div>
+    <div class="mono">Write to <a href="mailto:alejoacelas@gmail.com">alejoacelas@gmail.com</a></div>
+  </div>
+</section>
+
+<section class="toc" id="work">
+  <h3>In this issue — work so far</h3>
+  <div class="item"><span class="kicker mono">Audit · 2026</span><span class="title">Seventeen people at <i>Impact Ops</i></span><p>A call with each, then a ranked list of where AI helps most.</p></div>
+  <div class="item"><span class="kicker mono">Secondment · 2026</span><span class="title">Two months at <i>80,000 Hours</i></span><p>Helping the team use AI in its daily work.</p></div>
+  <div class="item"><span class="kicker mono">Coaching · 2026</span><span class="title">Thirty calls with <i>AIM</i> founders</span><p>One-to-one, on the work they already do.</p></div>
+  <div class="item"><span class="kicker mono">Co-founder · 2025</span><span class="title">Who should not get DNA</span><p>Cliver: spotting risky DNA synthesis customers.</p></div>
+  <div class="item"><span class="kicker mono">Teaching · 2025</span><span class="title">Mostly conviction</span><p>Head teacher at ML4Good.</p></div>
+  <div class="item"><span class="kicker mono">Policy · 2024</span><span class="title">Evals for the EU AI Act</span><p>AI policy at ORCG.</p></div>
+</section>
+
+<section class="toc" id="things">
+  <h3>Things you can use</h3>
+  <div class="item"><span class="kicker mono">Template</span><span class="title">AI task map</span><p>The spreadsheet behind the audits.</p></div>
+  <div class="item"><span class="kicker mono">—</span><span class="title placeholder">[pointer from the inventory]</span></div>
+  <div class="item"><span class="kicker mono">—</span><span class="title placeholder">[pointer from the inventory]</span></div>
+</section>
+
+<footer class="mono"><span>alejo (/ah-leh-ho/) if we're friends</span><span>Printed nowhere. Updated Nov 2026.</span></footer>
+</body>
+</html>

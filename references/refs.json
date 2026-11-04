@@ -1,5 +1,53 @@
 [
   {
+    "id": "direction-c-small-magazine",
+    "name": "Direction C — Small magazine",
+    "cluster": "Directions (draft)",
+    "note": "",
+    "why": "First-pass mock-up from analysis/patterns.md, with real words from BRIEF.md.",
+    "seed": null,
+    "source": "claude",
+    "added": "2026-11-04T22:27:26.127Z",
+    "pages": [
+      {
+        "label": "Homepage",
+        "url": "http://localhost:4321/directions/c-small-magazine.html"
+      }
+    ]
+  },
+  {
+    "id": "direction-b-quiet-page",
+    "name": "Direction B — Quiet page",
+    "cluster": "Directions (draft)",
+    "note": "",
+    "why": "First-pass mock-up from analysis/patterns.md, with real words from BRIEF.md.",
+    "seed": null,
+    "source": "claude",
+    "added": "2026-11-04T22:27:26.127Z",
+    "pages": [
+      {
+        "label": "Homepage",
+        "url": "http://localhost:4321/directions/b-quiet-page.html"
+      }
+    ]
+  },
+  {
+    "id": "direction-a-lab-notebook",
+    "name": "Direction A — Lab notebook",
+    "cluster": "Directions (draft)",
+    "note": "",
+    "why": "First-pass mock-up from analysis/patterns.md, with real words from BRIEF.md.",
+    "seed": null,
+    "source": "claude",
+    "added": "2026-11-04T22:27:26.127Z",
+    "pages": [
+      {
+        "label": "Homepage",
+        "url": "http://localhost:4321/directions/a-lab-notebook.html"
+      }
+    ]
+  },
+  {
     "id": "works-in-progress",
     "name": "Works in Progress",
     "cluster": "Magazines & journals",

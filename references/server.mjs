@@ -57,7 +57,7 @@ createServer(async (req, res) => {
     }
     const rel = normalize(decodeURIComponent(url.pathname === '/' ? '/index.html' : url.pathname)).replace(/^\/+/, '');
     const file = join(here, rel);
-    const allowed = rel === 'index.html' || rel.startsWith('shots/');
+    const allowed = rel === 'index.html' || rel.startsWith('shots/') || rel.startsWith('directions/');
     if (!allowed || !existsSync(file) || !statSync(file).isFile()) return send(404, 'not found', 'text/plain');
     res.writeHead(200, { 'content-type': TYPES[extname(file)] || 'application/octet-stream', 'cache-control': rel.startsWith('shots/') ? 'max-age=60' : 'no-store' });
     res.end(readFileSync(file));
