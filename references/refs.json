@@ -2444,5 +2444,605 @@
         "url": "https://fly.io/docs/"
       }
     ]
+  },
+  {
+    "id": "oxide-computer",
+    "name": "Oxide Computer",
+    "cluster": "Tools & documents",
+    "note": "",
+    "why": "A company whose written principles and public RFDs set out how it works, laid out as calm technical documents in a monospace-tinged system.",
+    "seed": "linear-method",
+    "source": "agent",
+    "added": "2026-11-04T22:07:00.404Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://oxide.computer/"
+      },
+      {
+        "label": "Principles",
+        "url": "https://oxide.computer/principles"
+      },
+      {
+        "label": "RFD 1",
+        "url": "https://rfd.shared.oxide.computer/rfd/0001"
+      },
+      {
+        "label": "Blog",
+        "url": "https://oxide.computer/blog"
+      }
+    ]
+  },
+  {
+    "id": "kinopio",
+    "name": "Kinopio",
+    "cluster": "Tools & documents",
+    "note": "",
+    "why": "A spatial thinking tool with a hand-made, playful voice and small cute details that make it feel personal rather than corporate.",
+    "seed": "are-na",
+    "source": "agent",
+    "added": "2026-11-04T22:07:00.404Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://kinopio.club/"
+      },
+      {
+        "label": "About",
+        "url": "https://kinopio.club/about"
+      },
+      {
+        "label": "Help docs",
+        "url": "https://help.kinopio.club/"
+      }
+    ]
+  },
+  {
+    "id": "inference-review",
+    "name": "Inference: International Review of Science",
+    "cluster": "Magazines & journals",
+    "note": "",
+    "why": "A science quarterly with austere serif typography, a sober issue-based layout and long essays that carry the page with no decoration.",
+    "seed": "asterisk",
+    "source": "agent",
+    "added": "2026-11-04T22:07:00.404Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://inference-review.com/"
+      },
+      {
+        "label": "Essay",
+        "url": "https://inference-review.com/article/ai-will-not-make-mathematicians-obsolete"
+      },
+      {
+        "label": "Issues",
+        "url": "https://inference-review.com/issues"
+      },
+      {
+        "label": "About",
+        "url": "https://inference-review.com/about"
+      }
+    ]
+  },
+  {
+    "id": "new-atlantis",
+    "name": "The New Atlantis",
+    "cluster": "Magazines & journals",
+    "note": "",
+    "why": "A technology-and-society journal with a classic print feel: illustrated covers, an issue archive and generous essay pages.",
+    "seed": "works-in-progress",
+    "source": "agent",
+    "added": "2026-11-04T22:07:00.404Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://www.thenewatlantis.com/"
+      },
+      {
+        "label": "Issues",
+        "url": "https://www.thenewatlantis.com/issues"
+      },
+      {
+        "label": "Article",
+        "url": "https://www.thenewatlantis.com/publications/the-editors-interview-the-editors"
+      },
+      {
+        "label": "About",
+        "url": "https://www.thenewatlantis.com/about"
+      }
+    ]
+  },
+  {
+    "id": "goodfire-research",
+    "name": "Goodfire Research",
+    "cluster": "Research organisations",
+    "note": "",
+    "why": "Interpretability research published as clean web articles with interactive figures, under a restrained lab home page.",
+    "seed": "transformer-circuits",
+    "source": "agent",
+    "added": "2026-11-04T22:07:00.404Z",
+    "pages": [
+      {
+        "label": "Research index",
+        "url": "https://www.goodfire.ai/research"
+      },
+      {
+        "label": "Research post",
+        "url": "https://www.goodfire.ai/research/under-the-hood-of-a-reasoning-model"
+      },
+      {
+        "label": "Home",
+        "url": "https://www.goodfire.ai/"
+      }
+    ]
+  },
+  {
+    "id": "sakana-ai",
+    "name": "Sakana AI",
+    "cluster": "Research organisations",
+    "note": "",
+    "why": "An AI lab site that is mostly a stream of long research write-ups, set off by ukiyo-e-style fish artwork.",
+    "seed": "thinking-machines",
+    "source": "agent",
+    "added": "2026-11-04T22:07:00.404Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://sakana.ai/"
+      },
+      {
+        "label": "The AI Scientist",
+        "url": "https://sakana.ai/ai-scientist/"
+      },
+      {
+        "label": "Evolutionary model merge",
+        "url": "https://sakana.ai/evolutionary-model-merge/"
+      }
+    ]
+  },
+  {
+    "id": "recomendo",
+    "name": "Recomendo",
+    "cluster": "Magazines & journals",
+    "note": "",
+    "why": "A weekly newsletter of six short personal recommendations, with a plain archive and a warm, first-person voice from its curators.",
+    "seed": "dense-discovery",
+    "source": "agent",
+    "added": "2026-11-04T22:07:00.404Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://www.recomendo.com/"
+      },
+      {
+        "label": "Archive",
+        "url": "https://www.recomendo.com/archive"
+      },
+      {
+        "label": "Issue",
+        "url": "https://www.recomendo.com/p/retro-recomendo-destinations-vol"
+      },
+      {
+        "label": "About",
+        "url": "https://www.recomendo.com/about"
+      }
+    ]
+  },
+  {
+    "id": "the-believer",
+    "name": "The Believer",
+    "cluster": "Magazines & journals",
+    "note": "",
+    "why": "A literary magazine with hand-drawn portrait illustrations, bookish serif type and quirky formats like micro-interviews.",
+    "seed": "public-domain-review",
+    "source": "agent",
+    "added": "2026-11-04T22:07:00.404Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://www.thebeliever.net/"
+      },
+      {
+        "label": "Micro-interview",
+        "url": "https://www.thebeliever.net/a-microinterview-with-luca-turin/"
+      },
+      {
+        "label": "Issues",
+        "url": "https://www.thebeliever.net/issues/"
+      },
+      {
+        "label": "About",
+        "url": "https://www.thebeliever.net/about/"
+      }
+    ]
+  },
+  {
+    "id": "future-library",
+    "name": "Future Library",
+    "cluster": "Research organisations",
+    "note": "",
+    "why": "A 100-year art project whose quiet site is laid out as a timeline of years, which makes the long horizon the main structure.",
+    "seed": "long-now",
+    "source": "agent",
+    "added": "2026-11-04T22:07:00.404Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://futurelibrary.no/"
+      },
+      {
+        "label": "Year 2014",
+        "url": "https://futurelibrary.no/#/years/2014"
+      },
+      {
+        "label": "The artists",
+        "url": "https://futurelibrary.no/#/the-artists"
+      }
+    ]
+  },
+  {
+    "id": "rsms",
+    "name": "Rasmus Andersson",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "A type designer's personal site: bare lists of posts and projects in his own typeface, Inter, with project pages that show off the craft.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T22:07:00.404Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://rsms.me/"
+      },
+      {
+        "label": "Inter project",
+        "url": "https://rsms.me/inter/"
+      },
+      {
+        "label": "Projects",
+        "url": "https://rsms.me/projects/"
+      },
+      {
+        "label": "About",
+        "url": "https://rsms.me/about/"
+      }
+    ]
+  },
+  {
+    "id": "manuel-moreale",
+    "name": "Manuel Moreale",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "A minimal personal site that mixes short candid thoughts with a running hiking series, each stream with its own simple feed.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T22:07:00.404Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://manuelmoreale.com/"
+      },
+      {
+        "label": "Post",
+        "url": "https://manuelmoreale.com/thoughts/the-life-triangle"
+      },
+      {
+        "label": "About",
+        "url": "https://manuelmoreale.com/about"
+      }
+    ]
+  },
+  {
+    "id": "michael-nielsen",
+    "name": "Michael Nielsen",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "A researcher's home page that is almost plain text: a short self-description and links to essays, with nothing extra around them.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T22:07:00.404Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://michaelnielsen.org/"
+      },
+      {
+        "label": "Blog",
+        "url": "https://michaelnielsen.org/blog/"
+      }
+    ]
+  },
+  {
+    "id": "elliot-jay-stocks",
+    "name": "Elliot Jay Stocks",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "A typographer's site where large, carefully paired serif type and generous spacing carry the whole design.",
+    "seed": "frank-chimero",
+    "source": "agent",
+    "added": "2026-11-04T22:09:15.874Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://elliotjaystocks.com/"
+      },
+      {
+        "label": "Blog",
+        "url": "https://elliotjaystocks.com/blog"
+      },
+      {
+        "label": "About",
+        "url": "https://elliotjaystocks.com/about"
+      }
+    ]
+  },
+  {
+    "id": "leerob",
+    "name": "Lee Robinson",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "A near-empty single column of small text, with short pages such as a list of beliefs written in a plain first-person voice.",
+    "seed": "paco",
+    "source": "agent",
+    "added": "2026-11-04T22:09:15.874Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://leerob.com/"
+      },
+      {
+        "label": "Beliefs",
+        "url": "https://leerob.com/beliefs"
+      },
+      {
+        "label": "Essay",
+        "url": "https://leerob.com/personal-software"
+      }
+    ]
+  },
+  {
+    "id": "alexander-obenauer",
+    "name": "Alexander Obenauer",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "An independent researcher publishes numbered lab notes with embedded prototype videos, treating the site as an open research notebook.",
+    "seed": "bret-victor",
+    "source": "agent",
+    "added": "2026-11-04T22:09:15.874Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://alexanderobenauer.com/"
+      },
+      {
+        "label": "Lab note",
+        "url": "https://alexanderobenauer.com/labnotes/000/"
+      },
+      {
+        "label": "Project (OLLOS)",
+        "url": "https://alexanderobenauer.com/ollos/"
+      }
+    ]
+  },
+  {
+    "id": "spencer-chang",
+    "name": "Spencer Chang",
+    "cluster": "Notes & work in progress",
+    "note": "",
+    "why": "A playful garden of posts, creations and a /now page, with small interactive touches inside restrained type.",
+    "seed": "jzhao-garden",
+    "source": "agent",
+    "added": "2026-11-04T22:09:15.874Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://spencer.place/"
+      },
+      {
+        "label": "Posts",
+        "url": "https://spencer.place/posts/"
+      },
+      {
+        "label": "Creations",
+        "url": "https://spencer.place/creation/"
+      },
+      {
+        "label": "Now",
+        "url": "https://spencer.place/now/"
+      }
+    ]
+  },
+  {
+    "id": "karpathy-blog",
+    "name": "Andrej Karpathy's blog",
+    "cluster": "Notes & work in progress",
+    "note": "",
+    "why": "A bare default Jekyll blog where the plainness signals that the writing is what matters, not polish.",
+    "seed": "metr-notes",
+    "source": "agent",
+    "added": "2026-11-04T22:09:15.874Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://karpathy.github.io/"
+      },
+      {
+        "label": "Essay: training recipe",
+        "url": "https://karpathy.github.io/2019/04/25/recipe/"
+      },
+      {
+        "label": "Essay with figures",
+        "url": "https://karpathy.github.io/2015/05/21/rnn-effectiveness/"
+      }
+    ]
+  },
+  {
+    "id": "shirley-wu",
+    "name": "Shirley Wu",
+    "cluster": "Data & charts",
+    "note": "",
+    "why": "A one-person data-art studio with hand-crafted, colourful visualisations and a warm, personal about page and notebook.",
+    "seed": "visual-cinnamon",
+    "source": "agent",
+    "added": "2026-11-04T22:09:15.874Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://www.shirleywu.studio/"
+      },
+      {
+        "label": "Projects",
+        "url": "https://www.shirleywu.studio/projects"
+      },
+      {
+        "label": "Notebook",
+        "url": "https://www.shirleywu.studio/notebook"
+      },
+      {
+        "label": "About",
+        "url": "https://www.shirleywu.studio/about"
+      }
+    ]
+  },
+  {
+    "id": "every-layout",
+    "name": "Every Layout",
+    "cluster": "Tools & documents",
+    "note": "",
+    "why": "A principled design method laid out as a calm, numbered document with monospace accents and diagrams.",
+    "seed": "linear-method",
+    "source": "agent",
+    "added": "2026-11-04T22:09:15.874Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://every-layout.dev/"
+      },
+      {
+        "label": "Layout chapter",
+        "url": "https://every-layout.dev/layouts/stack/"
+      },
+      {
+        "label": "Rudiments chapter",
+        "url": "https://every-layout.dev/rudiments/boxes/"
+      }
+    ]
+  },
+  {
+    "id": "cosmos",
+    "name": "Cosmos",
+    "cluster": "Tools & documents",
+    "note": "",
+    "why": "A quiet, image-first grid for collecting references, with interface chrome kept almost invisible.",
+    "seed": "are-na",
+    "source": "agent",
+    "added": "2026-11-04T22:09:15.874Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://www.cosmos.so/"
+      },
+      {
+        "label": "Explore",
+        "url": "https://www.cosmos.so/explore"
+      },
+      {
+        "label": "About",
+        "url": "https://www.cosmos.so/about"
+      }
+    ]
+  },
+  {
+    "id": "sentiers",
+    "name": "Sentiers",
+    "cluster": "Magazines & journals",
+    "note": "",
+    "why": "A one-curator newsletter about futures and technology, with a tidy archive and a candid personal voice in every issue.",
+    "seed": "dense-discovery",
+    "source": "agent",
+    "added": "2026-11-04T22:09:15.874Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://sentiers.media/"
+      },
+      {
+        "label": "Newsletter archive",
+        "url": "https://sentiers.media/tag/newsletters/"
+      },
+      {
+        "label": "About",
+        "url": "https://sentiers.media/about/"
+      }
+    ]
+  },
+  {
+    "id": "hedgehog-review",
+    "name": "The Hedgehog Review",
+    "cluster": "Magazines & journals",
+    "note": "",
+    "why": "A print-first journal of ideas whose themed issues and serif type give the website a calm, bookish feel.",
+    "seed": "asterisk",
+    "source": "agent",
+    "added": "2026-11-04T22:09:15.874Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://hedgehogreview.com/"
+      },
+      {
+        "label": "Issues",
+        "url": "https://hedgehogreview.com/issues"
+      }
+    ]
+  },
+  {
+    "id": "answer-ai",
+    "name": "Answer.AI",
+    "cluster": "Research organisations",
+    "note": "",
+    "why": "An AI lab whose site is just a plain list of long technical posts, with no marketing at all.",
+    "seed": "thinking-machines",
+    "source": "agent",
+    "added": "2026-11-04T22:09:15.874Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://www.answer.ai/"
+      },
+      {
+        "label": "Launch post",
+        "url": "https://www.answer.ai/posts/2023-12-12-launch.html"
+      },
+      {
+        "label": "Technical post",
+        "url": "https://www.answer.ai/posts/2024-03-06-fsdp-qlora.html"
+      }
+    ]
+  },
+  {
+    "id": "csswizardry",
+    "name": "CSS Wizardry (Harry Roberts)",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "An independent consultant's site that explains what he does plainly and backs it with a long, carefully kept archive of writing.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T22:09:15.874Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://csswizardry.com/"
+      },
+      {
+        "label": "Services",
+        "url": "https://csswizardry.com/services/"
+      },
+      {
+        "label": "Archive",
+        "url": "https://csswizardry.com/archive/"
+      }
+    ]
   }
 ]

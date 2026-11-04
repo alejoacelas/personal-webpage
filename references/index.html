@@ -70,6 +70,7 @@
   <div><kbd>← → ↑ ↓</kbd>move between sites (rows are kinds of site)</div>
   <div><kbd>v</kbd>next section of the page, then the site's next page (shift+v: back)</div>
   <div><kbd>f</kbd>favourite: finds more like it</div>
+  <div><kbd>x</kbd>hide sites you've seen and not favourited (again to show them)</div>
   <div><kbd>z</kbd>zoom out to the whole grid and back</div>
   <div><kbd>j k</kbd>scroll down / up · <kbd>space</kbd>a screen</div>
   <div><kbd>t</kbd>back to the top of the screenshot</div>
@@ -81,7 +82,8 @@
   let S = null;            // server state
   let rows = [];           // [{ cluster, items: [ref] }]
   let curId = decodeURIComponent(location.hash.slice(1)) || null;
-  let pageIdx = 0;         // index into the current ref's captured pages
+  let pageIdx = 0;
+  let hideSeen = false; try { hideSeen = localStorage.getItem('hideSeen') === '1'; } catch {}         // index into the current ref's captured pages
 
   // One full-page shot per captured page: [{ page, file }]. Shots from the older
   // three-view format stand in until the page is recaptured.
@@ -99,7 +101,8 @@
   // Rows are clusters in order of first appearance. Within a row, a site found from a
   // favourite sits right after that favourite, so "more like this" stays nearby.
   function buildRows() {
-    const ready = S.refs.filter(r => r.shots.length);
+    // With hideSeen on, sites already looked at and not favourited drop out (the current one stays until you move on).
+    const ready = S.refs.filter(r => r.shots.length && (!hideSeen || r.id === curId || !S.seen.includes(r.id) || S.favorites.includes(r.id)));
     const order = Object.fromEntries(S.refs.map((r, i) => [r.id, i]));
     const byCluster = new Map();
     for (const r of ready) { if (!byCluster.has(r.cluster)) byCluster.set(r.cluster, []); byCluster.get(r.cluster).push(r); }
@@ -129,7 +132,7 @@
     $('l2').innerHTML = [r.note && `<span class="note">${esc(r.note)}</span>`, r.why && esc(r.why), seed && `more like ${esc(seed.name)}`].filter(Boolean).join(' · ') || '&nbsp;';
     const total = rows.reduce((n, row) => n + row.items.length, 0);
     const pending = S.refs.filter(x => x.capture === 'pending').length;
-    $('count').textContent = `${S.seen.length}/${total} seen · ${S.favorites.length} ♥${pending ? ` · ${pending} capturing` : ''}`;
+    $('count').textContent = `${hideSeen ? 'hiding seen · ' : ''}${S.seen.length} seen · ${total} shown · ${S.favorites.length} ♥${pending ? ` · ${pending} capturing` : ''}`;
     const d = S.discovery;
     $('disc').className = d.running ? 'on' : '';
     $('disc').textContent = d.running ? 'finding more…' : d.lastError ? 'discovery error (see discover.log)' : d.rounds ? `last round +${d.lastAdded}` : 'discovery idle';
@@ -189,6 +192,7 @@
     const next = rows[ri].items[ci];
     if (next.id === curId) return;
     curId = next.id; pageIdx = 0;
+    if (hideSeen) buildRows(); // drop the site just left
     render(dr > 0 ? 'up' : dr < 0 ? 'down' : dc > 0 ? 'left' : 'right');
   }
 
@@ -224,6 +228,10 @@
     else if (k === 'ArrowDown') move(1, 0);
     else if (k === 'ArrowUp') move(-1, 0);
     else if (k === 'v' || k === 'V') step(k === 'V' ? -1 : 1);
+    else if (k === 'x') {
+      hideSeen = !hideSeen; try { localStorage.setItem('hideSeen', hideSeen ? '1' : '0'); } catch {}
+      buildRows(); render();
+    }
     else if (k === 'f') {
       const id = curId; S.favorites = S.favorites.includes(id) ? S.favorites.filter(x => x !== id) : [...S.favorites, id];
       post('/api/fav', { id }); renderBar(); document.body.classList.contains('ov') ? renderOverview() : renderMini();
