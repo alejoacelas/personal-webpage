@@ -1836,5 +1836,613 @@
         "url": "https://robinrendle.com/"
       }
     ]
+  },
+  {
+    "id": "the-marginalian",
+    "name": "The Marginalian",
+    "cluster": "Magazines & journals",
+    "note": "",
+    "why": "A one-person literary journal where vintage illustrations and long quoted passages set a slow, bookish reading pace.",
+    "seed": "public-domain-review",
+    "source": "agent",
+    "added": "2026-11-04T22:03:33.308Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://www.themarginalian.org/"
+      },
+      {
+        "label": "Essay with archival drawings",
+        "url": "https://www.themarginalian.org/2016/04/06/charles-darwin-children-doodles-origin-of-species/"
+      },
+      {
+        "label": "Favourite reads",
+        "url": "https://www.themarginalian.org/favorite-reads/"
+      },
+      {
+        "label": "About",
+        "url": "https://www.themarginalian.org/about/"
+      }
+    ]
+  },
+  {
+    "id": "emergence-magazine",
+    "name": "Emergence Magazine",
+    "cluster": "Magazines & journals",
+    "note": "",
+    "why": "Large imagery and generous whitespace give each essay the feel of a quiet, beautifully printed volume.",
+    "seed": "public-domain-review",
+    "source": "agent",
+    "added": "2026-11-04T22:03:33.308Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://emergencemagazine.org/"
+      },
+      {
+        "label": "Essay",
+        "url": "https://emergencemagazine.org/essay/new-life-for-the-ezo-spruce/"
+      },
+      {
+        "label": "Interactive feature",
+        "url": "https://emergencemagazine.org/feature/50-seasonal-meditations/"
+      },
+      {
+        "label": "About",
+        "url": "https://emergencemagazine.org/about/"
+      }
+    ]
+  },
+  {
+    "id": "plough",
+    "name": "Plough",
+    "cluster": "Magazines & journals",
+    "note": "",
+    "why": "A warm serif quarterly that pairs essays with painted art, so it reads like a well-made print journal.",
+    "seed": "public-domain-review",
+    "source": "agent",
+    "added": "2026-11-04T22:03:33.308Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://www.plough.com/"
+      },
+      {
+        "label": "Articles index",
+        "url": "https://www.plough.com/articles"
+      },
+      {
+        "label": "Article",
+        "url": "https://www.plough.com/articles/frog-and-toad-theology"
+      },
+      {
+        "label": "About",
+        "url": "https://www.plough.com/about-us"
+      }
+    ]
+  },
+  {
+    "id": "aeon",
+    "name": "Aeon",
+    "cluster": "Magazines & journals",
+    "note": "",
+    "why": "Long essays set in calm serif type with careful art direction, and a clear list of essays to browse.",
+    "seed": "public-domain-review",
+    "source": "agent",
+    "added": "2026-11-04T22:03:33.308Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://aeon.co/"
+      },
+      {
+        "label": "Essays index",
+        "url": "https://aeon.co/essays"
+      },
+      {
+        "label": "Essay",
+        "url": "https://aeon.co/essays/the-more-we-rely-on-tech-the-more-we-deskill-our-bodies"
+      },
+      {
+        "label": "About",
+        "url": "https://aeon.co/about"
+      }
+    ]
+  },
+  {
+    "id": "isolarii",
+    "name": "Isolarii",
+    "cluster": "Magazines & journals",
+    "note": "",
+    "why": "A publisher of tiny books whose site works like a catalogue of objects, where each title gets its own careful page.",
+    "seed": "stripe-press",
+    "source": "agent",
+    "added": "2026-11-04T22:03:33.308Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://www.isolarii.com/"
+      },
+      {
+        "label": "Book page",
+        "url": "https://www.isolarii.com/authors/james-lovelock"
+      },
+      {
+        "label": "Sunset edition",
+        "url": "https://www.isolarii.com/sunset"
+      }
+    ]
+  },
+  {
+    "id": "zone-books",
+    "name": "Zone Books",
+    "cluster": "Magazines & journals",
+    "note": "",
+    "why": "A spare publisher catalogue where the book covers and plain typographic lists do all the work.",
+    "seed": "stripe-press",
+    "source": "agent",
+    "added": "2026-11-04T22:03:33.308Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://www.zonebooks.org/"
+      },
+      {
+        "label": "Book list",
+        "url": "https://www.zonebooks.org/books"
+      },
+      {
+        "label": "Book page",
+        "url": "https://www.zonebooks.org/books/391-a-silent-apostrophe-the-fayum-portraits"
+      },
+      {
+        "label": "About",
+        "url": "https://www.zonebooks.org/about"
+      }
+    ]
+  },
+  {
+    "id": "inventory-press",
+    "name": "Inventory Press",
+    "cluster": "Magazines & journals",
+    "note": "",
+    "why": "A small art and design press that sells books as designed objects, on a restrained grid with sparse labels.",
+    "seed": "stripe-press",
+    "source": "agent",
+    "added": "2026-11-04T22:03:33.308Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://www.inventorypress.com/"
+      },
+      {
+        "label": "All books",
+        "url": "https://www.inventorypress.com/all"
+      },
+      {
+        "label": "Book page",
+        "url": "https://www.inventorypress.com/product/cyberfeminism-index"
+      },
+      {
+        "label": "About",
+        "url": "https://www.inventorypress.com/about"
+      }
+    ]
+  },
+  {
+    "id": "kevin-kelly",
+    "name": "Kevin Kelly",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "A long-running technology optimist's home base, with essays, books and side projects collected on a plain, old-web site.",
+    "seed": "roots-of-progress",
+    "source": "agent",
+    "added": "2026-11-04T22:03:33.308Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://kk.org/"
+      },
+      {
+        "label": "The Technium essays",
+        "url": "https://kk.org/thetechnium/"
+      },
+      {
+        "label": "Books",
+        "url": "https://kk.org/books"
+      },
+      {
+        "label": "Biography",
+        "url": "https://kk.org/biography"
+      }
+    ]
+  },
+  {
+    "id": "devon-zuegel",
+    "name": "Devon Zuegel",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "Plain essays and field notes on cities and progress, listed as one long index of titles with no extra decoration.",
+    "seed": "roots-of-progress",
+    "source": "agent",
+    "added": "2026-11-04T22:03:33.308Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://www.devonzuegel.com/"
+      },
+      {
+        "label": "Field notes",
+        "url": "https://www.devonzuegel.com/field-notes-miami"
+      },
+      {
+        "label": "Essay",
+        "url": "https://www.devonzuegel.com/numbers-for-understanding-cities"
+      }
+    ]
+  },
+  {
+    "id": "kasey-klimes",
+    "name": "Kasey Klimes",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "A designer and researcher's site, split into work, notes, a book shelf and a play section, each with its own small touches.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T22:03:33.308Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://kaseyklimes.com/"
+      },
+      {
+        "label": "Work",
+        "url": "https://kaseyklimes.com/work"
+      },
+      {
+        "label": "Notes",
+        "url": "https://kaseyklimes.com/notes"
+      },
+      {
+        "label": "Shelf",
+        "url": "https://kaseyklimes.com/shelf"
+      }
+    ]
+  },
+  {
+    "id": "celine-nguyen",
+    "name": "Celine Nguyen",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "A writer's single page that lists her published pieces by venue, a candid and very short way to introduce someone.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T22:03:33.308Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://celinenguyen.com/"
+      }
+    ]
+  },
+  {
+    "id": "grilli-type",
+    "name": "Grilli Type",
+    "cluster": "Studios & foundries",
+    "note": "",
+    "why": "A Swiss type foundry where each typeface page shows off the font itself, set in bold, playful sizes.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T22:03:33.308Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://www.grillitype.com/"
+      },
+      {
+        "label": "Typefaces",
+        "url": "https://www.grillitype.com/typefaces"
+      },
+      {
+        "label": "Typeface page",
+        "url": "https://www.grillitype.com/typeface/gt-alpina"
+      },
+      {
+        "label": "In use",
+        "url": "https://www.grillitype.com/blog/in-use"
+      }
+    ]
+  },
+  {
+    "id": "dynamicland",
+    "name": "Dynamicland",
+    "cluster": "Research organisations",
+    "note": "",
+    "why": "A research lab's site laid out like a printed zine, where photos of the physical work carry the story and the plain FAQ explains it in the lab's own voice.",
+    "seed": "ink-and-switch",
+    "source": "agent",
+    "added": "2026-11-04T22:04:51.214Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://dynamicland.org/"
+      },
+      {
+        "label": "FAQ",
+        "url": "https://dynamicland.org/2024/FAQ/"
+      },
+      {
+        "label": "Archive",
+        "url": "https://dynamicland.org/archive/"
+      }
+    ]
+  },
+  {
+    "id": "geoffrey-litt",
+    "name": "Geoffrey Litt",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "A malleable-software researcher's site with plain essays, margin-note experiments and project pages that read like small Ink & Switch reports.",
+    "seed": "ink-and-switch",
+    "source": "agent",
+    "added": "2026-11-04T22:04:51.214Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://www.geoffreylitt.com/"
+      },
+      {
+        "label": "Essay: AI assistant from one SQLite table",
+        "url": "https://www.geoffreylitt.com/2025/04/12/how-i-made-a-useful-ai-assistant-with-one-sqlite-table-and-a-handful-of-cron-jobs"
+      },
+      {
+        "label": "Project: Margin notes",
+        "url": "https://www.geoffreylitt.com/margin-notes"
+      },
+      {
+        "label": "Project: Wildcard",
+        "url": "https://www.geoffreylitt.com/wildcard"
+      }
+    ]
+  },
+  {
+    "id": "transluce",
+    "name": "Transluce",
+    "cluster": "Research organisations",
+    "note": "",
+    "why": "An AI interpretability nonprofit whose research write-ups use live demos and calm serif text instead of marketing copy.",
+    "seed": "anthropic-research",
+    "source": "agent",
+    "added": "2026-11-04T22:04:51.214Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://transluce.org/"
+      },
+      {
+        "label": "Research: observability interface",
+        "url": "https://transluce.org/observability-interface"
+      },
+      {
+        "label": "About",
+        "url": "https://transluce.org/about"
+      }
+    ]
+  },
+  {
+    "id": "colah-blog",
+    "name": "colah's blog",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "The forerunner of the Circuits thread: long explanatory posts built around hand-made diagrams, set on a bare, quiet page.",
+    "seed": "transformer-circuits",
+    "source": "agent",
+    "added": "2026-11-04T22:04:51.214Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://colah.github.io/"
+      },
+      {
+        "label": "Essay: Understanding LSTMs",
+        "url": "https://colah.github.io/posts/2015-08-Understanding-LSTMs/"
+      },
+      {
+        "label": "About",
+        "url": "https://colah.github.io/about.html"
+      }
+    ]
+  },
+  {
+    "id": "physical-intelligence",
+    "name": "Physical Intelligence",
+    "cluster": "Research organisations",
+    "note": "",
+    "why": "A robotics AI lab whose site is a short statement and a list of research posts, with video and plain text instead of a sales pitch.",
+    "seed": "thinking-machines",
+    "source": "agent",
+    "added": "2026-11-04T22:04:51.214Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://www.physicalintelligence.company/"
+      },
+      {
+        "label": "Research index",
+        "url": "https://www.physicalintelligence.company/research"
+      },
+      {
+        "label": "Post: π0",
+        "url": "https://www.physicalintelligence.company/blog/pi0"
+      }
+    ]
+  },
+  {
+    "id": "ssi",
+    "name": "Safe Superintelligence Inc.",
+    "cluster": "Research organisations",
+    "note": "",
+    "why": "An entire AI company presented as one short signed letter in plain text, with nothing else on the page.",
+    "seed": "thinking-machines",
+    "source": "agent",
+    "added": "2026-11-04T22:04:51.214Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://ssi.inc/"
+      }
+    ]
+  },
+  {
+    "id": "arc-prize",
+    "name": "ARC Prize",
+    "cluster": "Research organisations",
+    "note": "",
+    "why": "A research prize site that shows the puzzles themselves, keeps a public leaderboard and says plainly how far current AI still falls short.",
+    "seed": "vesuvius-challenge",
+    "source": "agent",
+    "added": "2026-11-04T22:04:51.214Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://arcprize.org/"
+      },
+      {
+        "label": "The benchmark",
+        "url": "https://arcprize.org/arc-agi"
+      },
+      {
+        "label": "Leaderboard",
+        "url": "https://arcprize.org/leaderboard"
+      },
+      {
+        "label": "Blog",
+        "url": "https://arcprize.org/blog"
+      }
+    ]
+  },
+  {
+    "id": "why-is-this-interesting",
+    "name": "Why Is This Interesting?",
+    "cluster": "Magazines & journals",
+    "note": "",
+    "why": "A daily newsletter where each issue is one curious idea from a named contributor, with a tidy, text-first archive.",
+    "seed": "dense-discovery",
+    "source": "agent",
+    "added": "2026-11-04T22:04:51.214Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://whyisthisinteresting.com/"
+      },
+      {
+        "label": "Archive",
+        "url": "https://whyisthisinteresting.com/archive"
+      },
+      {
+        "label": "About",
+        "url": "https://whyisthisinteresting.com/about"
+      }
+    ]
+  },
+  {
+    "id": "wellcome-collection",
+    "name": "Wellcome Collection",
+    "cluster": "Magazines & journals",
+    "note": "",
+    "why": "A museum and library where odd archival images lead warm, essay-like stories, with a gentle serif style throughout.",
+    "seed": "public-domain-review",
+    "source": "agent",
+    "added": "2026-11-04T22:04:51.214Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://wellcomecollection.org/"
+      },
+      {
+        "label": "Stories",
+        "url": "https://wellcomecollection.org/stories"
+      },
+      {
+        "label": "Collections",
+        "url": "https://wellcomecollection.org/collections"
+      }
+    ]
+  },
+  {
+    "id": "nintil",
+    "name": "Nintil",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "An independent researcher's plain, text-heavy site where long, carefully sourced essays and a candid About page do all the work.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T22:04:51.214Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://nintil.com/"
+      },
+      {
+        "label": "Essay: longevity",
+        "url": "https://nintil.com/longevity"
+      },
+      {
+        "label": "About",
+        "url": "https://nintil.com/about"
+      }
+    ]
+  },
+  {
+    "id": "panic",
+    "name": "Panic",
+    "cluster": "Studios & foundries",
+    "note": "",
+    "why": "A small software studio with playful illustrations, a warm voice and product pages full of small, joyful details.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T22:04:51.214Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://panic.com/"
+      },
+      {
+        "label": "Product: Nova",
+        "url": "https://panic.com/nova/"
+      },
+      {
+        "label": "About",
+        "url": "https://panic.com/about/"
+      },
+      {
+        "label": "Blog",
+        "url": "https://panic.com/blog/"
+      }
+    ]
+  },
+  {
+    "id": "fly-io-blog",
+    "name": "Fly.io Blog",
+    "cluster": "Tools & documents",
+    "note": "",
+    "why": "An infrastructure company's blog with an opinionated first-person voice and a cute hand-drawn illustration on every post.",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T22:04:51.214Z",
+    "pages": [
+      {
+        "label": "Blog index",
+        "url": "https://fly.io/blog/"
+      },
+      {
+        "label": "Post: My AI skeptic friends are all nuts",
+        "url": "https://fly.io/blog/youre-all-nuts/"
+      },
+      {
+        "label": "Docs",
+        "url": "https://fly.io/docs/"
+      }
+    ]
   }
 ]
