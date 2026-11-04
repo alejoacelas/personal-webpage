@@ -50,6 +50,15 @@
   #right { text-align: right; color: var(--muted); line-height: 1.6; }
   #disc.on { color: var(--accent); }
 
+  /* Note mode: a box that stays open; Enter saves and moves to the next favourite */
+  #notebox { position: fixed; left: 0; right: 0; bottom: var(--bar); background: #232323; border-top: 1px solid var(--accent); padding: 12px 18px 14px; display: none; }
+  body.notes #notebox { display: block; } body.notes #mini { display: none; }
+  body.notes #stage { bottom: calc(var(--bar) + var(--nb, 120px)); }
+  #draft { color: var(--muted); margin-bottom: 8px; white-space: normal; }
+  #draft b { color: var(--text); font-weight: 400; }
+  #noteinput { width: 100%; background: #151515; color: var(--text); border: 1px solid #444; border-radius: 4px; padding: 8px 10px; font: 15px/1.45 -apple-system, system-ui, sans-serif; resize: none; outline: none; }
+  #noteinput:focus { border-color: var(--accent); }
+  #notehint { color: var(--muted); font-size: 11px; margin-top: 6px; }
   #help { position: fixed; right: 18px; bottom: calc(var(--bar) + 12px); background: var(--panel); border: 1px solid #333; padding: 14px 18px; display: none; line-height: 1.9; z-index: 5; }
   #help.show { display: block; }
   kbd { display: inline-block; min-width: 2em; text-align: center; border: 1px solid #444; border-radius: 4px; padding: 0 5px; margin-right: 8px; color: var(--accent); }
@@ -59,6 +68,11 @@
 <div id="stage"><img id="shot" alt=""><div id="empty">Waiting for the first screenshots…</div></div>
 <div id="mini"></div>
 <div id="overview"></div>
+<div id="notebox">
+  <div id="draft"></div>
+  <textarea id="noteinput" rows="2" placeholder="What do you like about it?"></textarea>
+  <div id="notehint">Enter saves and goes to the next favourite · empty Enter skips · Shift+Enter new line · Tab next section · Esc closes</div>
+</div>
 <div id="bar">
   <div>
     <div id="l1"><span id="heart"></span><span id="name"></span><span id="cluster"></span><span id="view"></span></div>
@@ -71,6 +85,7 @@
   <div><kbd>v</kbd>next section of the page, then the site's next page (shift+v: back)</div>
   <div><kbd>f</kbd>favourite: finds more like it</div>
   <div><kbd>x</kbd>hide sites you've seen and not favourited (again to show them)</div>
+  <div><kbd>n</kbd>note mode: write what you like about each favourite</div>
   <div><kbd>z</kbd>zoom out to the whole grid and back</div>
   <div><kbd>j k</kbd>scroll down / up · <kbd>space</kbd>a screen</div>
   <div><kbd>t</kbd>back to the top of the screenshot</div>
@@ -129,7 +144,7 @@
     const [sec, secs] = sectionInfo();
     $('view').innerHTML = `<b>${esc(page.label)}</b> page ${pageIdx + 1}/${pages.length} · section ${sec}/${secs}`;
     const seed = r.seed && S.refs.find(x => x.id === r.seed);
-    $('l2').innerHTML = [r.note && `<span class="note">${esc(r.note)}</span>`, r.why && esc(r.why), seed && `more like ${esc(seed.name)}`].filter(Boolean).join(' · ') || '&nbsp;';
+    $('l2').innerHTML = [r.note && `<span class="note">${esc(r.note)}</span>`, !r.note && r.draft && `draft: ${esc(r.draft)}`, !r.draft && r.why && esc(r.why), seed && `more like ${esc(seed.name)}`].filter(Boolean).join(' · ') || '&nbsp;';
     const total = rows.reduce((n, row) => n + row.items.length, 0);
     const pending = S.refs.filter(x => x.capture === 'pending').length;
     $('count').textContent = `${hideSeen ? 'hiding seen · ' : ''}${S.seen.length} seen · ${total} shown · ${S.favorites.length} ♥${pending ? ` · ${pending} capturing` : ''}`;
@@ -207,6 +222,35 @@
   }
   $('stage').addEventListener('scroll', () => renderBar());
 
+  // Note mode
+  const favOrder = () => rows.flatMap(r => r.items).filter(r => S.favorites.includes(r.id));
+  function openNotes() {
+    const favs = favOrder(); if (!favs.length) return;
+    if (!S.favorites.includes(curId)) { curId = (favs.find(r => !r.note) || favs[0]).id; pageIdx = 0; }
+    document.body.classList.add('notes'); document.body.classList.remove('ov');
+    render(); fillNote();
+  }
+  function fillNote() {
+    const r = cur(); const favs = favOrder(); const i = favs.findIndex(x => x.id === r.id);
+    const done = favs.filter(x => x.note).length;
+    $('draft').innerHTML = `<b>${esc(r.name)}</b> · favourite ${i + 1}/${favs.length} · ${done} noted${r.draft ? `<br>Draft: ${esc(r.draft)}` : ''}`;
+    $('noteinput').value = r.note || '';
+    $('noteinput').focus();
+    document.body.style.setProperty('--nb', $('notebox').offsetHeight + 'px');
+  }
+  $('noteinput').addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      const r = cur(), text = $('noteinput').value.trim();
+      if (text && text !== r.note) { r.note = text; post('/api/note', { id: r.id, note: text }); }
+      const favs = favOrder(), i = favs.findIndex(x => x.id === r.id);
+      if (i < favs.length - 1) { curId = favs[i + 1].id; pageIdx = 0; render('left'); }
+      fillNote();
+    } else if (e.key === 'Tab') { e.preventDefault(); step(e.shiftKey ? -1 : 1); }
+    else if (e.key === 'Escape') { document.body.classList.remove('notes'); $('noteinput').blur(); render(); }
+    e.stopPropagation();
+  });
+
   const post = (url, data) => fetch(url, { method: 'POST', body: JSON.stringify(data) }).catch(() => {});
 
   async function refresh() {
@@ -219,7 +263,7 @@
   }
 
   addEventListener('keydown', e => {
-    if (e.metaKey || e.ctrlKey || e.altKey || !S) return;
+    if (e.metaKey || e.ctrlKey || e.altKey || !S || e.target === $('noteinput')) return;
     const k = e.key, stage = $('stage');
     if (document.body.classList.contains('ov') && (k === 'v' || k === 'V')) return;
     let handled = true;
@@ -228,6 +272,7 @@
     else if (k === 'ArrowDown') move(1, 0);
     else if (k === 'ArrowUp') move(-1, 0);
     else if (k === 'v' || k === 'V') step(k === 'V' ? -1 : 1);
+    else if (k === 'n') openNotes();
     else if (k === 'x') {
       hideSeen = !hideSeen; try { localStorage.setItem('hideSeen', hideSeen ? '1' : '0'); } catch {}
       buildRows(); render();

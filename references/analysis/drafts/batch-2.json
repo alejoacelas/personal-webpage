@@ -1,0 +1,107 @@
+[
+  {
+    "id": "stripe-press",
+    "draft": "Almost-black page whose whole home screen is a vertical stack of rendered 3D book spines, each one showing its own cover art and title; the only text is a small serif wordmark with an italic tagline in the corner.",
+    "details": ["3D book spines as the navigation", "tick-mark scroll index down the left edge", "italic tagline under the wordmark ('Ideas for progress')", "lone '?' help glyph in the margin"],
+    "type": "serif throughout (wordmark, tagline, cookie text); spine titles in each book's own type",
+    "palette": "near-black warm brown #201819, off-white text, multicoloured book covers as the only colour"
+  },
+  {
+    "id": "long-now",
+    "draft": "Full-bleed night photograph of a neon sign as the hero, then a dark plum gradient with a hand-drawn explainer (\"now\" = 3 days, \"nowadays\" = 30 years, \"the long now\" = 20,000 years) set in a large classical serif; the Ideas index flips to a light grey page alternating image-left and image-right essay rows.",
+    "details": ["five-digit years (02000 CE)", "curly-brace timeline diagrams explaining the name", "small-caps bold author bylines ('by EMILY HILL')", "tiny uppercase category label above each row", "hand-lettered arrows diagram of pace layers"],
+    "type": "classical serif headings and body (Garamond-like), small uppercase sans for nav and labels, heavy display serif for page titles",
+    "palette": "deep plum-to-navy gradient #1a0f24, white text, gold accent #e6b980 on attributions; light pages warm grey #f4f4f2 with black"
+  },
+  {
+    "id": "transformer-circuits",
+    "draft": "Plain off-white research index: a left column of small uppercase month stamps and a right column of bold geometric-sans titles followed by one-sentence serif summaries, with big papers getting large headings and a framed figure thumbnail. Paper pages open with a grid of numbered section cards, each with its own figure.",
+    "details": ["month-and-year stamp in the left gutter", "big vs small entries: major papers get headline and figure, updates get one line", "section-card table of contents with a figure per section", "author list with asterisk/dagger contribution marks", "small grey uppercase meta labels (AUTHORS, PUBLISHED)"],
+    "type": "geometric sans headings (bold), serif body on index; sans body on paper pages",
+    "palette": "warm off-white #faf9f5, near-black text #141413, grey meta text, figure colours (blue, orange, red) as the only accent"
+  },
+  {
+    "id": "forethought",
+    "draft": "Light-weight serif headlines on a warm off-white page, with a faint graph-paper grid behind the hero and thin orange line drawings (fans of straight lines) used as the only illustration. Research appears as bordered cards with title, authors, grey date and a 'Read more' button.",
+    "details": ["graph-paper grid behind hero and profile header", "generative orange line-fan illustrations in place of photos", "small line-glyph icon before each section heading", "share / cite / download / email icon row on each piece", "audio player with podcast app links at top of an essay series"],
+    "type": "light serif headings and body, sans for nav, bylines and buttons",
+    "palette": "warm off-white #f9f8f5, dark grey text #333, orange accent #f0703f, light grid lines #e6e3dc"
+  },
+  {
+    "id": "are-na",
+    "draft": "Very sparse white page in a plain grotesque, opening with a lettered list ('Are.na is a. … b. … c. +') and a live counter of how long the site has existed; the product is shown in a large screenshot with a step list beside it.",
+    "details": ["lettered definition list with an empty '+' item", "live age counter ('15 years and 87 days')", "vertical step list with only the active step in black", "plain-statement section headers ('No ads, no personalized recommendations')"],
+    "type": "grotesque sans throughout",
+    "palette": "white #ffffff, near-black text, navy button #0b0b5a, light grey #f2f2f2 for secondary button"
+  },
+  {
+    "id": "owid-data-insights",
+    "draft": "Each insight is a single centred white card on a pale grey page: small uppercase date, bold sans title, author avatars, then one annotated chart whose title colours the key words to match the lines, followed by a few short paragraphs.",
+    "details": ["chart title words coloured to match the data lines", "annotations written directly on the chart lines", "small chart icon after links that open a chart", "'Copy link' button and topic pills at card end", "relative date label ('YESTERDAY')"],
+    "type": "serif display for chart titles and section headings (Playfair-like), humanist sans body (Lato)",
+    "palette": "navy header #002147, pale grey page #f0f0f0, white cards, red accent #ce261e; teal #00847e and rust #b5531a in charts"
+  },
+  {
+    "id": "bret-victor",
+    "draft": "Dark navy page holding one long dated list of every project since 1999, set in small sans with a year column on the left; highlights in bright yellow, short grey glosses after a colon, and two old engravings (Don Quixote charging a windmill) drawn in faintly behind the text.",
+    "details": ["year column with multiple items per year", "yellow highlight for the best work", "colon gloss after each title ('first light', 'goes pretty deep')", "inline format links: talk, doc, poster, notes", "wry section names ('Bits & blurts.', 'Realtoys.')"],
+    "type": "humanist sans throughout (Avenir-like), small sizes",
+    "palette": "dark navy #0d1638, white titles, pale blue intro text #9cc0ff, yellow highlight #ffff00, grey glosses"
+  },
+  {
+    "id": "lynn-and-tonic",
+    "draft": "One centred screen on a speckled paper texture: a decorative display-serif name, a subtitle, and a book-style table of contents with dot leaders and Roman numerals for each section.",
+    "details": ["table-of-contents nav with dot leaders and Roman numerals", "site version number in Roman numerals ('v. XIX')", "paper-grain background texture", "sun icon for light/dark toggle", "'GIFS' listed as a top-level section"],
+    "type": "decorative display serif for name, small-caps serif for nav and subtitle",
+    "palette": "warm paper grey #e6e1da, near-black ink #1c1c1c"
+  },
+  {
+    "id": "emil-kowalski",
+    "draft": "A single narrow left-aligned column of small sans text on near-white with very generous vertical space: name and title, then plain sections (Today, Projects, Writing, More) where each item is a dark title over a one-line grey description. Essays add large serif pull quotes with italic key words.",
+    "details": ["'Today' status line about current work", "title + one-line grey description per item", "large serif pull quotes with a hairline-led attribution", "superscript footnote numbers", "single italic serif word inside sans body text"],
+    "type": "sans throughout (Inter-like) at small size; serif only for pull quotes",
+    "palette": "near-white #fcfcfc, near-black titles #171717, mid-grey descriptions #6f6f6f"
+  },
+  {
+    "id": "emergence-magazine",
+    "draft": "Image-led magazine: the home page is a full-bleed photograph (seen through a lens) with small sans nav overlaid, while essays put a museum print on off-white, centre an uppercase serif title with an italic byline, and run the body in a large serif column.",
+    "details": ["image credit line under the hero ('Courtesy of The Metropolitan Museum of Art')", "underlined small date above the standfirst", "collapsible 'Contributor bios' label in the margin", "floating 'Share this story' pill", "circular 'em' monogram as home link"],
+    "type": "serif headings and essay body, sans nav and about-page body; bold display serif for page titles",
+    "palette": "off-white #f9f9f7, near-black text, muted print tones (sage, beige) from imagery, grey labels"
+  },
+  {
+    "id": "shirley-wu",
+    "draft": "Warm serif site with a script monogram and an italic lowercase nav in the top-left corner; all headings and titles are lowercase, and every link has a wavy yellow underline. Projects sit in a four-column grid with a '→ for Client' line under each.",
+    "details": ["wavy yellow underlines on all links", "lowercase titles throughout ('thoughts', 'data visualizations')", "arrow marking the current nav item", "'→ for The Guardian' client credit under each project", "italic aside 'alternatively, find me on' before social links"],
+    "type": "serif throughout, italic serif for nav and subtitles, script logo",
+    "palette": "off-white #fdfdfc, near-black text, mustard yellow accent #e5b800, deep teal button #00665e"
+  },
+  {
+    "id": "alexander-obenauer",
+    "draft": "White page with italic serif project titles and short serif descriptions in one column, grouped by vertical rotated labels (BOOKS, ESSAYS & EXPERIMENTS, LAB NOTES) in the left margin; selected items connect by a thin horizontal rule to a framed screenshot on the right. Lab notes use a numbered 'LN 000' system with a yellow header block.",
+    "details": ["rotated section labels in the left margin", "thin rule linking an item to its screenshot", "numbered notes ('LN 037', 'EXP 002')", "spec block of metadata: 'circa 2021–2023, pub. Jan. 21, 2024, Swift, C'", "hand-drawn flask logo"],
+    "type": "serif body with italic serif titles, condensed uppercase sans for labels and name",
+    "palette": "white #ffffff (warm grey #f2f1ee on project pages), near-black text, yellow #f5c400 and charcoal #444 on lab notes"
+  },
+  {
+    "id": "tufte-css",
+    "draft": "Book-like single column of a classical serif on a cream page, with italic section headings instead of bold ones and a wide empty right margin reserved for sidenotes; no images or colour at the top.",
+    "details": ["sidenotes and margin notes in the right margin (further down the page)", "italic section headings", "small monospace for inline code", "indented block quotations with attribution"],
+    "type": "serif throughout (ET Book), italic serif headings, monospace for code",
+    "palette": "cream #fffff8, near-black text #111"
+  },
+  {
+    "id": "orion-magazine",
+    "draft": "Print-magazine layout on pale grey: big bold serif headlines with a short rust-coloured rule beneath, an italic serif dek, then letter-spaced uppercase sans bylines; section titles are wide-tracked uppercase in mustard gold.",
+    "details": ["short rust rule under every headline", "letter-spaced uppercase bylines and section labels", "kicker label above each title (ANIMALIA, MEDITATION, ENUMERATIONS)", "'from AUTUMN 2026' issue thumbnail beside the article", "pull quote in italics on each item of a contributor list"],
+    "type": "bold serif headings, serif body, italic serif deks, tracked uppercase sans for labels",
+    "palette": "pale grey #f1f1f1, navy-black headlines #14142b, rust accent #c07a3b, mustard section titles #9c7a14, teal links #116b6b"
+  },
+  {
+    "id": "henry-codes",
+    "draft": "Loud editorial personal site: huge condensed black sans titles collide with thin italic and roman serifs, over an off-white page with rounded-corner bordered boxes and dithered black-and-white bitmap images. The voice is personal and playful throughout, from a signed 'letter from the editor' to a links page laid out as a circle of rotated URLs.",
+    "details": ["live ticker of coordinates, local time, weather and now-playing song", "site version stamp ('VER. SS25')", "nav items with faint one-line descriptions ('A portrait of the author as a young man')", "struck-through Twitter link", "self-aware asides ('(THIS LAYOUT ISN'T WORKING FOR ME)', 'Not-Very-Serious Resume')"],
+    "type": "heavy condensed sans display, serif body and letter text, plain sans for nav and labels",
+    "palette": "off-white #f9f9f9, warm near-black #2a2624, pink-to-blue gradient rule under the banner"
+  }
+]

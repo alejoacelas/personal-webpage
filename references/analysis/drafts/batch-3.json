@@ -1,0 +1,197 @@
+[
+  {
+    "id": "public-domain-review",
+    "draft": "Old-style serif throughout (Alegreya-like) on a plain white page, with a centred engraved-style wordmark and a dense three-column magazine home: a mission blurb in a ruled box on the left, a large public-domain engraving as the lead image, and shop and newsletter panels on the right. Essays are centred single-column with the standfirst set in serif and a small 'Published' date stamp, letting archival paintings and woodcuts carry all the colour.",
+    "details": [
+      "small-caps panel headings ('Visit our Online Shop')",
+      "section titles centred between double hairline rules",
+      "coloured topic tags under each essay (Books, Culture & History)",
+      "image captions ending in a '— Source.' link",
+      "small uppercase 'PUBLISHED' label over the date"
+    ],
+    "type": "serif headings and body, sans for UI and captions",
+    "palette": "white #ffffff, near-black text #222, navy button #0d3b5e, pale blue-grey panels #eef2f5"
+  },
+  {
+    "id": "vesuvius-challenge",
+    "draft": "Dark charcoal page with a bold sans headline over a faded volcano painting, a single orange-red accent, and a boxed countdown ('234 days left') for the grand prize. Below, ruled sections (News, Open problems, Our story, Team) each with an uppercase orange 'see all →' link, a before/after image slider, and a horizontal timeline running from 79 AD to 2026.",
+    "details": [
+      "live countdown box: '$1,000,000 grand prize — 234 days left'",
+      "monospace timeline axis from 79 AD to 2026",
+      "team list as name plus grey role on one line",
+      "orange uppercase 'All milestones →' links on the right of each section rule",
+      "before/after image comparison slider"
+    ],
+    "type": "sans headings and body, monospace for timeline labels",
+    "palette": "near-black #111317, off-white text #e6e6e6, orange-red accent #f2542d, warm brown from the painting"
+  },
+  {
+    "id": "anthropic-research",
+    "draft": "Warm off-white page with a very large, tight geometric sans statement as the hero, then a horizontally scrolling row of research teams, each with a black ink-blot icon, a post count and a one-line description. Collage-style imagery mixes archival paper, engravings and rulers; a black band carries the featured post, and the article index has filter, sort and 'gallery view' controls.",
+    "details": [
+      "post count under each team name ('49 posts')",
+      "'01 / 07' pager in monospace between arrow buttons",
+      "'201 ARTICLES' count in spaced monospace caps",
+      "custom black organic icon per research area",
+      "category + date line above each card title"
+    ],
+    "type": "geometric sans headings and body, monospace for counters",
+    "palette": "warm off-white #faf9f5, near-black #141413, collage tones of tan paper #e8d9b5 and teal-green #2f8f6f"
+  },
+  {
+    "id": "works-in-progress",
+    "draft": "Magazine layout pairing a sharp high-contrast serif for titles and body with a monospace for all labels, bylines and navigation, on a pale pink-cream page. Each story is a full-width duotone or collage illustration with a solid colour block (indigo, pale teal) overlapping its lower left that holds title, byline and topic between hairlines.",
+    "details": [
+      "'Words by' byline in monospace with bold names",
+      "reading time with a small page icon ('20 Mins')",
+      "hand-drawn portrait logo next to stacked 'Works / in / Progress'",
+      "paper-plane line drawing beside the newsletter signup",
+      "thick colour bar along the top edge of each story image"
+    ],
+    "type": "serif headings and body, monospace for UI and metadata",
+    "palette": "pale cream-pink #fdf6f3, black text, indigo block #3a3a8c, green duotone #1e7a3c, salmon #f4917b"
+  },
+  {
+    "id": "linear-method",
+    "draft": "Near-black page with an oversized white serif headline ('Practices for building') centred over small grey sans copy, followed by a large line drawing of two dashed overlapping circles with a hatched intersection. The contents are a narrow numbered index (1.1, 2.1, 2.2…) grouped under small uppercase section labels and separated by dashed rules.",
+    "details": [
+      "numbered section index aligned right in monospace (2.1, 2.2)",
+      "dashed-line diagram with hatched overlap",
+      "small uppercase eyebrow ('THE LINEAR METHOD')",
+      "dashed dividers between groups",
+      "single bright arc segment animating around the circles"
+    ],
+    "type": "large serif headline, sans body, monospace numerals",
+    "palette": "near-black #08090a, white #f7f8f8, mid-grey text #8a8f98"
+  },
+  {
+    "id": "metr-notes",
+    "draft": "Notebook-paper theme: a lined, faintly textured grey header and cards drawn like ruled notebook pages with a red margin line, with a rounded humanist sans that has a slightly hand-inked look for titles. The index is a two-column grid of dated notes with a chart thumbnail; each note opens with a rubber-stamp 'NOTE' disclaimer that it is unpolished.",
+    "details": [
+      "rubber-stamp 'NOTE' box saying notes are unpolished and less reviewed",
+      "red margin rule down the left of cards and article body",
+      "pencil-sketch circular author portraits",
+      "header copy: 'Rough/unpolished research updates and speculation'",
+      "'Copy link' and 'Citation' buttons in the article header"
+    ],
+    "type": "rounded hand-drawn-feel sans headings, sans body",
+    "palette": "paper white #fafafa with faint blue ruled lines #dfe6ee, slate text #3c4650, margin red #e8a598, link green #4c9a75"
+  },
+  {
+    "id": "paco",
+    "draft": "Single narrow column of small grey sans text on white with no images: name, a two-line bio, a three-column list (Building, Projects, Writing) of underlined links with one-line descriptions, then 'Now' and 'Connect' paragraphs. Italic serif is used only for a few emphasised phrases, and the footer carries a motto and the year.",
+    "details": [
+      "italic serif for emphasised phrases inside sans text",
+      "'↗' arrow on links that leave the site",
+      "footer motto 'Pray at the altar of hard work.'",
+      "'Now' section about current interests, including music",
+      "every heading at body size"
+    ],
+    "type": "sans throughout with italic serif accents",
+    "palette": "white #ffffff, dark grey text #333, light grey labels #666"
+  },
+  {
+    "id": "nicky-case",
+    "draft": "Hand-drawn cartoon self-portrait peeking over a rounded black-outlined box that holds the whole page, with casual lowercase copy ('I make shtuff for curious & playful folks') and wide spaced uppercase section titles ('SHTUFF YOU CAN PLAY'). Projects are a two-column grid of banner thumbnails with a lowercase title and grey dash description; the Evolution of Trust page is a line-drawn network of stick figures around a hand-lettered title.",
+    "details": [
+      "cartoon avatar peeking over the content box",
+      "nav item 'toss monies at me'",
+      "newsletter note 'max 1 update per month'",
+      "doodled envelope and RSS mascots",
+      "'playing time: 30 min • by nicky case, july 2017' under the title"
+    ],
+    "type": "sans throughout, hand-lettered display on project pages",
+    "palette": "white #ffffff, near-black outlines #333, red link #e8433b"
+  },
+  {
+    "id": "julian-digital",
+    "draft": "Narrow centred column on white, opening with a dark rounded terminal box ('> Hello / > My name is Julian / > This is my lifelog and digital playground'), then a list of essay titles each in monospace on a yellow highlighter background. Essays are set entirely in monospace with numbered section headers (01 INTRO) and a handwritten annotation arrow pointing at a table.",
+    "details": [
+      "terminal-prompt greeting box",
+      "yellow highlighter background on links",
+      "'(new)' tag after the latest essay",
+      "handwritten 'Bottleneck' note with arrow beside a table",
+      "faded '01'-style section numbers before uppercase headers"
+    ],
+    "type": "bold sans headings, monospace body",
+    "palette": "white #ffffff, charcoal terminal #333333, highlighter yellow #f0e19a, grey text #444"
+  },
+  {
+    "id": "physical-intelligence",
+    "draft": "Warm off-white page pairing a light literary serif for the name and page titles with small monospace for everything else, left-aligned in a narrow column. The home is a vertical timeline of dated research posts where major model releases get a box with a hard black offset shadow; the papers page is a bare list separated by hairlines.",
+    "details": [
+      "hard black drop shadow marking major releases",
+      "dotted vertical timeline with square bullets",
+      "'(π)' in the wordmark",
+      "monospace metadata table (Published / Email / Paper)",
+      "underlined monospace nav, repeated in the footer"
+    ],
+    "type": "serif headings, monospace body and UI, sans for article prose",
+    "palette": "warm off-white #f5f4f0, black #111, grey text #6b6b6b, white boxes #ffffff"
+  },
+  {
+    "id": "giorgia-lupi",
+    "draft": "Near-white page with wide spaced uppercase grey nav around a centred wordmark, a scrolling ticker announcing an exhibition, and large centred statements in a rounded geometric sans. Work is shown as full-bleed photo tiles of physical artefacts, and essays mix in hand-drawn data sketches with red handwritten corrections.",
+    "details": [
+      "scrolling news ticker ('currently on view!')",
+      "active nav item in red",
+      "hand-annotated manifesto image with words struck through and replaced",
+      "'Originally published on PrintMag' italic note",
+      "first-person one-paragraph intro centred as the hero"
+    ],
+    "type": "geometric sans throughout, handwriting in images",
+    "palette": "near-white #f9f9f9, black text #111, grey nav #999, red accent #d0442c"
+  },
+  {
+    "id": "jenny-odell",
+    "draft": "Home is a single full-screen sky photo with a hand-lettered name and three italic serif links (writing, projects, about); inner pages drop to plain white with a system serif, an italic '< home' link in the corner and a narrow column. Writing entries stack bold title, outlet and year, and a one-line italic description; projects are a three-column grid of photos with bold-italic titles.",
+    "details": [
+      "'< home' back link in the top-left corner",
+      "one-line italic description under each piece",
+      "yellow highlight on the newsletter link",
+      "media list noting format in brackets '(2025, audio + transcript)'",
+      "lowercase section headings ('other writing', 'upcoming events')"
+    ],
+    "type": "serif throughout, hand-lettered name",
+    "palette": "white #ffffff, black text, sky blue #6f9fd8 on home, highlight yellow #fff59d"
+  },
+  {
+    "id": "kinopio",
+    "draft": "White page with a heavy italic display wordmark beside a stacked small-caps tagline, a playful collage of draggable cards, doodles and pixel images as the hero, and plain sans copy in a narrow column. The help page lists topics as coloured pill tags grouped by category, each with a coloured dot.",
+    "details": [
+      "'Other secret features may be available… (don't tell anyone)'",
+      "scrolling marquee of feature names",
+      "pill tags colour-coded by category",
+      "small 'UPDATED' sticker next to the changelog link",
+      "line 'An oasis for the mind, with no ads, tracking, or AI bloat' beside a palm-tree doodle"
+    ],
+    "type": "heavy italic display wordmark, sans body",
+    "palette": "white #ffffff, black text, dark green panel #0b4a2b, mint button #6ef0a8, pastel tag yellows/purples/pinks"
+  },
+  {
+    "id": "arcadia-research",
+    "draft": "Light sans on white with pale pastel hero bands (mint, lavender, periwinkle), each holding a coloured-pencil illustration such as a frog or ice cube, and spaced monospace caps for section labels marked with a small black square. Publications are rounded pastel cards tagged METHOD / RESULT; the Icebox page lists shelved projects with reason tags like 'technical gap' and 'strategic misalignment'.",
+    "details": [
+      "public list of shelved projects ('Icebox')",
+      "reason-for-stopping tags (technical gap, project complete, dead end)",
+      "'■ SECTION' labels in monospace caps",
+      "comment count on each card",
+      "'You've been iced!' section heading"
+    ],
+    "type": "light sans headings and body, monospace for labels",
+    "palette": "white #ffffff, mint #f1f8ea, slate panel #5c6f74, pastel teal #cfe9df, charcoal text #3a3f44"
+  },
+  {
+    "id": "maxime-heckel",
+    "draft": "Dark navy-black page with a vivid blue gradient hero and a particle-cloud infinity sign rendered in WebGL, under a floating pill nav (Index, Articles, Cmd, Ask). The article index is a year-grouped list with right-aligned monospace dates; essays are a narrow centred column of grey sans with inline code pills, italic pull-quotes and bordered 'Before you start' callouts.",
+    "details": [
+      "titles that decode from scrambled characters on load",
+      "'Cmd' command-menu item in the nav",
+      "'Before you start' and 'Note' callout boxes",
+      "year headings grouping the article list",
+      "inline code styled as small bordered pills"
+    ],
+    "type": "sans headings and body, monospace for dates and code",
+    "palette": "near-black navy #0a0d14, electric blue #0066ff, grey text #a0a6b4, link blue #5b8def"
+  }
+]

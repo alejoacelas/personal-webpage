@@ -17,7 +17,17 @@
         "label": "Article",
         "url": "https://worksinprogress.co/issue/the-forgotten-formula-for-lovable-cities/"
       }
-    ]
+    ],
+    "draft": "Magazine layout pairing a sharp high-contrast serif for titles and body with a monospace for all labels, bylines and navigation, on a pale pink-cream page. Each story is a full-width duotone or collage illustration with a solid colour block (indigo, pale teal) overlapping its lower left that holds title, byline and topic between hairlines.",
+    "details": [
+      "'Words by' byline in monospace with bold names",
+      "reading time with a small page icon ('20 Mins')",
+      "hand-drawn portrait logo next to stacked 'Works / in / Progress'",
+      "paper-plane line drawing beside the newsletter signup",
+      "thick colour bar along the top edge of each story image"
+    ],
+    "type": "serif headings and body, monospace for UI and metadata",
+    "palette": "pale cream-pink #fdf6f3, black text, indigo block #3a3a8c, green duotone #1e7a3c, salmon #f4917b"
   },
   {
     "id": "forethought",
@@ -41,7 +51,17 @@
         "label": "Person",
         "url": "https://www.forethought.org/people/william-macaskill"
       }
-    ]
+    ],
+    "draft": "Light-weight serif headlines on a warm off-white page, with a faint graph-paper grid behind the hero and thin orange line drawings (fans of straight lines) used as the only illustration. Research appears as bordered cards with title, authors, grey date and a 'Read more' button.",
+    "details": [
+      "graph-paper grid behind hero and profile header",
+      "generative orange line-fan illustrations in place of photos",
+      "small line-glyph icon before each section heading",
+      "share / cite / download / email icon row on each piece",
+      "audio player with podcast app links at top of an essay series"
+    ],
+    "type": "light serif headings and body, sans for nav, bylines and buttons",
+    "palette": "warm off-white #f9f8f5, dark grey text #333, orange accent #f0703f, light grid lines #e6e3dc"
   },
   {
     "id": "curius",
@@ -95,7 +115,17 @@
         "label": "Data insight",
         "url": "https://ourworldindata.org/data-insights/solar-and-wind-power-have-grown-quickly-in-poland-but-coal-still-dominates"
       }
-    ]
+    ],
+    "draft": "Each insight is a single centred white card on a pale grey page: small uppercase date, bold sans title, author avatars, then one annotated chart whose title colours the key words to match the lines, followed by a few short paragraphs.",
+    "details": [
+      "chart title words coloured to match the data lines",
+      "annotations written directly on the chart lines",
+      "small chart icon after links that open a chart",
+      "'Copy link' button and topic pills at card end",
+      "relative date label ('YESTERDAY')"
+    ],
+    "type": "serif display for chart titles and section headings (Playfair-like), humanist sans body (Lato)",
+    "palette": "navy header #002147, pale grey page #f0f0f0, white cards, red accent #ce261e; teal #00847e and rust #b5531a in charts"
   },
   {
     "id": "metr-notes",
@@ -115,7 +145,17 @@
         "label": "Note",
         "url": "https://metr.org/notes/2026-07-22-economics-of-recursive-self-improvement/"
       }
-    ]
+    ],
+    "draft": "Notebook-paper theme: a lined, faintly textured grey header and cards drawn like ruled notebook pages with a red margin line, with a rounded humanist sans that has a slightly hand-inked look for titles. The index is a two-column grid of dated notes with a chart thumbnail; each note opens with a rubber-stamp 'NOTE' disclaimer that it is unpolished.",
+    "details": [
+      "rubber-stamp 'NOTE' box saying notes are unpolished and less reviewed",
+      "red margin rule down the left of cards and article body",
+      "pencil-sketch circular author portraits",
+      "header copy: 'Rough/unpolished research updates and speculation'",
+      "'Copy link' and 'Citation' buttons in the article header"
+    ],
+    "type": "rounded hand-drawn-feel sans headings, sans body",
+    "palette": "paper white #fafafa with faint blue ruled lines #dfe6ee, slate text #3c4650, margin red #e8a598, link green #4c9a75"
   },
   {
     "id": "asterisk",
@@ -131,7 +171,16 @@
         "label": "Home",
         "url": "https://asteriskmag.com/"
       }
-    ]
+    ],
+    "draft": "Magazine layout: a large botanical illustration with a tiny caption fills the left two-thirds, next to a hot-pink panel holding a heavy lowercase sans wordmark and an issue blurb written as a run of odd fragments. The table of contents below mixes heavy and light serif weights, roman and italic, with authors set in sans, on a warm off-white page.",
+    "details": [
+      "issue summary written as a list of absurd fragments ('Fish dads. NPCs.…')",
+      "each title set in a different weight or italic of the same serif",
+      "artist credit caption under the cover art",
+      "small uppercase kicker ('INTERVIEW') above some titles"
+    ],
+    "type": "heavy and light serif headings, sans author names and wordmark, serif body",
+    "palette": "warm off-white #faf6f0, hot pink #f04e78, black text, botanical greens and reds"
   },
   {
     "id": "roots-of-progress",
@@ -147,7 +196,16 @@
         "label": "Home",
         "url": "https://rootsofprogress.org/"
       }
-    ]
+    ],
+    "draft": "A split hero puts a full-bleed retro-futurist painting (rocket, warm peach sky) on the left and a large grey-green sans headline with three short argued paragraphs on the right, over a cream page. Below a solid red subscribe band, sections use thin, light serif headlines in a left column with dense sans body text on the right.",
+    "details": [
+      "paragraphs that open with a red lead-in phrase ('Why study progress?')",
+      "full-width red subscribe strip splitting the page",
+      "bold run-in labels ('Location.', 'Speakers.') instead of subheadings",
+      "light display serif used only for section titles"
+    ],
+    "type": "light display serif section headings, geometric sans hero and body",
+    "palette": "cream #fdfcf0, slate grey-green text #5a6b5e, brick red accent #b8312a, peach illustration tones"
   },
   {
     "id": "stripe-press",
@@ -163,7 +221,16 @@
         "label": "Home",
         "url": "https://press.stripe.com/"
       }
-    ]
+    ],
+    "draft": "Almost-black page whose whole home screen is a vertical stack of rendered 3D book spines, each one showing its own cover art and title; the only text is a small serif wordmark with an italic tagline in the corner.",
+    "details": [
+      "3D book spines as the navigation",
+      "tick-mark scroll index down the left edge",
+      "italic tagline under the wordmark ('Ideas for progress')",
+      "lone '?' help glyph in the margin"
+    ],
+    "type": "serif throughout (wordmark, tagline, cookie text); spine titles in each book's own type",
+    "palette": "near-black warm brown #201819, off-white text, multicoloured book covers as the only colour"
   },
   {
     "id": "palladium",
@@ -243,7 +310,17 @@
         "label": "Home",
         "url": "https://www.inkandswitch.com/"
       }
-    ]
+    ],
+    "draft": "The home page opens on a black screen of white line-art letterforms (wireframes, circuits, pixel 'W', an 'INSERT COIN' score table) forming an interactive anniversary piece, then cuts to a white page with a slab-ish sans wordmark, a large serif mission line and serif body. Research areas are listed with bespoke black line-icon glyphs and small-caps underlined labels.",
+    "details": [
+      "interactive hero art built from the lab's own tools ('Play with it! Click/drag everywhere')",
+      "ink splatter dots around the logo and trailing off a paragraph",
+      "custom line-drawn icon for each research area",
+      "underlined uppercase labels above each area description",
+      "counter-style row 'I N K & S W I T C H / 0 0 0 0…'"
+    ],
+    "type": "serif headings and body, sans wordmark and labels, monospace in the art",
+    "palette": "black #000000, off-white #fafafa, near-black text #111"
   },
   {
     "id": "distill",
@@ -291,7 +368,17 @@
         "label": "Home",
         "url": "https://www.anthropic.com/research"
       }
-    ]
+    ],
+    "draft": "Warm off-white page with a very large, tight geometric sans statement as the hero, then a horizontally scrolling row of research teams, each with a black ink-blot icon, a post count and a one-line description. Collage-style imagery mixes archival paper, engravings and rulers; a black band carries the featured post, and the article index has filter, sort and 'gallery view' controls.",
+    "details": [
+      "post count under each team name ('49 posts')",
+      "'01 / 07' pager in monospace between arrow buttons",
+      "'201 ARTICLES' count in spaced monospace caps",
+      "custom black organic icon per research area",
+      "category + date line above each card title"
+    ],
+    "type": "geometric sans headings and body, monospace for counters",
+    "palette": "warm off-white #faf9f5, near-black #141413, collage tones of tan paper #e8d9b5 and teal-green #2f8f6f"
   },
   {
     "id": "arc-institute",
@@ -563,7 +650,17 @@
         "label": "Home",
         "url": "https://worrydream.com/"
       }
-    ]
+    ],
+    "draft": "Dark navy page holding one long dated list of every project since 1999, set in small sans with a year column on the left; highlights in bright yellow, short grey glosses after a colon, and two old engravings (Don Quixote charging a windmill) drawn in faintly behind the text.",
+    "details": [
+      "year column with multiple items per year",
+      "yellow highlight for the best work",
+      "colon gloss after each title ('first light', 'goes pretty deep')",
+      "inline format links: talk, doc, poster, notes",
+      "wry section names ('Bits & blurts.', 'Realtoys.')"
+    ],
+    "type": "humanist sans throughout (Avenir-like), small sizes",
+    "palette": "dark navy #0d1638, white titles, pale blue intro text #9cc0ff, yellow highlight #ffff00, grey glosses"
   },
   {
     "id": "joe-carlsmith",
@@ -627,7 +724,17 @@
         "label": "Home",
         "url": "https://paco.me/"
       }
-    ]
+    ],
+    "draft": "Single narrow column of small grey sans text on white with no images: name, a two-line bio, a three-column list (Building, Projects, Writing) of underlined links with one-line descriptions, then 'Now' and 'Connect' paragraphs. Italic serif is used only for a few emphasised phrases, and the footer carries a motto and the year.",
+    "details": [
+      "italic serif for emphasised phrases inside sans text",
+      "'↗' arrow on links that leave the site",
+      "footer motto 'Pray at the altar of hard work.'",
+      "'Now' section about current interests, including music",
+      "every heading at body size"
+    ],
+    "type": "sans throughout with italic serif accents",
+    "palette": "white #ffffff, dark grey text #333, light grey labels #666"
   },
   {
     "id": "julia-evans",
@@ -675,7 +782,16 @@
         "label": "Home",
         "url": "https://www.are.na/"
       }
-    ]
+    ],
+    "draft": "Very sparse white page in a plain grotesque, opening with a lettered list ('Are.na is a. … b. … c. +') and a live counter of how long the site has existed; the product is shown in a large screenshot with a step list beside it.",
+    "details": [
+      "lettered definition list with an empty '+' item",
+      "live age counter ('15 years and 87 days')",
+      "vertical step list with only the active step in black",
+      "plain-statement section headers ('No ads, no personalized recommendations')"
+    ],
+    "type": "grotesque sans throughout",
+    "palette": "white #ffffff, near-black text, navy button #0b0b5a, light grey #f2f2f2 for secondary button"
   },
   {
     "id": "linear-method",
@@ -691,7 +807,17 @@
         "label": "Home",
         "url": "https://linear.app/method"
       }
-    ]
+    ],
+    "draft": "Near-black page with an oversized white serif headline ('Practices for building') centred over small grey sans copy, followed by a large line drawing of two dashed overlapping circles with a hatched intersection. The contents are a narrow numbered index (1.1, 2.1, 2.2…) grouped under small uppercase section labels and separated by dashed rules.",
+    "details": [
+      "numbered section index aligned right in monospace (2.1, 2.2)",
+      "dashed-line diagram with hatched overlap",
+      "small uppercase eyebrow ('THE LINEAR METHOD')",
+      "dashed dividers between groups",
+      "single bright arc segment animating around the circles"
+    ],
+    "type": "large serif headline, sans body, monospace numerals",
+    "palette": "near-black #08090a, white #f7f8f8, mid-grey text #8a8f98"
   },
   {
     "id": "steph-ango",
@@ -751,7 +877,16 @@
         "label": "Essay: Everything Easy is Hard Again",
         "url": "https://frankchimero.com/blog/2018/everything-easy/"
       }
-    ]
+    ],
+    "draft": "Everything is set in small monospace on a flat dark grey-green page: name and one-line descriptor on the left, a short list of five sections each with a muted subtitle (type and years) beside it. Essays open in a light-grey right half while the dark nav column stays on the left, with a centred bold title, date and a short italic preface.",
+    "details": [
+      "muted subtitle with type and years under each nav item ('Collages · 2017–2020')",
+      "↗ arrow marking links that leave the site",
+      "short rule dividers between essay sections",
+      "italic preface stating where a talk was given"
+    ],
+    "type": "monospace throughout",
+    "palette": "dark slate #3d4140, off-white text #e8e8e8, muted green-grey #7d8f86, light grey reading pane #ececec"
   },
   {
     "id": "brandur",
@@ -803,7 +938,17 @@
         "label": "Home",
         "url": "https://lynnandtonic.com/"
       }
-    ]
+    ],
+    "draft": "One centred screen on a speckled paper texture: a decorative display-serif name, a subtitle, and a book-style table of contents with dot leaders and Roman numerals for each section.",
+    "details": [
+      "table-of-contents nav with dot leaders and Roman numerals",
+      "site version number in Roman numerals ('v. XIX')",
+      "paper-grain background texture",
+      "sun icon for light/dark toggle",
+      "'GIFS' listed as a top-level section"
+    ],
+    "type": "decorative display serif for name, small-caps serif for nav and subtitle",
+    "palette": "warm paper grey #e6e1da, near-black ink #1c1c1c"
   },
   {
     "id": "ciechanowski",
@@ -875,7 +1020,17 @@
         "label": "Home",
         "url": "https://jzhao.xyz/"
       }
-    ]
+    ],
+    "draft": "Three-column garden on a warm parchment page: a left rail of 'Selected Writing' and 'Recent Notes' in navy serif with handwritten dates, a centre column with a dithered pixel-art banner and a short first-person welcome in sans, and a right widget styled as a monospace train-station board. Links are navy with orange underlines.",
+    "details": [
+      "handwritten 'Welcome!' and '– jacky :)' sign-off",
+      "dates under each note in a handwriting font",
+      "arrivals/departures board showing live visitors ('YOU', 'GLAMOROUS WHIPPET')",
+      "named site sections ('The oak letter desk', 'The bookshelf on the far wall')",
+      "three red asterisks as a section divider"
+    ],
+    "type": "serif headings and note titles, sans body, monospace widget, script for dates and sign-off",
+    "palette": "parchment #f4ecdc, navy #233a5e, orange-red underline #d2452b, small green accent"
   },
   {
     "id": "creative-independent",
@@ -975,7 +1130,17 @@
         "label": "Essay",
         "url": "https://publicdomainreview.org/essay/philip-sidney-and-the-extreme-disgraces-of-the-parenthesis/"
       }
-    ]
+    ],
+    "draft": "Old-style serif throughout (Alegreya-like) on a plain white page, with a centred engraved-style wordmark and a dense three-column magazine home: a mission blurb in a ruled box on the left, a large public-domain engraving as the lead image, and shop and newsletter panels on the right. Essays are centred single-column with the standfirst set in serif and a small 'Published' date stamp, letting archival paintings and woodcuts carry all the colour.",
+    "details": [
+      "small-caps panel headings ('Visit our Online Shop')",
+      "section titles centred between double hairline rules",
+      "coloured topic tags under each essay (Books, Culture & History)",
+      "image captions ending in a '— Source.' link",
+      "small uppercase 'PUBLISHED' label over the date"
+    ],
+    "type": "serif headings and body, sans for UI and captions",
+    "palette": "white #ffffff, near-black text #222, navy button #0d3b5e, pale blue-grey panels #eef2f5"
   },
   {
     "id": "nicky-case",
@@ -995,7 +1160,17 @@
         "label": "The Evolution of Trust",
         "url": "https://ncase.me/trust/"
       }
-    ]
+    ],
+    "draft": "Hand-drawn cartoon self-portrait peeking over a rounded black-outlined box that holds the whole page, with casual lowercase copy ('I make shtuff for curious & playful folks') and wide spaced uppercase section titles ('SHTUFF YOU CAN PLAY'). Projects are a two-column grid of banner thumbnails with a lowercase title and grey dash description; the Evolution of Trust page is a line-drawn network of stick figures around a hand-lettered title.",
+    "details": [
+      "cartoon avatar peeking over the content box",
+      "nav item 'toss monies at me'",
+      "newsletter note 'max 1 update per month'",
+      "doodled envelope and RSS mascots",
+      "'playing time: 30 min • by nicky case, july 2017' under the title"
+    ],
+    "type": "sans throughout, hand-lettered display on project pages",
+    "palette": "white #ffffff, near-black outlines #333, red link #e8433b"
   },
   {
     "id": "wattenberger",
@@ -1035,7 +1210,17 @@
         "label": "Writing index",
         "url": "https://macwright.com/writing"
       }
-    ]
+    ],
+    "draft": "A bare white page with a left name-and-nav column and a dense index: post titles on the left, ISO dates right-aligned in grey, grouped under small bold headings (Writing, Micro, Photos, Drawings, Reading). Photos and watercolour drawings appear as rows of five square thumbnails, and books carry star ratings.",
+    "details": [
+      "ISO dates (2026-11-01) right-aligned in grey",
+      "star ratings next to each book read",
+      "row of square watercolour drawings on the home page",
+      "three-circle theme switcher in the top-right corner",
+      "recurring monthly 'Recently' posts"
+    ],
+    "type": "sans throughout (system sans)",
+    "palette": "white #ffffff, black text #111, grey dates #777, red active link #c0392b"
   },
   {
     "id": "hamel-dev",
@@ -1079,7 +1264,17 @@
         "label": "About",
         "url": "https://www.visualcinnamon.com/about/"
       }
-    ]
+    ],
+    "draft": "A portfolio led by its own work: a large hexagonal data-art graphic beside a bold geometric sans headline, then an edge-to-edge grid of colourful visualisation thumbnails with no captions. Nav is spaced uppercase sans split around a hexagon logo on a thin teal rule, with monospace used for small labels and the CTA.",
+    "details": [
+      "'more to see down here' scroll hint with tiny chevrons",
+      "monospace pill label '★ selected works'",
+      "trophy badge on award-winning projects",
+      "italic captions naming project and client ('Space Wars / Scientific American')",
+      "filter dropdowns for type, media, industry and chart"
+    ],
+    "type": "bold geometric sans headings, sans body, monospace for labels and buttons",
+    "palette": "white #ffffff, near-black text #1a1a1a, teal accent #3cbfc7, saturated blues and multicolour work"
   },
   {
     "id": "emil-kowalski",
@@ -1099,7 +1294,17 @@
         "label": "Developing taste",
         "url": "https://emilkowal.ski/ui/developing-taste"
       }
-    ]
+    ],
+    "draft": "A single narrow left-aligned column of small sans text on near-white with very generous vertical space: name and title, then plain sections (Today, Projects, Writing, More) where each item is a dark title over a one-line grey description. Essays add large serif pull quotes with italic key words.",
+    "details": [
+      "'Today' status line about current work",
+      "title + one-line grey description per item",
+      "large serif pull quotes with a hairline-led attribution",
+      "superscript footnote numbers",
+      "single italic serif word inside sans body text"
+    ],
+    "type": "sans throughout (Inter-like) at small size; serif only for pull quotes",
+    "palette": "near-white #fcfcfc, near-black titles #171717, mid-grey descriptions #6f6f6f"
   },
   {
     "id": "astera",
@@ -1159,7 +1364,17 @@
         "label": "Issues archive",
         "url": "https://www.densediscovery.com/issues/"
       }
-    ]
+    ],
+    "draft": "A bold, compact grotesque headline ('One email worth opening, every week') over a warm off-white panel, beside a fanned stack of past issues in pastel colours; below, an eight-item grid of content categories each keyed to a small solid colour square. The archive page is a two-pane reader: a bordered list of numbered issues with one-line titles on the left and the full issue on the right.",
+    "details": [
+      "live countdown line: 'Next issue is dispatched in 5 days'",
+      "small colour-square key next to each category",
+      "numbered issue list with witty one-line titles ('Cynicism is not a strategy')",
+      "credited artwork caption ('Artwork by …') under each issue image",
+      "sort-order arrows on the archive list"
+    ],
+    "type": "sans throughout (bold grotesque headings, regular sans body)",
+    "palette": "warm off-white #f4f2ee, charcoal #2f2f2f, pale peach #f5dcb4, small multicolour category accents"
   },
   {
     "id": "dynomight",
@@ -1239,7 +1454,17 @@
         "label": "Toy Models of Superposition",
         "url": "https://transformer-circuits.pub/2022/toy_model/index.html"
       }
-    ]
+    ],
+    "draft": "Plain off-white research index: a left column of small uppercase month stamps and a right column of bold geometric-sans titles followed by one-sentence serif summaries, with big papers getting large headings and a framed figure thumbnail. Paper pages open with a grid of numbered section cards, each with its own figure.",
+    "details": [
+      "month-and-year stamp in the left gutter",
+      "big vs small entries: major papers get headline and figure, updates get one line",
+      "section-card table of contents with a figure per section",
+      "author list with asterisk/dagger contribution marks",
+      "small grey uppercase meta labels (AUTHORS, PUBLISHED)"
+    ],
+    "type": "geometric sans headings (bold), serif body on index; sans body on paper pages",
+    "palette": "warm off-white #faf9f5, near-black text #141413, grey meta text, figure colours (blue, orange, red) as the only accent"
   },
   {
     "id": "thinking-machines",
@@ -1259,7 +1484,17 @@
         "label": "Post: nondeterminism in LLM inference",
         "url": "https://thinkingmachines.ai/blog/defeating-nondeterminism-in-llm-inference/"
       }
-    ]
+    ],
+    "draft": "A single narrow centred column of warm serif body text on plain white, with a wide-tracked grey sans wordmark on the home page and small sans section headings; each principle starts with an italic run-in sentence. Posts add a left table of contents, numbered sidenotes in the right margin and an interactive token-probability figure as the hero.",
+    "details": [
+      "small 'NEW' pill before the latest announcement",
+      "italic run-in lead sentence for each paragraph",
+      "footnotes set as sidenotes in the right margin",
+      "sticky left table of contents with the current section bulleted",
+      "byline plus plain date centred under the post title"
+    ],
+    "type": "serif body, sans headings and nav, wide-tracked sans wordmark",
+    "palette": "white #ffffff, near-black text #222, mid-grey wordmark #9a9696, grey underlined links"
   },
   {
     "id": "ifp",
@@ -1615,7 +1850,17 @@
         "label": "Home",
         "url": "https://scrollprize.org/"
       }
-    ]
+    ],
+    "draft": "Dark charcoal page with a bold sans headline over a faded volcano painting, a single orange-red accent, and a boxed countdown ('234 days left') for the grand prize. Below, ruled sections (News, Open problems, Our story, Team) each with an uppercase orange 'see all →' link, a before/after image slider, and a horizontal timeline running from 79 AD to 2026.",
+    "details": [
+      "live countdown box: '$1,000,000 grand prize — 234 days left'",
+      "monospace timeline axis from 79 AD to 2026",
+      "team list as name plus grey role on one line",
+      "orange uppercase 'All milestones →' links on the right of each section rule",
+      "before/after image comparison slider"
+    ],
+    "type": "sans headings and body, monospace for timeline labels",
+    "palette": "near-black #111317, off-white text #e6e6e6, orange-red accent #f2542d, warm brown from the painting"
   },
   {
     "id": "fitzcarraldo-editions",
@@ -1719,7 +1964,17 @@
         "label": "Ideas",
         "url": "https://longnow.org/ideas/"
       }
-    ]
+    ],
+    "draft": "Full-bleed night photograph of a neon sign as the hero, then a dark plum gradient with a hand-drawn explainer (\"now\" = 3 days, \"nowadays\" = 30 years, \"the long now\" = 20,000 years) set in a large classical serif; the Ideas index flips to a light grey page alternating image-left and image-right essay rows.",
+    "details": [
+      "five-digit years (02000 CE)",
+      "curly-brace timeline diagrams explaining the name",
+      "small-caps bold author bylines ('by EMILY HILL')",
+      "tiny uppercase category label above each row",
+      "hand-lettered arrows diagram of pace layers"
+    ],
+    "type": "classical serif headings and body (Garamond-like), small uppercase sans for nav and labels, heavy display serif for page titles",
+    "palette": "deep plum-to-navy gradient #1a0f24, white text, gold accent #e6b980 on attributions; light pages warm grey #f4f4f2 with black"
   },
   {
     "id": "speculative-technologies",
@@ -1819,7 +2074,17 @@
         "label": "Essay",
         "url": "https://julian.digital/2025/03/27/the-case-against-conversational-interfaces/"
       }
-    ]
+    ],
+    "draft": "Narrow centred column on white, opening with a dark rounded terminal box ('> Hello / > My name is Julian / > This is my lifelog and digital playground'), then a list of essay titles each in monospace on a yellow highlighter background. Essays are set entirely in monospace with numbered section headers (01 INTRO) and a handwritten annotation arrow pointing at a table.",
+    "details": [
+      "terminal-prompt greeting box",
+      "yellow highlighter background on links",
+      "'(new)' tag after the latest essay",
+      "handwritten 'Bottleneck' note with arrow beside a table",
+      "faded '01'-style section numbers before uppercase headers"
+    ],
+    "type": "bold sans headings, monospace body",
+    "palette": "white #ffffff, charcoal terminal #333333, highlighter yellow #f0e19a, grey text #444"
   },
   {
     "id": "robin-rendle",
@@ -1891,7 +2156,17 @@
         "label": "About",
         "url": "https://emergencemagazine.org/about/"
       }
-    ]
+    ],
+    "draft": "Image-led magazine: the home page is a full-bleed photograph (seen through a lens) with small sans nav overlaid, while essays put a museum print on off-white, centre an uppercase serif title with an italic byline, and run the body in a large serif column.",
+    "details": [
+      "image credit line under the hero ('Courtesy of The Metropolitan Museum of Art')",
+      "underlined small date above the standfirst",
+      "collapsible 'Contributor bios' label in the margin",
+      "floating 'Share this story' pill",
+      "circular 'em' monogram as home link"
+    ],
+    "type": "serif headings and essay body, sans nav and about-page body; bold display serif for page titles",
+    "palette": "off-white #f9f9f7, near-black text, muted print tones (sage, beige) from imagery, grey labels"
   },
   {
     "id": "plough",
@@ -2123,7 +2398,17 @@
         "label": "Home",
         "url": "https://celinenguyen.com/"
       }
-    ]
+    ],
+    "draft": "Overlapping colour blocks on white: a lilac panel holds a large light serif introduction, a red panel overlaps it with a list of interests in alternating serif and sans caps, and a right column gives 'This year' and 'Previously' as running prose with tiny year stamps after each item. Small spaced uppercase sans labels in navy head each block.",
+    "details": [
+      "tiny small-caps year stamp after each item ('Proust 2025.')",
+      "'This year' / 'Previously' instead of a CV",
+      "interests list alternating serif and bold sans caps separated by slashes",
+      "'so feel free to talk to me about these things!' aside",
+      "✦ separators between social links"
+    ],
+    "type": "light serif body and intro, spaced uppercase sans labels",
+    "palette": "white #ffffff, navy text #1d3f6e, lilac #f2dcef, coral red #ef4848"
   },
   {
     "id": "grilli-type",
@@ -2275,7 +2560,17 @@
         "label": "Post: π0",
         "url": "https://www.physicalintelligence.company/blog/pi0"
       }
-    ]
+    ],
+    "draft": "Warm off-white page pairing a light literary serif for the name and page titles with small monospace for everything else, left-aligned in a narrow column. The home is a vertical timeline of dated research posts where major model releases get a box with a hard black offset shadow; the papers page is a bare list separated by hairlines.",
+    "details": [
+      "hard black drop shadow marking major releases",
+      "dotted vertical timeline with square bullets",
+      "'(π)' in the wordmark",
+      "monospace metadata table (Published / Email / Paper)",
+      "underlined monospace nav, repeated in the footer"
+    ],
+    "type": "serif headings, monospace body and UI, sans for article prose",
+    "palette": "warm off-white #f5f4f0, black #111, grey text #6b6b6b, white boxes #ffffff"
   },
   {
     "id": "ssi",
@@ -2495,7 +2790,17 @@
         "label": "Help docs",
         "url": "https://help.kinopio.club/"
       }
-    ]
+    ],
+    "draft": "White page with a heavy italic display wordmark beside a stacked small-caps tagline, a playful collage of draggable cards, doodles and pixel images as the hero, and plain sans copy in a narrow column. The help page lists topics as coloured pill tags grouped by category, each with a coloured dot.",
+    "details": [
+      "'Other secret features may be available… (don't tell anyone)'",
+      "scrolling marquee of feature names",
+      "pill tags colour-coded by category",
+      "small 'UPDATED' sticker next to the changelog link",
+      "line 'An oasis for the mind, with no ads, tracking, or AI bloat' beside a palm-tree doodle"
+    ],
+    "type": "heavy italic display wordmark, sans body",
+    "palette": "white #ffffff, black text, dark green panel #0b4a2b, mint button #6ef0a8, pastel tag yellows/purples/pinks"
   },
   {
     "id": "inference-review",
@@ -2575,7 +2880,17 @@
         "label": "Home",
         "url": "https://www.goodfire.ai/"
       }
-    ]
+    ],
+    "draft": "Light serif headlines over a faint graph-paper background, paired with ink-wash and painted scientific illustrations (a microscope, tree rings, an engraved whale labelled 'FIG. 1.'). The research index is a ruled list with monospace category pills, sans titles, 'et al.' bylines and a painted thumbnail on the right of each entry.",
+    "details": [
+      "faint grid-paper texture behind headers",
+      "monospace category pills ('Applied Research')",
+      "'FIG. 1.' engraving-style figure on posts",
+      "monospace breadcrumb and date ('← RESEARCH · APR 15, 2025')",
+      "AUTHORS / PUBLISHED metadata block with affiliation daggers"
+    ],
+    "type": "serif headings, sans body, monospace labels",
+    "palette": "warm off-white #f8f6f0, charcoal #1f2427, burnt orange #c8622e, sepia illustration tones"
   },
   {
     "id": "sakana-ai",
@@ -2707,7 +3022,17 @@
         "label": "About",
         "url": "https://rsms.me/about/"
       }
-    ]
+    ],
+    "draft": "Plain sans (Inter) on wide white space, with a large greeting on the left and a stacked grey nav marked by a single orange dot on the right; the home page runs three columns of projects, dated essays and a short bio. Each section changes the whole background colour: pink for projects, green for about.",
+    "details": [
+      "coloured dot above the nav that recolours per page",
+      "full-page background colour per section",
+      "faded dates inline after essay blurbs ('Jan 2017')",
+      "'This website' colophon on the about page",
+      "self-deprecating aside ('programming languages that no one will ever use, ha ha')"
+    ],
+    "type": "sans throughout (Inter)",
+    "palette": "white #ffffff, black text, orange dot #ff4f00, pink #ffd4dc, green #a3dea3"
   },
   {
     "id": "manuel-moreale",
@@ -2823,7 +3148,17 @@
         "label": "Project (OLLOS)",
         "url": "https://alexanderobenauer.com/ollos/"
       }
-    ]
+    ],
+    "draft": "White page with italic serif project titles and short serif descriptions in one column, grouped by vertical rotated labels (BOOKS, ESSAYS & EXPERIMENTS, LAB NOTES) in the left margin; selected items connect by a thin horizontal rule to a framed screenshot on the right. Lab notes use a numbered 'LN 000' system with a yellow header block.",
+    "details": [
+      "rotated section labels in the left margin",
+      "thin rule linking an item to its screenshot",
+      "numbered notes ('LN 037', 'EXP 002')",
+      "spec block of metadata: 'circa 2021–2023, pub. Jan. 21, 2024, Swift, C'",
+      "hand-drawn flask logo"
+    ],
+    "type": "serif body with italic serif titles, condensed uppercase sans for labels and name",
+    "palette": "white #ffffff (warm grey #f2f1ee on project pages), near-black text, yellow #f5c400 and charcoal #444 on lab notes"
   },
   {
     "id": "spencer-chang",
@@ -2903,7 +3238,17 @@
         "label": "About",
         "url": "https://www.shirleywu.studio/about"
       }
-    ]
+    ],
+    "draft": "Warm serif site with a script monogram and an italic lowercase nav in the top-left corner; all headings and titles are lowercase, and every link has a wavy yellow underline. Projects sit in a four-column grid with a '→ for Client' line under each.",
+    "details": [
+      "wavy yellow underlines on all links",
+      "lowercase titles throughout ('thoughts', 'data visualizations')",
+      "arrow marking the current nav item",
+      "'→ for The Guardian' client credit under each project",
+      "italic aside 'alternatively, find me on' before social links"
+    ],
+    "type": "serif throughout, italic serif for nav and subtitles, script logo",
+    "palette": "off-white #fdfdfc, near-black text, mustard yellow accent #e5b800, deep teal button #00665e"
   },
   {
     "id": "every-layout",
@@ -3115,7 +3460,16 @@
         "label": "Demo document",
         "url": "https://edwardtufte.github.io/tufte-css/"
       }
-    ]
+    ],
+    "draft": "Book-like single column of a classical serif on a cream page, with italic section headings instead of bold ones and a wide empty right margin reserved for sidenotes; no images or colour at the top.",
+    "details": [
+      "sidenotes and margin notes in the right margin (further down the page)",
+      "italic section headings",
+      "small monospace for inline code",
+      "indented block quotations with attribution"
+    ],
+    "type": "serif throughout (ET Book), italic serif headings, monospace for code",
+    "palette": "cream #fffff8, near-black text #111"
   },
   {
     "id": "red-blob-games",
@@ -3195,7 +3549,17 @@
         "label": "Tag page",
         "url": "https://gordonbrander.com/tags/pattern/"
       }
-    ]
+    ],
+    "draft": "A pure-black page with small grey and white humanist sans text: a short three-paragraph bio with a few underlined links, then a ruled table of notes with dotted dates (2026.08.13), titles and outlined tag pills. Note pages are a short quote, a 'Related' line and a long related-notes table in the same format.",
+    "details": [
+      "dates in YYYY.MM.DD form in a narrow grey column",
+      "outlined pill tags on every row",
+      "'Tags / pattern' breadcrumb as the page title",
+      "related-notes table under each note",
+      "notes count in the heading ('Notes (180)')"
+    ],
+    "type": "humanist sans throughout",
+    "palette": "black #000000, white titles #f0f0f0, grey body #a0a0a0, grey rules #333"
   },
   {
     "id": "giorgia-lupi",
@@ -3223,7 +3587,17 @@
         "label": "Manifesto",
         "url": "https://giorgialupi.com/data-humanism-my-manifesto-for-a-new-data-wold"
       }
-    ]
+    ],
+    "draft": "Near-white page with wide spaced uppercase grey nav around a centred wordmark, a scrolling ticker announcing an exhibition, and large centred statements in a rounded geometric sans. Work is shown as full-bleed photo tiles of physical artefacts, and essays mix in hand-drawn data sketches with red handwritten corrections.",
+    "details": [
+      "scrolling news ticker ('currently on view!')",
+      "active nav item in red",
+      "hand-annotated manifesto image with words struck through and replaced",
+      "'Originally published on PrintMag' italic note",
+      "first-person one-paragraph intro centred as the hero"
+    ],
+    "type": "geometric sans throughout, handwriting in images",
+    "palette": "near-white #f9f9f9, black text #111, grey nav #999, red accent #d0442c"
   },
   {
     "id": "posthog-handbook",
@@ -3307,7 +3681,17 @@
         "label": "About and news",
         "url": "http://www.jennyodell.com/about-news.html"
       }
-    ]
+    ],
+    "draft": "Home is a single full-screen sky photo with a hand-lettered name and three italic serif links (writing, projects, about); inner pages drop to plain white with a system serif, an italic '< home' link in the corner and a narrow column. Writing entries stack bold title, outlet and year, and a one-line italic description; projects are a three-column grid of photos with bold-italic titles.",
+    "details": [
+      "'< home' back link in the top-left corner",
+      "one-line italic description under each piece",
+      "yellow highlight on the newsletter link",
+      "media list noting format in brackets '(2025, audio + transcript)'",
+      "lowercase section headings ('other writing', 'upcoming events')"
+    ],
+    "type": "serif throughout, hand-lettered name",
+    "palette": "white #ffffff, black text, sky blue #6f9fd8 on home, highlight yellow #fff59d"
   },
   {
     "id": "evan-miller",
@@ -3587,7 +3971,17 @@
         "label": "About",
         "url": "https://garden.bradwoods.io/about"
       }
-    ]
+    ],
+    "draft": "A dense, retro technical-manual look: monospace headings and nav on a speckled kraft-paper background, with notes laid out in a bordered grid of cells, each with a halftone or line-drawn illustration of an object (juice carton, film camera, blender). The bottom half is a monospace topic index with tree branches (└) for sub-notes; the about page flips to dark.",
+    "details": [
+      "status labels per note: seed / sprout / mature / decay",
+      "'Planted' and 'Tended' dates plus intended audience on each note",
+      "scrolling ticker of latest notes with their status",
+      "reading-progress bar under the table of contents",
+      "tree-branch (└) nesting in the topic index"
+    ],
+    "type": "monospace headings and labels, sans body, italic serif for quotes",
+    "palette": "kraft tan #d6c39b, near-black #1c1c1c, dark brown-gold #b08c4a, cream text on dark #e2d3b3"
   },
   {
     "id": "offscreen-mag",
@@ -3643,7 +4037,17 @@
         "label": "About",
         "url": "https://convergentresearch.org/about"
       }
-    ]
+    ],
+    "draft": "Each page opens on a grainy deep-blue gradient hero with thin orbital lines and orange and blue dots, carrying a large light serif statement in white. Below, white pages with thin rules, light serif section titles and sans body, plus rounded beige cards for each FRO with a small uppercase field label.",
+    "details": [
+      "orbital line diagram with node dots in the hero",
+      "small orange dot marking the start of each text block",
+      "uppercase kicker above the hero line ('ABOUT FROS')",
+      "pill filter row by field",
+      "captioned archival photo ('Assembly line of the SR-71 Blackbird at Skunk Works')"
+    ],
+    "type": "light serif headings, sans body",
+    "palette": "deep navy blue #0d2f6e, orange #ff7a2f, beige card #ebe2d8, white"
   },
   {
     "id": "kalzumeus",
@@ -3691,7 +4095,17 @@
         "label": "About",
         "url": "https://research.arcadiascience.com/about"
       }
-    ]
+    ],
+    "draft": "Light sans on white with pale pastel hero bands (mint, lavender, periwinkle), each holding a coloured-pencil illustration such as a frog or ice cube, and spaced monospace caps for section labels marked with a small black square. Publications are rounded pastel cards tagged METHOD / RESULT; the Icebox page lists shelved projects with reason tags like 'technical gap' and 'strategic misalignment'.",
+    "details": [
+      "public list of shelved projects ('Icebox')",
+      "reason-for-stopping tags (technical gap, project complete, dead end)",
+      "'■ SECTION' labels in monospace caps",
+      "comment count on each card",
+      "'You've been iced!' section heading"
+    ],
+    "type": "light sans headings and body, monospace for labels",
+    "palette": "white #ffffff, mint #f1f8ea, slate panel #5c6f74, pastel teal #cfe9df, charcoal text #3a3f44"
   },
   {
     "id": "tilde-research",
@@ -3743,7 +4157,17 @@
         "label": "Contributor page",
         "url": "https://orionmagazine.org/contributor/brian-doyle/"
       }
-    ]
+    ],
+    "draft": "Print-magazine layout on pale grey: big bold serif headlines with a short rust-coloured rule beneath, an italic serif dek, then letter-spaced uppercase sans bylines; section titles are wide-tracked uppercase in mustard gold.",
+    "details": [
+      "short rust rule under every headline",
+      "letter-spaced uppercase bylines and section labels",
+      "kicker label above each title (ANIMALIA, MEDITATION, ENUMERATIONS)",
+      "'from AUTUMN 2026' issue thumbnail beside the article",
+      "pull quote in italics on each item of a contributor list"
+    ],
+    "type": "bold serif headings, serif body, italic serif deks, tracked uppercase sans for labels",
+    "palette": "pale grey #f1f1f1, navy-black headlines #14142b, rust accent #c07a3b, mustard section titles #9c7a14, teal links #116b6b"
   },
   {
     "id": "molly-white",
@@ -3819,7 +4243,17 @@
         "label": "Essay: raymarching",
         "url": "https://blog.maximeheckel.com/posts/painting-with-math-a-gentle-study-of-raymarching/"
       }
-    ]
+    ],
+    "draft": "Dark navy-black page with a vivid blue gradient hero and a particle-cloud infinity sign rendered in WebGL, under a floating pill nav (Index, Articles, Cmd, Ask). The article index is a year-grouped list with right-aligned monospace dates; essays are a narrow centred column of grey sans with inline code pills, italic pull-quotes and bordered 'Before you start' callouts.",
+    "details": [
+      "titles that decode from scrambled characters on load",
+      "'Cmd' command-menu item in the nav",
+      "'Before you start' and 'Note' callout boxes",
+      "year headings grouping the article list",
+      "inline code styled as small bordered pills"
+    ],
+    "type": "sans headings and body, monospace for dates and code",
+    "palette": "near-black navy #0a0d14, electric blue #0066ff, grey text #a0a6b4, link blue #5b8def"
   },
   {
     "id": "adactio",
@@ -3875,7 +4309,17 @@
         "label": "Micro",
         "url": "https://henry.codes/micro"
       }
-    ]
+    ],
+    "draft": "Loud editorial personal site: huge condensed black sans titles collide with thin italic and roman serifs, over an off-white page with rounded-corner bordered boxes and dithered black-and-white bitmap images. The voice is personal and playful throughout, from a signed 'letter from the editor' to a links page laid out as a circle of rotated URLs.",
+    "details": [
+      "live ticker of coordinates, local time, weather and now-playing song",
+      "site version stamp ('VER. SS25')",
+      "nav items with faint one-line descriptions ('A portrait of the author as a young man')",
+      "struck-through Twitter link",
+      "self-aware asides ('(THIS LAYOUT ISN'T WORKING FOR ME)', 'Not-Very-Serious Resume')"
+    ],
+    "type": "heavy condensed sans display, serif body and letter text, plain sans for nav and labels",
+    "palette": "off-white #f9f9f9, warm near-black #2a2624, pink-to-blue gradient rule under the banner"
   },
   {
     "id": "jason-santa-maria",
@@ -3947,7 +4391,17 @@
         "label": "Archive",
         "url": "https://meltingasphalt.com/archive/"
       }
-    ]
+    ],
+    "draft": "Classic blog layout centred on white: a red three-triangle logo above a large serif title, a main column of essay excerpts with red serif titles, and a narrow sidebar with grey uppercase sans headings ('NEEDS SOME LOVE', 'GOODIES'). The archive is a plain year-grouped list of 'MM/DD — Title' links in red.",
+    "details": [
+      "'Needs some love' sidebar of neglected older essays",
+      "short wry about blurb ('I write things and put them here.') plus an epigraph",
+      "year-grouped archive with MM/DD dates and em dashes",
+      "logo mark repeated small at the end of each post with 'Originally published' date",
+      "hyphenated justified body text"
+    ],
+    "type": "serif headings and body, light uppercase sans for sidebar headings and nav",
+    "palette": "white #ffffff, dark red #a80000, near-black text #222, light grey nav bar #eeeeee"
   },
   {
     "id": "order-design",

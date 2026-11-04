@@ -40,6 +40,15 @@ createServer(async (req, res) => {
       writeJson('favorites.json', favs.includes(id) ? favs.filter(f => f !== id) : [...favs, id]);
       return send(200, { ok: true });
     }
+    if (url.pathname === '/api/note' && req.method === 'POST') {
+      const { id, note } = await body(req);
+      const refs = readRefs();
+      const r = refs.find(x => x.id === id);
+      if (!r) return send(404, { error: 'unknown id' });
+      r.note = note;
+      writeFileSync(join(here, 'refs.json'), JSON.stringify(refs, null, 2) + '\n');
+      return send(200, { ok: true });
+    }
     if (url.pathname === '/api/seen' && req.method === 'POST') {
       const { id } = await body(req);
       const st = readJson('state.json', { seen: [] });
