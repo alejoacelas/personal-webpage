@@ -33,27 +33,22 @@ Email. Contact is personal and low-key, with no booking widget up front.
 
 ## History shown
 
-AI uplift work (AIM, 80,000 Hours, Impact Ops) plus two or three earlier items
-that support it, chosen from Cliver, ML4Good and AI policy at ORCG.
+AI uplift work (AIM, 80,000 Hours, Impact Ops) plus Cliver, ML4Good and AI policy
+at ORCG. Writing on the EA Forum and myea.blog stays unlinked.
 
 ## Message
 
-**Open:** the one sentence the site says. Drafts:
-
-- I help people doing important work use AI to do it better.
-- I teach high-impact teams to work with AI, one task at a time.
-- I find where AI can help a team, then help them use it.
+**Open:** the one sentence the site says. Alejo's current version: "I want to make
+you better at AI. My plan for that is to pick an ambitious outcome (hopefully
+within the reach of current AI capabilities) and try many things together until
+we crack it." The fuller offer is in the
+[coaching intake doc](https://docs.google.com/document/d/1EuofQaVmkFFnK5REb681Gk5gFKI3v1U3O85vuc6YLlg/edit?tab=t.0#heading=h.he9bssfk3fx).
 
 ## Pointers
 
-Candidates:
-
-- AI task map template (github.com/alejoacelas/ai-task-map-template, public)
-- AI audit template and the audit interview questions that worked
-- Audit call kit (`audit-calls` repo, private)
-- Sharing prompts (`sharing-prompts` repo, private)
-- Get started with coding agents; how to let AI access your Google Docs
-- Claude Code spiel (myea.blog/claude-code-spiel)
+Specific outputs Alejo has already shared outside, since being shared is the
+signal that they're useful. Only these get linked. **Open:** a curated list or a
+feed.
 
 ## Tone
 
