@@ -6,141 +6,221 @@
 <title>References</title>
 <style>
   :root {
-    --bg: #161616; --panel: #1f1f1f; --text: #ececec; --muted: #8a8a8a; --accent: #f2c14e;
-    --mono: ui-monospace, "SF Mono", Menlo, monospace;
+    --bg: #151515; --panel: #1e1e1e; --line: #2c2c2c; --text: #ececec; --muted: #8a8a8a; --accent: #f2c14e; --fav: #ff7a59;
+    --mono: ui-monospace, "SF Mono", Menlo, monospace; --bar: 68px;
   }
   * { box-sizing: border-box; }
-  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text); font: 14px/1.4 var(--mono); overflow: hidden; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text); font: 13px/1.4 var(--mono); overflow: hidden; }
 
-  #stage { position: fixed; inset: 0 0 64px 0; overflow-y: auto; overflow-x: hidden; scroll-behavior: auto; outline: none; }
-  #shot { display: block; margin: 24px auto; box-shadow: 0 0 0 1px #333, 0 12px 40px #0008; transition: transform .28s ease, opacity .28s ease; }
-  #shot.desktop { width: min(96vw, calc((100vh - 112px) * 1.6)); }
+  /* Focus mode: one screenshot */
+  #stage { position: fixed; inset: 0 0 var(--bar) 0; overflow-y: auto; overflow-x: hidden; }
+  #shot { display: block; margin: 20px auto; box-shadow: 0 0 0 1px #333, 0 12px 40px #0008; transition: transform .22s ease, opacity .22s ease; }
+  #shot.desktop { width: min(96vw, calc((100vh - var(--bar) - 40px) * 1.6)); }
   #shot.full { width: min(96vw, 1200px); }
   #shot.phone { width: 390px; max-width: 92vw; }
-  #shot.out-left { transform: translateX(-60px); opacity: 0; }
-  #shot.out-right { transform: translateX(60px); opacity: 0; }
-  #shot.out-up { transform: translateY(-30px); opacity: 0; }
-  #shot.out-down { transform: translateY(30px); opacity: 0; }
-  #missing { display: none; margin: 30vh auto; text-align: center; color: var(--muted); }
+  #shot.out-left { transform: translateX(-50px); opacity: 0; } #shot.out-right { transform: translateX(50px); opacity: 0; }
+  #shot.out-up { transform: translateY(-40px); opacity: 0; } #shot.out-down { transform: translateY(40px); opacity: 0; }
+  #empty { margin: 30vh auto; text-align: center; color: var(--muted); }
 
-  #bar { position: fixed; left: 0; right: 0; bottom: 0; height: 64px; background: var(--panel); border-top: 1px solid #2c2c2c;
-         display: flex; align-items: center; gap: 20px; padding: 0 20px; white-space: nowrap; }
-  #name { font-weight: 700; }
-  #page, #view { color: var(--muted); }
-  #page b, #view b { color: var(--accent); font-weight: 400; }
-  #note { flex: 1; overflow: hidden; text-overflow: ellipsis; color: var(--text); font-style: italic; }
-  #note.empty { color: var(--muted); }
-  #count { color: var(--muted); }
-  #dots { display: flex; gap: 5px; }
-  #dots i { width: 7px; height: 7px; border-radius: 50%; background: #444; }
-  #dots i.on { background: var(--accent); }
+  /* Minimap: the grid in miniature, bottom right */
+  #mini { position: fixed; right: 14px; bottom: calc(var(--bar) + 12px); background: #1e1e1ee8; border: 1px solid var(--line); padding: 8px; display: grid; gap: 3px; max-width: 46vw; overflow: hidden; }
+  #mini .row { display: flex; gap: 3px; align-items: center; }
+  #mini .lbl { flex: none; width: 92px; color: var(--muted); font-size: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  #mini .cell { width: 9px; height: 9px; background: #555; flex: none; }
+  #mini .cell.seen { background: #333; } #mini .cell.fav { background: var(--fav); }
+  #mini .cell.cur { outline: 2px solid var(--accent); outline-offset: 1px; }
 
-  #help { position: fixed; right: 20px; bottom: 80px; background: var(--panel); border: 1px solid #333; padding: 14px 18px; display: none; line-height: 1.8; }
+  /* Overview mode: the whole grid with thumbnails */
+  #overview { position: fixed; inset: 0 0 var(--bar) 0; overflow: auto; padding: 18px 24px; display: none; }
+  body.ov #overview { display: block; } body.ov #stage, body.ov #mini { display: none; }
+  .ovrow { margin-bottom: 18px; }
+  .ovrow h2 { font-size: 12px; font-weight: 400; color: var(--muted); margin: 0 0 8px; }
+  .ovrow .items { display: flex; gap: 12px; }
+  .tile { flex: none; width: 220px; }
+  .tile .img { width: 220px; height: 138px; background: #222 center top / cover no-repeat; outline: 1px solid #333; }
+  .tile .t { margin-top: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--muted); }
+  .tile.seen .img { opacity: .55; } .tile.fav .t::before { content: '♥ '; color: var(--fav); }
+  .tile.cur .img { outline: 3px solid var(--accent); opacity: 1; } .tile.cur .t { color: var(--text); }
+
+  #bar { position: fixed; left: 0; right: 0; bottom: 0; height: var(--bar); background: var(--panel); border-top: 1px solid var(--line);
+         display: grid; grid-template-columns: 1fr auto; align-items: center; padding: 0 18px; gap: 16px; }
+  #l1, #l2 { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  #l1 { display: flex; gap: 14px; align-items: baseline; }
+  #name { font-weight: 700; font-size: 14px; } #heart { color: var(--fav); }
+  #cluster, #view { color: var(--muted); } #view b { color: var(--accent); font-weight: 400; }
+  #l2 { color: var(--muted); margin-top: 4px; } #l2 .note { color: var(--text); font-style: italic; }
+  #right { text-align: right; color: var(--muted); line-height: 1.6; }
+  #disc.on { color: var(--accent); }
+
+  #help { position: fixed; right: 18px; bottom: calc(var(--bar) + 12px); background: var(--panel); border: 1px solid #333; padding: 14px 18px; display: none; line-height: 1.9; z-index: 5; }
   #help.show { display: block; }
-  kbd { display: inline-block; min-width: 1.8em; text-align: center; border: 1px solid #444; border-radius: 4px; padding: 0 5px; margin-right: 8px; color: var(--accent); }
+  kbd { display: inline-block; min-width: 2em; text-align: center; border: 1px solid #444; border-radius: 4px; padding: 0 5px; margin-right: 8px; color: var(--accent); }
 </style>
 </head>
 <body>
-<div id="stage" tabindex="0">
-  <img id="shot" alt="">
-  <div id="missing">No screenshot yet. Run <code>node references/capture.mjs <span id="missing-id"></span></code></div>
-</div>
+<div id="stage"><img id="shot" alt=""><div id="empty">Waiting for the first screenshots…</div></div>
+<div id="mini"></div>
+<div id="overview"></div>
 <div id="bar">
-  <div id="dots"></div>
-  <span id="name"></span>
-  <span id="page"></span>
-  <span id="view"></span>
-  <span id="note"></span>
-  <span id="count"></span>
-  <span style="color:var(--muted)">? keys</span>
+  <div>
+    <div id="l1"><span id="heart"></span><span id="name"></span><span id="cluster"></span><span id="view"></span></div>
+    <div id="l2"></div>
+  </div>
+  <div id="right"><div id="count"></div><div id="disc"></div></div>
 </div>
 <div id="help">
-  <div><kbd>← →</kbd>previous / next reference</div>
-  <div><kbd>↑ ↓</kbd>previous / next page of this reference</div>
-  <div><kbd>1 2 3</kbd>above the fold / full page / phone</div>
-  <div><kbd>v</kbd>cycle view</div>
-  <div><kbd>j k</kbd>scroll down / up</div>
-  <div><kbd>space</kbd>scroll a screen (shift: back)</div>
-  <div><kbd>g G</kbd>top / bottom</div>
+  <div><kbd>← → ↑ ↓</kbd>move between sites (rows are kinds of site)</div>
+  <div><kbd>v</kbd>next view of this site (shift+v: previous)</div>
+  <div><kbd>f</kbd>favourite: finds more like it</div>
+  <div><kbd>z</kbd>zoom out to the whole grid and back</div>
+  <div><kbd>j k</kbd>scroll down / up · <kbd>space</kbd>a screen</div>
+  <div><kbd>t</kbd>back to the top of the screenshot</div>
   <div><kbd>o</kbd>open the live page</div>
   <div><kbd>?</kbd>toggle this help</div>
 </div>
-<script src="refs.js"></script>
 <script>
-  const REFS = window.REFS;
-  const VIEWS = ['desktop', 'full', 'phone'];
-  const VIEW_LABEL = { desktop: 'above the fold', full: 'full page', phone: 'phone' };
   const $ = id => document.getElementById(id);
-  const stage = $('stage'), shot = $('shot');
+  const VIEW_LABEL = { desktop: 'above the fold', full: 'full page', phone: 'phone' };
+  const VIEW_ORDER = ['desktop', 'full', 'phone'];
+  let S = null;            // server state
+  let rows = [];           // [{ cluster, items: [ref] }]
+  let curId = decodeURIComponent(location.hash.slice(1)) || null;
+  let viewIdx = 0;         // index into the current ref's shot list
 
-  // State lives in the hash so a reload keeps your place: #ref-id/page/view
-  let r = 0, p = 0, v = 0;
-  const [hid, hp, hv] = decodeURIComponent(location.hash.slice(1)).split('/');
-  if (hid) { r = Math.max(0, REFS.findIndex(x => x.id === hid)); p = +hp || 0; v = Math.max(0, VIEWS.indexOf(hv)); }
+  // Shots for a ref, ordered by page then view: [{ file, page, view }]
+  const shotsOf = r => r.shots.map(f => { const [p, v] = f.replace('.jpg', '').split('-'); return { file: f, page: +p, view: v }; })
+    .sort((a, b) => a.page - b.page || VIEW_ORDER.indexOf(a.view) - VIEW_ORDER.indexOf(b.view));
 
-  function render(dir) {
-    const ref = REFS[r], page = ref.pages[p], view = VIEWS[v];
-    const src = `shots/${ref.id}/${p}-${view}.jpg`;
-    history.replaceState(null, '', `#${ref.id}/${p}/${view}`);
+  // Rows are clusters in order of first appearance. Within a row, a site found from a
+  // favourite sits right after that favourite, so "more like this" stays nearby.
+  function buildRows() {
+    const ready = S.refs.filter(r => r.shots.length);
+    const order = Object.fromEntries(S.refs.map((r, i) => [r.id, i]));
+    const byCluster = new Map();
+    for (const r of ready) { if (!byCluster.has(r.cluster)) byCluster.set(r.cluster, []); byCluster.get(r.cluster).push(r); }
+    rows = [...byCluster].map(([cluster, items]) => {
+      const inRow = new Set(items.map(r => r.id));
+      const key = r => (r.seed && inRow.has(r.seed) ? [order[r.seed], 1, order[r.id]] : [order[r.id], 0, 0]);
+      items.sort((a, b) => { const ka = key(a), kb = key(b); return ka[0] - kb[0] || ka[1] - kb[1] || ka[2] - kb[2]; });
+      return { cluster, items };
+    });
+  }
+  function pos() {
+    for (const [ri, row] of rows.entries()) { const ci = row.items.findIndex(r => r.id === curId); if (ci >= 0) return [ri, ci]; }
+    return [0, 0];
+  }
+  const cur = () => { const [ri, ci] = pos(); return rows[ri]?.items[ci]; };
 
-    $('dots').innerHTML = REFS.map((_, i) => `<i class="${i === r ? 'on' : ''}"></i>`).join('');
-    $('name').textContent = ref.name;
-    $('page').innerHTML = ref.pages.length > 1 ? `<b>${page.label}</b> ${p + 1}/${ref.pages.length}` : page.label;
-    $('view').innerHTML = `<b>${VIEW_LABEL[view]}</b>`;
-    $('note').textContent = ref.note || 'no note yet';
-    $('note').classList.toggle('empty', !ref.note);
-    $('count').textContent = `${r + 1}/${REFS.length}`;
+  function renderBar() {
+    const r = cur(); if (!r) return;
+    const shots = shotsOf(r), s = shots[viewIdx] || shots[0], page = r.pages[s.page];
+    const fav = S.favorites.includes(r.id);
+    $('heart').textContent = fav ? '♥' : '';
+    $('name').textContent = r.name;
+    $('cluster').textContent = r.cluster;
+    $('view').innerHTML = `${r.pages.length > 1 ? page.label + ' · ' : ''}<b>${page.manual ? 'screenshot' : VIEW_LABEL[s.view]}</b> ${viewIdx + 1}/${shots.length}`;
+    const seed = r.seed && S.refs.find(x => x.id === r.seed);
+    $('l2').innerHTML = [r.note && `<span class="note">${esc(r.note)}</span>`, r.why && esc(r.why), seed && `more like ${esc(seed.name)}`].filter(Boolean).join(' · ') || '&nbsp;';
+    const total = rows.reduce((n, row) => n + row.items.length, 0);
+    const pending = S.refs.filter(x => x.capture === 'pending').length;
+    $('count').textContent = `${S.seen.length}/${total} seen · ${S.favorites.length} ♥${pending ? ` · ${pending} capturing` : ''}`;
+    const d = S.discovery;
+    $('disc').className = d.running ? 'on' : '';
+    $('disc').textContent = d.running ? 'finding more…' : d.lastError ? 'discovery error (see discover.log)' : d.rounds ? `last round +${d.lastAdded}` : 'discovery idle';
+  }
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
 
-    const swap = () => {
-      shot.className = view;
-      shot.onerror = () => { shot.style.display = 'none'; $('missing').style.display = 'block'; $('missing-id').textContent = ref.id; };
-      shot.onload = () => { shot.style.display = 'block'; $('missing').style.display = 'none'; };
-      shot.src = src;
-      stage.scrollTop = 0;
-    };
-    if (dir) {
-      shot.classList.add('out-' + dir);
-      setTimeout(() => {
-        swap();
-        const back = { left: 'out-right', right: 'out-left', up: 'out-down', down: 'out-up' }[dir];
-        shot.classList.add(back);
-        requestAnimationFrame(() => requestAnimationFrame(() => shot.classList.remove(back)));
-      }, 160);
-    } else swap();
-
-    // Preload neighbours so swiping is instant
-    for (const i of [r - 1, r + 1]) {
-      const n = REFS[(i + REFS.length) % REFS.length];
-      new Image().src = `shots/${n.id}/0-${view}.jpg`;
-    }
+  function renderMini() {
+    const [ri, ci] = pos();
+    $('mini').innerHTML = rows.map((row, i) => `<div class="row"><span class="lbl">${esc(row.cluster)}</span>${
+      row.items.map((r, j) => `<span class="cell ${S.seen.includes(r.id) ? 'seen' : ''} ${S.favorites.includes(r.id) ? 'fav' : ''} ${i === ri && j === ci ? 'cur' : ''}"></span>`).join('')}</div>`).join('');
   }
 
-  const scrollBy = dy => stage.scrollBy({ top: dy, behavior: 'smooth' });
+  function renderOverview() {
+    const [ri, ci] = pos();
+    $('overview').innerHTML = rows.map((row, i) => `<div class="ovrow"><h2>${esc(row.cluster)} · ${row.items.length}</h2><div class="items">${
+      row.items.map((r, j) => `<div class="tile ${S.seen.includes(r.id) ? 'seen' : ''} ${S.favorites.includes(r.id) ? 'fav' : ''} ${i === ri && j === ci ? 'cur' : ''}" ${i === ri && j === ci ? 'id="curtile"' : ''}>
+        <div class="img" style="background-image:url('shots/${r.id}/${shotsOf(r)[0].file}')"></div><div class="t">${esc(r.name)}</div></div>`).join('')}</div></div>`).join('');
+    $('curtile')?.scrollIntoView({ block: 'nearest', inline: 'center' });
+  }
+
+  function renderShot(dir) {
+    const r = cur();
+    $('empty').style.display = r ? 'none' : 'block';
+    if (!r) return;
+    const shots = shotsOf(r), s = shots[viewIdx] || shots[0];
+    const swap = () => { $('shot').className = s.view; $('shot').src = `shots/${r.id}/${s.file}`; $('stage').scrollTop = 0; };
+    if (!dir) return swap();
+    $('shot').classList.add('out-' + dir);
+    setTimeout(() => {
+      swap();
+      const back = { left: 'out-right', right: 'out-left', up: 'out-down', down: 'out-up' }[dir];
+      $('shot').classList.add(back);
+      requestAnimationFrame(() => requestAnimationFrame(() => $('shot').classList.remove(back)));
+    }, 130);
+  }
+
+  function render(dir) {
+    const r = cur(); if (!r) { renderShot(); return; }
+    curId = r.id;
+    history.replaceState(null, '', '#' + r.id);
+    if (!S.seen.includes(r.id)) { S.seen.push(r.id); post('/api/seen', { id: r.id }); }
+    if (document.body.classList.contains('ov')) renderOverview(); else { renderShot(dir); renderMini(); }
+    renderBar();
+    // Preload the neighbours' first shots
+    const [ri, ci] = pos();
+    for (const n of [rows[ri].items[ci - 1], rows[ri].items[ci + 1], rows[ri - 1]?.items[0], rows[ri + 1]?.items[0]]) if (n) new Image().src = `shots/${n.id}/${shotsOf(n)[0].file}`;
+  }
+
+  function move(dr, dc) {
+    let [ri, ci] = pos();
+    if (dr) { ri = Math.max(0, Math.min(rows.length - 1, ri + dr)); ci = Math.min(ci, rows[ri].items.length - 1); }
+    else ci = Math.max(0, Math.min(rows[ri].items.length - 1, ci + dc));
+    const next = rows[ri].items[ci];
+    if (next.id === curId) return;
+    curId = next.id; viewIdx = 0;
+    render(dr > 0 ? 'up' : dr < 0 ? 'down' : dc > 0 ? 'left' : 'right');
+  }
+
+  const post = (url, data) => fetch(url, { method: 'POST', body: JSON.stringify(data) }).catch(() => {});
+
+  async function refresh() {
+    try { S = await (await fetch('/api/state')).json(); } catch { $('disc').textContent = 'server not running: npm start'; return; }
+    const before = rows.reduce((n, r) => n + r.items.length, 0);
+    buildRows();
+    if (!curId || !cur() || cur().id !== curId) { const p = rows.flatMap(r => r.items).find(r => r.id === curId); if (!p) curId = rows[0]?.items[0]?.id; }
+    const after = rows.reduce((n, r) => n + r.items.length, 0);
+    if (!$('shot').src || after !== before) render(); else renderBar();
+  }
 
   addEventListener('keydown', e => {
-    if (e.metaKey || e.ctrlKey || e.altKey) return;
-    const k = e.key;
+    if (e.metaKey || e.ctrlKey || e.altKey || !S) return;
+    const k = e.key, stage = $('stage');
     let handled = true;
-    if (k === 'ArrowRight' || k === 'l') { r = (r + 1) % REFS.length; p = 0; render('left'); }
-    else if (k === 'ArrowLeft' || k === 'h') { r = (r - 1 + REFS.length) % REFS.length; p = 0; render('right'); }
-    else if (k === 'ArrowDown') { const n = REFS[r].pages.length; if (n > 1) { p = (p + 1) % n; render('up'); } }
-    else if (k === 'ArrowUp') { const n = REFS[r].pages.length; if (n > 1) { p = (p - 1 + n) % n; render('down'); } }
-    else if (k >= '1' && k <= '3') { v = +k - 1; render(); }
-    else if (k === 'v') { v = (v + 1) % VIEWS.length; render(); }
-    else if (k === 'j') scrollBy(240);
-    else if (k === 'k') scrollBy(-240);
-    else if (k === ' ') scrollBy((e.shiftKey ? -1 : 1) * stage.clientHeight * 0.85);
-    else if (k === 'g') stage.scrollTo({ top: 0, behavior: 'smooth' });
-    else if (k === 'G') stage.scrollTo({ top: stage.scrollHeight, behavior: 'smooth' });
-    else if (k === 'o') window.open(REFS[r].pages[p].url, '_blank');
+    if (k === 'ArrowRight') move(0, 1);
+    else if (k === 'ArrowLeft') move(0, -1);
+    else if (k === 'ArrowDown') move(1, 0);
+    else if (k === 'ArrowUp') move(-1, 0);
+    else if (k === 'v' || k === 'V') { const n = shotsOf(cur()).length; viewIdx = (viewIdx + (k === 'V' ? -1 : 1) + n) % n; renderShot(); renderBar(); }
+    else if (k === 'f') {
+      const id = curId; S.favorites = S.favorites.includes(id) ? S.favorites.filter(x => x !== id) : [...S.favorites, id];
+      post('/api/fav', { id }); renderBar(); document.body.classList.contains('ov') ? renderOverview() : renderMini();
+    }
+    else if (k === 'z' || (k === 'Escape' && document.body.classList.contains('ov'))) { document.body.classList.toggle('ov'); render(); }
+    else if (k === 'Enter' && document.body.classList.contains('ov')) { document.body.classList.remove('ov'); render(); }
+    else if (k === 'j') stage.scrollBy({ top: 260, behavior: 'smooth' });
+    else if (k === 'k') stage.scrollBy({ top: -260, behavior: 'smooth' });
+    else if (k === ' ') stage.scrollBy({ top: (e.shiftKey ? -1 : 1) * stage.clientHeight * 0.85, behavior: 'smooth' });
+    else if (k === 't') stage.scrollTo({ top: 0, behavior: 'smooth' });
+    else if (k === 'o') { const r = cur(); window.open(r.pages[(shotsOf(r)[viewIdx] || shotsOf(r)[0]).page].url, '_blank'); }
     else if (k === '?') $('help').classList.toggle('show');
     else if (k === 'Escape') $('help').classList.remove('show');
     else handled = false;
     if (handled) e.preventDefault();
   });
 
-  render();
-  stage.focus();
+  refresh();
+  setInterval(refresh, 4000);
 </script>
 </body>
 </html>

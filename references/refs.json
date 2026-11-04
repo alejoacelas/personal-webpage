@@ -1,0 +1,696 @@
+[
+  {
+    "id": "works-in-progress",
+    "name": "Works in Progress",
+    "cluster": "Magazines & journals",
+    "note": "",
+    "why": "",
+    "seed": null,
+    "source": "alejo",
+    "added": "2026-11-04T21:45:01.667Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://worksinprogress.co/"
+      },
+      {
+        "label": "Article",
+        "url": "https://worksinprogress.co/issue/the-forgotten-formula-for-lovable-cities/"
+      }
+    ]
+  },
+  {
+    "id": "forethought",
+    "name": "Forethought",
+    "cluster": "Research organisations",
+    "note": "",
+    "why": "",
+    "seed": null,
+    "source": "alejo",
+    "added": "2026-11-04T21:45:01.667Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://www.forethought.org/"
+      },
+      {
+        "label": "Research piece",
+        "url": "https://www.forethought.org/research/better-futures"
+      },
+      {
+        "label": "Person",
+        "url": "https://www.forethought.org/people/william-macaskill"
+      }
+    ]
+  },
+  {
+    "id": "curius",
+    "name": "Curius",
+    "cluster": "Tools & documents",
+    "note": "",
+    "why": "",
+    "seed": null,
+    "source": "alejo",
+    "added": "2026-11-04T21:45:01.667Z",
+    "pages": [
+      {
+        "label": "Logged in (Alejo’s screenshot)",
+        "url": "https://curius.app/",
+        "manual": "curius-logged-in.jpg"
+      },
+      {
+        "label": "Logged out",
+        "url": "https://curius.app/"
+      }
+    ]
+  },
+  {
+    "id": "google-docs",
+    "name": "Google Docs",
+    "cluster": "Tools & documents",
+    "note": "",
+    "why": "",
+    "seed": null,
+    "source": "alejo",
+    "added": "2026-11-04T21:45:01.667Z",
+    "pages": [
+      {
+        "label": "Editor (Alejo’s screenshot)",
+        "url": "https://docs.google.com/",
+        "manual": "google-docs-editor.jpg"
+      }
+    ]
+  },
+  {
+    "id": "owid-data-insights",
+    "name": "Our World in Data — Data Insights",
+    "cluster": "Data & charts",
+    "note": "",
+    "why": "",
+    "seed": null,
+    "source": "alejo",
+    "added": "2026-11-04T21:45:01.667Z",
+    "pages": [
+      {
+        "label": "Data insight",
+        "url": "https://ourworldindata.org/data-insights/solar-and-wind-power-have-grown-quickly-in-poland-but-coal-still-dominates"
+      }
+    ]
+  },
+  {
+    "id": "metr-notes",
+    "name": "METR Notes",
+    "cluster": "Notes & work in progress",
+    "note": "Looks rough and unpolished, which signals work in progress.",
+    "why": "",
+    "seed": null,
+    "source": "alejo",
+    "added": "2026-11-04T21:45:01.667Z",
+    "pages": [
+      {
+        "label": "Notes index",
+        "url": "https://metr.org/notes/"
+      },
+      {
+        "label": "Note",
+        "url": "https://metr.org/notes/2026-07-22-economics-of-recursive-self-improvement/"
+      }
+    ]
+  },
+  {
+    "id": "asterisk",
+    "name": "Asterisk",
+    "cluster": "Magazines & journals",
+    "note": "",
+    "why": "",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:45:01.667Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://asteriskmag.com/"
+      }
+    ]
+  },
+  {
+    "id": "roots-of-progress",
+    "name": "The Roots of Progress",
+    "cluster": "Magazines & journals",
+    "note": "",
+    "why": "",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:45:01.667Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://rootsofprogress.org/"
+      }
+    ]
+  },
+  {
+    "id": "stripe-press",
+    "name": "Stripe Press",
+    "cluster": "Magazines & journals",
+    "note": "",
+    "why": "",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:45:01.667Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://press.stripe.com/"
+      }
+    ]
+  },
+  {
+    "id": "palladium",
+    "name": "Palladium",
+    "cluster": "Magazines & journals",
+    "note": "",
+    "why": "",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:45:01.667Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://www.palladiummag.com/"
+      }
+    ]
+  },
+  {
+    "id": "noema",
+    "name": "Noema",
+    "cluster": "Magazines & journals",
+    "note": "",
+    "why": "",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:45:01.667Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://www.noemamag.com/"
+      }
+    ]
+  },
+  {
+    "id": "quanta",
+    "name": "Quanta Magazine",
+    "cluster": "Magazines & journals",
+    "note": "",
+    "why": "",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:45:01.667Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://www.quantamagazine.org/"
+      }
+    ]
+  },
+  {
+    "id": "epoch",
+    "name": "Epoch AI",
+    "cluster": "Research organisations",
+    "note": "",
+    "why": "",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:45:01.667Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://epoch.ai/"
+      }
+    ]
+  },
+  {
+    "id": "ink-and-switch",
+    "name": "Ink & Switch",
+    "cluster": "Research organisations",
+    "note": "",
+    "why": "",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:45:01.667Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://www.inkandswitch.com/"
+      }
+    ]
+  },
+  {
+    "id": "distill",
+    "name": "Distill",
+    "cluster": "Research organisations",
+    "note": "",
+    "why": "",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:45:01.667Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://distill.pub/"
+      }
+    ]
+  },
+  {
+    "id": "ai-2027",
+    "name": "AI 2027",
+    "cluster": "Research organisations",
+    "note": "",
+    "why": "",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:45:01.667Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://ai-2027.com/"
+      }
+    ]
+  },
+  {
+    "id": "anthropic-research",
+    "name": "Anthropic Research",
+    "cluster": "Research organisations",
+    "note": "",
+    "why": "",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:45:01.667Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://www.anthropic.com/research"
+      }
+    ]
+  },
+  {
+    "id": "arc-institute",
+    "name": "Arc Institute",
+    "cluster": "Research organisations",
+    "note": "",
+    "why": "",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:45:01.667Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://arcinstitute.org/"
+      }
+    ]
+  },
+  {
+    "id": "pudding",
+    "name": "The Pudding",
+    "cluster": "Data & charts",
+    "note": "",
+    "why": "",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:45:01.667Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://pudding.cool/"
+      }
+    ]
+  },
+  {
+    "id": "epoch-data",
+    "name": "Epoch AI Data",
+    "cluster": "Data & charts",
+    "note": "",
+    "why": "",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:45:01.667Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://epoch.ai/data"
+      }
+    ]
+  },
+  {
+    "id": "owid-home",
+    "name": "Our World in Data",
+    "cluster": "Data & charts",
+    "note": "",
+    "why": "",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:45:01.667Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://ourworldindata.org/"
+      }
+    ]
+  },
+  {
+    "id": "matuschak-notes",
+    "name": "Andy Matuschak’s notes",
+    "cluster": "Notes & work in progress",
+    "note": "",
+    "why": "",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:45:01.667Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://notes.andymatuschak.org/"
+      }
+    ]
+  },
+  {
+    "id": "gwern",
+    "name": "Gwern.net",
+    "cluster": "Notes & work in progress",
+    "note": "",
+    "why": "",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:45:01.667Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://gwern.net/"
+      }
+    ]
+  },
+  {
+    "id": "maggie-appleton",
+    "name": "Maggie Appleton’s garden",
+    "cluster": "Notes & work in progress",
+    "note": "",
+    "why": "",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:45:01.667Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://maggieappleton.com/garden"
+      }
+    ]
+  },
+  {
+    "id": "simon-willison-til",
+    "name": "Simon Willison’s TILs",
+    "cluster": "Notes & work in progress",
+    "note": "",
+    "why": "",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:45:01.667Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://til.simonwillison.net/"
+      }
+    ]
+  },
+  {
+    "id": "simon-willison",
+    "name": "Simon Willison’s Weblog",
+    "cluster": "Notes & work in progress",
+    "note": "",
+    "why": "",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:45:01.667Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://simonwillison.net/"
+      }
+    ]
+  },
+  {
+    "id": "dan-luu",
+    "name": "Dan Luu",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:45:01.667Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://danluu.com/"
+      }
+    ]
+  },
+  {
+    "id": "nabeel",
+    "name": "Nabeel Qureshi",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:45:01.667Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://nabeelqu.co/"
+      }
+    ]
+  },
+  {
+    "id": "thesephist",
+    "name": "Linus Lee",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:45:01.667Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://thesephist.com/"
+      }
+    ]
+  },
+  {
+    "id": "paul-graham",
+    "name": "Paul Graham",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:45:01.667Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://paulgraham.com/articles.html"
+      }
+    ]
+  },
+  {
+    "id": "patrick-collison",
+    "name": "Patrick Collison",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:45:01.667Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://patrickcollison.com/"
+      }
+    ]
+  },
+  {
+    "id": "craig-mod",
+    "name": "Craig Mod",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:45:01.667Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://craigmod.com/"
+      }
+    ]
+  },
+  {
+    "id": "robin-sloan",
+    "name": "Robin Sloan",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:45:01.667Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://www.robinsloan.com/"
+      }
+    ]
+  },
+  {
+    "id": "bret-victor",
+    "name": "Bret Victor",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:45:01.667Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://worrydream.com/"
+      }
+    ]
+  },
+  {
+    "id": "joe-carlsmith",
+    "name": "Joe Carlsmith",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:45:01.667Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://joecarlsmith.com/"
+      }
+    ]
+  },
+  {
+    "id": "henrik-karlsson",
+    "name": "Henrik Karlsson",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:45:01.667Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://www.henrikkarlsson.xyz/"
+      }
+    ]
+  },
+  {
+    "id": "rauno",
+    "name": "Rauno Freiberg",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:45:01.667Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://rauno.me/"
+      }
+    ]
+  },
+  {
+    "id": "paco",
+    "name": "Paco Coursey",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:45:01.667Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://paco.me/"
+      }
+    ]
+  },
+  {
+    "id": "julia-evans",
+    "name": "Julia Evans",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:45:01.667Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://jvns.ca/"
+      }
+    ]
+  },
+  {
+    "id": "cold-takes",
+    "name": "Cold Takes",
+    "cluster": "Personal sites",
+    "note": "",
+    "why": "",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:45:01.667Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://www.cold-takes.com/"
+      }
+    ]
+  },
+  {
+    "id": "are-na",
+    "name": "Are.na",
+    "cluster": "Tools & documents",
+    "note": "",
+    "why": "",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:45:01.667Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://www.are.na/"
+      }
+    ]
+  },
+  {
+    "id": "linear-method",
+    "name": "Linear Method",
+    "cluster": "Tools & documents",
+    "note": "",
+    "why": "",
+    "seed": null,
+    "source": "agent",
+    "added": "2026-11-04T21:45:01.667Z",
+    "pages": [
+      {
+        "label": "Home",
+        "url": "https://linear.app/method"
+      }
+    ]
+  }
+]

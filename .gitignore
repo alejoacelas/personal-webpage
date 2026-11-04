@@ -34,5 +34,8 @@ pnpm-debug.log*
 .mcp.json
 .env*
 
-# Reference screenshots (regenerate with references/capture.mjs)
+# References: screenshots are regenerated; Alejo's own screenshots and browsing state stay local
 references/shots/
+references/manual/
+references/state.json
+references/discover.log
