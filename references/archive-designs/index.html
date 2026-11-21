@@ -6,7 +6,7 @@
 #work{height:100dvh;display:grid;grid-template-rows:auto minmax(0,1fr);background:#fff}#work[hidden],#overview[hidden],[hidden]{display:none!important}#bar{background:#252522;color:#f5f2e9;display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:8px 16px;font-size:13px}#bar a{text-decoration:none}#bar a:hover{text-decoration:underline}#bar select,#bar button{color:inherit;background:#33332e;border:1px solid #67675c;padding:5px 9px;border-radius:4px}#bar select{font:inherit}.spacer{flex:1}#favorite[aria-pressed=true]{background:#f2dd9c;color:#21211c}#frame{width:100%;height:100%;border:0}#notes{position:absolute;z-index:2;right:14px;top:54px;width:min(345px,92vw);background:#fffdf7;border:1px solid #b5b0a4;padding:16px;box-shadow:0 6px 20px #0002}#notes label{display:block;font-weight:600}#notes textarea{margin:8px 0;width:100%;min-height:100px;resize:vertical;padding:8px}#notes button{padding:5px 12px}#feedback{font-size:12px;margin-left:10px}.keys{font-size:12px;color:#cccac1}
 @media(max-width:720px){.grid{grid-template-columns:1fr}.head{display:block}.head span{display:block;margin-top:7px}.keys{display:none}#bar{gap:6px;padding:7px}.spacer{display:none}#bar select{max-width:125px}#overview{padding-top:18px}}
 </style></head><body>
-<main id="overview"><header class="head"><h1>Five ways to browse</h1><span>Alejo Acelas / Website studies</span></header><div class="grid" id="grid"></div></main>
+<main id="overview"><header class="head"><h1>Five ways to browse</h1><span id="archive-scope">Alejo Acelas / Website studies</span></header><div class="grid" id="grid"></div></main>
 <section id="work" hidden><nav id="bar" aria-label="Design review"><a href="/">← All five</a><select aria-label="Choose design" id="choice"></select><span class="keys">← → switch designs</span><span class="spacer"></span><button id="favorite" aria-pressed="false">☆ Favourite</button><button id="annotate" aria-expanded="false">Notes</button></nav><div id="notes" hidden><label for="note">What would you keep or change?</label><textarea id="note"></textarea><button id="save">Save note</button><span id="feedback" role="status"></span></div><iframe id="frame" title="Selected website design"></iframe></section>
 <script type="module">
 const concepts=[
@@ -22,6 +22,9 @@ const selected=new URLSearchParams(location.search).get('design');
 const index=concepts.findIndex(c=>c[0]===selected);
 const state=await fetch('/review').then(r=>r.json());
 if(index<0){
+ const {items}=await import('./archive.mjs');
+ const dates=new Intl.DateTimeFormat('en-GB',{day:'numeric',month:'short',timeZone:'UTC'});
+ $('#archive-scope').textContent=items.length+' entries · '+dates.format(new Date(items.at(-1).date))+' – '+dates.format(new Date(items[0].date))+' '+items[0].date.slice(0,4);
  $('#grid').innerHTML=concepts.map(([id,name,description])=>`<a class="tile" href="?design=${id}"><span class="mini" inert><iframe title="" tabindex="-1" src="/${id}.html"></iframe></span><header><h2>${name}${state.favorite===id?' ★':''}</h2><span class="open" aria-hidden="true">↗</span></header><p>${description}</p></a>`).join('');
  // Scale previews to the card width, including browsers without typed CSS arithmetic.
  const resize=new ResizeObserver(entries=>entries.forEach(e=>e.target.firstElementChild.style.transform='scale('+e.contentRect.width/1100+')'));
