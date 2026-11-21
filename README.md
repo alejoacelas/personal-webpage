@@ -1,7 +1,33 @@
 # alejoacelas.com
 
-Alejo Acelas’s personal site. The page is static HTML so visitors can read it without JavaScript.
+Alejo Acelas's personal site: a map of work he has shared, grouped by topic, with a
+reader for each piece. The works are his Slack posts, documents, repositories, small
+sites and things he said on calls.
 
-Run `yarn build` and serve `dist/` locally with `python3 -m http.server --directory dist`. Vercel builds the production site from `main`.
+## How it is built
 
-The Google Docs links are a reviewed snapshot. The Slack feed contains selected top-level posts from Alejo in the AI Uplift for EA community.
+- `wiki/index.html`, `style.css`, `inks.css`, `app.js` and `map-inks.js` are the page.
+  It has no framework and every route is in the URL hash.
+- `wiki/data.publish.js` is the published data: each work's title, description, text
+  and position on the map. `node wiki/build.mjs --release` writes it from a private,
+  annotated sample of Alejo's work that is kept outside this repository.
+- `wiki/share.mjs` decides which works are published and applies the edits that
+  remove other people's details. The build writes nothing if a private name, an email
+  address, an invite link or a link to a left-out work remains.
+- `scripts/build.mjs` copies the page, the files it loads and the published data
+  into `dist/`. Vercel runs it on every push to `main`.
+- `api/rank.mjs` re-sorts search results by how well each answers the visitor's
+  question. The page keeps its own word-matching order when the endpoint is absent.
+
+## Commands
+
+- `yarn build`: build `dist/` from what is committed.
+- `node wiki/serve.mjs`: serve the site locally with the search endpoint.
+- `node wiki/build.mjs --review`: build `wiki/data.js` with every work that isn't
+  left out, for checking the sharing marks. That file is ignored and never deployed.
+- `node wiki/shoot.mjs`: take headless screenshots of the page.
+
+## How it is published
+
+A weekly run on Alejo's computer collects his new work, marks what can be public,
+has a second agent check it, and commits a new `wiki/data.publish.js` to `main`.

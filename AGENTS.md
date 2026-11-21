@@ -1,13 +1,17 @@
-# Personal Website — alejoacelas.com
+# alejoacelas.com
 
-The `redesign` branch rebuilds the site from scratch; follow [PLAN.md](PLAN.md).
-Production still deploys from `main` until the redesign is merged.
+The site is the page in `wiki/`, and `main` is what is live.
 
-Read [README.md](README.md) for the source layout, local commands and deployment.
-Run `yarn build` and inspect changed UI locally before publishing.
+## Weekly run
 
-- Commit source assets from `public/`; do not commit generated `dist/` output.
-- Do not commit local dependency installs, Playwright captures, local env files, or OS metadata.
+Every Monday at 08:30 a scheduled Claude session on the main Mac collects Alejo's new
+Slack posts, sent documents and calls, decides what can be public, and deploys by
+committing `wiki/data.publish.js` to `main`. Once a month it puts a review page on
+his docket showing what it held back and what went out.
+
+The run's brief, the sharing criteria, the annotation briefs and the private sample
+are in the private desk folder
+`~/best/desk/requested/2026-11/2026-11-21-website-wiki`; start with its `README.md`.
 
 ## Secrets
 
