@@ -48,7 +48,8 @@ export function applyEdits({ item, ann, repo }, rec) {
   for (const { find, with: to } of e.replace || []) {
     if (!find || typeof to !== 'string') throw new Error(`${rec.id}: a replace needs "find" and "with"`);
     let hits = 0;
-    work = mapStrings(work, s => { const parts = s.split(find); hits += parts.length - 1; return parts.join(to); });
+    const swap = s => { const parts = s.split(find); hits += parts.length - 1; return parts.join(to); };
+    work = { item: mapStrings(work.item, swap), ann: mapStrings(work.ann, swap), repo: mapStrings(work.repo, swap) };
     if (!hits) throw new Error(`${rec.id}: text to replace not found: ${JSON.stringify(find.slice(0, 80))}`);
   }
   if (e.drop_from) {
