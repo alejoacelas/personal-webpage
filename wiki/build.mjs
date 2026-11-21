@@ -1,13 +1,16 @@
 // Builds wiki/data.js from the private annotated sample kept in desk.
 // The sample and data.js stay out of this public repository.
-//   node wiki/build.mjs            every work except those marked "no"
+//   node wiki/build.mjs            what would be published: "ok" works and edited "edit" works
+//   node wiki/build.mjs --review   every work except those marked "no", for reviewing the marks
 import { readFile, writeFile, readdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
 import { fileURLToPath } from 'node:url';
 import { marked } from 'marked';
+import { createHash } from 'node:crypto';
 import { layout } from './layout.mjs';
+import { loadShare, markOf, applyEdits, problems, privatePeople } from './share.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const src = process.env.WIKI_DATA || path.join(os.homedir(), 'best/desk/requested/2026-11/2026-11-21-website-wiki');
@@ -112,15 +115,26 @@ const gdocId = u => (u.match(/docs\.google\.com\/document\/d\/([\w-]+)/) || [])[
 const firstWords = (t, n) => { const s = t.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1').replace(/\s+/g, ' ').trim(); return s.length > n ? s.slice(0, n).replace(/\s\S*$/, '') + '…' : s; };
 const works = [];
 let dropped = 0;
-for (const i of items) {
-  const a = annotations.get(i.id) || {};
-  if (a.share === 'no') { dropped++; continue; }
+// ---- Which works are shown, and with which edits (share.mjs). --review keeps the rest for checking the marks.
+const review = process.argv.includes('--review');
+const share = await loadShare(src);
+function shown(raw) {
+  const rec = share.get(raw.id), ann = annotations.get(raw.id) || {}, mark = markOf(annotations.get(raw.id), rec);
+  if (mark === 'no' || (!review && mark !== 'ok' && mark !== 'edit')) { dropped++; return null; }
+  const out = rec?.edits ? applyEdits({ item: raw, ann, repo: github[raw.id] }, rec) : { item: raw, ann, repo: github[raw.id] };
+  const note = mark === 'edit' ? `edited: ${rec.reason}` : mark === 'ask' ? `ask ${rec.ask.who}: ${rec.ask.question}` : mark === 'unreviewed' ? `not re-marked: ${ann.share_reason || ''}` : '';
+  return { ...out, marks: { share: mark === 'ok' || !review ? 'ok' : 'check', shareReason: review ? note : '', ...(mark === 'edit' ? { edited: true } : {}) } };
+}
+for (const raw of items) {
+  const out = shown(raw);
+  if (!out) continue;
+  const { item: i, ann: a, marks } = out;
   const w = {
     id: i.id, kind: KIND[i.kind], sub: i.kind, date: i.date, url: i.url || '',
     title: a.title || i.title || firstWords(i.messages?.[0]?.text || '', 70),
     gloss: a.gloss || '', pull: a.pull || '', patterns: resolvePatterns({ ...a, id: i.id }),
     facets: a.facets || {}, links: (a.links || []).map(l => ({ ...l })), mentions: a.mentions || [],
-    share: a.share || 'check', shareReason: a.share_reason || (a.share ? '' : 'not annotated yet'),
+    ...marks,
   };
   if (i.kind === 'slack') {
     w.slack = {
@@ -133,7 +147,7 @@ for (const i of items) {
     };
     w.text = i.messages.map(m => m.text).join(' ');
   } else if (i.kind === 'repo' || i.kind === 'gist') {
-    const g = github[i.id] || {};
+    const g = out.repo || {};
     w.tool = g.missing || g.private ? { repo: g.repo, unavailable: true, private: !!g.private }
       : g.gist ? { gist: true, description: g.description, files: g.files.map(f => ({ name: f.name, html: /\.md$/i.test(f.name) ? md(f.content) : `<pre>${esc(f.content.slice(0, 8000))}</pre>` })) }
       : { repo: g.repo, description: g.description, language: g.language, stars: g.stars, pushed: g.pushed, homepage: g.homepage, readme: g.readme ? md(g.readme) : '' };
@@ -148,13 +162,14 @@ for (const i of items) {
   if (i.announced_in && !w.links.some(l => l.to === i.announced_in)) w.links.push({ to: i.announced_in, type: 'shared-in', why: '' });
   works.push(w);
 }
-for (const q of quotes) {
-  const a = annotations.get(q.id) || {};
-  if (a.share === 'no') { dropped++; continue; }
+for (const raw of quotes) {
+  const out = shown(raw);
+  if (!out) continue;
+  const { item: q, ann: a, marks } = out;
   works.push({
     id: q.id, kind: 'said', sub: q.call_kind, date: q.date, url: '', title: a.title || firstWords(q.text, 60), gloss: a.gloss || '',
     pull: q.text, patterns: resolvePatterns({ ...a, id: q.id }), facets: a.facets || {}, links: a.links || [], mentions: a.mentions || [],
-    share: a.share || 'check', shareReason: a.share_reason || '', said: { setting: q.setting, about: q.about, text: q.text }, text: q.text,
+    ...marks, said: { setting: q.setting, about: q.about, text: q.text }, text: q.text,
   });
 }
 works.sort((a, b) => a.date < b.date ? 1 : a.date > b.date ? -1 : 0);
@@ -197,7 +212,23 @@ const data = {
   areas, patterns: patterns.filter(p => count.get(p.id)), facets: scheme.facets, mentions, questions, arcs,
   works: works.map(({ text, ...w }) => ({ ...w, search: (w.title + ' ' + w.gloss + ' ' + w.mentions.join(' ') + ' ' + text).toLowerCase().replace(/\s+/g, ' ').slice(0, 4000) })),
 };
-await writeFile(path.join(here, 'data.js'), 'window.DATA = ' + JSON.stringify(data) + ';\n');
+let serialized = JSON.stringify(data);
+if (!review) {
+  // Ids are made from titles and call names, so the published ones are replaced by a hash.
+  const ids = [...items, ...quotes].map(x => x.id).sort((x, y) => y.length - x.length);
+  const hashed = id => 'w' + createHash('sha256').update(id).digest('hex').slice(0, 10);
+  for (const id of ids) serialized = serialized.split(JSON.stringify(id)).join(JSON.stringify(hashed(id)));
+  // Nothing is written if a private name, email address, invite link or file path is left.
+  const people = await privatePeople(src);
+  const found = [];
+  for (const w of data.works) for (const p of problems(w, share.get(w.id), people)) found.push(`${w.id} (${w.title}): ${p}`);
+  const { works: _, map: __, ...rest } = data;
+  for (const p of problems(rest, null, people)) found.push(`patterns, questions or arcs: ${p}`);
+  const leftover = ids.filter(id => /[a-z]{3}/.test(id) && serialized.includes(id));
+  for (const id of leftover) found.push(`id still readable: ${id}`);
+  if (found.length) { console.error(found.join('\n') + `\n${found.length} problems. data.js not written.`); process.exit(1); }
+}
+await writeFile(path.join(here, 'data.js'), 'window.DATA = ' + serialized + ';\n');
 const kinds = {};
 for (const w of works) kinds[w.kind] = (kinds[w.kind] || 0) + 1;
 console.log(`${works.length} works`, kinds, `· ${data.patterns.length} patterns · ${areas.length} areas · ${dropped} left out · ${[...annotations.keys()].length} annotated`);
