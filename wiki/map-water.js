@@ -66,7 +66,7 @@ window.MapView = (() => {
     return out;
   }
   const dayOf = d => `${+d.slice(8, 10)} ${['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][+d.slice(5, 7) - 1]} ${d.slice(0, 4)}`;
-  const source = w => w.kind === 'post' ? '#' + w.slack.channel : w.kind === 'said' ? 'said on a call' : ({ doc: 'Google Doc', sheet: 'Google Sheet', repo: 'repository', gist: 'gist', site: 'live site', file: 'link' })[w.sub] || w.sub;
+  const source = w => w.kind === 'post' ? '#' + w.slack.channel : w.kind === 'said' ? 'call excerpt' : ({ doc: 'Google Doc', sheet: 'Google Sheet', repo: 'repository', gist: 'gist', site: 'live site', file: 'link' })[w.sub] || w.sub;
   const shortDay = d => `${+d.slice(8, 10)} ${['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][+d.slice(5, 7) - 1]} ’${d.slice(2, 4)}`;
 
   // ---- Pigments. Hue follows a pattern's position; patterns near the middle get earthier paint,
@@ -368,9 +368,8 @@ window.MapView = (() => {
   function frame(now) {
     const dt = Math.min(50, now - last || 16); last = now; clock = now;
     if (tween) {
-      const t = Math.min(1, (now - tween.start) / tween.ms), e = t < .5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2;
-      cam.x = tween.from.x + (tween.to.x - tween.from.x) * e; cam.y = tween.from.y + (tween.to.y - tween.from.y) * e;
-      cam.z = Math.exp(Math.log(tween.from.z) + (Math.log(tween.to.z) - Math.log(tween.from.z)) * e);
+      const t = Math.min(1, (now - tween.start) / tween.ms), e = t < .5 ? 2 * t * t : 1 - (-2 * t + 2) ** 2 / 2;
+      Object.assign(cam, t === 1 ? tween.to : tween.path.at(e));
       if (t === 1) tween = null; dirty = true;
     }
     if (zoomGoal) {
@@ -387,11 +386,19 @@ window.MapView = (() => {
     if (dirty) { dirty = false; clampCam(); draw(dt); const close = cam.z > zFit * 1.45; if (close !== wasClose) { wasClose = close; cb.onZoom?.(close); } }
     requestAnimationFrame(frame);
   }
-  function fly(to, ms = 900) {
+  function flight(a, b) {
+    const rho = 1.3, rho2 = rho * rho, wide = Math.max(200, W - inset - insetLeft), w0 = wide / a.z, w1 = wide / b.z, dx = b.x - a.x, dy = b.y - a.y, d = Math.hypot(dx, dy);
+    if (d < 1) { const S = Math.log(w1 / w0) / rho; return { length: Math.abs(S), at: t => ({ x: a.x + dx * t, y: a.y + dy * t, z: wide / (w0 * Math.exp(rho * t * S)) }) }; }
+    const b0 = (w1 * w1 - w0 * w0 + rho2 * rho2 * d * d) / (2 * w0 * rho2 * d), b1 = (w1 * w1 - w0 * w0 - rho2 * rho2 * d * d) / (2 * w1 * rho2 * d);
+    const r0 = Math.log(Math.sqrt(b0 * b0 + 1) - b0), r1 = Math.log(Math.sqrt(b1 * b1 + 1) - b1), S = (r1 - r0) / rho;
+    return { length: S, at: t => { const s = t * S, u = w0 / (rho2 * d) * (Math.cosh(r0) * Math.tanh(rho * s + r0) - Math.sinh(r0)); return { x: a.x + u * dx, y: a.y + u * dy, z: wide / (w0 * Math.cosh(r0) / Math.cosh(rho * s + r0)) }; } };
+  }
+  function fly(to, ms) {
     zoomGoal = null; velocity = null;
     to = { x: to.x ?? cam.x, y: to.y ?? cam.y, z: Math.max(zMin, Math.min(Z_MAX, to.z ?? cam.z)) };
     if (still || ms === 0) { Object.assign(cam, to); tween = null; dirty = true; return; }
-    tween = { from: { ...cam }, to, start: performance.now(), ms };
+    const path = flight({ ...cam }, to);
+    tween = { path, to, start: performance.now(), ms: ms ?? Math.max(420, Math.min(1700, path.length * 640)) };
   }
   function fit(ids, { maxZoom = 1.5, ms } = {}) {
     const list = ids.map(i => at.get(i)).filter(Boolean); if (!list.length) return;
@@ -499,13 +506,14 @@ window.MapView = (() => {
     },
     setWorks,
     setFilter(fn) { filter = fn; dirty = true; },
-    setInset(right, left = 0) { if (right !== inset || left !== insetLeft) { const shift = ((right - inset) - (left - insetLeft)) / 2 / cam.z; inset = right; insetLeft = left; cam.x += shift; zFit = homeView().z; zMin = zFit * .72; dirty = true; if (atHome && !right) home(tween ? 1200 : 500); } },
+    setInset(right, left = 0) { if (right !== inset || left !== insetLeft) { const shift = ((left - insetLeft) - (right - inset)) / 2 / cam.z; inset = right; insetLeft = left; cam.x += shift; zFit = homeView().z; zMin = zFit * .72; dirty = true; if (atHome && !right) home(tween ? 1200 : 500); } },
     select({ works: ids = [], pattern = null, related = [], fly: move = true }) {
       sel = { works: new Set(ids), pattern, related: new Set(related) }; dirty = true; if (ids.length) atHome = false;
       if (!move || !ids.length) return;
-      if (ids.length === 1) { const w = at.get(ids[0]); if (w) fly({ x: w.x, y: w.y, z: Math.max(cam.z, Z_CARD + .3) }, 1000); }
+      if (ids.length === 1) { const w = at.get(ids[0]); if (w) fly({ x: w.x, y: w.y, z: Math.max(cam.z, Z_CARD + .3) }); }
       else fit(ids, { maxZoom: pattern ? 1.9 : 1.3 });
     },
+    focusWorks(ids) { if (!ids) focusPatterns = null; else { focusPatterns = new Set(ids); focusPatterns.pattern = new Set(); } dirty = true; },
     focusPatterns(ids) { if (!ids) focusPatterns = null; else { focusPatterns = new Set(ids.flatMap(p => [...(byPattern.get(p) || [])])); focusPatterns.pattern = new Set(ids); } dirty = true; },
     fit, home, zoomAt,
     pan(dx, dy) { atHome = false; fly({ x: cam.x + dx / cam.z, y: cam.y + dy / cam.z }, 260); },

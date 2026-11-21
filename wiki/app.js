@@ -7,8 +7,8 @@ const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': 
 const enc = encodeURIComponent;
 
 const KINDS = {
-  post: ['Slack post', 'Slack posts'], doc: ['doc', 'docs'], tool: ['tool', 'tools'],
-  site: ['site', 'sites'], said: ['thing I said on a call', 'things I said on calls'], other: ['other link', 'other links'],
+  post: ['Slack post', 'Slack posts'], doc: ['doc', 'docs'], tool: ['repo', 'repos'],
+  site: ['site', 'sites'], said: ['call excerpt', 'call excerpts'], other: ['other link', 'other links'],
 };
 const SUB = {
   slack: 'Slack post', doc: 'Google Doc', sheet: 'Google Sheet', repo: 'Repository', gist: 'Gist', site: 'Live site', file: 'Link',
@@ -23,7 +23,6 @@ const plural = (n, kind) => `${n} ${KINDS[kind][n === 1 ? 0 : 1]}`;
 let publicOnly = false;
 let works, W, P, A, patternWorks, lensCache;
 let query = '';
-const kindsOff = new Set();
 let ctxKey = null;                  // the list the reader is stepping through
 const ctxStore = new Map();
 const trail = [];
@@ -41,6 +40,9 @@ const pWorks = id => patternWorks.get(id) || [];
 
 // ---- Other ways to slice the collection: each is a set of named lists of works.
 const LENSES = [
+  { id: 'kind', label: 'By kind', rows() {
+    return Object.keys(KINDS).map(k => ({ key: k, label: KINDS[k][1].replace(/^./, c => c.toUpperCase()), items: works.filter(w => w.kind === k) })).filter(r => r.items.length);
+  } },
   { id: 'time', label: 'By month', rows() {
     const months = new Map();
     for (const w of works) (months.get(w.date.slice(0, 7)) || months.set(w.date.slice(0, 7), []).get(w.date.slice(0, 7))).push(w);
@@ -99,7 +101,7 @@ function renderPlate() {
     <div class="plate-body">
       <p class="lede">I help high-impact organisations use AI so their existing work goes better.</p>
       <p class="how">This is a map of what I've shared along the way. Works that share an idea sit close together, their colours run into each other, and the paint is deepest where there is most. Zoom in to read, and click anything to open it.</p>
-      <p class="legend">${kindCounts(works).map(([k, n]) => `<button class="legend-item${kindsOff.has(k) ? ' off' : ''}" data-kind="${k}" aria-pressed="${!kindsOff.has(k)}" title="Show or hide ${KINDS[k][1]}">${glyph(k)}${plural(n, k)}</button>`).join('')}</p>
+      <p class="legend">${kindCounts(works).map(([k, n]) => `<a class="legend-item" href="#/c/kind/${k}" data-kind="${k}">${glyph(k)}${plural(n, k)}</a>`).join('')}</p>
       <p class="doors">${D.questions?.length ? '<a href="#/ask">Start from a question</a>' : ''}<a href="#/index">Read it as a list</a><button id="wander" title="Fly to a work at random (R)">Surprise me</button></p>
     </div>`;
 }
@@ -123,6 +125,8 @@ function hidePop() { clearTimeout(popTimer); pop.hidden = true; }
 document.addEventListener('mouseover', e => {
   const many = e.target.closest?.('[data-ps]');
   if (many) { MapView.focusPatterns(many.dataset.ps.split(' ')); return; }
+  const kind = e.target.closest?.('[data-kind]');
+  if (kind) { MapView.focusWorks?.(works.filter(w => w.kind === kind.dataset.kind).map(w => w.id)); return; }
   const el = e.target.closest?.('a[data-w],a[data-p]');
   if (!el || el.closest('#pop')) return;
   if (el.dataset.p) MapView.focusPatterns([el.dataset.p]);
@@ -131,7 +135,7 @@ document.addEventListener('mouseover', e => {
   popTimer = setTimeout(() => { const r = el.getBoundingClientRect(); showPop(popHtml({ w: el.dataset.w, p: el.dataset.p }), r.left + r.width / 2, r.bottom, true); }, 280);
 });
 document.addEventListener('mouseout', e => {
-  const el = e.target.closest?.('a[data-w],a[data-p],[data-ps]');
+  const el = e.target.closest?.('a[data-w],a[data-p],[data-ps],[data-kind]');
   if (!el || el.contains(e.relatedTarget)) return;
   hidePop(); MapView.focusPatterns(null);
 });
@@ -264,7 +268,10 @@ function viewer(w) {
     return `<figure class="v-site"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="url">${esc(w.url.replace(/^https?:\/\//, ''))}</span><a href="${esc(w.url)}" target="_blank" rel="noopener">Open ↗</a></figcaption><iframe src="${esc(w.url)}" loading="lazy" title="${esc(w.title)}" referrerpolicy="no-referrer" sandbox="allow-scripts allow-same-origin allow-forms"></iframe></figure>`;
   }
   if (w.kind === 'said') {
-    return `<figure class="v-said"><span class="wave" aria-hidden="true">${Array.from({ length: 34 }, (_, i) => `<i style="height:${4 + Math.round(13 * Math.abs(Math.sin(i * 1.7 + w.id.length)))}px"></i>`).join('')}</span><blockquote>${esc(w.said.text)}</blockquote><figcaption>${esc(w.said.setting)} · ${day(w.date)}</figcaption></figure>`;
+    const ex = w.said.excerpt, start = w.said.text.slice(0, 48);
+    const mine = text => text.includes(w.said.text) ? esc(text).replace(esc(w.said.text), `<mark>${esc(w.said.text)}</mark>`) : text.includes(start) ? `<mark>${esc(text)}</mark>` : esc(text);
+    const around = ex ? `<section class="around"><h2>Around it in the call</h2><div class="excerpt">${ex.turns.map(t => t.me ? `<p class="t-me"><b>Alejo</b>${mine(t.me)}</p>` : `<p class="t-other"><b>${esc(ex.other)}</b>${esc(t.other)}</p>`).join('')}</div><p class="excerpt-note">My words are as I said them, with cuts marked. What the other person said is summarised and never quoted.</p></section>` : '';
+    return `<figure class="v-said"><span class="wave" aria-hidden="true">${Array.from({ length: 34 }, (_, i) => `<i style="height:${4 + Math.round(13 * Math.abs(Math.sin(i * 1.7 + w.id.length)))}px"></i>`).join('')}</span><blockquote>${esc(w.said.text)}</blockquote><figcaption>${esc(w.said.setting)} · ${day(w.date)}</figcaption></figure>${around}`;
   }
   return `<figure class="v-link"><p>${esc(w.gloss)}</p>${w.url ? `<a href="${esc(w.url)}" target="_blank" rel="noopener">${esc(w.url.replace(/^https?:\/\//, '').slice(0, 70))} ↗</a>` : ''}</figure>`;
 }
@@ -305,7 +312,11 @@ const missing = () => ({ title: 'Not found', select: none, html: head('', 'Nothi
 function route() {
   const [, kind, a, b] = decodeURI(location.hash.replace(/^#/, '')).split('/');
   hidePop(); MapView.focusPatterns(null);
+  const moved = D.redirects?.[`${kind}/${a}`];
+  if (moved) { history.replaceState(null, '', '#/' + moved); return route(); }
   let page = null;
+  if (D.gone?.[`${kind}/${a}`]) page = { title: 'Taken down', select: none, html: head('', 'This was here and has been taken down', '<p class="summary">The link is right, but the work it pointed to is no longer on the site. <a href="#/index">Everything that is here, as a list.</a></p>') };
+  else
   if (kind === 'p') page = patternPage(a);
   else if (kind === 'a') page = areaPage(a);
   else if (kind === 'w') page = workPage(a);
@@ -335,13 +346,11 @@ addEventListener('hashchange', route);
 addEventListener('resize', () => document.body.classList.contains('reading') ? MapView.setInset(innerWidth > 860 ? readerEl.offsetWidth : 0) : MapView.setInset(0, plateRoom()));
 
 // ---- Events
-const applyFilter = () => MapView.setFilter(kindsOff.size || query ? w => !kindsOff.has(w.kind) && matches(w) : null);
+const applyFilter = () => MapView.setFilter(query ? matches : null);
 document.addEventListener('click', e => {
   const t = e.target;
   const link = t.closest('a[data-w]');
   if (link) { const holder = link.closest('[data-ctx]'); ctxKey = holder ? holder.dataset.ctx : null; }
-  const legend = t.closest('[data-kind]');
-  if (legend) { const k = legend.dataset.kind; kindsOff.has(k) ? kindsOff.delete(k) : kindsOff.add(k); legend.classList.toggle('off'); legend.setAttribute('aria-pressed', !kindsOff.has(k)); applyFilter(); return; }
   if (t.closest('[data-more]')) { t.closest('.clamp').classList.remove('clamp'); return; }
   const view = t.closest('[data-docview]');
   if (view) {
