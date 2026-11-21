@@ -22,6 +22,20 @@ function toText(html, shift = 2) {
     .replace(/[ \t]+\n/g, '\n').replace(/\n{3,}/g, '\n\n').trim();
 }
 
+// A readable address for each work's text, made from its title. Some assistants' page readers refuse
+// addresses that look like random ids, so these are the ones the text files give out; the same text
+// is also served under the work's id, which never changes.
+export function workSlugs(works) {
+  const out = new Map(), used = new Set();
+  for (const w of [...works].sort((a, b) => a.id.localeCompare(b.id))) {
+    const plain = w.title.toLowerCase().normalize('NFKD').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 60).replace(/-+$/, '') || w.id;
+    let slug = plain;
+    for (let n = 2; used.has(slug); n++) slug = `${plain}-${n}`;
+    used.add(slug); out.set(w.id, slug);
+  }
+  return out;
+}
+
 // The whole published text of one work, as plain text.
 export function bodyText(w) {
   if (w.kind === 'post') return [w.slack.replyingTo ? `(Replying in a thread. ${w.slack.replyingTo})` : '', ...w.slack.messages.map(m => toText(m.html)), w.slack.startsThread && w.slack.replies ? `(${w.slack.replies} ${w.slack.replies === 1 ? 'reply' : 'replies'} in the thread, not shown.)` : ''].filter(Boolean).join('\n\n');
@@ -36,11 +50,12 @@ export function textFiles(D, base = 'https://alejoacelas.com') {
   const works = [...D.works].sort((a, b) => b.date.localeCompare(a.date));
   const inTopic = id => works.filter(w => w.patterns.some(p => p[0] === id));
   const where = w => w.kind === 'post' ? `Slack post in ${w.slack.channel === 'private-channel' ? 'a private channel' : '#' + w.slack.channel}` : w.kind === 'said' ? 'Said on a call' : ({ doc: 'Google Doc', sheet: 'Google Sheet', repo: 'GitHub repository', gist: 'GitHub gist', site: 'Live site', file: 'Link' })[w.sub] || KIND[w.kind];
-  const line = w => `- ${w.date.slice(0, w.kind === 'said' ? 7 : 10)} | ${KIND[w.kind]} | ${w.title} | ${w.gloss} | ${base}/works/${w.id}.txt`;
+  const slugs = workSlugs(D.works), address = w => `${base}/works/${slugs.get(w.id)}.txt`;
+  const line = w => `- ${w.date.slice(0, w.kind === 'said' ? 7 : 10)} | ${KIND[w.kind]} | ${w.title} | ${w.gloss} | ${address(w)}`;
 
   const work = (w, level = '#') => [
     `${level} ${w.title}`,
-    [`${where(w)} · ${when(w)}`, w.patterns.length ? `Topics: ${w.patterns.map(p => P.get(p[0])?.label).filter(Boolean).join('; ')}` : '', w.url ? `Source: ${w.url}` : '', `On the map: ${base}/#/w/${w.id}`, `As text: ${base}/works/${w.id}.txt`].filter(Boolean).join('\n'),
+    [`${where(w)} · ${when(w)}`, w.patterns.length ? `Topics: ${w.patterns.map(p => P.get(p[0])?.label).filter(Boolean).join('; ')}` : '', w.url ? `Source: ${w.url}` : '', `On the map: ${base}/#/w/${w.id}`, `As text: ${address(w)}`].filter(Boolean).join('\n'),
     w.gloss ? `Summary: ${w.gloss}` : '',
     bodyText(w),
   ].filter(Boolean).join('\n\n');
@@ -61,7 +76,7 @@ The page at ${base}/ is an interactive map that needs JavaScript. Everything on 
 - [Index of every work](${base}/works.txt): one line per work (date, kind, title, one-line summary, address of its text file). Read this to find what is relevant, then open the works you need.
 - Topic files (below): a topic's summary followed by every work in it, in full.
 - Search: \`GET ${base}/api/search?q=your+words\` returns the best-matching works as plain text. Add \`&n=20\` for more results.
-- One work: \`${base}/works/<id>.txt\`, with ids as given in the index.
+- One work: its address is given in the index and in every topic file. The same text is also at \`${base}/works/<id>.txt\`, using the id from the work's map address, and that form never changes.
 
 ## Topics
 
@@ -82,7 +97,7 @@ alejoacelas@gmail.com · https://calendly.com/alejoacelas/30m
     const list = inTopic(p.id), related = (p.related || []).filter(r => P.has(r.id));
     files.set(`topics/${p.id}.txt`, `# ${p.label}\n\nA topic on alejoacelas.com (${D.areas.find(a => a.id === p.area)?.label}). ${list.length} works. On the map: ${base}/#/p/${p.id}\n\n${p.summary}\n${related.length ? `\nRelated topics:\n${related.map(r => `- [${P.get(r.id).label}](${base}/topics/${r.id}.txt): ${r.why}`).join('\n')}\n` : ''}\nThe works in this topic, newest first (date | kind | title | summary | address of the full text). Each is given in full further down; if this file is cut short, open the ones you need by address.\n\n${list.map(line).join('\n')}\n\n---\n\n${list.map(w => work(w, '##')).join('\n\n---\n\n')}\n`);
   }
-  for (const w of works) files.set(`works/${w.id}.txt`, work(w) + '\n');
+  for (const w of works) { files.set(`works/${slugs.get(w.id)}.txt`, work(w) + '\n'); files.set(`works/${w.id}.txt`, work(w) + '\n'); }
   files.set('llms-full.txt', `# Alejo Acelas: everything on alejoacelas.com as text\n\n${intro}\n\nIndex and topic files: ${base}/llms.txt\n\n---\n\n${works.map(w => work(w, '##')).join('\n\n---\n\n')}\n`);
 
   // Ordinary HTML for the home page, out of sight of someone using the map but there for anything that reads the markup.
@@ -94,7 +109,7 @@ alejoacelas@gmail.com · https://calendly.com/alejoacelas/30m
 <ul>${D.patterns.map(p => `<li><a href="${base}/topics/${p.id}.txt">${esc(p.label)}</a>: ${esc(p.summary.split(/(?<=\.)\s/)[0])}</li>`).join('')}</ul>
 <h2>Every work</h2>
 <p>Each link is the work's full text. Summaries are in the index at ${base}/works.txt.</p>
-<ul>${works.map(w => `<li><a href="${base}/works/${w.id}.txt">${esc(w.title)}</a> (${KIND[w.kind]}, ${when(w)})</li>`).join('')}</ul>
+<ul>${works.map(w => `<li><a href="${address(w)}">${esc(w.title)}</a> (${KIND[w.kind]}, ${when(w)})</li>`).join('')}</ul>
 <p>Contact: <a href="mailto:alejoacelas@gmail.com">alejoacelas@gmail.com</a>, <a href="https://calendly.com/alejoacelas/30m">calendly.com/alejoacelas/30m</a></p>
 </div>`;
   return { files, html };
