@@ -1,0 +1,7 @@
+{
+  "name": "alejoacelas-com",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/build.mjs"
+  }
+}

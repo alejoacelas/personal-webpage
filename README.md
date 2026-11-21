@@ -1,11 +1,7 @@
 # alejoacelas.com
 
-Canonical source for [alejoacelas.com](https://alejoacelas.com).
+Alejo Acelas’s personal site. The page is static HTML so visitors can read it without JavaScript.
 
-This branch, `redesign`, rebuilds the site from scratch and has no code yet; see
-[PLAN.md](PLAN.md). The live site deploys from `main` through Vercel project
-`alejoacelas-com` (organization `alejandros-projects-a115cc74`).
+Run `yarn build` and serve `dist/` locally with `python3 -m http.server --directory dist`. Vercel builds the production site from `main`.
 
-`references/` collects sites Alejo likes for the redesign. Run `npm install && npm start`
-inside it and open http://localhost:4321: arrows move around the grid, `v` steps down the page and on to the site's other pages,
-`f` marks a favourite, and a Claude loop keeps adding and screenshotting similar sites.
+The Google Docs links are a reviewed snapshot. The Slack feed contains selected top-level posts from Alejo in the AI Uplift for EA community.
