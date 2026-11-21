@@ -9,7 +9,7 @@ import os from 'node:os';
 import { fileURLToPath } from 'node:url';
 
 const MARKS = new Set(['ok', 'edit', 'ask', 'no']);
-const EDIT_KEYS = new Set(['replace', 'drop_messages', 'drop_from', 'drop_link', 'keep_link', 'title', 'gloss', 'pull', 'replying_to']);
+const EDIT_KEYS = new Set(['replace', 'drop_messages', 'drop_from', 'drop_link', 'keep_link', 'drop_excerpt', 'title', 'gloss', 'pull', 'replying_to']);
 const ANN_TEXT = ['title', 'gloss', 'pull', 'replying_to'];
 
 // Later files win, so corrections go in a file that sorts last.
@@ -36,10 +36,10 @@ const allStrings = (v, out = []) => { if (typeof v === 'string') out.push(v); el
 const nameRe = n => new RegExp(`(?<![\\p{L}\\p{N}])${n.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?![\\p{L}\\p{N}])`, 'u');
 
 // Returns edited copies of the raw work, its annotation and its fetched repository. Throws when an edit can't be applied.
-export function applyEdits({ item, ann, repo }, rec) {
+export function applyEdits({ item, ann, repo, excerpt }, rec) {
   const e = rec.edits || {};
   for (const k of Object.keys(e)) if (!EDIT_KEYS.has(k)) throw new Error(`${rec.id}: unknown edit "${k}"`);
-  let work = structuredClone({ item, ann: ann || {}, repo: repo || null });
+  let work = structuredClone({ item, ann: ann || {}, repo: repo || null, excerpt: e.drop_excerpt ? null : excerpt || null });
   if (e.drop_messages?.length) {
     const n = work.item.messages?.length || 0;
     for (const i of e.drop_messages) if (!(i >= 0 && i < n)) throw new Error(`${rec.id}: no message ${i} to drop`);
@@ -49,7 +49,7 @@ export function applyEdits({ item, ann, repo }, rec) {
     if (!find || typeof to !== 'string') throw new Error(`${rec.id}: a replace needs "find" and "with"`);
     let hits = 0;
     const swap = s => { const parts = s.split(find); hits += parts.length - 1; return parts.join(to); };
-    work = { item: mapStrings(work.item, swap), ann: mapStrings(work.ann, swap), repo: mapStrings(work.repo, swap) };
+    work = { item: mapStrings(work.item, swap), ann: mapStrings(work.ann, swap), repo: mapStrings(work.repo, swap), excerpt: mapStrings(work.excerpt, swap) };
     if (!hits) throw new Error(`${rec.id}: text to replace not found: ${JSON.stringify(find.slice(0, 80))}`);
   }
   if (e.drop_from) {
@@ -62,7 +62,12 @@ export function applyEdits({ item, ann, repo }, rec) {
   }
   for (const k of ANN_TEXT) if (typeof e[k] === 'string') work.ann[k] = e[k];
   const names = rec.names || [];
-  if (work.ann.mentions) work.ann.mentions = work.ann.mentions.filter(m => !names.some(n => nameRe(n).test(m)));
+  if (work.ann.mentions) {
+    // A tag stays only while the edited text still says it; otherwise it would undo the edit.
+    const said = allStrings([work.item.title, work.item.messages?.map(m => m.text), work.item.body, work.item.text, work.repo?.readme, work.repo?.description]).join(' ').toLowerCase();
+    const edited = Object.keys(e).length > 0;
+    work.ann.mentions = work.ann.mentions.filter(m => !names.some(n => nameRe(n).test(m)) && (!edited || said.includes(m.toLowerCase())));
+  }
   // An edited document never links to its unedited original, unless the edits removed only Alejo's own details (keep_link).
   const bodyEdited = e.replace?.length || e.drop_from || e.drop_messages?.length;
   if (e.drop_link || (bodyEdited && !e.keep_link && ['doc', 'sheet', 'file'].includes(work.item.kind))) { work.item.url = ''; work.unlinked = true; }
@@ -115,6 +120,8 @@ if (process.argv[1] === fileURLToPath(import.meta.url) && process.argv[2] === 'c
     for (const r of await read(`${dir}/${f}`)) if (dir === 'quotes') items.set(r.id, { ...r, kind: 'said' }); else anns.set(r.id, r);
   }
   const github = existsSync(path.join(src, 'corpus/github.json')) ? await read('corpus/github.json') : {};
+  const excerpts = new Map();
+  for (const f of (await readdir(path.join(src, 'quotes'))).filter(f => f.startsWith('excerpts-') && f.endsWith('.json'))) for (const x of await read(`quotes/${f}`)) if (x.turns?.length) excerpts.set(x.id, x);
   const people = await privatePeople(src);
   let bad = 0, n = 0;
   const tally = {};
@@ -136,9 +143,10 @@ if (process.argv[1] === fileURLToPath(import.meta.url) && process.argv[2] === 'c
       if (rec.share === 'ok' && Object.keys(rec.edits || {}).length) fail('a work with edits is "edit", not "ok"');
       if (rec.share === 'no') continue;
       try {
-        const out = applyEdits({ item, ann: anns.get(rec.id), repo: github[rec.id] }, rec);
-        const shown = { item: { ...out.item, path: '', id: '', channel: '', workspace: '', context: '', attachments: '', messages: (out.item.messages || []).map(m => m.text) }, ann: { ...out.ann, id: '', share_reason: '', links: (out.ann.links || []).map(l => l.why) }, repo: out.repo };
-        for (const p of problems(shown, rec, people)) fail(`still shows ${p}`);
+        const x = excerpts.get(rec.id);
+        const out = applyEdits({ item, ann: anns.get(rec.id), repo: github[rec.id], excerpt: x && { other: x.other, turns: x.turns.map(t => t.who === 'alejo' ? { me: t.text } : { other: t.summary }) } }, rec);
+        const shown = { item: { ...out.item, path: '', id: '', channel: '', workspace: '', context: '', attachments: '', messages: (out.item.messages || []).map(m => m.text) }, ann: { ...out.ann, id: '', share_reason: '', links: (out.ann.links || []).map(l => l.why) }, repo: out.repo, excerpt: out.excerpt };
+        for (const p of problems(shown, { ...rec, names: [...(rec.names || []), ...(x?.names || []).filter(n => !/^(Ambitious Impact|80,000 Hours|80K|AIM|Impact Ops)$/i.test(n))] }, people)) fail(`still shows ${p}`);
       } catch (err) { fail(err.message.replace(`${rec.id}: `, '')); }
     }
   }

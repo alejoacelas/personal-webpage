@@ -128,7 +128,7 @@ const openChannels = new Set(existsSync(path.join(src, 'share/channels.txt')) ? 
 function shown(raw) {
   const rec = share.get(raw.id), ann = annotations.get(raw.id) || {}, mark = markOf(annotations.get(raw.id), rec);
   if (mark === 'no' || (!review && mark !== 'ok' && mark !== 'edit')) { dropped++; return null; }
-  const out = rec?.edits ? applyEdits({ item: raw, ann, repo: github[raw.id] }, rec) : { item: raw, ann, repo: github[raw.id] };
+  const out = rec?.edits ? applyEdits({ item: raw, ann, repo: github[raw.id], excerpt: excerpts.get(raw.id) }, rec) : { item: raw, ann, repo: github[raw.id], excerpt: excerpts.get(raw.id) };
   const note = mark === 'edit' ? `edited: ${rec.reason}` : mark === 'ask' ? `ask ${rec.ask.who}: ${rec.ask.question}` : mark === 'unreviewed' ? `not re-marked: ${ann.share_reason || ''}` : '';
   return { ...out, marks: { share: mark === 'ok' || !review ? 'ok' : 'check', shareReason: review ? note : '', ...(mark === 'edit' ? { edited: true } : {}) } };
 }
@@ -177,7 +177,7 @@ for (const raw of quotes) {
   works.push({
     id: q.id, kind: 'said', sub: q.call_kind, date: q.date, url: '', title: a.title || firstWords(q.text, 60), gloss: a.gloss || '',
     pull: q.text, patterns: resolvePatterns({ ...a, id: q.id }), facets: a.facets || {}, links: a.links || [], mentions: a.mentions || [],
-    ...marks, said: { setting: q.setting, about: q.about, text: q.text, ...(excerpts.has(q.id) ? { excerpt: excerpts.get(q.id) } : {}) }, text: q.text,
+    ...marks, said: { setting: q.setting, about: q.about, text: q.text, ...(out.excerpt ? { excerpt: out.excerpt } : {}) }, text: q.text,
   });
 }
 works.sort((a, b) => a.date < b.date ? 1 : a.date > b.date ? -1 : 0);
