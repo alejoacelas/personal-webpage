@@ -294,6 +294,7 @@ figure { margin: 22px 0 0; }
 .index-area h2 a { text-decoration: none; }
 .index-area .plink::before { content: none; }
 .tags a span { color: var(--faint); font: 11px var(--mono); margin-left: 3px; }
+.edited { margin: 10px 0 0; font: 12px var(--mono); color: var(--mute); }
 .review label { display: inline-flex; gap: 8px; align-items: center; }
 
 /* ---- Small screens: the reader covers the map */

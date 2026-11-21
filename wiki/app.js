@@ -204,7 +204,7 @@ function indexPage() {
     }).join('') +
     (D.arcs?.length ? `<section><h2>How one thing led to the next</h2><ul class="related">${D.arcs.map(a => `<li><a class="plink" href="#/arc/${a.id}">${esc(a.label)}</a><span class="why">${esc(a.blurb)}</span><span class="n">${a.steps.length} steps</span></li>`).join('')}</ul></section>` : '') +
     LENSES.map(l => `<section><h2>${esc(l.label)}</h2><p class="tags">${rowsOf(l.id).map(r => `<a href="#/c/${l.id}/${enc(r.key)}">${esc(r.label)} <span>${r.items.length}</span></a>`).join('')}</p></section>`).join('') +
-    `<p class="review"><label><input type="checkbox" id="public" ${publicOnly ? 'checked' : ''}> Show only works an agent marked safe to publish (${D.works.filter(w => w.share === 'ok').length} of ${D.works.length})</label><br>Prototype built ${day(D.built)} from a sample. Names, summaries and groupings were drafted by agents and wait for review.</p>` };
+    `<p class="review">${D.works.some(w => w.share !== 'ok') ? `<label><input type="checkbox" id="public" ${publicOnly ? 'checked' : ''}> Show only works marked safe to publish (${D.works.filter(w => w.share === 'ok').length} of ${D.works.length})</label><br>` : ''}Prototype built ${day(D.built)} from a sample. Names, summaries and groupings were drafted by agents and wait for review.</p>` };
 }
 
 function collectionPage(lensName, key) {
@@ -291,6 +291,7 @@ function workPage(id) {
   return { title: w.title, select: { works: [id], related: w.patterns.map(p => p[0]) },
     html: `<header class="page-head work-head"><p class="kicker">${glyph(w.kind)}${esc(SUB[w.sub] || w.sub)} · ${day(w.date)}${step}</p><h1>${esc(w.title)}</h1>${w.gloss ? `<p class="summary">${esc(w.gloss)}</p>` : ''}</header>` +
     viewer(w) +
+    (w.edited ? '<p class="edited">Edited to remove other people’s details.</p>' : '') +
     (w.patterns.length ? `<section><h2>Part of</h2><ul class="related partof">${w.patterns.map(([p, s]) => `<li class="s${s}">${pLink(p)}<span class="n">${pWorks(p).length} works</span></li>`).join('')}</ul></section>` : '') +
     (links.length ? `<section><h2>Linked</h2><div class="rows" data-ctx="${esc(k1)}">${links.map(([o, l]) => row(o, l.label)).join('')}</div></section>` : '') +
     (near.length ? `<section><h2>Nearby</h2>${workList(near, k2)}</section>` : '') +
