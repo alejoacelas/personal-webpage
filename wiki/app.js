@@ -35,6 +35,7 @@ function index() {
   patternWorks = new Map(D.patterns.map(p => [p.id, []]));
   for (const w of works) for (const [p, s] of w.patterns) patternWorks.get(p)?.push([w, s]);
   lensCache = {};
+  engine = null;
 }
 const pWorks = id => patternWorks.get(id) || [];
 
@@ -65,48 +66,12 @@ const LENSES = [
 const lens = id => LENSES.find(l => l.id === id);
 const rowsOf = id => lensCache[id] || (lensCache[id] = lens(id)?.rows() || []);
 
-// ---- Search. Every work is scored by how well the visitor's words match its title, the questions
-//      it answers, its topics and its text; rarer words count for more. Nothing leaves the browser.
-const STOP = new Set('a an and are as at be been by can do does did for from has have he him his how i if in is it its me my of on or our should so some that the their them there they this to was we were what when where which who why will with would you your about alejo acelas'.split(' '));
-const stem = t => t.length > 3 ? t.replace(/(ies|ing|ers|ed|es|er|s)$/, '').replace(/e$/, '') : t;
-const terms = text => (String(text).toLowerCase().match(/[a-z0-9]+/g) || []).filter(t => !STOP.has(t)).map(stem);
+// ---- Search (wiki/search.js): ranked word matching in the browser. Nothing leaves it.
+const terms = Search.terms;
 let engine = null;
-function buildEngine() {
-  const docs = [], seen = new Map();
-  const add = (kind, item, fields) => {
-    const tf = new Map();
-    for (const [text, weight] of fields) for (const t of terms(text)) tf.set(t, Math.min(6, (tf.get(t) || 0) + weight));
-    for (const t of tf.keys()) seen.set(t, (seen.get(t) || 0) + 1);
-    docs.push({ kind, item, tf });
-  };
-  for (const w of works) add('work', w, [[w.title, 3], [(w.asks || []).join(' '), 2.5], [(w.words || []).join(' '), 2.5], [w.mentions.join(' '), 2], [w.patterns.map(p => P.get(p[0])?.label || '').join(' '), 1.5], [w.gloss, 1.5], [w.pull, 1], [w.search, .5]]);
-  for (const p of D.patterns) if (pWorks(p.id).length) add('topic', p, [[p.label, 3], [p.summary, 1.2]]);
-  const idf = new Map([...seen].map(([t, n]) => [t, Math.log(1 + docs.length / n)]));
-  engine = { docs, idf, vocab: [...seen.keys()] };
-}
 function search(text) {
-  if (!engine) buildEngine();
-  const q = terms(text); if (!q.length) return { works: [], topics: [] };
-  // While someone is still typing, the last word also matches words that start with it.
-  const open = /[a-z0-9]$/i.test(text) ? q.at(-1) : null;
-  const starts = open && open.length >= 2 ? engine.vocab.filter(t => t !== open && t.startsWith(open)).slice(0, 40) : [];
-  const out = { works: [], topics: [] };
-  for (const d of engine.docs) {
-    let score = 0, hit = 0;
-    for (const t of q) {
-      let f = d.tf.get(t) || 0, weight = engine.idf.get(t) || 0;
-      if (!f && t === open) for (const s of starts) if (d.tf.has(s)) { f = d.tf.get(s) * .7; weight = engine.idf.get(s); break; }
-      if (f) { hit++; score += weight * f / (f + 1.2); }
-    }
-    if (!hit) continue;
-    score *= (hit / q.length) ** 1.6;                        // matching most of the question beats matching one word well
-    (d.kind === 'work' ? out.works : out.topics).push({ score, [d.kind === 'work' ? 'w' : 'p']: d.item });
-  }
-  out.works.sort((a, b) => b.score - a.score); out.topics.sort((a, b) => b.score - a.score);
-  const best = out.works[0]?.score || 0;
-  out.works = out.works.filter(x => x.score > best * .22);
-  out.topics = out.topics.filter(x => x.score > (out.topics[0]?.score || 0) * .45).map(x => x.p);
-  return out;
+  if (!engine) engine = Search.build(works, D.patterns.filter(p => pWorks(p.id).length), id => P.get(id)?.label);
+  return engine(text);
 }
 
 // ---- Small pieces

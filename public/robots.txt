@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
 
+# The site as plain text, for AI assistants: https://alejoacelas.com/llms.txt
 Sitemap: https://alejoacelas.com/sitemap.xml

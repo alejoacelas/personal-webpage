@@ -1,7 +1,9 @@
 // Builds the site Vercel serves from `main`: the wiki page, the files it loads, and the published data.
 // It needs no installed packages. `wiki/data.publish.js` is written only by `node wiki/build.mjs --release`,
 // after every sharing check has passed, so nothing unchecked can reach `dist/`.
-import { cp, mkdir, readFile, rm, access } from 'node:fs/promises';
+import { cp, mkdir, readFile, writeFile, rm, access } from 'node:fs/promises';
+import path from 'node:path';
+import { textFiles } from '../wiki/text.mjs';
 
 const page = await readFile('wiki/index.html', 'utf8');
 // Every local file the page names: scripts and stylesheets beside it. `data.js` is the published data.
@@ -15,4 +17,10 @@ await mkdir('dist', { recursive: true });
 await cp('public', 'dist', { recursive: true });          // favicon, robots.txt, sitemap.xml
 await cp('wiki/index.html', 'dist/index.html');
 for (const f of local) await cp(f === 'data.js' ? data : `wiki/${f}`, `dist/${f}`);
-console.log(`dist/: index.html, ${local.join(', ')} and public/`);
+
+// The same works as plain text, for AI assistants and anything else that cannot run the map (wiki/text.mjs).
+const published = JSON.parse((await readFile(data, 'utf8')).replace(/^window\.DATA = /, '').replace(/;\s*$/, ''));
+const text = textFiles(published);
+for (const [name, content] of text.files) { await mkdir(path.dirname(`dist/${name}`), { recursive: true }); await writeFile(`dist/${name}`, content); }
+await writeFile('dist/index.html', page.replace(/<!-- as-text:[^>]*-->/, text.html));
+console.log(`dist/: index.html, ${local.join(', ')}, public/ and ${text.files.size} text files`);
