@@ -1,0 +1,102 @@
+/* The nebula look: the same page as the atlas, re-skinned as instruments floating over a night sky.
+   Loaded after style.css. It only touches what floats on the map; the reader's contents keep their own colours. */
+.nebula { background: #03040b; }
+.nebula .grain { display: none; }
+
+/* Everything that floats on the sky is dark glass with pale type. The star colours here match KIND in map-nebula.js. */
+.nebula :is(.plate, .zoom, .looks, .hint, #pop) {
+  --ui: Jost, "Avenir Next", Futura, -apple-system, "Segoe UI", sans-serif;
+  --star: #f1f5ff; --soft: #c3cee8; --edge: #bcd2ff29; --accent: #a9d4ff;
+  --post: #dcc6ff; --doc: #8fc6ff; --tool: #7ff2b4; --site: #5fe3f2; --said: #ffd470; --other: #aab4cc;
+  font-family: var(--ui); color: var(--star); color-scheme: dark;
+}
+.nebula :is(.plate, .zoom, .looks, #pop) {
+  background: linear-gradient(180deg, #161c3ca8, #080a18b8); border: 1px solid var(--edge); outline: 0;
+  box-shadow: 0 16px 50px #00000a8c, inset 0 1px 0 #ffffff12; backdrop-filter: blur(16px) saturate(1.3); -webkit-backdrop-filter: blur(16px) saturate(1.3);
+}
+
+/* Title block */
+.nebula .plate { padding: 20px 22px 17px; border-radius: 16px; }
+.nebula .plate h1 { font: 300 24px/1.15 var(--ui); letter-spacing: .27em; text-transform: uppercase; }
+.nebula .plate h1 a:hover { color: #fff; text-shadow: 0 0 18px #9cc8ffb3; }
+.nebula .lede { font: 400 17.5px/1.36 var(--ui); margin-top: 12px; color: #fff; }
+.nebula .how { font: 400 14.5px/1.5 var(--ui); margin-top: 8px; color: var(--soft); }
+.nebula .doors { gap: 4px 18px; margin-top: 15px; padding-top: 12px; border-top: 1px solid var(--edge); font: 500 14.5px var(--ui); }
+.nebula .doors a, .nebula .doors button { color: #d3e4ff; text-decoration-color: #a9d4ff73; }
+.nebula .doors a:hover, .nebula .doors button:hover { color: #fff; text-decoration-color: #fff; }
+.nebula.reading .plate, .nebula.close-up .plate:not(:hover):not(:focus-within) { padding: 11px 16px 10px; border-radius: 12px; }
+.nebula.reading .plate h1, .nebula.close-up .plate:not(:hover):not(:focus-within) h1 { font-size: 14px; }
+.nebula.reading .plate.open { padding: 20px 22px 17px; border-radius: 16px; }
+.nebula.reading .plate.open h1 { font-size: 24px; }
+
+/* Ask a question */
+.nebula .ask-box { margin-top: 16px; }
+.nebula .ask-box input { font: 400 15.5px var(--ui); padding: 10px 34px 10px 14px; border: 1px solid #bcd2ff47; border-radius: 10px; background: #ffffff0f; color: var(--star); appearance: none; -webkit-appearance: none; transition: background .15s, border-color .15s, box-shadow .15s; }
+.nebula .ask-box input::placeholder { color: #c3cee8b3; font-style: normal; }
+.nebula .ask-box input:hover { background: #ffffff17; }
+.nebula .ask-box input:focus { outline: 0; border-color: #a9d4ffcc; background: #ffffff17; box-shadow: 0 0 0 3px #a9d4ff2e; }
+.nebula .ask-box kbd { top: 12px; right: 13px; color: #c3cee899; }
+.nebula .suggest { margin-top: 10px; }
+.nebula .suggest span { font: 400 10px var(--ui); letter-spacing: .2em; color: #c3cee8a6; margin-bottom: 4px; }
+.nebula .suggest a { padding: 6px 0; border-top: 1px solid var(--edge); font: 400 14.5px/1.35 var(--ui); color: #dfe8fb; }
+.nebula .suggest a:hover { color: #fff; }
+
+/* Colour by topic or by source, and the key to the sources */
+.nebula .colour-by { gap: 12px; margin-top: 16px; font: 400 10.5px var(--ui); letter-spacing: .2em; text-transform: uppercase; color: #c3cee8bf; }
+.nebula .colour-by .seg { padding: 2px; border: 1px solid var(--edge); border-radius: 9px; background: #ffffff0a; font: 500 13px var(--ui); letter-spacing: .02em; text-transform: none; }
+.nebula .colour-by .seg button { padding: 4px 13px; border: 0; border-radius: 7px; color: #d6e0f6; }
+.nebula .colour-by .seg button:hover { background: #ffffff14; color: #fff; }
+.nebula .colour-by .seg button[aria-pressed=true] { background: #dfe9ff; color: #080b1a; }
+.nebula .key { gap: 6px 15px; margin-top: 13px; font-size: 12.5px; color: #d6e0f6; }
+.nebula .key span { gap: 7px; }
+/* Each mark in the key is cut to the shape of its star. The page gives every mark only its colour, so the shape is
+   chosen by that colour: these are the values of KIND in map-nebula.js. A colour not listed stays a round dot. */
+.nebula .key i { width: 8px; height: 8px; opacity: 1; flex: none; }
+.nebula .key i[style*="#8fc6ff"] { width: 14px; height: 14px; margin: 0 -3px; border-radius: 0; clip-path: polygon(50% 0, 58% 42%, 100% 50%, 58% 58%, 50% 100%, 42% 58%, 0 50%, 42% 42%); }
+.nebula .key i[style*="#ffd470"] { width: 12px; height: 12px; margin: 0 -2px; border-radius: 0; clip-path: polygon(50% 0, 63% 37%, 100% 50%, 63% 63%, 50% 100%, 37% 63%, 0 50%, 37% 37%); }
+.nebula .key i[style*="#7ff2b4"] { width: 7.5px; height: 7.5px; border-radius: 1px; transform: rotate(45deg); }
+.nebula .key i[style*="#5fe3f2"] { width: 11px; height: 11px; margin: 0 -1.5px; -webkit-mask: radial-gradient(circle, #000 0 1.3px, transparent 1.9px 3.3px, #000 3.9px); mask: radial-gradient(circle, #000 0 1.3px, transparent 1.9px 3.3px, #000 3.9px); }
+.nebula .key i[style*="#aab4cc"] { width: 5px; height: 5px; margin: 0 1.5px; opacity: .8; }
+
+/* In the hover preview the marks are the stars too: round, rayed, spark, diamond, ringed, faint. */
+.nebula #pop .glyph { margin-right: 8px; filter: drop-shadow(0 0 3px var(--k)); }
+.nebula #pop .k-post { --k: var(--post); } .nebula #pop .k-doc { --k: var(--doc); } .nebula #pop .k-tool { --k: var(--tool); }
+.nebula #pop .k-site { --k: var(--site); } .nebula #pop .k-said { --k: var(--said); } .nebula #pop .k-other { --k: var(--other); }
+.nebula #pop .glyph.k-post { width: 8px; height: 8px; background: radial-gradient(circle, #fff 0 1.5px, var(--k) 3.4px); }
+.nebula #pop .glyph.k-doc { width: 13px; height: 13px; margin: 0 6px 0 -2px; border-radius: 0; vertical-align: -2.5px;
+  background: radial-gradient(circle, #fff 0 1.3px, var(--k) 2.5px, transparent 3.1px), linear-gradient(90deg, transparent, var(--k) 35% 65%, transparent) center / 100% 1.3px no-repeat, linear-gradient(transparent, var(--k) 35% 65%, transparent) center / 1.3px 100% no-repeat; }
+.nebula #pop .glyph.k-said { width: 11px; height: 11px; margin-right: 7px; border-radius: 0; vertical-align: -1.5px; filter: drop-shadow(0 0 2.5px var(--k));
+  background: no-repeat center / contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-2 -2 4 4'%3E%3Cpath d='M0-2Q.35-.35 2 0Q.35.35 0 2Q-.35.35-2 0Q-.35-.35 0-2Z' fill='%23ffd470'/%3E%3C/svg%3E"); }
+.nebula #pop .glyph.k-tool { width: 7px; height: 7px; margin: 0 9px 0 1px; }
+.nebula #pop .glyph.k-site { width: 10px; height: 10px; border-width: 1.8px; background: radial-gradient(circle, #fff 0 1.1px, transparent 1.7px); vertical-align: -1.5px; }
+.nebula #pop .glyph.k-other { width: 5px; height: 5px; margin: 0 10px 0 2px; border: 0; border-radius: 50%; background: var(--k); vertical-align: 1px; }
+
+/* Zoom, hint, look switcher */
+.nebula .zoom { border-radius: 12px; overflow: hidden; }
+.nebula .zoom button { width: 36px; height: 34px; color: #dfe8fb; font-weight: 300; }
+.nebula .zoom button + button { border-top: 1px solid var(--edge); }
+.nebula .zoom button:hover { background: #a9d4ff24; color: #fff; }
+.nebula .hint { right: 70px; bottom: 25px; font: 400 10.5px var(--ui); letter-spacing: .2em; text-transform: uppercase; color: #c3cee88c; text-shadow: 0 1px 6px #000; }
+.nebula .looks { padding: 4px 5px 4px 13px; border-radius: 12px; font-size: 12.5px; }
+.nebula .looks span { font: 400 10px var(--ui); letter-spacing: .2em; color: #c3cee8a6; margin-right: 8px; }
+.nebula .looks a { padding: 4px 10px; border-radius: 8px; color: #d6e0f6; }
+.nebula .looks a:hover { background: #ffffff14; color: #fff; }
+.nebula .looks a[aria-current] { background: #dfe9ff; color: #080b1a; }
+
+/* Hover preview. It sits just above whatever it describes, so its shadow stays tight and does not darken the star below. */
+.nebula #pop { gap: 4px; padding: 11px 14px 12px; border-radius: 11px; font-size: 13.5px; line-height: 1.42; box-shadow: 0 3px 12px #00000a59, inset 0 1px 0 #ffffff12; }
+.nebula #pop b { font-weight: 500; font-size: 15px; color: #fff; }
+.nebula #pop span { color: #cfd8ee; }
+.nebula #pop .pop-src, .nebula #pop .pop-kinds { font: 10.5px var(--mono); color: #aab6d4; }
+
+/* Where the reader meets the sky */
+.nebula .reader { border-left: 1px solid #c8d8ff40; box-shadow: -34px 0 90px #00000cb3, -1px 0 22px #7fb0ff24; }
+
+@media (max-width: 860px) {
+  .nebula .plate { padding: 14px 16px 13px; border-radius: 14px; }
+  .nebula .plate h1 { font-size: 19px; }
+  .nebula .lede { font-size: 15.5px; margin-top: 8px; }
+  .nebula .ask-box, .nebula .colour-by { margin-top: 12px; }
+  .nebula .doors { margin-top: 12px; padding-top: 10px; }
+  .nebula .reader { border-left: 0; }
+}

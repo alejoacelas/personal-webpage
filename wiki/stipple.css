@@ -1,0 +1,65 @@
+/* The stippled map: everything on the map is made of dots on warm paper, so the
+   chrome that floats on it is soft paper too, with round corners and no ruled lines.
+   Loaded after style.css, and only overrides what floats on the map. */
+.stipple {
+  --display: "Fraunces", "Iowan Old Style", Georgia, serif; --text: "Fraunces", "Iowan Old Style", Georgia, serif;
+  --map-paper: #f6efde; --map-ink: #2c2520; --accent: #c4432b;
+  --post: #4a154b; --doc: #1f4fb0; --tool: #1c5a40; --site: #0e7a78; --said: #a05c00; --other: #6b665c;
+  --chip: #fcf8ecf2; --lift: 0 1px 0 #ffffffa6 inset, 0 10px 34px -10px #5a3c1a40, 0 2px 6px #5a3c1a14;
+  background: var(--map-paper);
+}
+/* The reader keeps its own colours. */
+.stipple .reader { --accent: #a4461f; --post: #611f69; --doc: #3f74c9; --tool: #2a6b52; --site: #1f8a84; --said: #c28a17; --other: #8f8d82; }
+
+.stipple .grain { opacity: .42; }
+.stipple .grain::after { background: radial-gradient(ellipse at 50% 46%, transparent 58%, #7a5c3836 135%); }
+
+.stipple .plate { border: 0; outline: 0; backdrop-filter: none; border-radius: 20px; background: var(--chip); box-shadow: var(--lift); }
+.stipple .plate h1 { font: 600 35px/1 var(--display); letter-spacing: -.02em; }
+/* A row of dots under the name, in the map's own colours. */
+.stipple .plate h1::after { content: ""; display: block; width: 106px; height: 8px; margin-top: 12px;
+  background:
+    radial-gradient(circle at 4px 4px, #c8553f 3.4px, transparent 4px),
+    radial-gradient(circle at 20px 4px, #d39a3a 2.6px, transparent 3.2px),
+    radial-gradient(circle at 35px 4px, #7fa650 3.4px, transparent 4px),
+    radial-gradient(circle at 51px 4px, #3f9c8f 2.4px, transparent 3px),
+    radial-gradient(circle at 66px 4px, #4f86c2 3.4px, transparent 4px),
+    radial-gradient(circle at 82px 4px, #8068b8 2.6px, transparent 3.2px),
+    radial-gradient(circle at 97px 4px, #b9588f 3.4px, transparent 4px); }
+.stipple .lede { font: 500 18.5px/1.32 var(--text); margin-top: 12px; }
+.stipple .how { font: 400 14.5px/1.5 var(--text); color: #5b4d40; }
+.stipple .legend { gap: 5px; }
+.stipple .legend-item { border: 0; background: #fffdf5; box-shadow: 0 1px 3px #5a3c1a1f; padding: 3px 10px 3px 9px; }
+.stipple .legend-item:hover { box-shadow: 0 1px 3px #5a3c1a1f, 0 0 0 1.5px #2c252055; }
+.stipple .legend-item.off { background: none; box-shadow: none; }
+.stipple .doors { border-top: 2px dotted #2c252040; font: 500 15.5px var(--text); }
+.stipple .doors a, .stipple .doors button { text-decoration-style: dotted; text-decoration-thickness: 2px; text-decoration-color: #c4432b99; text-underline-offset: 4px; }
+.stipple.reading .plate, .stipple.close-up .plate:not(:hover):not(:focus-within) { border-radius: 99px; padding: 9px 20px 10px; }
+.stipple.reading .plate h1, .stipple.close-up .plate:not(:hover):not(:focus-within) h1 { font-size: 22px; }
+.stipple.reading .plate h1::after, .stipple.close-up .plate:not(:hover):not(:focus-within) h1::after { display: none; }
+
+.stipple .search input { border: 0; background: var(--chip); box-shadow: var(--lift); padding: 9px 32px 9px 16px; width: 220px; font-size: 14px; }
+.stipple .search kbd { right: 14px; }
+.stipple .zoom { border: 0; background: none; box-shadow: none; gap: 8px; }
+.stipple .zoom button { width: 38px; height: 38px; border-radius: 50%; background: var(--chip); box-shadow: var(--lift); transition: transform .15s, color .15s; }
+.stipple .zoom button + button { border-top: 0; }
+.stipple .zoom button:hover { background: #fffdf5; color: var(--accent); transform: scale(1.08); }
+.stipple .hint { right: 72px; bottom: 28px; font: italic 400 13.5px var(--text); color: #2c252099; text-shadow: 0 0 6px var(--map-paper), 0 0 6px var(--map-paper), 0 0 2px var(--map-paper); }
+.stipple .looks { border: 0; border-radius: 99px; background: var(--chip); box-shadow: var(--lift); padding: 4px 5px 4px 14px; }
+.stipple .looks a { border-radius: 99px; padding: 4px 10px; }
+.stipple .looks a:hover { background: #c4432b1a; }
+.stipple .looks a[aria-current] { background: var(--map-ink); color: #fbf6e8; }
+
+.stipple #pop { background: #2c2520f5; border-radius: 12px; padding: 11px 14px 12px; box-shadow: 0 10px 30px -6px #2c252066; }
+
+/* Where the reader meets the map: no ruled edge, only its shadow on the paper. */
+.stipple .reader { border-left: 0; box-shadow: -30px 0 70px -16px #5a3c1a3d, -2px 0 8px #5a3c1a14; }
+
+@media (min-width: 861px) {
+  .stipple .plate { top: 18px; left: 18px; padding: 22px 26px 18px; }
+  .stipple .tools { top: 18px; right: 18px; }
+  .stipple.reading .tools { right: calc(var(--reader) + 18px); }
+  .stipple .zoom { right: 18px; bottom: 18px; }
+  .stipple.reading .zoom { right: calc(var(--reader) + 18px); }
+  .stipple .looks { left: 18px; bottom: 18px; }
+}
