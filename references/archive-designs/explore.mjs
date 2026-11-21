@@ -1,88 +1,109 @@
-import {items as base,ui} from './archive.mjs';
-import {renderMap} from './spatial.mjs';
-const [catalogue,added,sources]=await Promise.all(['atlas-taxonomy.json','atlas-extra.json','atlas-sources.json'].map(async name=>{
- const r=await fetch('/'+name);if(!r.ok)throw Error('Could not load '+name);return r.json();
-}));
-const items=[...base.map(i=>({...i,...catalogue.items[i.id]})),...sources,...added].sort((a,b)=>b.date.localeCompare(a.date));
-const regions=catalogue.regions, byId=new Map(items.map(i=>[i.id,i]));
-const $=s=>document.querySelector(s), esc=ui.esc;
-const phone=matchMedia('(max-width:650px)');
-function sizeSearch(){ $('#query').placeholder=phone.matches?'Search':'Search the archive'; }
-phone.addEventListener('change',sizeSearch);sizeSearch();
-const info={
- workflows:'Find a recurring task and decide whether it is worth automating.',
- agents:'Give an agent a clear task, follow its progress, and know when to step in.',
- tools:'Find working tools, integrations, and examples you can try.',
- learning:'Explore how people get started with AI and turn practice into a habit.',
- community:'Find questions, conversations, and experiments from the AI uplift community.'
-};
-function href(mode,...parts){return '#'+[mode,...parts].map(encodeURIComponent).join('/')}
-function itemPath(i,mode){return href(mode,'entry',i.id)}
-function connections(item){
- const direct=new Set(item.related||[]);
- const tags=new Set(item.tags||[]);
- return items.filter(i=>i.id!==item.id).map(i=>{
-  const shared=(i.tags||[]).filter(t=>tags.has(t));
-  const linked=direct.has(i.id)||(i.related||[]).includes(item.id);
-  const same=i.region===item.region&&i.subtopic===item.subtopic;
-  const score=(linked?20:0)+shared.length*4+(same?3:0);
-  return {i,score,reason:shared.length?shared.slice(0,2).join(' · '):same?regions.find(r=>r.id===i.region)?.subjects.find(s=>s.id===i.subtopic)?.label:'Related reading'};
- }).filter(p=>p.score>0).sort((a,b)=>b.score-a.score||b.i.date.localeCompare(a.i.date));
+import {items as originals, ui} from './archive.mjs';
+import {landing} from './landing.mjs';
+
+const {esc}=ui;
+async function data(name) {
+  const response=await fetch('/'+name+'.json');
+  if(!response.ok) throw Error('Could not load '+name);
+  return response.json();
 }
-let currentMode='terrain',parts=[],observer,focus=null;
-function navigate(url){if(url===location.hash)return;location.hash=url}
-function render(){
- const [m,...p]=location.hash.slice(1).split('/').map(decodeURIComponent);
- currentMode=m==='orbits'?'orbits':'terrain';parts=p;const mode=currentMode;
- const entry=p[0]==='entry'?byId.get(p[1]):null;
- const region=regions.find(r=>r.id===(entry?.region||p[0]));
- const sub=region?.subjects.find(s=>s.id===(entry?.subtopic||p[1]));
- const query=p[0]==='find'?p[1]||'':'';
- const group=items.filter(i=>(!region||i.region===region.id)&&(!sub||i.subtopic===sub.id));
- const related=entry?connections(entry):[];
- const previous=entry&&byId.get(history.state?.fromEntry);
- const results=query?items.filter(i=>query.toLowerCase().trim().split(/\s+/).every(w=>[i.title,i.description,i.body,i.kind,...(i.tags||[])].join(' ').toLowerCase().includes(w))):entry?related.map(a=>a.i):group;
- const all=href(mode),parent=entry?href(mode,region.id,sub.id):sub?href(mode,region.id):all;
- const crumbs=[['Atlas',all],...(region?[[region.label,href(mode,region.id)]]:[]),...(sub?[[sub.label,href(mode,region.id,sub.id)]]:[])];
- $('#trail').innerHTML=crumbs.map(([s,h])=>`<a href="${esc(h)}">${esc(s)}</a>`).join(' / ')+(entry?' / Reading':query?' / Search':'');
- const heading=entry?.title||(query?'Search results':sub?.label||region?.label||'Work atlas');
- $('#title').textContent=heading;document.title=heading+' · Alejo Acelas';
- $('#intro').textContent=entry?ui.meta(entry):query?results.length+' matches for “'+query+'”':sub?group.length+' entries':region?info[region.id]:'I help people use AI at work. Explore the projects, prompts, and conversations behind it.';
- $('#query').value=query;document.body.classList.toggle('dark',mode==='orbits');
- document.querySelectorAll('[data-mode]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.mode===mode)));
- const link=(url,label)=>`<a class="source" href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(label)} ↗</a>`;
- const reading=$('#reading');reading.hidden=!entry;
- if(entry){
-  const body=esc(entry.body||entry.description).replaceAll('\\n','\n');
-  reading.innerHTML=(previous?`<a class="came-from" href="${esc(itemPath(previous,mode))}">← From ${esc(previous.title)}</a>`:'')+(entry.kind==='Call excerpt'?`<blockquote>${body}</blockquote>`:`<p>${body}</p>`)+
-   (entry.url?link(entry.url,entry.kind==='Repository'?'View repository':'Open Google Doc'):'')+
-   (entry.links||[]).map(l=>'<p>'+link(l.url,l.label)+'</p>').join('')+'<h2 class="continuation">Explore from here</h2>';
- }
- const leaf=!!(sub||entry||query);
- const nodes=leaf?results.slice(0,12).map(i=>({id:i.id,label:i.title,color:regions.find(r=>r.id===i.region)?.color,count:1,kind:'item'})):
-  (region?region.subjects:regions).map(s=>({id:s.id,label:s.label,color:region?.color||s.color,kind:region?'topic':'region',count:group.filter(i=>(region?i.subtopic:i.region)===s.id).length})).filter(s=>s.count);
- $('#map').hidden=!nodes.length;
- if(nodes.length)renderMap($('#map'),{mode,nodes,level:entry?'item':sub?'topic':region?'region':'overview',focus,
-  onSelect:id=>{focus=id;navigate(leaf?itemPath(byId.get(id),mode):region?href(mode,region.id,id):href(mode,id))},onUp:(region||query)?()=>navigate(parent):undefined});
- $('#directory h2').textContent=entry?'Connected entries':query?'Matches':region?'All '+group.length+' entries':'Where to begin';
- const list=(!region&&!entry&&!query)?['159tncXDj-lS8zy40YB8WEuJWCkc8ov19duwgv7kOkBg','1793963939.881499','1795189660.321559'].map(id=>byId.get(id)).filter(Boolean):results;
- let end=0;const rows=$('#rows');rows.replaceChildren();observer?.disconnect();
- function append(){const next=list.slice(end,end+16);end+=next.length;
-  rows.insertAdjacentHTML('beforeend',next.map(i=>`<a href="${esc(itemPath(i,mode))}"><small>${esc(i.kind)}</small><span><strong>${esc(i.title)}</strong><em>${esc((entry?related.find(x=>x.i===i)?.reason+' · ':'')+i.description)}</em></span><span>↗</span></a>`).join(''));$('#more').hidden=end>=list.length;
- }
- append();if(!list.length)rows.innerHTML='<p class="empty">No matching entries.</p>';
- $('#more').onclick=append;
- observer=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)&&end<list.length)append()});observer.observe($('#more'));
- window.scrollTo(0,0);
+const [annotations,projects,excerpts,connections]=await Promise.all(
+  ['atlas-taxonomy','atlas-sources','atlas-extra','trail-links'].map(data)
+);
+const items=[...originals.map(item=>({...item,...annotations.items[item.id]})),...projects,...excerpts]
+  .sort((a,b)=>b.date.localeCompare(a.date)||a.title.localeCompare(b.title));
+const lookup=new Map(items.map(item=>[item.id,item]));
+const view=document.querySelector('#view');
+const allLink=document.querySelector('#all-link');
+allLink.textContent='All '+items.length+' entries ↗';
+const trailUrl=path=>'#read/'+path.map(encodeURIComponent).join('/');
+const openLink=(id,label)=>`<a href="${esc(trailUrl([id]))}">${esc(label)}</a>`;
+const storeKey='reading-trails.v1';
+let visited=[];
+try{visited=JSON.parse(sessionStorage.getItem(storeKey)||'[]')}catch{visited=[]}
+visited=Array.isArray(visited)?visited.filter(path=>Array.isArray(path)&&path.length&&path.every(id=>lookup.has(id))):[];
+
+function remember(path){
+  if(visited.some(old=>old.length>=path.length&&path.every((id,n)=>id===old[n])))return;
+  visited=visited.filter(old=>!old.every((id,n)=>id===path[n]));
+  visited.push(path);
+  try{sessionStorage.setItem(storeKey,JSON.stringify(visited))}catch{/* In-memory trails still work when storage is unavailable. */}
 }
-document.querySelector('form').onsubmit=e=>{e.preventDefault();const value=$('#query').value.trim();if(value)navigate(href(currentMode,'find',value))};
-document.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>navigate(href(b.dataset.mode,...parts)));
-window.addEventListener('hashchange',event=>{
- const before=new URL(event.oldURL).hash.slice(1).split('/');
- const after=location.hash.slice(1).split('/');
- if(after[1]==='entry' && before[1]==='entry' && history.state==null){
-   const fromEntry=before[2]===after[2]?null:decodeURIComponent(before[2]);
-   if(fromEntry)history.replaceState({fromEntry},'');
- }
- render();
-});render();
+
+function tree(path){
+  const root=new Map();
+  for(const route of visited.filter(r=>r[0]===path[0])){
+    let node=root;
+    for(const id of route){
+      if(!node.has(id))node.set(id,new Map());
+      node=node.get(id);
+    }
+  }
+  const current=trailUrl(path);
+  function branches(nodes,prefix){
+    return '<ol>'+[...nodes].map(([id,children])=>{
+      const next=[...prefix,id],url=trailUrl(next),active=url===current;
+      return `<li><a href="${esc(url)}" class="branch${active?' active':''}" ${active?'aria-current="page"':''}>${esc(lookup.get(id).title)}</a>${children.size?branches(children,next):''}</li>`;
+    }).join('')+'</ol>';
+  }
+  return branches(root,[]);
+}
+
+function source(url,label){
+  if(new URL(url).protocol!=='https:')throw Error('Expected HTTPS source');
+  return `<a class="source" href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(label)} ↗</a>`;
+}
+function body(item){
+  let text=(item.body||item.description).replaceAll('\\n','\n'),html='',extra=[];
+  for(const l of item.links||[]){
+    const pos=text.indexOf(l.label),anchor=source(l.url,l.label);
+    if(pos<0){extra.push(anchor);continue}
+    html+=esc(text.slice(0,pos))+anchor;text=text.slice(pos+l.label.length);
+  }
+  html+=esc(text);
+  html=html.split(/\n\s*\n/).map(p=>'<p>'+p.replaceAll('\n','<br>')+'</p>').join('');
+  if(item.kind==='Call excerpt'||(item.kind==='Call note'&&item.body.startsWith('“')))html='<blockquote>'+html+'</blockquote>';
+  if(item.url)extra.push(source(item.url,item.kind==='Repository'?'View repository':'Open Google Doc'));
+  return html+extra.map(a=>'<p>'+a+'</p>').join('');
+}
+
+function reader(path){
+  remember(path);
+  const id=path.at(-1),item=lookup.get(id),links=connections[id];
+  const forks=links.map(({to,reason})=>{
+    const seen=path.indexOf(to);
+    const next=seen===-1?[...path,to]:path.slice(0,seen+1);
+    return `<a class="fork" href="${esc(trailUrl(next))}"><span class="reason">${esc(reason)}</span><strong>${esc(lookup.get(to).title)} ↗</strong></a>`;
+  }).join('');
+  return `<div class="workspace"><article class="reading"><p class="kicker">${ui.meta(item)}</p><h1>${esc(item.title)}</h1><a class="trail-jump" href="#trail-location">Your trail ↓</a><div class="body">${body(item)}</div><section class="forks"><h2>Follow a connection</h2>${forks}</section></article><aside class="trail" id="trail-location" tabindex="-1"><h2>Your trail</h2>${tree(path)}</aside></div>`;
+}
+
+function archive(query){
+  view.innerHTML=`<section class="index"><h1>All entries</h1><label for="find">Search the archive</label><input id="find" type="search" placeholder="A phrase, a tool, a question…" value="${esc(query)}"><p id="count" aria-live="polite"></p><div class="results"></div></section>`;
+  const find=document.querySelector('#find');
+  function results(){
+    const words=find.value.toLowerCase().trim().split(/\s+/);
+    const hits=items.filter(i=>words.every(w=>[i.title,i.description,i.body,i.kind,...(i.tags||[])].join(' ').toLowerCase().includes(w)));
+    document.querySelector('#count').textContent=hits.length?hits.length+' '+(hits.length===1?'entry':'entries'):'No matching entries';
+    document.querySelector('.results').innerHTML=hits.map(i=>`<a href="${trailUrl([i.id])}"><small>${ui.meta(i)}</small><strong>${esc(i.title)}</strong></a>`).join('');
+  }
+  find.oninput=()=>{history.replaceState(null,'',find.value?'#all/'+encodeURIComponent(find.value):'#all');results()};
+  results();
+}
+function render(moveFocus=false){
+  const [page,...parts]=location.hash.slice(1).split('/').map(decodeURIComponent);
+  let path=page==='read'?parts:[];
+  if(['terrain','orbits'].includes(page)&&parts[0]==='entry'&&lookup.has(parts[1]))path=[parts[1]];
+  const isReading=path.length&&path.every(id=>lookup.has(id));
+  const title=isReading?lookup.get(path.at(-1)).title:page==='all'?'All entries':'AI uplift consultant';
+  document.title=title+' · Alejo Acelas';
+  if(page==='all')archive(parts.join('/'));
+  else view.innerHTML=isReading?reader(path):landing(items,{esc,openLink});
+  if(moveFocus)view.focus({preventScroll:true});
+  window.scrollTo(0,0);
+}
+view.addEventListener('click',event=>{
+  const jump=event.target.closest('.trail-jump');if(!jump)return;
+  event.preventDefault();const node=document.querySelector('#trail-location');node.focus();node.scrollIntoView({block:'start'});
+});
+window.addEventListener('hashchange',()=>render(true));render();
