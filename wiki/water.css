@@ -8,17 +8,10 @@ body { background: #f6f0e3; }
 .plate h1 { font-weight: 500; font-style: italic; font-size: 40px; }
 .reading .plate h1, .close-up .plate:not(:hover):not(:focus-within) h1 { font-size: 25px; }
 .how { color: #5a4f45; }
-.legend-item { border-color: #2b262233; background: none; }
-.doors { border-top-color: #2b262226; }
-.search input, .zoom, .looks { border: 0; background: #fdfaf2f5; box-shadow: 0 1px 0 #2b262214, 0 6px 20px #3a281626; }
+.zoom, .looks { border: 0; background: #fdfaf2f5; box-shadow: 0 1px 0 #2b262214, 0 6px 20px #3a281626; }
 .zoom button + button { border-top-color: #2b26221f; }
 .looks a[aria-current] { background: #2b2622; color: #fdfaf2; }
 .hint { color: #2b262299; }
 .reader { border-left: 0; box-shadow: -1px 0 0 #2b262224, -22px 0 50px #3a28162e; }
 
-/* In the reader and legend, the shapes are drawn in ink like the marks on the map. */
-.glyph.k-doc, .glyph.k-said { background: #fbf7ec; border: 1.5px solid var(--map-ink); }
-.glyph.k-site { border-width: 1.5px; }
-.glyph.k-other { border-width: 1.5px; }
-#pop .glyph.k-doc, #pop .glyph.k-said { background: none; border-color: #e9e3d6; }
-#pop .k-post, #pop .k-tool { --k: #e9e3d6; } #pop .k-site, #pop .k-other { --k: #e9e3d6; }
+#pop .glyph { --k: #e9e3d6; }

@@ -23,7 +23,6 @@ const plural = (n, kind) => `${n} ${KINDS[kind][n === 1 ? 0 : 1]}`;
 // ---- State
 let publicOnly = false;
 let works, W, P, A, patternWorks, lensCache;
-let query = '';
 let ctxKey = null;                  // the list the reader is stepping through
 const ctxStore = new Map();
 const trail = [];
@@ -66,10 +65,53 @@ const LENSES = [
 const lens = id => LENSES.find(l => l.id === id);
 const rowsOf = id => lensCache[id] || (lensCache[id] = lens(id)?.rows() || []);
 
+// ---- Search. Every work is scored by how well the visitor's words match its title, the questions
+//      it answers, its topics and its text; rarer words count for more. Nothing leaves the browser.
+const STOP = new Set('a an and are as at be been by can do does did for from has have he him his how i if in is it its me my of on or our should so some that the their them there they this to was we were what when where which who why will with would you your about alejo acelas'.split(' '));
+const stem = t => t.length > 3 ? t.replace(/(ies|ing|ers|ed|es|er|s)$/, '').replace(/e$/, '') : t;
+const terms = text => (String(text).toLowerCase().match(/[a-z0-9]+/g) || []).filter(t => !STOP.has(t)).map(stem);
+let engine = null;
+function buildEngine() {
+  const docs = [], seen = new Map();
+  const add = (kind, item, fields) => {
+    const tf = new Map();
+    for (const [text, weight] of fields) for (const t of terms(text)) tf.set(t, Math.min(6, (tf.get(t) || 0) + weight));
+    for (const t of tf.keys()) seen.set(t, (seen.get(t) || 0) + 1);
+    docs.push({ kind, item, tf });
+  };
+  for (const w of works) add('work', w, [[w.title, 3], [(w.asks || []).join(' '), 2.5], [(w.words || []).join(' '), 2.5], [w.mentions.join(' '), 2], [w.patterns.map(p => P.get(p[0])?.label || '').join(' '), 1.5], [w.gloss, 1.5], [w.pull, 1], [w.search, .5]]);
+  for (const p of D.patterns) if (pWorks(p.id).length) add('topic', p, [[p.label, 3], [p.summary, 1.2]]);
+  const idf = new Map([...seen].map(([t, n]) => [t, Math.log(1 + docs.length / n)]));
+  engine = { docs, idf, vocab: [...seen.keys()] };
+}
+function search(text) {
+  if (!engine) buildEngine();
+  const q = terms(text); if (!q.length) return { works: [], topics: [] };
+  // While someone is still typing, the last word also matches words that start with it.
+  const open = /[a-z0-9]$/i.test(text) ? q.at(-1) : null;
+  const starts = open && open.length >= 2 ? engine.vocab.filter(t => t !== open && t.startsWith(open)).slice(0, 40) : [];
+  const out = { works: [], topics: [] };
+  for (const d of engine.docs) {
+    let score = 0, hit = 0;
+    for (const t of q) {
+      let f = d.tf.get(t) || 0, weight = engine.idf.get(t) || 0;
+      if (!f && t === open) for (const s of starts) if (d.tf.has(s)) { f = d.tf.get(s) * .7; weight = engine.idf.get(s); break; }
+      if (f) { hit++; score += weight * f / (f + 1.2); }
+    }
+    if (!hit) continue;
+    score *= (hit / q.length) ** 1.6;                        // matching most of the question beats matching one word well
+    (d.kind === 'work' ? out.works : out.topics).push({ score, [d.kind === 'work' ? 'w' : 'p']: d.item });
+  }
+  out.works.sort((a, b) => b.score - a.score); out.topics.sort((a, b) => b.score - a.score);
+  const best = out.works[0]?.score || 0;
+  out.works = out.works.filter(x => x.score > best * .22);
+  out.topics = out.topics.filter(x => x.score > (out.topics[0]?.score || 0) * .45).map(x => x.p);
+  return out;
+}
+
 // ---- Small pieces
 const channel = w => w.slack.channel === 'private-channel' ? 'a private channel' : '#' + w.slack.channel;
 const glyph = (kind, cls = '') => `<span class="glyph k-${kind} ${cls}" aria-hidden="true"></span>`;
-const matches = w => !query || query.split(/\s+/).every(t => w.search.includes(t));
 const pLink = id => P.has(id) ? `<a class="plink" href="#/p/${id}" data-p="${id}">${esc(P.get(id).label)}</a>` : '';
 const srcLine = w => w.kind === 'post' ? esc(channel(w)) : esc(SUB[w.sub] || w.sub);
 function setCtx(key, label, href, ids) { ctxStore.set(key, { label, href, ids }); return key; }
@@ -98,19 +140,12 @@ const kindSummary = list => `<p class="kinds">${kindCounts(list).map(([k, n]) =>
 
 // ---- The title block on the map
 const readerEl = $('#reader'), pop = $('#pop'), plate = $('#plate');
-let colouring = 'topic';
 function renderPlate() {
-  const paint = MapView.sourcePaint?.() || {};
-  const ownBox = !$('.tools #q');               // looks that still have a search box in the corner keep it
   plate.innerHTML = `<h1><a href="#/">Alejo Acelas</a></h1>
     <div class="plate-body">
-      <p class="lede">I help high-impact organisations use AI so their existing work goes better.</p>
-      <p class="how">This is a map of what I've shared along the way. Things that share an idea sit close together. Zoom in to read.</p>
-      ${ownBox ? `<form class="ask-box" id="ask-form"><label class="sr" for="q">Ask a question about my work</label><input id="q" type="search" placeholder="Ask a question about my work" autocomplete="off" value="${esc($('#q')?.value || '')}"><kbd>/</kbd>
-        ${D.questions?.length ? `<div class="suggest"><span>People often ask</span>${D.questions.slice(0, 5).map(q => `<a href="#/ask/${q.id}" data-ps="${q.patterns.join(' ')}">${esc(q.question)}</a>`).join('')}</div>` : ''}</form>` : ''}
-      ${MapView.setColouring ? `<p class="colour-by"><span>Colour by</span><span class="seg" role="group" aria-label="Colour the map by"><button data-colour="topic" aria-pressed="${colouring === 'topic'}">Topic</button><button data-colour="source" aria-pressed="${colouring === 'source'}">Source</button></span></p>
-      ${colouring === 'source' ? `<p class="key">${kindCounts(works).map(([k, n]) => `<span><i style="background:${paint[k] || '#999'}"></i>${plural(n, k)}</span>`).join('')}</p>` : ''}` : ''}
-      <p class="doors"><a href="#/index">Read everything as a list</a></p>
+      <p class="lede">I help high-impact organisations use AI</p>
+      <p class="how">Click, hover, and zoom to see some of the work I've done</p>
+      <p class="doors"><a href="#/topics">List by topic</a><a href="#/sources">List by source</a><button class="ask-button" id="ask">Ask a question<kbd>/</kbd></button></p>
     </div>`;
 }
 
@@ -133,8 +168,6 @@ function hidePop() { clearTimeout(popTimer); pop.hidden = true; }
 document.addEventListener('mouseover', e => {
   const many = e.target.closest?.('[data-ps]');
   if (many) { MapView.focusPatterns(many.dataset.ps.split(' ')); return; }
-  const kind = e.target.closest?.('[data-kind]');
-  if (kind) { MapView.focusWorks?.(works.filter(w => w.kind === kind.dataset.kind).map(w => w.id)); return; }
   const el = e.target.closest?.('a[data-w],a[data-p]');
   if (!el || el.closest('#pop')) return;
   if (el.dataset.p) MapView.focusPatterns([el.dataset.p]);
@@ -143,7 +176,7 @@ document.addEventListener('mouseover', e => {
   popTimer = setTimeout(() => { const r = el.getBoundingClientRect(); showPop(popHtml({ w: el.dataset.w, p: el.dataset.p }), r.left + r.width / 2, r.bottom, true); }, 280);
 });
 document.addEventListener('mouseout', e => {
-  const el = e.target.closest?.('a[data-w],a[data-p],[data-ps],[data-kind]');
+  const el = e.target.closest?.('a[data-w],a[data-p],[data-ps]');
   if (!el || el.contains(e.relatedTarget)) return;
   hidePop(); MapView.focusPatterns(null);
 });
@@ -208,6 +241,23 @@ function arcPage(id) {
     `<ol class="arc" data-ctx="${esc(key)}">${steps.map(([w, note]) => `<li><p class="arc-note"><time>${when(w)}</time>${esc(note)}</p>${row(w)}</li>`).join('')}</ol>` };
 }
 
+function topicsPage() {
+  const shown = D.patterns.filter(p => pWorks(p.id).length);
+  return { title: 'List by topic', select: none, html: head(`${shown.length} topics · ${works.length} works`, 'List by topic') +
+    D.areas.map(a => {
+      const ps = shown.filter(p => p.area === a.id);
+      return ps.length ? `<section class="index-area"><h2><a href="#/a/${a.id}">${esc(a.label)}</a></h2><p class="summary small">${esc(a.blurb)}</p><ul class="related">${ps.map(p => `<li>${pLink(p.id)}<span class="n">${pWorks(p.id).length}</span></li>`).join('')}</ul></section>` : '';
+    }).join('') + `<p class="more-lists"><a href="#/index">Other lists: by month, by who it was for, how one thing led to the next</a></p>` };
+}
+function sourcesPage() {
+  return { title: 'List by source', select: none, html: head(`${works.length} works`, 'List by source') +
+    kindCounts(works).map(([k, n]) => {
+      const list = works.filter(w => w.kind === k).sort((a, b) => b.date.localeCompare(a.date));
+      const key = setCtx(`kind/${k}`, KINDS[k][1], `#/c/kind/${k}`, list.map(w => w.id));
+      return `<section class="index-area"><h2><a href="#/c/kind/${k}">${glyph(k)}${esc(KINDS[k][1].replace(/^./, c => c.toUpperCase()))}</a> <span class="n">${n}</span></h2>${workList(list.slice(0, 6), key)}${n > 6 ? `<p class="more-lists"><a href="#/c/kind/${k}">All ${n} ${esc(KINDS[k][1])}</a></p>` : ''}</section>`;
+    }).join('') };
+}
+
 function indexPage() {
   return { title: 'Everything as a list', select: none, html: head(`${works.length} works · ${D.patterns.length} topics · ${D.areas.length} areas`, 'Everything as a list') +
     D.areas.map(a => {
@@ -233,60 +283,12 @@ function collectionPage(lensName, key) {
 }
 
 function searchPage(q) {
-  const list = works.filter(matches);
+  const found = search(q), list = found.works.map(x => x.w);
   const k = setCtx('search', `“${q}”`, `#/q/${enc(q)}`, list.map(w => w.id));
-  const ps = D.patterns.filter(p => pWorks(p.id).length && q.split(/\s+/).every(t => (p.label + ' ' + p.summary).toLowerCase().includes(t)));
-  return { title: `Search: ${q}`, select: { works: list.length > 1 && list.length < 200 ? list.map(w => w.id) : [] },
-    html: head(`Search · ${list.length} works`, `“${esc(q)}”`) +
-    (ps.length ? `<section><h2>Topics</h2><ul class="related">${ps.map(p => `<li>${pLink(p.id)}<span class="n">${pWorks(p.id).length} works</span></li>`).join('')}</ul></section>` : '') +
-    `<section><h2>Works</h2>${list.length ? workList(list.slice(0, 150), k) : '<p class="summary small">Nothing matches. Try a tool name, or one word.</p>'}</section>` };
-}
-
-// A visitor's own question, answered from the works. The answer is written by a model on the site's
-// server, which is given only what the site already shows; the works it cites light up on the map.
-let asking = null;
-function answerPage(question) {
-  const words = question.toLowerCase().split(/\s+/).filter(t => t.length > 3);
-  const scored = works.map(w => [words.filter(t => w.search.includes(t)).length, w]).filter(x => x[0]).sort((a, b) => b[0] - a[0]).slice(0, 8).map(x => x[1]);
-  const k = setCtx('answer-matches', `matches for “${question}”`, `#/answer/${enc(question)}`, scored.map(w => w.id));
-  return { title: question, select: none, after: () => startAnswer(question),
-    html: head('You asked', esc(question)) + `<div class="answer" id="answer"><p class="waiting">Reading what I've shared<i></i><i></i><i></i></p></div>
-      <section id="cited" hidden><h2>Drawn from</h2><div class="rows" data-ctx="answer-cited"></div></section>` +
-      (scored.length ? `<section id="matches"><h2>Works that share your words</h2>${workList(scored, k)}</section>` : '') };
-}
-async function startAnswer(question) {
-  asking?.abort(); asking = new AbortController();
-  const box = $('#answer'), signal = asking.signal;
-  const fail = text => { box.innerHTML = `<p class="no-answer">${text}</p>`; };
-  if (location.protocol === 'file:') return fail('Written answers come from the site’s server, which isn’t running when the page is opened as a file. The works below share your words.');
-  try {
-    const res = await fetch('/api/ask', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ question }), signal });
-    if (!res.ok || !res.body) return fail(res.status === 429 ? 'That’s a lot of questions in a short time. Try again in a few minutes.' : 'The answer didn’t come through. The works below share your words.');
-    const reader = res.body.getReader(), decoder = new TextDecoder();
-    let text = '';
-    for (;;) {
-      const { value, done } = await reader.read();
-      if (done) break;
-      text += decoder.decode(value, { stream: true });
-      showAnswer(box, text, false);
-    }
-    showAnswer(box, text, true);
-  } catch (e) { if (e.name !== 'AbortError') fail('The answer didn’t come through. The works below share your words.'); }
-}
-function showAnswer(box, text, done) {
-  const cited = [];
-  const html = esc(text.replace(/\[\[[^\]]*$/, '')).replace(/\s*\[\[([^\]]+)\]\]/g, (_, ids) => ids.split(/[,\s]+/).map(id => {
-    id = id.replace(/^topic:/, '');
-    if (W.has(id)) { if (!cited.includes(id)) cited.push(id); return `<a class="cite" href="#/w/${id}" data-w="${id}">${cited.indexOf(id) + 1}</a>`; }
-    return P.has(id) ? ` <a class="plink" href="#/p/${id}" data-p="${id}">${esc(P.get(id).label)}</a>` : '';
-  }).join(''));
-  box.innerHTML = html.split(/\n{2,}/).map(p => `<p>${p}</p>`).join('') + (done ? '' : '<span class="caret"></span>');
-  const list = $('#cited');
-  if (cited.length && list) {
-    list.hidden = false; setCtx('answer-cited', 'works behind the answer', location.hash, cited);
-    $('.rows', list).innerHTML = cited.map((id, n) => row(W.get(id)).replace('<span class="rc-main">', `<span class="rc-n">${n + 1}</span><span class="rc-main">`)).join('');
-    if (done) { MapView.select({ works: cited }); $('#matches')?.remove(); }
-  }
+  return { title: q, select: { works: list.length > 1 ? list.slice(0, 60).map(w => w.id) : [] },
+    html: head(`You asked · ${list.length} ${list.length === 1 ? 'entry' : 'entries'}`, esc(q)) +
+    (found.topics.length ? `<section><h2>Topics</h2><ul class="related">${found.topics.slice(0, 6).map(p => `<li>${pLink(p.id)}<span class="n">${pWorks(p.id).length} works</span></li>`).join('')}</ul></section>` : '') +
+    `<section><h2>Entries, closest first</h2>${list.length ? workList(list.slice(0, 150), k) : '<p class="summary small">Nothing matches. Try other words, or one word.</p>'}</section>` };
 }
 
 // The source, drawn to look like where it lives.
@@ -326,8 +328,10 @@ function viewer(w) {
     const ex = w.said.excerpt, start = w.said.text.slice(0, 48);
     const parts = w.said.text.split('…').map(t => t.trim()).filter(t => t.length > 12);      // a quote with cuts is found piece by piece
     const mine = text => { let html = esc(text), hit = false; for (const part of parts) if (html.includes(esc(part))) { html = html.replace(esc(part), `<mark>${esc(part)}</mark>`); hit = true; } return hit ? html : text.includes(start) ? `<mark>${esc(text)}</mark>` : esc(text); };
-    const around = ex ? `<section class="around"><h2>Around it in the call</h2><div class="excerpt">${ex.turns.map(t => t.me ? `<p class="t-me"><b>Alejo</b>${mine(t.me)}</p>` : `<p class="t-other"><b>${esc(ex.other)}</b>${esc(t.other)}</p>`).join('')}</div><p class="excerpt-note">My words are as I said them, with cuts marked. What the other person said is summarised and never quoted.</p></section>` : '';
-    return `<figure class="v-said"><span class="wave" aria-hidden="true">${Array.from({ length: 34 }, (_, i) => `<i style="height:${4 + Math.round(13 * Math.abs(Math.sin(i * 1.7 + w.id.length)))}px"></i>`).join('')}</span><blockquote>${esc(w.said.text)}</blockquote><figcaption>${esc(w.said.setting)} · ${when(w)}</figcaption></figure>${around}`;
+    const wave = `<span class="wave" aria-hidden="true">${Array.from({ length: 34 }, (_, i) => `<i style="height:${4 + Math.round(13 * Math.abs(Math.sin(i * 1.7 + w.id.length)))}px"></i>`).join('')}</span>`;
+    // With the conversation around it, the quote is shown in place, highlighted. Alone, it stands as a quote.
+    if (ex) return `<figure class="v-said in-call">${wave}<div class="excerpt">${ex.turns.map(t => t.me ? `<p class="t-me"><b>Alejo</b>${mine(t.me)}</p>` : `<p class="t-other"><b>${esc(ex.other)}</b>${esc(t.other)}</p>`).join('')}</div><figcaption>${esc(w.said.setting)} · ${when(w)}<span>My words are as I said them, with cuts marked. What the other person said is summarised and never quoted.</span></figcaption></figure>`;
+    return `<figure class="v-said">${wave}<blockquote>${esc(w.said.text)}</blockquote><figcaption>${esc(w.said.setting)} · ${when(w)}</figcaption></figure>`;
   }
   return `<figure class="v-link"><p>${esc(w.gloss)}</p>${w.url ? `<a href="${esc(w.url)}" target="_blank" rel="noopener">${esc(w.url.replace(/^https?:\/\//, '').slice(0, 70))} ↗</a>` : ''}</figure>`;
 }
@@ -379,11 +383,10 @@ function route() {
   else if (kind === 'ask') page = a ? questionPage(a) : questionsPage();
   else if (kind === 'arc') page = arcPage(a);
   else if (kind === 'index') page = indexPage();
-  else if (kind === 'answer') page = answerPage(decodeURIComponent(a || ''));
+  else if (kind === 'topics') page = topicsPage();
+  else if (kind === 'sources') page = sourcesPage();
   else if (kind === 'c') page = collectionPage(a, decodeURIComponent(b || ''));
-  else if (kind === 'q') { query = decodeURIComponent(a || '').toLowerCase(); if ($('#q') && $('#q').value.toLowerCase() !== query) $('#q').value = query; applyFilter(); page = searchPage(query); }
-  if (kind !== 'answer') asking?.abort();
-  if (kind !== 'q' && query && document.activeElement?.id !== 'q') { query = ''; applyFilter(); }
+  else if (kind === 'q') page = searchPage(decodeURIComponent(a || ''));
   if (!page) {
     document.body.classList.remove('reading'); readerEl.hidden = true; document.title = 'Alejo Acelas'; trail.length = 0;
     MapView.setInset(0, plateRoom()); MapView.select({ works: [] });
@@ -399,14 +402,12 @@ function route() {
   document.title = `${page.title} · Alejo Acelas`;
   MapView.setInset(innerWidth > 860 ? readerEl.offsetWidth : 0);
   MapView.select(page.select);
-  page.after?.();
 }
 const plateRoom = () => innerWidth > 1100 ? plate.offsetWidth + 30 : 0;
 addEventListener('hashchange', route);
 addEventListener('resize', () => document.body.classList.contains('reading') ? MapView.setInset(innerWidth > 860 ? readerEl.offsetWidth : 0) : MapView.setInset(0, plateRoom()));
 
 // ---- Events
-const applyFilter = () => MapView.setFilter(query ? matches : null);
 document.addEventListener('click', e => {
   const t = e.target;
   const link = t.closest('a[data-w]');
@@ -422,48 +423,22 @@ document.addEventListener('click', e => {
     $('.page-wrap', fig).hidden = live;
     return;
   }
-  const colour = t.closest('[data-colour]');
-  if (colour) { colouring = colour.dataset.colour; MapView.setColouring?.(colouring); renderPlate(); return; }
+  if (t.closest('#ask')) { openBar(); return; }
+  if (t.closest('.plate h1 a')) { e.preventDefault(); goHome(); return; }
   const zoom = t.closest('[data-zoom]');
   if (zoom) { const z = zoom.dataset.zoom; z === 'fit' ? MapView.home() : MapView.zoomAt(z === 'in' ? 1.7 : 1 / 1.7); }
 });
 document.addEventListener('change', e => { if (e.target.id === 'public') { publicOnly = e.target.checked; index(); MapView.setWorks(works); renderPlate(); route(); } });
-function wander() { const sorted = works.filter(w => w.patterns.length && matches(w)); const pool = sorted.length ? sorted : works; const w = pool[Math.floor(Math.random() * pool.length)]; if (w) { ctxKey = null; location.hash = `#/w/${w.id}`; } }
+function goHome() { if (location.hash.length > 2) location.hash = '#/'; MapView.home(); }
+function wander() { const sorted = works.filter(w => w.patterns.length); const pool = sorted.length ? sorted : works; const w = pool[Math.floor(Math.random() * pool.length)]; if (w) { ctxKey = null; location.hash = `#/w/${w.id}`; } }
 
-let qTimer;
-document.addEventListener('submit', e => {
-  if (e.target.id !== 'ask-form') return;
-  e.preventDefault(); clearTimeout(qTimer);
-  const asked = $('#q').value.trim();
-  if (asked.length > 2) { query = ''; applyFilter(); location.hash = `#/answer/${enc(asked)}`; $('#q').blur(); }
-});
-document.addEventListener('input', e => {
-  if (e.target.id !== 'q') return;
-  const q = e.target;
-  query = q.value.trim().toLowerCase();
-  applyFilter();
-  clearTimeout(qTimer);
-  qTimer = setTimeout(() => {
-    if (query.length >= 2) { const h = `#/q/${enc(query)}`; location.hash.startsWith('#/q/') ? (history.replaceState(null, '', h), route()) : (location.hash = h); }
-    else if (location.hash.startsWith('#/q/')) location.hash = '#/';
-  }, 260);
-});
-document.addEventListener('keydown', e => {            // corner search boxes in the other looks have no form to submit
-  if (e.key === 'Enter' && e.target.id === 'q' && !e.target.form) { const asked = e.target.value.trim(); if (asked.length > 2) { clearTimeout(qTimer); query = ''; applyFilter(); location.hash = `#/answer/${enc(asked)}`; } }
-});
 document.addEventListener('keydown', e => {
-  if (e.metaKey || e.ctrlKey || e.altKey) return;
-  const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName);
-  const q = $('#q');
-  if (e.key === 'Escape') {
-    if (typing && q?.value) { q.value = ''; q.dispatchEvent(new Event('input', { bubbles: true })); }
-    else if (typing) document.activeElement.blur();
-    else if (location.hash.length > 2) location.hash = '#/';
-    return;
-  }
-  if (typing) return;
+  if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); bar.open ? closeBar() : openBar(); return; }
+  if (e.metaKey || e.ctrlKey || e.altKey || bar.open) return;
+  if (/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName)) return;
   const reading = document.body.classList.contains('reading');
-  if (e.key === '/' && q) { e.preventDefault(); plate.classList.add('open'); q.focus(); q.select(); }
+  if (e.key === 'Escape') { if (location.hash.length > 2) location.hash = '#/'; else MapView.home(); }      // once closes the reader, again returns to the whole map
+  else if (e.key === '/') { e.preventDefault(); openBar(); }
   else if (e.key === 'r') wander();
   else if (e.key === '+' || e.key === '=') MapView.zoomAt(1.6);
   else if (e.key === '-' || e.key === '_') MapView.zoomAt(1 / 1.6);
@@ -473,6 +448,113 @@ document.addEventListener('keydown', e => {
     if (reading && step) { e.preventDefault(); location.hash = step.getAttribute('href'); }
     else if (!reading) { e.preventDefault(); const d = { ArrowLeft: [-160, 0], ArrowRight: [160, 0], ArrowUp: [0, -160], ArrowDown: [0, 160] }[e.key]; MapView.pan(d[0], d[1]); }
   }
+});
+
+// ---- The bar: a floating sheet for asking. Empty, it offers questions that fit what the visitor is
+//      looking at, and ways to browse; with words in it, it lists the closest entries. The entries it
+//      lists light up on the map behind it, and the highlighted one is marked.
+const bar = { open: false, rows: [], sel: 0, stack: [] };
+const barEl = document.createElement('div');
+barEl.className = 'bar-backdrop'; barEl.hidden = true;
+barEl.innerHTML = `<div class="bar" role="dialog" aria-label="Ask a question">
+  <div class="bar-input"><button class="bar-back" hidden title="Back (Backspace)">←</button><input id="bar-q" type="text" placeholder="Ask a question, or type a few words" autocomplete="off" spellcheck="false" aria-controls="bar-list"><kbd>esc</kbd></div>
+  <div class="bar-list" id="bar-list" role="listbox"></div>
+  <div class="bar-foot"><span><kbd>↑</kbd><kbd>↓</kbd>move</span><span><kbd>↵</kbd>open</span><span class="bar-all" hidden><kbd>⌘</kbd><kbd>↵</kbd>see all <b></b> in the reader</span></div>
+</div>`;
+document.body.append(barEl);
+const barInput = $('#bar-q', barEl), barList = $('.bar-list', barEl);
+
+const workRow = w => ({ type: 'work', id: w.id, glyph: w.kind, title: w.title, gloss: w.gloss, meta: `${w.kind === 'post' ? channel(w) : SUB[w.sub] || w.sub} · ${when(w)}`, href: `#/w/${w.id}` });
+const topicRow = p => ({ type: 'topic', id: p.id, mark: '◌', title: p.label, gloss: p.summary, meta: `${pWorks(p.id).length} works`, href: `#/p/${p.id}` });
+const questionRow = q => ({ type: 'question', mark: '?', title: q.question, meta: 'question', q });
+const section = (label, rows) => rows.length ? [{ type: 'section', label }, ...rows] : [];
+function questionResults(q) {
+  const ps = q.patterns.map(id => P.get(id)).filter(p => p && pWorks(p.id).length), seen = new Set(), lead = [];
+  for (let n = 0; n < 4; n++) for (const p of ps) { const w = W.get((p.lead || [])[n]); if (w && !seen.has(w.id)) { seen.add(w.id); lead.push(w); } }
+  return [...section('Start with', lead.slice(0, 9).map(workRow)), ...section('Topics that answer it', ps.map(topicRow))];
+}
+// What to offer before anything is typed: it depends on what is open and where the map is.
+function suggestions() {
+  const [, kind, id] = decodeURI(location.hash.replace(/^#/, '')).split('/'), questions = D.questions || [], out = [];
+  if (kind === 'p' && P.has(id)) {
+    const p = P.get(id);
+    out.push(...section(`About “${p.label}”`, questions.filter(q => q.patterns.includes(id)).slice(0, 3).map(questionRow)));
+    out.push(...section('Next to it', (p.related || []).map(r => P.get(r.id)).filter(x => x && pWorks(x.id).length).slice(0, 4).map(topicRow)));
+  } else if (kind === 'w' && W.has(id)) {
+    const w = W.get(id);
+    out.push(...section('Around what you are reading', [...w.patterns.slice(0, 3).map(x => topicRow(P.get(x[0]))), ...w.near.slice(0, 3).map(i => W.get(i)).filter(Boolean).map(workRow)]));
+  } else {
+    // Zoomed in, the nearest topics are what the visitor is looking at; from the whole map they are not.
+    const near = document.body.classList.contains('close-up') ? (MapView.around?.() || []).map(i => P.get(i)).filter(x => x && pWorks(x.id).length).slice(0, 4) : [];
+    out.push(...section('Where the map is now', near.map(topicRow)));
+  }
+  const asked = new Set(out.filter(r => r.q).map(r => r.q.id));
+  out.push(...section('People often ask', questions.filter(q => !asked.has(q.id)).slice(0, out.length ? 4 : 6).map(questionRow)));
+  out.push(...section('Browse', [
+    { type: 'browse', mark: '◌', title: 'All topics', meta: `${D.patterns.filter(p => pWorks(p.id).length).length}`, label: 'Topics', rows: () => D.areas.flatMap(a => section(a.label, D.patterns.filter(p => p.area === a.id && pWorks(p.id).length).map(topicRow))) },
+    ...kindCounts(works).map(([k, n]) => ({ type: 'browse', glyph: k, title: KINDS[k][1].replace(/^./, c => c.toUpperCase()), meta: `${n}`, label: KINDS[k][1].replace(/^./, c => c.toUpperCase()), rows: () => works.filter(w => w.kind === k).map(workRow) })),
+  ]));
+  return out;
+}
+function renderBar() {
+  const text = barInput.value.trim(), level = bar.stack.at(-1);
+  let rows, total = 0;
+  if (level?.q && (!text || text === level.q.question)) rows = questionResults(level.q);
+  else if (level && !level.q) {
+    rows = level.rows();
+    if (text) { const want = terms(text); rows = rows.filter(r => r.type !== 'section' && want.every(t => terms(r.title + ' ' + (r.gloss || '')).some(x => x.startsWith(t)))); }
+  } else if (text.length >= 2) {
+    if (level?.q) bar.stack.pop();
+    const found = search(text); total = found.works.length;
+    rows = [...section('Topics', found.topics.slice(0, 3).map(topicRow)), ...section('Entries', found.works.slice(0, 14).map(x => workRow(x.w)))];
+    if (!rows.length) rows = [{ type: 'note', label: 'Nothing matches those words. Try fewer, or a tool’s name.' }];
+  } else rows = suggestions();
+  bar.rows = rows;
+  bar.sel = Math.max(0, rows.findIndex(r => r.type !== 'section' && r.type !== 'note'));
+  $('.bar-back', barEl).hidden = !bar.stack.length;
+  barInput.placeholder = level && !level.q ? `Filter ${level.label.toLowerCase()}` : 'Ask a question, or type a few words';
+  const all = $('.bar-all', barEl); all.hidden = !(total > 14); $('b', all).textContent = total;
+  barList.innerHTML = rows.map((r, n) => r.type === 'section' ? `<p class="bar-section">${esc(r.label)}</p>` : r.type === 'note' ? `<p class="bar-note">${esc(r.label)}</p>`
+    : `<a class="bar-row" role="option" data-n="${n}" ${r.href ? `href="${r.href}"` : 'href="#"'}>${r.glyph ? glyph(r.glyph) : `<span class="bar-mark" aria-hidden="true">${r.mark || ''}</span>`}<span class="bar-text"><span class="bar-title">${esc(r.title)}</span>${r.gloss ? `<span class="bar-gloss">${esc(r.gloss)}</span>` : ''}</span><span class="bar-meta">${esc(r.meta || '')}</span></a>`).join('');
+  barList.scrollTop = 0;
+  const ids = rows.filter(r => r.type === 'work').map(r => r.id);
+  MapView.focusWorks?.(ids.length ? ids : null);
+  mark();
+}
+function mark() {
+  for (const el of $$('.bar-row', barList)) { const on = +el.dataset.n === bar.sel; el.classList.toggle('sel', on); el.setAttribute('aria-selected', on); if (on) el.scrollIntoView({ block: 'nearest' }); }
+  const r = bar.rows[bar.sel];
+  MapView.peek?.(r?.type === 'work' ? r.id : null);
+  if (r?.type === 'topic') MapView.focusPatterns([r.id]); else if (bar.open && !bar.rows.some(x => x.type === 'work')) MapView.focusPatterns(null);
+}
+function move(step) {
+  let n = bar.sel;
+  do { n += step; } while (bar.rows[n] && (bar.rows[n].type === 'section' || bar.rows[n].type === 'note'));
+  if (bar.rows[n]) { bar.sel = n; mark(); }
+}
+function choose(r) {
+  if (!r) return;
+  if (r.type === 'question') { bar.stack.push({ q: r.q }); barInput.value = r.q.question; renderBar(); barInput.select(); }
+  else if (r.type === 'browse') { bar.stack.push({ label: r.label, rows: r.rows }); barInput.value = ''; renderBar(); }
+  else { ctxKey = setCtx('bar', 'what the bar listed', location.hash, bar.rows.filter(x => x.type === 'work').map(x => x.id)); closeBar(); location.hash = r.href; }
+}
+function back() { bar.stack.pop(); barInput.value = ''; renderBar(); }
+function openBar() { if (bar.open) return; bar.open = true; bar.stack = []; barEl.hidden = false; barInput.value = ''; renderBar(); barInput.focus(); document.body.classList.add('asking'); }
+function closeBar() { bar.open = false; barInput.blur(); barEl.hidden = true; document.body.classList.remove('asking'); MapView.focusWorks?.(null); MapView.peek?.(null); MapView.focusPatterns(null); }
+barInput.addEventListener('input', renderBar);
+barInput.addEventListener('keydown', e => {
+  if (e.key === 'ArrowDown' || (e.key === 'Tab' && !e.shiftKey)) { e.preventDefault(); move(1); }
+  else if (e.key === 'ArrowUp' || (e.key === 'Tab' && e.shiftKey)) { e.preventDefault(); move(-1); }
+  else if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) { const text = barInput.value.trim(); if (text.length >= 2) { closeBar(); location.hash = `#/q/${enc(text)}`; } }
+  else if (e.key === 'Enter') { e.preventDefault(); choose(bar.rows[bar.sel]); }
+  else if (e.key === 'Escape') { e.preventDefault(); if (bar.stack.length) back(); else if (barInput.value) { barInput.value = ''; renderBar(); } else closeBar(); }
+  else if (e.key === 'Backspace' && !barInput.value && bar.stack.length) { e.preventDefault(); back(); }
+});
+barEl.addEventListener('mousemove', e => { const el = e.target.closest('.bar-row'); if (el && +el.dataset.n !== bar.sel) { bar.sel = +el.dataset.n; mark(); } });
+barEl.addEventListener('click', e => {
+  if (e.target === barEl) return closeBar();
+  if (e.target.closest('.bar-back')) { back(); barInput.focus(); return; }
+  const el = e.target.closest('.bar-row'); if (el) { e.preventDefault(); choose(bar.rows[+el.dataset.n]); barInput.focus(); }
 });
 
 // Prototype only: switch between the looks being compared, keeping the place you are at.
@@ -490,9 +572,9 @@ MapView.init($('#map'), D, {
     if (!h || h.type !== 'work' || cards) return hidePop();        // only works get a preview; a topic's name already says what it is
     popTimer = setTimeout(() => showPop(popHtml({ w: h.id }), x, y, false), 40);
   },
+  onMiss(where) { if (where?.outside) goHome(); },                 // a click on bare paper, beyond the map, returns to the landing view
   onZoom(close) { document.body.classList.toggle('close-up', close); },
   onOpen(h) { hidePop(); if (h.type === 'work') ctxKey = null; location.hash = `#/${h.type[0]}/${h.id}`; },
 });
 renderPlate();
-plate.addEventListener('focusout', () => plate.classList.remove('open'));
 route();

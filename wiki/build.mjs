@@ -219,6 +219,10 @@ const entries = await maybe('scheme/entries.json', { questions: [], arcs: [] });
 const questions = (entries.questions || []).map(q => ({ ...q, patterns: q.patterns.filter(p => patternIds.has(p)) })).filter(q => q.patterns.length);
 const arcs = (entries.arcs || []).map(a => ({ ...a, steps: a.steps.filter(s => byId.has(s.work)) })).filter(a => a.steps.length > 1);
 const mentions = [...mentionCount].filter(([, n]) => n >= 4).sort((a, b) => b[1] - a[1]).slice(0, 60).map(([name]) => name);
+// Questions and plain words a visitor might type to find each work (written ahead of time by agents).
+if (existsSync(path.join(src, 'annotations-search'))) for (const f of (await readdir(path.join(src, 'annotations-search'))).filter(f => f.endsWith('.json'))) {
+  for (const row of await json(`annotations-search/${f}`)) { const w = byId.get(row.id); if (w) { w.asks = row.asks || []; w.words = row.words || []; } }
+}
 const map = layout({ works, patterns: patterns.filter(p => count.get(p.id)), areas: areas.filter(a => patterns.some(p => p.area === a.id && count.get(p.id))) });
 const data = {
   map,

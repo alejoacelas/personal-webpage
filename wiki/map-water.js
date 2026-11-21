@@ -18,8 +18,9 @@ window.MapView = (() => {
   let tween = null, zoomGoal = null, anchor = null, velocity = null, drag = null;
   let inset = 0, insetLeft = 0;
   let works = [], at = new Map(), byPattern = new Map(), patterns = [], areas = [];
+  let amounts = null;            // how much paint lies where, kept to tell the map from the bare paper around it
   let gl = null, glCanvas = null, program = null, uniforms = {}, fieldTexture = null, glScale = 1, grow = 1, growStart = 0, spot = null, veil = null;
-  let hover = null, focusPatterns = null;
+  let hover = null, focusPatterns = null, peeked = null;
   let sel = { works: new Set(), pattern: null, related: new Set() };
   let filter = null;
   let dirty = true, last = 0, clock = 0, wasClose = false;
@@ -78,8 +79,6 @@ window.MapView = (() => {
     const keep = Math.min(1, Math.max(0, (distance - .08) / .5)), m = .5 * (1 - keep * keep * (3 - 2 * keep));
     return vivid.map((v, k) => v + (earth[k] - v) * m);
   }
-  const SOURCE = { post: [.57, .38, .64], doc: [.36, .52, .80], tool: [.35, .62, .46], site: [.27, .62, .68], said: [.90, .70, .35], other: [.62, .60, .56] };
-  let colouring = 'topic';
   const absorb = rgb => rgb.map(v => -Math.log(Math.max(.02, v)));
   const css = rgb => `rgb(${rgb.map(v => Math.round(v * 255)).join(',')})`;
 
@@ -96,12 +95,12 @@ window.MapView = (() => {
     };
     const paint = new Map(patterns.map(p => [p.id, absorb(p.rgb)]));
     for (const w of works) {
-      if (colouring === 'source') { splat(w.x, w.y, 62, 1, absorb(SOURCE[w.kind])); continue; }
       const mix = [0, 0, 0]; let total = 0;
       for (const [p, s] of w.patterns) { const ab = paint.get(p); if (!ab) continue; const share = s === 2 ? 1 : .4; total += share; for (let k = 0; k < 3; k++) mix[k] += ab[k] * share; }
       if (total) splat(w.x, w.y, 62, 1, mix.map(v => v / total)); else splat(w.x, w.y, 52, .8, [.2, .2, .19]);
     }
-    if (colouring === 'topic') for (const p of patterns) if (byPattern.get(p.id)?.size) splat(p.x, p.y, 84, 1.1, paint.get(p.id));
+    for (const p of patterns) if (byPattern.get(p.id)?.size) splat(p.x, p.y, 84, 1.1, paint.get(p.id));
+    amounts = { step, nx, ny, field };
     gl.bindTexture(gl.TEXTURE_2D, fieldTexture);
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA16F, nx, ny, 0, gl.RGBA, gl.FLOAT, field);
   }
@@ -229,17 +228,25 @@ window.MapView = (() => {
     ctx.lineJoin = 'round'; ctx.lineWidth = strength; ctx.strokeStyle = 'rgba(250,246,236,.5)';
     ctx.strokeText(text, x, y); ctx.fillStyle = fill; ctx.fillText(text, x, y);
   }
-  // Marks are pen and ink over the paint: the shape says where a work lives.
-  function symbol(kind, x, y, r, colour = INK) {
-    ctx.beginPath();
-    if (kind === 'doc') ctx.rect(x - r * .74, y - r, r * 1.48, r * 2);
-    else if (kind === 'tool') { ctx.moveTo(x, y - r * 1.2); ctx.lineTo(x + r * 1.2, y); ctx.lineTo(x, y + r * 1.2); ctx.lineTo(x - r * 1.2, y); ctx.closePath(); }
-    else if (kind === 'said') { ctx.moveTo(x - r, y + r); ctx.lineTo(x - r, y); ctx.arc(x, y, r, Math.PI, Math.PI * 2.5); ctx.closePath(); }
-    else if (kind === 'other') ctx.rect(x - r * .8, y - r * .8, r * 1.6, r * 1.6);
-    else ctx.arc(x, y, r, 0, 2 * Math.PI);
-    ctx.lineJoin = 'round'; ctx.lineWidth = Math.max(2, r * .7); ctx.strokeStyle = 'rgba(250,246,236,.45)'; ctx.stroke();
-    if (kind === 'post' || kind === 'tool') { ctx.fillStyle = colour; ctx.fill(); }
-    else { ctx.fillStyle = '#fbf7ec'; ctx.fill(); ctx.lineWidth = Math.max(1.1, r * .36); ctx.strokeStyle = colour; ctx.stroke(); }
+  // Marks are pen and ink over the paint. From afar a work is a dot; closer, it is a character that
+  // says where the work lives: # a Slack post, ¶ a doc, {} a repo, ↗ a site, “ a call excerpt.
+  const MARK = { post: '#', doc: '¶', tool: '{}', site: '↗', said: '“', other: '·' };
+  function symbol(kind, x, y, r, colour = INK, lettered = 0) {
+    if (lettered < 1) {
+      ctx.save(); ctx.globalAlpha *= 1 - lettered;
+      ctx.beginPath(); ctx.arc(x, y, r * .9, 0, 2 * Math.PI);
+      ctx.lineWidth = Math.max(2, r * .7); ctx.strokeStyle = 'rgba(250,246,236,.45)'; ctx.stroke(); ctx.fillStyle = colour; ctx.fill();
+      ctx.restore();
+    }
+    if (lettered > 0) {
+      const size = kind === 'said' ? r * 4.4 : kind === 'tool' ? r * 2.5 : r * 3;
+      ctx.save(); ctx.globalAlpha *= lettered;
+      ctx.font = `${kind === 'said' ? '700' : '600'} ${size}px ${kind === 'said' || kind === 'doc' ? TEXT : MONO}`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.lineJoin = 'round'; ctx.lineWidth = 3; ctx.strokeStyle = 'rgba(250,246,236,.7)';
+      const dy = kind === 'said' ? size * .2 : 0;
+      ctx.strokeText(MARK[kind], x, y + dy); ctx.fillStyle = colour; ctx.fillText(MARK[kind], x, y + dy);
+      ctx.restore();
+    }
   }
   function curve(a, b, bend = .16) {
     const mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2, dx = b.x - a.x, dy = b.y - a.y;
@@ -254,7 +261,7 @@ window.MapView = (() => {
     const gf = `400 11px ${SANS}`, gloss = z >= Z_GLOSS && !isSaid && w.gloss ? wrap(w.gloss, gf, inner, 4) : [];
     const h = pad + 12 + title.length * th + (gloss.length ? 5 + gloss.length * 14 : 0) + pad - 2;
     const x = Math.round(sx(w.x) - cw / 2), y = Math.round(sy(w.y) - h / 2);
-    const hot = hover?.type === 'work' && hover.id === w.id, chosen = sel.works.size === 1 && sel.works.has(w.id);
+    const hot = (hover?.type === 'work' && hover.id === w.id) || peeked === w.id, chosen = sel.works.size === 1 && sel.works.has(w.id);
     ctx.save(); ctx.globalAlpha = alpha * (lit(w) ? 1 : .3);
     if (hot) { ctx.translate(x + cw / 2, y + h / 2); ctx.scale(1.035, 1.035); ctx.translate(-x - cw / 2, -y - h / 2); }
     ctx.shadowColor = hot ? 'rgba(50,34,20,.36)' : 'rgba(50,34,20,.2)'; ctx.shadowBlur = hot ? 18 : 8; ctx.shadowOffsetY = hot ? 6 : 2;
@@ -267,7 +274,7 @@ window.MapView = (() => {
     ctx.font = `400 9.5px ${MONO}`; ctx.fillStyle = 'rgba(43,38,34,.7)';
     const when = w.kind === 'said' ? shortDay(w.date).replace(/^\d+ /, '') : shortDay(w.date), room = inner - width(when, ctx.font) - 22;
     let src = source(w); if (width(src, ctx.font) > room) { while (src.length > 4 && width(src + '…', ctx.font) > room) src = src.slice(0, -1); src += '…'; }
-    symbol(w.kind, x + pad + 5, y + pad + 5, 3.4);
+    symbol(w.kind, x + pad + 5, y + pad + 5, 3.6, INK, 1);
     ctx.font = `400 9.5px ${MONO}`; ctx.fillStyle = 'rgba(43,38,34,.7)'; ctx.textAlign = 'left';
     ctx.fillText(src, x + pad + 14, y + pad + 8); ctx.textAlign = 'right'; ctx.fillText(when, x + cw - pad, y + pad + 8); ctx.textAlign = 'left';
     ctx.font = tf; ctx.fillStyle = hot ? RUST : '#26211c';
@@ -314,7 +321,7 @@ window.MapView = (() => {
       ctx.setLineDash([]);
     }
     const linked = new Set();
-    const one = hover?.type === 'work' ? at.get(hover.id) : sel.works.size === 1 ? at.get([...sel.works][0]) : null;
+    const one = hover?.type === 'work' ? at.get(hover.id) : peeked ? at.get(peeked) : sel.works.size === 1 ? at.get([...sel.works][0]) : null;
     if (one) {
       ctx.strokeStyle = 'rgba(178,58,30,.85)'; ctx.lineWidth = px(1.5);
       for (const l of one.links) { const o = at.get(l.to); if (o) { linked.add(o.id); curve(one, o, .12); ctx.stroke(); } }
@@ -323,13 +330,14 @@ window.MapView = (() => {
     screen();
     // Works. They arrive with the paint.
     const r = markRadius(z), cards = z >= Z_CARD - .25 ? Math.min(1, (z - (Z_CARD - .25)) / .25) : 0;
+    const lettered = Math.max(0, Math.min(1, (z - Z_TITLE * .82) / (Z_TITLE * .18)));
     const shown = plan(z), view = [wx(-140), wy(-90), wx(W + 140), wy(H + 90)], arrived = Math.max(0, (grow - .35) / .65);
     const visible = works.filter(w => w.x > view[0] && w.x < view[2] && w.y > view[1] && w.y < view[3]);
     for (const w of visible) {
-      const x = sx(w.x), y = sy(w.y), hot = hover?.type === 'work' && hover.id === w.id, chosen = sel.works.size === 1 && sel.works.has(w.id);
+      const x = sx(w.x), y = sy(w.y), hot = (hover?.type === 'work' && hover.id === w.id) || peeked === w.id, chosen = sel.works.size === 1 && sel.works.has(w.id);
       if (cards < 1) {
         ctx.globalAlpha = (1 - cards) * (lit(w) ? 1 : .25) * arrived;
-        symbol(w.kind, x, y, hot || chosen ? r * 1.5 : linked.has(w.id) ? r * 1.25 : r, hot || chosen ? RUST : INK);
+        symbol(w.kind, x, y, hot || chosen ? r * 1.5 : linked.has(w.id) ? r * 1.25 : r, hot || chosen ? RUST : INK, lettered);
         if (hot || chosen || linked.has(w.id)) { ctx.beginPath(); ctx.arc(x, y, r * (hot || chosen ? 1.5 : 1.25) + 4, 0, 2 * Math.PI); ctx.strokeStyle = RUST; ctx.lineWidth = 1.5; ctx.stroke(); }
         hits.push({ type: 'work', id: w.id, at: [x, y], reach: Math.max(r + 4, 8) });
       }
@@ -430,6 +438,11 @@ window.MapView = (() => {
     for (const kind of ['pattern', 'area']) for (const h of hits) if (h.type === kind && x >= h.box[0] && x <= h.box[2] && y >= h.box[1] && y <= h.box[3]) return h;
     return null;
   }
+  function painted(x, y) {
+    if (!amounts) return true;
+    const i = Math.round(x / amounts.step), j = Math.round(y / amounts.step);
+    return i >= 0 && j >= 0 && i < amounts.nx && j < amounts.ny && amounts.field[(j * amounts.nx + i) * 4 + 3] > .45;
+  }
   function setHover(h, x, y) {
     const same = (hover?.type === h?.type && hover?.id === h?.id);
     if (!same) { hover = h ? { type: h.type, id: h.id } : null; dirty = true; cv.style.cursor = h ? 'pointer' : drag ? 'grabbing' : 'grab'; }
@@ -462,7 +475,7 @@ window.MapView = (() => {
       pointers.delete(e.pointerId); if (pointers.size < 2) pinch = null;
       if (!drag) return;
       const d = drag; drag = null; cv.style.cursor = 'grab';
-      if (d.moved <= 4) { const box = cv.getBoundingClientRect(), h = pick(e.clientX - box.left, e.clientY - box.top); if (h) cb.onOpen?.(h); else cb.onMiss?.(); return; }
+      if (d.moved <= 4) { const box = cv.getBoundingClientRect(), h = pick(e.clientX - box.left, e.clientY - box.top); if (h) cb.onOpen?.(h); else cb.onMiss?.({ outside: !painted(wx(e.clientX - box.left), wy(e.clientY - box.top)) }); return; }
       if (performance.now() - d.t < 60 && Math.hypot(d.vx, d.vy) > .15) velocity = { x: d.vx, y: d.vy };
     };
     cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up);
@@ -473,6 +486,7 @@ window.MapView = (() => {
       if (!zoomGoal || !anchor || Math.hypot(anchor.sx - x, anchor.sy - y) > 2) anchor = { sx: x, sy: y, wx: wx(x), wy: wy(y) };
       const step = e.ctrlKey ? -e.deltaY * .012 : -e.deltaY * (e.deltaMode ? .08 : .0022);
       zoomGoal = Math.max(zMin, Math.min(Z_MAX, (zoomGoal || cam.z) * Math.exp(step)));
+      if (step < 0 && zoomGoal <= zFit * 1.03) home(520);          // pulling all the way back lands on the whole map
       cb.onHover?.(null);
     }, { passive: false });
     cv.addEventListener('dblclick', e => { const box = cv.getBoundingClientRect(); zoomAt(1.9, e.clientX - box.left, e.clientY - box.top); });
@@ -490,7 +504,7 @@ window.MapView = (() => {
     patterns.sort((a, b) => size(b.id) - size(a.id));
     for (const p of patterns) p.weight = size(p.id) / most;
     const paints = new Map(patterns.map(p => [p.id, css(p.rgb)]));
-    for (const w of works) w.paint = colouring === 'source' ? css(SOURCE[w.kind]) : paints.get(w.patterns[0]?.[0]) || '#b9b4a8';
+    for (const w of works) w.paint = paints.get(w.patterns[0]?.[0]) || '#b9b4a8';
     plans.clear(); wrapped.clear(); buildField(); dirty = true;
   }
   return {
@@ -516,8 +530,11 @@ window.MapView = (() => {
       if (ids.length === 1) { const w = at.get(ids[0]); if (w) fly({ x: w.x, y: w.y, z: Math.max(cam.z, Z_CARD + .3) }); }
       else fit(ids, { maxZoom: pattern ? 1.9 : 1.3 });
     },
-    setColouring(mode) { if (mode === colouring) return; colouring = mode; setWorks(works); if (!still) { grow = .3; growStart = performance.now() - 2600 * .11; } dirty = true; },
-    sourcePaint: () => Object.fromEntries(Object.entries(SOURCE).map(([k, rgb]) => [k, css(rgb)])),
+    peek(id) { const next = id && at.has(id) ? id : null; if (next !== peeked) { peeked = next; dirty = true; } },      // mark one work, as hovering it would
+    around() {                                             // the topics nearest the middle of the view, nearest first
+      const reach = Math.min(W - inset - insetLeft, H) / 2 / cam.z;
+      return patterns.map(p => [Math.hypot(p.x - cam.x, p.y - cam.y), p.id]).filter(d => d[0] < reach).sort((a, b) => a[0] - b[0]).map(d => d[1]);
+    },
     focusWorks(ids) { if (!ids) focusPatterns = null; else { focusPatterns = new Set(ids); focusPatterns.pattern = new Set(); } dirty = true; },
     focusPatterns(ids) { if (!ids) focusPatterns = null; else { focusPatterns = new Set(ids.flatMap(p => [...(byPattern.get(p) || [])])); focusPatterns.pattern = new Set(ids); } dirty = true; },
     fit, home, zoomAt,
