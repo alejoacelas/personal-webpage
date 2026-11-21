@@ -1,0 +1,27 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alejo Acelas</title>
+<style>
+*{box-sizing:border-box}body{margin:0}button,input,select,textarea{font:inherit}button{color:inherit;cursor:pointer}button.entry{border:0;color:inherit;background:none;text-align:inherit;font:inherit;padding:0}a{color:inherit}:focus-visible{outline:3px solid #5791e3;outline-offset:3px}
+dialog.archive-reader{width:min(630px,93vw);max-height:85dvh;overflow:auto;border:1px solid #bbb9b3;padding:clamp(20px,5vw,42px);border-radius:6px;background:#fffcf6;color:#25251f;box-shadow:0 20px 100px #0003;font:17px/1.6 Georgia,serif}
+.archive-reader::backdrop{background:#19181380}.archive-reader .reader-bar{font:13px system-ui;display:flex;align-items:center;justify-content:space-between;gap:12px}.reader-bar button{background:transparent;border:1px solid #b4afa4;padding:5px 11px;border-radius:4px}.archive-reader h2{font:normal clamp(30px,5vw,45px)/1.08 Georgia,serif;letter-spacing:-.035em;margin:24px 0 16px}.source-prose,.source-link{overflow-wrap:anywhere}.source-link a{font-weight:bold}
+</style></head><body><main id="layout"></main><dialog class="archive-reader" aria-labelledby="read-title"><div class="reader-bar"><span id="read-meta"></span><button id="close-reader">Close</button></div><h2 id="read-title"></h2><div id="read-body"></div></dialog>
+<script type="module">
+import {items,ui} from './archive.mjs';
+const name=location.pathname.split('/').pop().replace('.html','');
+const layout=await import('./'+name+'.mjs');
+const style=document.createElement('style'); style.textContent=layout.css;document.head.append(style);
+document.title=({edition:'Sunday edition',stream:'Stream',cabinet:'Card catalogue',atlas:'Topic atlas',room:'Reading room'})[name]+' — Alejo Acelas';
+document.querySelector('#layout').innerHTML=layout.default(items,ui);
+layout.init?.(items,ui);
+const dialog=document.querySelector('dialog.archive-reader');
+document.addEventListener('click',e=>{
+ const button=e.target.closest('[data-read]');
+ if(!button)return;
+ const item=items.find(i=>i.id===button.dataset.read);
+ document.querySelector('#read-title').textContent=item.title;
+ document.querySelector('#read-meta').textContent=ui.meta(item);
+ document.querySelector('#read-body').innerHTML=ui.read(item);
+ dialog.showModal();dialog.scrollTop=0;
+});
+document.querySelector('#close-reader').onclick=()=>dialog.close();
+</script></body></html>

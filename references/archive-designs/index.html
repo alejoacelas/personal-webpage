@@ -1,0 +1,54 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Five ways to browse — Alejo Acelas</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#eeeae3;color:#22221e;font:15px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}a,button{color:inherit}button,input,textarea{font:inherit}a:focus-visible,button:focus-visible,textarea:focus-visible{outline:3px solid #246ba1;outline-offset:3px}
+#overview{max-width:1520px;margin:auto;padding:34px clamp(18px,4vw,72px) 60px}.head{display:flex;align-items:baseline;justify-content:space-between;gap:20px;border-top:3px solid;padding-top:12px;margin-bottom:28px}.head h1{font:normal clamp(36px,5.4vw,80px)/1 Georgia,serif;letter-spacing:-.06em;margin:0}.head span{color:#565650}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 24px}
+.tile{color:inherit;text-decoration:none;display:block}.mini{position:relative;display:block;width:100%;aspect-ratio:1.95;overflow:hidden;border:1px solid #b6b2a8;background:#fff;container-type:inline-size;pointer-events:none}.mini iframe{width:1100px;height:780px;transform-origin:0 0;transform:scale(calc(100cqw / 1100px));border:0;pointer-events:none}.tile:hover .mini{outline:2px solid #262622}.tile header{display:flex;align-items:baseline;justify-content:space-between;margin:10px 0 1px}.tile h2{font:normal 26px Georgia,serif;letter-spacing:-.045em;margin:0}.tile p{margin:0;color:#55554d}.open{font-size:21px}
+#work{height:100dvh;display:grid;grid-template-rows:auto minmax(0,1fr);background:#fff}#work[hidden],#overview[hidden],[hidden]{display:none!important}#bar{background:#252522;color:#f5f2e9;display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:8px 16px;font-size:13px}#bar a{text-decoration:none}#bar a:hover{text-decoration:underline}#bar select,#bar button{color:inherit;background:#33332e;border:1px solid #67675c;padding:5px 9px;border-radius:4px}#bar select{font:inherit}.spacer{flex:1}#favorite[aria-pressed=true]{background:#f2dd9c;color:#21211c}#frame{width:100%;height:100%;border:0}#notes{position:absolute;z-index:2;right:14px;top:54px;width:min(345px,92vw);background:#fffdf7;border:1px solid #b5b0a4;padding:16px;box-shadow:0 6px 20px #0002}#notes label{display:block;font-weight:600}#notes textarea{margin:8px 0;width:100%;min-height:100px;resize:vertical;padding:8px}#notes button{padding:5px 12px}#feedback{font-size:12px;margin-left:10px}.keys{font-size:12px;color:#cccac1}
+@media(max-width:720px){.grid{grid-template-columns:1fr}.head{display:block}.head span{display:block;margin-top:7px}.keys{display:none}#bar{gap:6px;padding:7px}.spacer{display:none}#bar select{max-width:125px}#overview{padding-top:18px}}
+</style></head><body>
+<main id="overview"><header class="head"><h1>Five ways to browse</h1><span>Alejo Acelas / Website studies</span></header><div class="grid" id="grid"></div></main>
+<section id="work" hidden><nav id="bar" aria-label="Design review"><a href="/">← All five</a><select aria-label="Choose design" id="choice"></select><span class="keys">← → switch designs</span><span class="spacer"></span><button id="favorite" aria-pressed="false">☆ Favourite</button><button id="annotate" aria-expanded="false">Notes</button></nav><div id="notes" hidden><label for="note">What would you keep or change?</label><textarea id="note"></textarea><button id="save">Save note</button><span id="feedback" role="status"></span></div><iframe id="frame" title="Selected website design"></iframe></section>
+<script type="module">
+const concepts=[
+ ['atlas','Topic atlas','Start with a question. Follow it to related work.'],
+ ['edition','Sunday edition','An editorial front page with a lead story and a full contents list.'],
+ ['stream','Stream','Read everything in date order, across sources.'],
+ ['cabinet','Card catalogue','Browse drawers of drafts, templates, posts and call notes.'],
+ ['room','Reading room','Pick a title and read it beside the index.']
+];
+const $=selector=>document.querySelector(selector);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const selected=new URLSearchParams(location.search).get('design');
+const index=concepts.findIndex(c=>c[0]===selected);
+const state=await fetch('/review').then(r=>r.json());
+if(index<0){
+ $('#grid').innerHTML=concepts.map(([id,name,description])=>`<a class="tile" href="?design=${id}"><span class="mini" inert><iframe title="" tabindex="-1" src="/${id}.html"></iframe></span><header><h2>${name}${state.favorite===id?' ★':''}</h2><span class="open" aria-hidden="true">↗</span></header><p>${description}</p></a>`).join('');
+ // Scale previews to the card width, including browsers without typed CSS arithmetic.
+ const resize=new ResizeObserver(entries=>entries.forEach(e=>e.target.firstElementChild.style.transform='scale('+e.contentRect.width/1100+')'));
+ document.querySelectorAll('.mini').forEach(el=>resize.observe(el));
+}else{
+ $('#overview').hidden=true;$('#work').hidden=false;
+ const choice=$('#choice');choice.innerHTML=concepts.map(([id,name])=>`<option value="${id}">${esc(name)}</option>`).join('');choice.value=selected;
+ $('#frame').src='/'+selected+'.html';
+ choice.onchange=()=>location.assign('?design='+choice.value);
+ const favorite=$('#favorite'),note=$('#note'),feedback=$('#feedback');
+ function mark(){const active=state.favorite===selected;favorite.setAttribute('aria-pressed',String(active));favorite.textContent=active?'★ Favourite':'☆ Favourite';}
+ async function save(payload){
+  const result=await fetch('/review',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+  if(!result.ok) throw Error('Could not save');
+  Object.assign(state,await result.json());
+ }
+ mark();favorite.onclick=async()=>{favorite.disabled=true;try{await save({favorite:state.favorite===selected?'':selected});mark()}catch{favorite.textContent='Retry favourite'}finally{favorite.disabled=false}};
+ note.value=state.notes[selected]||'';
+ $('#annotate').onclick=()=>{const panel=$('#notes');panel.hidden=!panel.hidden;$('#annotate').setAttribute('aria-expanded',String(!panel.hidden));if(!panel.hidden)note.focus()};
+ $('#save').onclick=async()=>{try{await save({id:selected,note:note.value});feedback.textContent='Saved'}catch{feedback.textContent='Could not save'}};
+ note.oninput=()=>feedback.textContent='';
+ function keys(e){
+  if(e.altKey||e.metaKey||e.ctrlKey||e.shiftKey||e.defaultPrevented||e.target.closest?.('textarea,input,select,button,[role=tablist]')||e.target.ownerDocument?.querySelector('dialog[open]'))return;
+  const dir={ArrowLeft:-1,ArrowRight:1}[e.key];if(!dir)return;
+  e.preventDefault();location.assign('?design='+concepts[(index+dir+concepts.length)%concepts.length][0]);
+ }
+ document.addEventListener('keydown',keys);
+ $('#frame').onload=()=>$('#frame').contentDocument.addEventListener('keydown',keys);
+}
+</script></body></html>
