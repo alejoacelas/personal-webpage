@@ -4,6 +4,7 @@
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { createRequire } from 'node:module';
+import { bodyText } from '../wiki/text.mjs';
 const Search = createRequire(import.meta.url)('../wiki/search.js');
 
 let ready;
@@ -12,7 +13,9 @@ function load() {
     const text = readFileSync(path.join(process.cwd(), 'wiki/data.publish.js'), 'utf8');
     const D = JSON.parse(text.replace(/^window\.DATA = /, '').replace(/;\s*$/, ''));
     const labels = new Map(D.patterns.map(p => [p.id, p.label]));
-    ready = { D, labels, search: Search.build(D.works, D.patterns, id => labels.get(id)) };
+    // The page searches the start of each work; here every word of the published text counts, so a work that mentions something late is still found.
+    const works = D.works.map(w => ({ ...w, search: w.search + ' ' + bodyText(w) }));
+    ready = { D, labels, search: Search.build(works, D.patterns, id => labels.get(id)) };
   }
   return ready;
 }
@@ -25,7 +28,8 @@ export function answer(query, n, base, loaded = load()) {
   if (!top.length) return `Nothing on alejoacelas.com matches "${q}". Try fewer or different words, or read the index: ${base}/works.txt\n`;
   return `Search of alejoacelas.com for "${q}": ${found.works.length} works match; the best ${top.length} are below. Open a work's text address to read it in full.\n\n` +
     (found.topics.length ? `Topics that match: ${found.topics.slice(0, 3).map(p => `${p.label} (${base}/topics/${p.id}.txt)`).join('; ')}\n\n` : '') +
-    top.map((x, i) => `${i + 1}. ${x.w.title}\n   ${KIND[x.w.kind]}, ${x.w.date.slice(0, x.w.kind === 'said' ? 7 : 10)}. ${x.w.gloss}\n   Text: ${base}/works/${x.w.id}.txt\n   On the map: ${base}/#/w/${x.w.id}`).join('\n\n') + '\n';
+    top.map((x, i) => `${i + 1}. ${x.w.title}\n   ${KIND[x.w.kind]}, ${x.w.date.slice(0, x.w.kind === 'said' ? 7 : 10)}. ${x.w.gloss}\n   Text: ${base}/works/${x.w.id}.txt\n   On the map: ${base}/#/w/${x.w.id}`).join('\n\n') +
+    `\n\nResults are ranked by how well the words match and weak matches are left out. To count or list every mention of something, download ${base}/llms-full.txt and search it.\n`;
 }
 
 export default function handler(req, res) {

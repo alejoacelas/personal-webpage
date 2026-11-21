@@ -22,6 +22,15 @@ function toText(html, shift = 2) {
     .replace(/[ \t]+\n/g, '\n').replace(/\n{3,}/g, '\n\n').trim();
 }
 
+// The whole published text of one work, as plain text.
+export function bodyText(w) {
+  if (w.kind === 'post') return [w.slack.replyingTo ? `(Replying in a thread. ${w.slack.replyingTo})` : '', ...w.slack.messages.map(m => toText(m.html)), w.slack.startsThread && w.slack.replies ? `(${w.slack.replies} ${w.slack.replies === 1 ? 'reply' : 'replies'} in the thread, not shown.)` : ''].filter(Boolean).join('\n\n');
+  if (w.kind === 'doc') return w.doc?.html ? toText(w.doc.html) + (w.doc.cut ? '\n\n(The copy stops here; the rest is in the linked document.)' : '') : '';
+  if (w.kind === 'tool') { const t = w.tool || {}; return t.unavailable ? '' : t.gist ? (t.files || []).map(f => `### ${f.name}\n\n${toText(f.html)}`).join('\n\n') : [t.description, t.readme ? `### README\n\n${toText(t.readme, 3)}` : ''].filter(Boolean).join('\n\n'); }
+  if (w.kind === 'said') { const ex = w.said.excerpt; return ex ? ex.turns.map(t => t.me ? `Alejo: ${t.me}` : `[${ex.other}: ${t.other}]`).join('\n\n') + `\n\nThe quote: "${w.said.text}"\n(${w.said.setting}. Alejo's words are as spoken, with cuts marked; what the other person said is summarised.)` : `"${w.said.text}"\n(${w.said.setting}.)`; }
+  return '';
+}
+
 export function textFiles(D, base = 'https://alejoacelas.com') {
   const P = new Map(D.patterns.map(p => [p.id, p]));
   const works = [...D.works].sort((a, b) => b.date.localeCompare(a.date));
@@ -29,18 +38,11 @@ export function textFiles(D, base = 'https://alejoacelas.com') {
   const where = w => w.kind === 'post' ? `Slack post in ${w.slack.channel === 'private-channel' ? 'a private channel' : '#' + w.slack.channel}` : w.kind === 'said' ? 'Said on a call' : ({ doc: 'Google Doc', sheet: 'Google Sheet', repo: 'GitHub repository', gist: 'GitHub gist', site: 'Live site', file: 'Link' })[w.sub] || KIND[w.kind];
   const line = w => `- ${w.date.slice(0, w.kind === 'said' ? 7 : 10)} | ${KIND[w.kind]} | ${w.title} | ${w.gloss} | ${base}/works/${w.id}.txt`;
 
-  function body(w) {
-    if (w.kind === 'post') return [w.slack.replyingTo ? `(Replying in a thread. ${w.slack.replyingTo})` : '', ...w.slack.messages.map(m => toText(m.html)), w.slack.startsThread && w.slack.replies ? `(${w.slack.replies} ${w.slack.replies === 1 ? 'reply' : 'replies'} in the thread, not shown.)` : ''].filter(Boolean).join('\n\n');
-    if (w.kind === 'doc') return w.doc?.html ? toText(w.doc.html) + (w.doc.cut ? '\n\n(The copy stops here; the rest is in the linked document.)' : '') : '';
-    if (w.kind === 'tool') { const t = w.tool || {}; return t.unavailable ? '' : t.gist ? (t.files || []).map(f => `### ${f.name}\n\n${toText(f.html)}`).join('\n\n') : [t.description, t.readme ? `### README\n\n${toText(t.readme, 3)}` : ''].filter(Boolean).join('\n\n'); }
-    if (w.kind === 'said') { const ex = w.said.excerpt; return ex ? ex.turns.map(t => t.me ? `Alejo: ${t.me}` : `[${ex.other}: ${t.other}]`).join('\n\n') + `\n\nThe quote: "${w.said.text}"\n(${w.said.setting}. Alejo's words are as spoken, with cuts marked; what the other person said is summarised.)` : `"${w.said.text}"\n(${w.said.setting}.)`; }
-    return '';
-  }
   const work = (w, level = '#') => [
     `${level} ${w.title}`,
     [`${where(w)} · ${when(w)}`, w.patterns.length ? `Topics: ${w.patterns.map(p => P.get(p[0])?.label).filter(Boolean).join('; ')}` : '', w.url ? `Source: ${w.url}` : '', `On the map: ${base}/#/w/${w.id}`, `As text: ${base}/works/${w.id}.txt`].filter(Boolean).join('\n'),
     w.gloss ? `Summary: ${w.gloss}` : '',
-    body(w),
+    bodyText(w),
   ].filter(Boolean).join('\n\n');
 
   const count = k => works.filter(w => w.kind === k).length;

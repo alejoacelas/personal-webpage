@@ -169,7 +169,7 @@ for (const raw of items) {
     w.text = g.private || g.missing ? '' : (g.description || '') + ' ' + (g.readme || '').slice(0, 3000);
   } else if (i.kind === 'doc') {
     const body = i.body.replace(/^\s*\[from\]\([^)]*\)\s*/, '').replace(/^# .+\n+(# .+\n)/, '$1');
-    w.doc = { gdoc: gdocId(i.url), html: i.chars > 400 ? md(body) : '', cut: i.chars > i.body.length, chars: i.chars };
+    w.doc = { gdoc: gdocId(i.url), html: i.chars > 400 ? md(body) : '', cut: i.body.length < i.chars * .9,          // a copy a little shorter than the document has only lost whitespace chars: i.chars };
     w.text = i.body.slice(0, 6000);
   } else {
     w.text = i.body || '';

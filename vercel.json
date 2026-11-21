@@ -5,7 +5,7 @@
   "outputDirectory": "dist",
   "functions": {
     "api/*.mjs": {
-      "includeFiles": "wiki/{data.publish.js,search.js,rank.mjs}"
+      "includeFiles": "wiki/{data.publish.js,search.js,rank.mjs,text.mjs}"
     }
   },
   "headers": [
