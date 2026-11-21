@@ -45,7 +45,7 @@ http.createServer(async (req, res) => {
     }
     // Files come from this folder; the favicon lives in ../public.
     const name = path.normalize(url.pathname === '/' ? 'index.html' : url.pathname).replace(/^[/\\]+/, '').replace(/^(\.\.[/\\])+/, '');
-    const file = name === 'public/favicon.svg' ? path.join(here, '..', name) : path.join(here, name);
+    const file = name === 'favicon.svg' ? path.join(here, '..', 'public', name) : path.join(here, name);
     const body = await readFile(file);                 // read before answering, so a missing file is a clean 404
     res.writeHead(200, { 'Content-Type': types[path.extname(file)] || 'application/octet-stream', 'Cache-Control': 'no-store' });
     res.end(body);
