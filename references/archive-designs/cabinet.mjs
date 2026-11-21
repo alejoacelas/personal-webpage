@@ -1,33 +1,68 @@
-const drawers = [
-  ['Draft', 'Drafts', 'drafts'],
-  ['Template', 'Templates', 'templates'],
-  ['Slack', 'Slack posts', 'posts'],
-  ['Call note', 'Call notes', 'calls']
-];
+const featuredIds = ['159tncXDj-lS8zy40YB8WEuJWCkc8ov19duwgv7kOkBg','1xuLpOdGa2b470lAIqMPMwg36wm1INq0PQy0TIhRABDk'];
+const pageSize = 6;
+const monthFormat = new Intl.DateTimeFormat('en-GB', {year:'numeric',month:'long',timeZone:'UTC'});
 
 export default function cabinet(items, ui) {
-  const sections = drawers.map(([kind, name, slug]) => ({
-    kind, name, slug, files: items.filter(item => item.kind === kind)
-  })).filter(group => group.files.length);
-
-  function folder({ name, slug, files }) {
-    return `<section class="cab-folder cab-${slug}" id="cab-${slug}">
-      <h2 class="cab-tab">${name}</h2>
-      <div class="cab-stack">${files.map((item, index) => `<article class="cab-card">
-        <div class="cab-dateline"><span>${ui.esc(item.kind)}</span><time>${ui.date(item)}</time></div>
-        <h3>${ui.entry(item)}</h3>
-        ${(index === 0 && item.description) ? `<p>${ui.esc(item.description)}</p>` : ''}
-      </article>`).join('')}</div></section>`;
-  }
+  const featured = featuredIds.map(id => items.find(item => item.id === id)).filter(Boolean);
+  const kinds = [...new Set(items.map(item => item.kind))].sort();
+  const months = [...new Set(items.map(item => item.date.slice(0,7)))].sort().reverse();
   return `<div class="cabinet">
     <header class="cab-head"><div class="cab-wordmark"><span class="cab-mark" aria-hidden="true">a</span> Alejo Acelas</div><span>AI uplift consultant</span></header>
     <div class="cab-interior"><div class="cab-cover"><h1>Card <i>catalogue.</i></h1>
       <p>My working drafts, reusable prompts and notes on helping people use AI at work.</p></div>
-    <nav class="cab-index" aria-label="Jump to a drawer">${sections.map(s => `<a href="#cab-${s.slug}">${s.name} <small>${s.files.length}</small></a>`).join('')}</nav>
-    <div class="cab-shelves">${sections.map(folder).join('')}</div></div>
-  </div>`;
+    <div class="cab-workspace">
+    ${featured.length ? `<aside class="cab-feature"><h2>Try these tools</h2>${featured.map(i => `<article class="cab-tool"><div class="cab-dateline">Reusable prompt</div><h3>${ui.entry(i)}</h3><p>${ui.esc(i.description)}</p></article>`).join('')}</aside>` : ''}
+    <section class="cab-finder"><h2 class="cab-tab">Find an item</h2><div class="cab-stack">
+      <div class="cab-controls">
+        <label class="cab-search">Search the catalogue<input type="search" placeholder="Title, subject or phrase" autocomplete="off"></label>
+        <label>Type<select id="cab-kind"><option value="">All types</option>${kinds.map(v => `<option>${ui.esc(v)}</option>`).join('')}</select></label>
+        <label>Month<select id="cab-month"><option value="">All months</option>${months.map(v => `<option value="${ui.esc(v)}">${monthFormat.format(new Date(v+'-01'))}</option>`).join('')}</select></label>
+      </div>
+      <div class="cab-status"><span aria-live="polite"></span><button type="button" class="cab-reset">Clear filters</button></div>
+      <div class="cab-results"></div>
+      <nav class="cab-pager" aria-label="Result pages"><button type="button" data-step="-1">← Previous</button><button type="button" data-step="1">Next →</button></nav>
+    </div></section></div></div></div>`;
 }
 
+export function init(items, ui) {
+  const panel = document.querySelector('.cab-finder');
+  const search = panel.querySelector('input');
+  const kind = panel.querySelector('#cab-kind');
+  const month = panel.querySelector('#cab-month');
+  const reset = panel.querySelector('.cab-reset');
+  const pager = panel.querySelector('.cab-pager');
+  const previous = pager.querySelector('[data-step="-1"]');
+  const next = pager.querySelector('[data-step="1"]');
+  let page = 0;
+  function update() {
+    const words = search.value.trim().toLowerCase().split(/\s+/).filter(Boolean);
+    const matches = items.filter(i => {
+      const text = [i.title,i.topic,i.body,i.description].join(' ').toLowerCase();
+      return (!kind.value || kind.value === i.kind) && (!month.value || i.date.startsWith(month.value)) && words.every(w => text.includes(w));
+    });
+    const start = page * pageSize;
+    const slice = matches.slice(start, start+pageSize);
+    panel.querySelector('.cab-status span').textContent = matches.length ? `${start+1}–${start+slice.length} of ${matches.length} items` : 'No matching items';
+    reset.hidden = !search.value && !kind.value && !month.value;
+    panel.querySelector('.cab-results').innerHTML = slice.map(i => `<article class="cab-result"><div class="cab-dateline">${ui.meta(i)}</div><h3>${ui.entry(i)}</h3></article>`).join('');
+    pager.hidden = matches.length <= pageSize;
+    previous.disabled = page === 0;
+    next.disabled = start+pageSize >= matches.length;
+  }
+  function filter() { page=0; update(); }
+  search.addEventListener('input',filter);
+  kind.addEventListener('change',filter);
+  month.addEventListener('change',filter);
+  reset.onclick = () => { search.value=''; kind.value=''; month.value=''; filter(); search.focus(); };
+  pager.onclick = event => {
+    const button=event.target.closest('[data-step]');
+    if (!button || button.disabled) return;
+    page += Number(button.dataset.step); update();
+    const first=panel.querySelector('.cab-result button');
+    first?.focus();
+  };
+  update();
+}
 export const css = `
 .cabinet { --ink:#272a20; --wood:#484e36; --paper:#fffaf0; color:var(--ink); background:#eae5d6; min-height:100vh; font-family:Georgia,serif; }
 .cabinet * { box-sizing:border-box; }
@@ -39,34 +74,37 @@ export const css = `
 .cab-cover h1 { font:normal clamp(60px,8.6vw,124px)/.93 Georgia,serif; letter-spacing:-.075em; margin:0; }
 .cab-cover h1 i { font-weight:normal; }
 .cab-cover p { font:16px/1.42 Georgia,serif; max-width:24ch; margin:0 0 4px; }
-.cab-index { border-block:1px solid #a39f8c; display:flex; flex-wrap:wrap; gap:8px 32px; padding:11px 1px; font:13px/1.4 ui-monospace,monospace; }
-.cab-index a { text-decoration:none; color:inherit; }
-.cab-index a:hover { text-decoration:underline; }
-.cab-index small { color:#615d4a; font-size:11px; vertical-align:super; }
-.cab-shelves { padding:33px 0 0; display:grid; grid-template-columns:1fr 1fr; align-items:start; gap:37px 32px; }
-.cab-folder { --stock:#c9cdac; --tab:#d9ddbc; scroll-margin:76px; min-width:0; padding:0 0 9px; background:transparent; }
-.cab-templates { --stock:#d8bc94; --tab:#e9cfa8; }
-.cab-posts { --stock:#b6c3bd; --tab:#c5d3ce; }
-.cab-calls { --stock:#d0b4ab; --tab:#e1c6bd; }
-.cab-tab { width:fit-content; min-width:129px; padding:8px 26px 7px 15px; margin:0 0 -1px 0; background:var(--tab); border:1px solid #99937b; border-bottom:none; border-radius:8px 13px 0 0; position:relative; z-index:1; transform:skewX(-5deg); transform-origin:left bottom; font:700 15px/1.25 ui-monospace,monospace; }
-.cab-stack { background:linear-gradient(170deg,var(--tab),var(--stock)); border:1px solid #99937b; border-radius:0 8px 8px 8px; padding:11px 12px 15px; box-shadow:0 2px 0 -1px #a8a389,0 5px 0 -3px #b7b094,0 9px 15px -12px #544b32; }
-.cab-card { position:relative; padding:13px 16px 15px 28px; background:var(--paper); border:1px solid #beb8a4; border-radius:2px; box-shadow:0 2px 1px -1px #918a71; }
-.cab-card + .cab-card { margin-top:5px; }
-.cab-card::before { content:""; position:absolute; left:9px; top:18px; width:6px; height:6px; border-radius:50%; background:var(--stock); box-shadow:inset 0 1px 1px #817c69; }
-.cab-dateline { display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid #cab6a3; padding:0 0 4px; color:#665f51; font:10px/1.4 ui-monospace,monospace; text-transform:uppercase; letter-spacing:.09em; }
-.cab-card h3 { margin:9px 0 0; font:normal clamp(18px,2.0vw,27px)/1.13 Georgia,serif; letter-spacing:-.03em; }
-.cab-card h3 :is(button,a) { appearance:none; background:none; border:0; padding:0; font:inherit; color:inherit; text-align:left; text-decoration:none; cursor:pointer; letter-spacing:inherit; }
-.cab-card h3 :is(button,a)::after { content:""; position:absolute; inset:0; }
-.cab-card:focus-within,.cab-card:hover { outline:1px solid #746f56; background:#fffdf7; }
-.cab-card h3 :is(button,a):hover { text-decoration:underline; text-underline-offset:3px; }
-.cab-card p { margin:8px 0 0; color:#595548; font:14px/1.45 Georgia,serif; }
-@media(max-width:700px) {
+ .cab-workspace { border-top:1px solid #a39f8c; padding-top:30px; display:flex; gap:clamp(24px,5vw,80px); align-items:flex-start; }
+.cab-feature { flex:0 0 30%; }
+.cab-feature h2 { font:italic 30px/1.05 Georgia,serif; margin:0 0 15px; letter-spacing:-.04em; }
+.cab-tool { background:var(--paper); padding:18px 18px 20px; border:1px solid #c7c1ae; border-top:4px solid #a7ac8e; box-shadow:2px 3px #d6d0be; margin:0 0 13px; }
+.cab-tool h3 { font:normal 26px/1.08 Georgia,serif; letter-spacing:-.04em; margin:13px 0 6px; }
+.cab-tool p { font:15px/1.45 Georgia,serif; color:#5e5c4f; margin:8px 0 0; }
+.cab-finder { flex:1; min-width:0; }
+.cab-tab { width:fit-content; padding:7px 22px 6px 14px; margin:0 0 -1px; border:1px solid #99937b; border-bottom:none; border-radius:7px 10px 0 0; background:#d9ddbc; font:600 15px ui-monospace,monospace; position:relative; }
+.cab-stack { background:#d9ddbc; padding:14px; border:1px solid #99937b; border-radius:0 8px 8px 8px; box-shadow:0 3px 0 -1px #aba78e; }
+.cab-controls { display:grid; grid-template-columns:minmax(0,1.8fr) minmax(80px,1fr) minmax(95px,1fr); gap:8px; }
+.cab-controls label { display:grid; gap:5px; font:11px/1.2 ui-monospace,monospace; color:#464c39; }
+.cab-controls :is(input,select) { width:100%; min-width:0; background:#fffcf3; color:#23261d; border:1px solid #939880; border-radius:3px; padding:8px; font:14px/1.2 system-ui,sans-serif; min-height:36px; }
+.cab-status,.cab-pager { display:flex; justify-content:space-between; align-items:center; gap:8px; font:12px/1.4 ui-monospace,monospace; }
+.cab-status { min-height:43px; }
+.cab-pager { margin-top:12px; }
+.cab-status button,.cab-pager button { background:transparent; color:inherit; border:1px solid #92977f; border-radius:3px; padding:4px 7px; font:inherit; }
+.cabinet [hidden] { display:none; }
+.cabinet button:disabled { opacity:.4; cursor:default; }
+.cabinet button:not(:disabled):hover { text-decoration:underline; }
+.cab-result { background:var(--paper); padding:11px 15px 12px 27px; position:relative; border:1px solid #b6b29b; box-shadow:0 1px 1px #b6b6a1; }
+.cab-result + .cab-result { margin-top:4px; }
+.cab-result:before { content:""; width:6px; height:6px; background:#c9cdac; box-shadow:inset 0 1px 1px #817c69; border-radius:50%; position:absolute; left:9px; top:14px; }
+.cab-result h3 { margin:6px 0 0; font:400 19px/1.2 Georgia,serif; letter-spacing:-.025em; }
+.cab-dateline { padding-bottom:4px; border-bottom:1px solid #d7c9b1; font:10px/1.25 ui-monospace,monospace; text-transform:uppercase; letter-spacing:.07em; color:#5e6153; }
+@media(max-width:720px) {
  .cab-head { padding-inline:18px; }
- .cab-cover { display:block; }
- .cab-cover h1 { font-size:clamp(49px,12.9vw,85px); }
- .cab-cover p { margin:15px 0 0; max-width:40ch; }
- .cab-interior { padding-top:28px; }
- .cab-index { gap:9px 17px; font-size:12px; }
- .cab-shelves { grid-template-columns:1fr; gap:18px; padding-top:24px; }
+ .cab-cover { display:block; } .cab-cover h1 { font-size:clamp(49px,12.9vw,85px); }
+ .cab-cover p { max-width:40ch; margin:10px 0 0; }
+ .cab-interior { padding-top:26px; }
+ .cab-workspace { flex-direction:column; gap:24px; }
+ .cab-feature,.cab-finder { width:100%; } .cab-finder { order:-1; }
+ .cab-controls { grid-template-columns:1fr 1fr; } .cab-search { grid-column:1/-1; }
 }
 `;
