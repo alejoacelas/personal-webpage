@@ -7,6 +7,7 @@ import path from 'node:path';
 import os from 'node:os';
 import { fileURLToPath } from 'node:url';
 import { marked } from 'marked';
+import { layout } from './layout.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const src = process.env.WIKI_DATA || path.join(os.homedir(), 'best/desk/requested/2026-11/2026-11-21-website-wiki');
@@ -84,8 +85,10 @@ for (const dir of ['quotes', 'annotations']) {
 }
 
 // ---- Patterns and areas. Before consolidation, fall back to the scheme's patterns in one area.
-const patterns = (final?.patterns || scheme.patterns.map(p => ({ ...p, area: 'all', summary: p.definition, lead: [], related: [] })));
-const areas = final?.areas || [{ id: 'all', label: 'Everything', blurb: '' }];
+const patterns = (final?.patterns || scheme.patterns.map(p => ({ ...p, area: p.kind, summary: p.definition, lead: p.examples.slice(0, 4), related: [] })));
+const areas = final?.areas || [{ id: 'idea', label: 'Ideas he returns to', blurb: 'Provisional grouping until the agents finish.' }, { id: 'practice', label: 'Things he does and makes', blurb: 'Provisional grouping until the agents finish.' }, { id: 'project', label: 'Bodies of work', blurb: 'Provisional grouping until the agents finish.' }];
+const exampleOf = new Map();
+for (const p of scheme.patterns) for (const id of p.examples || []) (exampleOf.get(id) || exampleOf.set(id, []).get(id)).push({ id: p.id, strength: 2 });
 const patternIds = new Set(patterns.map(p => p.id));
 const labelToId = new Map([...scheme.patterns, ...patterns].map(p => [p.label.toLowerCase(), p.id]));
 const reassign = final?.reassign || {};
@@ -94,7 +97,7 @@ for (const a of final?.add || []) (adds.get(a.work) || adds.set(a.work, []).get(
 function resolvePatterns(a) {
   const got = new Map();
   const put = (id, strength) => { if (patternIds.has(id)) got.set(id, Math.max(got.get(id) || 0, strength)); };
-  for (const p of a.patterns || []) {
+  for (const p of a.patterns || (annotations.has(a.id) ? [] : exampleOf.get(a.id)) || []) {
     if (patternIds.has(p.id)) put(p.id, p.strength || 1);
     else for (const to of reassign[p.id] || []) put(to, p.strength || 1);
   }
@@ -187,7 +190,9 @@ const entries = await maybe('scheme/entries.json', { questions: [], arcs: [] });
 const questions = (entries.questions || []).map(q => ({ ...q, patterns: q.patterns.filter(p => patternIds.has(p)) })).filter(q => q.patterns.length);
 const arcs = (entries.arcs || []).map(a => ({ ...a, steps: a.steps.filter(s => byId.has(s.work)) })).filter(a => a.steps.length > 1);
 const mentions = [...mentionCount].filter(([, n]) => n >= 4).sort((a, b) => b[1] - a[1]).slice(0, 60).map(([name]) => name);
+const map = layout({ works, patterns: patterns.filter(p => count.get(p.id)), areas: areas.filter(a => patterns.some(p => p.area === a.id && count.get(p.id))) });
 const data = {
+  map,
   built: new Date().toISOString().slice(0, 10), dropped,
   areas, patterns: patterns.filter(p => count.get(p.id)), facets: scheme.facets, mentions, questions, arcs,
   works: works.map(({ text, ...w }) => ({ ...w, search: (w.title + ' ' + w.gloss + ' ' + w.mentions.join(' ') + ' ' + text).toLowerCase().replace(/\s+/g, ' ').slice(0, 4000) })),

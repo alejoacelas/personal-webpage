@@ -5,21 +5,28 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Alejo Acelas</title>
 <link rel="icon" href="../public/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header class="top">
-  <a class="name" href="#/">Alejo Acelas</a>
-  <nav class="lenses" aria-label="Arrange the works by"><span class="lenses-label">Arrange by</span><span id="lenses"></span></nav>
-  <button id="wander" title="Open a work at random (R)">Surprise me</button>
-  <label class="search"><span class="sr">Search</span><input id="q" type="search" placeholder="Search" autocomplete="off"><kbd>/</kbd></label>
-</header>
-<div class="shell" id="shell">
-  <main class="map" id="map" aria-label="All works"></main>
-  <aside class="reader" id="reader" aria-live="polite" hidden></aside>
+<canvas id="map" aria-label="A map of every work. The same works are listed under Read it as a list."></canvas>
+<div class="grain" aria-hidden="true"></div>
+<header class="plate" id="plate"></header>
+<div class="tools">
+  <label class="search"><span class="sr">Search</span><input id="q" type="search" placeholder="Search the map" autocomplete="off"><kbd>/</kbd></label>
 </div>
+<div class="zoom" role="group" aria-label="Zoom">
+  <button data-zoom="in" title="Zoom in (+)">+</button>
+  <button data-zoom="out" title="Zoom out (−)">−</button>
+  <button data-zoom="fit" title="See the whole map (0)">⤢</button>
+</div>
+<p class="hint">Scroll to zoom · drag to move</p>
+<aside class="reader" id="reader" aria-live="polite" hidden></aside>
 <div id="pop" role="tooltip" hidden></div>
 <script src="data.js"></script>
+<script src="map.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
