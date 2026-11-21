@@ -13,7 +13,7 @@ const destination=path.join(cache,'review.json');
 let state;
 try{state=JSON.parse(await readFile(destination,'utf8'))}catch(err){if(err.code!=='ENOENT')throw err;state={favorite:'',notes:{}}}
 const ids=['atlas','edition','stream','cabinet','room'];
-const routes=new Map([['/','explore.html'],['/explore','explore.html'],['/studies','index.html'],...['explore.css','landing.mjs','trail-links.json','explore.mjs','spatial.mjs','atlas-taxonomy.json','atlas-extra.json','atlas-sources.json'].map(name=>['/'+name,name]),['/archive.mjs','archive.mjs'],
+const routes=new Map([['/','explore.html'],['/explore','explore.html'],['/studies','index.html'],...['explore.css','constellation.mjs','landing.mjs','trail-links.json','explore.mjs','spatial.mjs','atlas-taxonomy.json','atlas-extra.json','atlas-sources.json'].map(name=>['/'+name,name]),['/archive.mjs','archive.mjs'],
  ...ids.flatMap(id=>[['/'+id+'.html','prototype.html'],['/'+id+'.mjs',id+'.mjs']]),
  ['/historical-documents.json','historical-documents.json'],['/historical-posts.json','historical-posts.json'],
  ['/documents.json',path.join(repo,'content/documents.json')],['/feed.json',path.join(repo,'public/feed.json')]
