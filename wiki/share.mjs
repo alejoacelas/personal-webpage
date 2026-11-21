@@ -9,7 +9,7 @@ import os from 'node:os';
 import { fileURLToPath } from 'node:url';
 
 const MARKS = new Set(['ok', 'edit', 'ask', 'no']);
-const EDIT_KEYS = new Set(['replace', 'drop_messages', 'drop_from', 'drop_link', 'title', 'gloss', 'pull', 'replying_to']);
+const EDIT_KEYS = new Set(['replace', 'drop_messages', 'drop_from', 'drop_link', 'keep_link', 'title', 'gloss', 'pull', 'replying_to']);
 const ANN_TEXT = ['title', 'gloss', 'pull', 'replying_to'];
 
 // Later files win, so corrections go in a file that sorts last.
@@ -62,9 +62,9 @@ export function applyEdits({ item, ann, repo }, rec) {
   for (const k of ANN_TEXT) if (typeof e[k] === 'string') work.ann[k] = e[k];
   const names = rec.names || [];
   if (work.ann.mentions) work.ann.mentions = work.ann.mentions.filter(m => !names.some(n => nameRe(n).test(m)));
-  // An edited document never links to its unedited original.
+  // An edited document never links to its unedited original, unless the edits removed only Alejo's own details (keep_link).
   const bodyEdited = e.replace?.length || e.drop_from || e.drop_messages?.length;
-  if (e.drop_link || (bodyEdited && ['doc', 'sheet', 'file'].includes(work.item.kind))) { work.item.url = ''; work.unlinked = true; }
+  if (e.drop_link || (bodyEdited && !e.keep_link && ['doc', 'sheet', 'file'].includes(work.item.kind))) { work.item.url = ''; work.unlinked = true; }
   return work;
 }
 
