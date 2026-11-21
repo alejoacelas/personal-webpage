@@ -1,91 +1,52 @@
-export default function readingRoom(items, ui) {
-  const glyphs = {Draft: '¶', Template: '▦', Slack: '#', 'Call note': '“'};
-  const rows = items.map((item, index) => `
-    <button type="button" class="room-row" data-room-row="${index}" aria-controls="room-text-${index}"${index === 0 ? ' aria-current="true"' : ''}>
-      <span class="room-glyph" aria-hidden="true">${glyphs[item.kind] || '·'}</span>
-      <span class="room-row-text"><span class="room-row-caption">${ui.esc(item.kind)}<span class="room-dot">/</span>${ui.esc(ui.date(item))}</span><span class="room-row-title">${ui.esc(item.title)}</span></span>
-    </button>`).join('');
-  const articles = items.map((item, index) => `
-    <article class="room-text" id="room-text-${index}" aria-labelledby="room-title-${index}"${index === 0 ? '' : ' hidden'}>
-      <div class="room-folio"><span>${ui.esc(item.kind)}</span><span>${ui.esc(ui.date(item))}</span></div>
-      <h1 id="room-title-${index}">${ui.esc(item.title)}</h1>
-      <div class="room-copy">${ui.read(item)}</div>
-    </article>`).join('');
-  return `<main class="reading-room">
-    <header class="room-mast"><div class="room-identity"><i class="room-book" aria-hidden="true"></i><strong>Alejo Acelas</strong></div><span>Independent AI uplift consultant</span></header>
-    <div class="room-frame">
-      <aside class="room-index" aria-label="Reading room contents">
-        <div class="room-index-heading"><h2>Contents</h2><span>${items.length} entries</span></div>
-        <div class="room-rows">${rows}</div>
-      </aside>
-      <section class="room-pane" aria-label="Selected reading">
-        <header class="room-deskbar">
-          <span class="room-roomname">Reading room</span><button type="button" class="room-contents" aria-expanded="false">☰ &nbsp; Contents</button>
-          <div class="room-paging">
-            <span class="room-position" aria-live="polite">1 / ${items.length}</span>
-            <button type="button" data-room-step="-1" aria-label="Previous entry" disabled>←</button>
-            <button type="button" data-room-step="1" aria-label="Next entry"${items.length <= 1 ? ' disabled' : ''}>→</button>
-          </div>
-        </header>
-        <div class="room-page">${articles}</div>
-      </section>
-    </div>
-  </main>`;
-}
-
-export function init() {
-  const root = document.querySelector('.reading-room');
-  const rows = [...root.querySelectorAll('[data-room-row]')];
-  const articles = [...root.querySelectorAll('.room-text')];
-  const steps = [...root.querySelectorAll('[data-room-step]')];
-  const contents = root.querySelector('.room-contents');
-  const pane = root.querySelector('.room-page');
-  let selected = 0;
-
-  function showContents(open) {
-    root.classList.toggle('room-list-open', open);
-    contents.setAttribute('aria-expanded', String(open));
-    if (open) rows[selected]?.focus({ preventScroll: true });
+const paths = [
+  {title:'Find your first AI project', intro:'Start with the work you actually do. These three pieces take you from spotting a bottleneck to mapping a process.',ids:['1793704230.839999','159tncXDj-lS8zy40YB8WEuJWCkc8ov19duwgv7kOkBg','1xuLpOdGa2b470lAIqMPMwg36wm1INq0PQy0TIhRABDk']},
+  {title:'Get an agent back on track',intro:'Try a prompt, see how it behaves on real work, then consider the cost of juggling several agents.',ids:['1793963939.881499','testing-prompts','1794907853.133389']}
+];
+function volumes(items) {
+  const byId = new Map(items.map(i=>[i.id,i]));
+  const editions = paths.map(p=>({...p,group:'Guided reading',entries:p.ids.map(id=>byId.get(id)).filter(Boolean)})).filter(p=>p.entries.length);
+  const months=new Map();
+  for(const item of items) {
+    const key=item.date.slice(0,7);
+    if(!months.has(key)) months.set(key,[]);
+    months.get(key).push(item);
   }
-  function select(index, focusIndex = false) {
-    if (!rows[index]) return;
-    rows[selected].removeAttribute('aria-current');
-    articles[selected].hidden = true;
-    selected = index;
-    rows[index].setAttribute('aria-current', 'true');
-    articles[index].hidden = false;
-    root.querySelector('.room-position').textContent = `${index + 1} / ${rows.length}`;
-    for (const step of steps) step.disabled = !rows[index + Number(step.dataset.roomStep)];
-    pane.scrollTop = 0;
-    const viewingList = root.classList.contains('room-list-open');
-    if (!focusIndex) showContents(false);
-    if (viewingList && !focusIndex) contents.focus({ preventScroll: true });
-    if (focusIndex) rows[index].focus();
-    if (!matchMedia('(max-width: 720px)').matches) {
-      const list = root.querySelector('.room-rows');
-      const row = rows[index].getBoundingClientRect();
-      const bounds = list.getBoundingClientRect();
-      if (row.bottom > bounds.bottom) list.scrollTop += row.bottom - bounds.bottom;
-      if (row.top < bounds.top) list.scrollTop -= bounds.top - row.top;
-    }
+  for(const [key,entries] of months) {
+    const title=new Intl.DateTimeFormat('en-GB',{month:'long',year:'numeric',timeZone:'UTC'}).format(new Date(key+'-01'));
+    editions.push({title,group:'Full archive by month',intro:'Every entry from '+title+', newest first.',entries});
   }
-  rows.forEach((row, index) => row.addEventListener('click', () => select(index)));
-  steps.forEach(step => step.addEventListener('click', () => select(selected + Number(step.dataset.roomStep))));
-  contents.addEventListener('click', () => showContents(!root.classList.contains('room-list-open')));
-  root.addEventListener('keydown', event => {
-    if (event.key === 'Escape' && root.classList.contains('room-list-open')) {
-      showContents(false);
-      contents.focus();
-    }
-    if (!event.target.closest('[data-room-row]')) return;
-    const offsets = {ArrowUp: -1, ArrowDown: 1};
-    if (Object.hasOwn(offsets, event.key)) {
-      event.preventDefault();
-      select(selected + offsets[event.key], true);
-    }
-  });
+  return editions;
 }
-
+export default function readingRoom(items,ui) {
+ const books=volumes(items);
+ return `<div class="reading-room">
+   <header class="room-mast"><div class="room-identity"><i class="room-book" aria-hidden="true"></i><strong>Alejo Acelas</strong></div><span>Independent AI uplift consultant</span></header>
+   <div class="room-shelf"><label for="room-volume">Choose a reading path or month</label><select id="room-volume">${['Guided reading','Full archive by month'].map(group=>`<optgroup label="${group}">${books.map((v,k)=>v.group===group?`<option value="${k}">${ui.esc(v.title)} (${v.entries.length})</option>`:'').join('')}</optgroup>`).join('')}</select></div>
+   <div class="room-frame"><aside class="room-index"><div class="room-index-heading"><h2>Contents</h2></div><div class="room-rows"></div></aside>
+   <section class="room-pane"><header class="room-deskbar"><span class="room-roomname">Reading room</span><button class="room-contents" aria-expanded="false">Contents</button><div class="room-paging"><span class="room-position" aria-live="polite"></span><button data-step="-1" aria-label="Previous reading">←</button><button data-step="1" aria-label="Next reading">→</button></div></header><div class="room-page"></div></section></div></div>`;
+}
+export function init(items,ui){
+ const books=volumes(items), root=document.querySelector('.reading-room');
+ const pick=s=>root.querySelector(s), volume=pick('#room-volume'), list=pick('.room-rows'), page=pick('.room-page'), contents=pick('.room-contents');
+ let index=0;
+ function toggle(open){root.classList.toggle('room-list-open',open);contents.setAttribute('aria-expanded',String(open));}
+ function render(){
+   const book=books[Number(volume.value)], item=book.entries[index];
+   const start=Math.floor(index/8)*8;
+   list.innerHTML=`<div class="room-chapter"><small>${ui.esc(book.group)}</small><h3>${ui.esc(book.title)}</h3><p>${ui.esc(book.intro)}</p></div>`+
+    book.entries.slice(start,start+8).map((i,k)=>`<button class="room-row" data-row="${start+k}" ${start+k===index?'aria-current="true"':''}><span class="room-glyph">${start+k+1}</span><span class="room-row-text"><span class="room-row-caption">${ui.meta(i)}</span><span class="room-row-title">${ui.esc(i.title)}</span></span></button>`).join('');
+   if(book.entries.length>8) list.innerHTML+=`<div class="room-batch"><button data-row="${start-8}" ${start===0?'disabled':''}>← Previous 8</button><button data-row="${start+8}" ${start+8>=book.entries.length?'disabled':''}>Next 8 →</button></div>`;
+   page.innerHTML=`<article class="room-text"><div class="room-folio">${ui.esc(book.title)} <span>${ui.meta(item)}</span></div><h1>${ui.esc(item.title)}</h1><div class="room-copy">${ui.read(item)}</div></article>`;
+   pick('.room-position').textContent=(index+1)+' / '+book.entries.length;
+   pick('[data-step="-1"]').disabled=index===0;pick('[data-step="1"]').disabled=index===book.entries.length-1;page.scrollTop=0;
+ }
+ function select(next,focusList=false){index=next;render();if(focusList)list.querySelector('[aria-current]')?.focus();else{toggle(false);if(matchMedia('(max-width:720px)').matches) contents.focus()}}
+ volume.onchange=()=>{index=0;toggle(false);render()};
+ root.addEventListener('click',e=>{const row=e.target.closest('[data-row]'),step=e.target.closest('[data-step]');if(row)select(Number(row.dataset.row));if(step)select(index+Number(step.dataset.step))});
+ contents.onclick=()=>{const open=!root.classList.contains('room-list-open');toggle(open);if(open)list.querySelector('[aria-current]')?.focus()};
+ root.addEventListener('keydown',e=>{if(e.key==='Escape'){toggle(false);contents.focus();return}if(!e.target.closest('.room-row'))return;const offset={ArrowUp:-1,ArrowDown:1}[e.key];if(offset&&books[Number(volume.value)].entries[index+offset]){e.preventDefault();select(index+offset,true)}});
+ render();
+}
 export const css = `
 body:has(.reading-room){margin:0;background:#101719;color:#eae6dc}
 .reading-room,.reading-room *{box-sizing:border-box}
@@ -152,4 +113,14 @@ body:has(.reading-room){margin:0;background:#101719;color:#eae6dc}
 .room-contents{display:block;font-size:14px;padding:6px 8px;margin-left:-8px;border-radius:4px}
 .room-deskbar{min-height:54px;padding:0 15px}
 }
+
+.room-shelf{max-width:1550px;margin:0 auto 14px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.room-shelf label,.room-chapter small{font:12px/1.4 ui-monospace,monospace;color:#cbbd9b}
+.room-shelf select{max-width:100%;padding:8px 12px;background:#26302e;color:#fff3d8;border:1px solid #646b5d;border-radius:4px}
+.room-chapter{padding:20px 21px;border-bottom:1px solid var(--line)}
+.room-chapter h3{margin:6px 0;font:normal 25px/1.15 Georgia,serif;color:#ffedbf}
+.room-chapter p{font-size:14px;margin:0;color:#c6cbbf}
+.room-frame{height:clamp(510px,calc(100svh - 185px),1050px)}
+.room-batch{display:flex;justify-content:space-between;padding:12px;font-size:13px}.room-batch button:disabled{opacity:.35}
+@media(max-width:720px){.room-shelf{gap:5px}.room-shelf label{width:100%}.room-frame{height:calc(100svh - 162px)}}
 `;
