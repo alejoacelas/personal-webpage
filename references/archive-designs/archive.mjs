@@ -8,10 +8,19 @@ const postInfo = {
   '1793963939.881499': ['Ask the model to restate your intent', 'Working with agents', 'A prompt I use when the model follows my instructions but misses what I’m trying to do.'],
   '1793704230.839999': ['What stops you getting more out of AI?', 'Using AI at work', 'Is the bottleneck ideas, know-how, motivation, or something else?']
 };
-const docTopics = ['Thinking about AI','Working with agents','Using AI at work','Using AI at work','Tools for research'];
+const docTopics = {
+  '1aBy72YNPTikWAfX2o5ikWAnGOzKI8qLaT_iZJDN3tPE':'Thinking about AI',
+  '1Wy-mFv1J0J56rziT3QBcxoM7EaI00JX21bEwUhBOlbc':'Working with agents',
+  '159tncXDj-lS8zy40YB8WEuJWCkc8ov19duwgv7kOkBg':'Using AI at work',
+  '1xuLpOdGa2b470lAIqMPMwg36wm1INq0PQy0TIhRABDk':'Using AI at work',
+  '1OgM0T1_WPyntA5j1cmZ6_abO-WFFNrbtSGNZEwi7eiI':'Tools for research'
+};
 const callBody = 'I try prompts on my own transcripts first. I want to see what comes back and how often the AI stops to ask me a question.';
 export const items = [
-  ...docs.map(d => ({...d, id:d.url.split('/')[5], topic:docTopics[docs.indexOf(d)] || 'Using AI at work', body:d.description, links:[]})),
+  ...docs.map(d => {
+    const id = new URL(d.url).pathname.split('/')[3];
+    return {...d, id, topic:docTopics[id] || 'Using AI at work', body:d.description, links:[]};
+  }),
   ...feed.posts.map(p => {
     const [title,topic,description] = postInfo[p.ts] || [p.text.split(/[.!?]\s/)[0], 'Using AI at work', p.text.split('\n')[0]];
     return {id:p.ts, title, topic, description, body:p.text, links:p.links, url:'', kind:'Slack', date:new Date(Number(p.ts)*1000).toISOString().slice(0,10)};
