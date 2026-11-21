@@ -11,7 +11,7 @@ import { marked } from 'marked';
 import { createHash } from 'node:crypto';
 import { layout } from './layout.mjs';
 import { permalinks } from './permalinks.mjs';
-import { loadShare, markOf, applyEdits, problems, privatePeople } from './share.mjs';
+import { loadShare, markOf, applyEdits, problems, privatePeople, addressOf } from './share.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const src = process.env.WIKI_DATA || path.join(os.homedir(), 'best/desk/requested/2026-11/2026-11-21-website-wiki');
@@ -125,10 +125,15 @@ const review = process.argv.includes('--review');
 const share = await loadShare(src);
 // Channel names can carry a client's or a project's name; only the listed ones are shown.
 const openChannels = new Set(existsSync(path.join(src, 'share/channels.txt')) ? (await readFile(path.join(src, 'share/channels.txt'), 'utf8')).split(/\s+/) : []);
+const linked = new Set();    // addresses of works published with their link; a second entry for the same address doesn't block it
+const blocked = new Set();   // addresses no published text may link: works left out, or shown without their link
 function shown(raw) {
   const rec = share.get(raw.id), ann = annotations.get(raw.id) || {}, mark = markOf(annotations.get(raw.id), rec);
+  if (mark !== 'ok' && mark !== 'edit' && addressOf(raw)) blocked.add(addressOf(raw));
   if (mark === 'no' || (!review && mark !== 'ok' && mark !== 'edit')) { dropped++; return null; }
   const out = rec?.edits ? applyEdits({ item: raw, ann, repo: github[raw.id], excerpt: excerpts.get(raw.id) }, rec) : { item: raw, ann, repo: github[raw.id], excerpt: excerpts.get(raw.id) };
+  if (out.unlinked && addressOf(raw)) blocked.add(addressOf(raw));
+  else if (addressOf(raw)) linked.add(addressOf(raw));
   const note = mark === 'edit' ? `edited: ${rec.reason}` : mark === 'ask' ? `ask ${rec.ask.who}: ${rec.ask.question}` : mark === 'unreviewed' ? `not re-marked: ${ann.share_reason || ''}` : '';
   return { ...out, marks: { share: mark === 'ok' || !review ? 'ok' : 'check', shareReason: review ? note : '', ...(mark === 'edit' ? { edited: true } : {}) } };
 }
@@ -231,14 +236,14 @@ if (!review) {
   const people = await privatePeople(src);
   const found = [];
   const published = JSON.parse(serialized).works;   // as written, with hashed ids
-  for (const [n, w] of data.works.entries()) for (const p of problems(published[n], { ...share.get(w.id), names: [...(share.get(w.id)?.names || []), ...(excerptNames.get(w.id) || [])] }, people)) found.push(`${w.id} (${w.title}): ${p}`);
+  for (const [n, w] of data.works.entries()) for (const p of problems(published[n], { ...share.get(w.id), names: [...(share.get(w.id)?.names || []), ...(excerptNames.get(w.id) || [])] }, people, [...blocked].filter(b => !linked.has(b)))) found.push(`${w.id} (${w.title}): ${p}`);
   const { works: _, map: __, ...rest } = data;
   for (const p of problems(rest, null, people)) found.push(`patterns, questions or arcs: ${p}`);
   const leftover = ids.filter(id => /[a-z]{3}/.test(id) && serialized.includes(id));
   for (const id of leftover) found.push(`id still readable: ${id}`);
   if (found.length) { console.error(found.join('\n') + `\n${found.length} problems. data.js not written.`); process.exit(1); }
 }
-serialized = await permalinks({ serialized, internalIds: data.works.map(w => w.id), items, quotes, reassign: final?.reassign, src, review });
+serialized = await permalinks({ serialized, internalIds: data.works.map(w => w.id), items, quotes, reassign: final?.reassign, src, record: !review && process.argv.includes('--release') });
 await writeFile(path.join(here, 'data.js'), 'window.DATA = ' + serialized + ';\n');
 const kinds = {};
 for (const w of works) kinds[w.kind] = (kinds[w.kind] || 0) + 1;

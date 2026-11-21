@@ -14,7 +14,7 @@ const sourceOf = item =>
   : item.url ? 'url:' + item.url.replace(/[?#].*/, '').replace(/\/$/, '')
   : 'desk:' + item.id;
 
-export async function permalinks({ serialized, internalIds, items, quotes, reassign = {}, src, review }) {
+export async function permalinks({ serialized, internalIds, items, quotes, reassign = {}, src, record }) {
   const out = JSON.parse(serialized);
   const file = path.join(src, 'scheme/permalinks.json');
   const register = existsSync(file) ? JSON.parse(await readFile(file, 'utf8')) : { works: {}, patterns: {} };
@@ -27,17 +27,17 @@ export async function permalinks({ serialized, internalIds, items, quotes, reass
   const livePatterns = new Set(out.patterns.map(p => p.id));
   for (const [id, entry] of Object.entries(register.patterns)) {
     if (livePatterns.has(id) || redirects['p/' + id]) continue;
-    if (!review) entry.gone ??= today;
+    if (record) entry.gone ??= today;
     gone['p/' + id] = { since: entry.gone || today };
   }
   for (const [key, entry] of Object.entries(register.works)) {
     const id = now.get(key);
-    if (id && id !== entry.id) { (entry.former ??= []).push(entry.id); if (!review) entry.id = id; }
+    if (id && id !== entry.id) { (entry.former ??= []).push(entry.id); if (record) entry.id = id; }
     for (const former of entry.former || []) if (id) redirects['w/' + former] = 'w/' + id;
-    if (!id) { if (!review) entry.gone ??= today; for (const dead of [entry.id, ...(entry.former || [])]) gone['w/' + dead] = { since: entry.gone || today }; }
-    else if (!review) delete entry.gone;
+    if (!id) { if (record) entry.gone ??= today; for (const dead of [entry.id, ...(entry.former || [])]) gone['w/' + dead] = { since: entry.gone || today }; }
+    else if (record) delete entry.gone;
   }
-  if (!review) {            // only a publishing build adds to the register
+  if (record) {            // only a release adds to the register: node wiki/build.mjs --release
     for (const [key, id] of now) if (key) register.works[key] ??= { id, since: today };
     for (const id of livePatterns) { register.patterns[id] ??= { since: today }; delete register.patterns[id].gone; }
     await writeFile(file, JSON.stringify(register, null, 1) + '\n');

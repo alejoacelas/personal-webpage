@@ -78,6 +78,8 @@ window.MapView = (() => {
     const keep = Math.min(1, Math.max(0, (distance - .08) / .5)), m = .5 * (1 - keep * keep * (3 - 2 * keep));
     return vivid.map((v, k) => v + (earth[k] - v) * m);
   }
+  const SOURCE = { post: [.57, .38, .64], doc: [.36, .52, .80], tool: [.35, .62, .46], site: [.27, .62, .68], said: [.90, .70, .35], other: [.62, .60, .56] };
+  let colouring = 'topic';
   const absorb = rgb => rgb.map(v => -Math.log(Math.max(.02, v)));
   const css = rgb => `rgb(${rgb.map(v => Math.round(v * 255)).join(',')})`;
 
@@ -94,11 +96,12 @@ window.MapView = (() => {
     };
     const paint = new Map(patterns.map(p => [p.id, absorb(p.rgb)]));
     for (const w of works) {
+      if (colouring === 'source') { splat(w.x, w.y, 62, 1, absorb(SOURCE[w.kind])); continue; }
       const mix = [0, 0, 0]; let total = 0;
       for (const [p, s] of w.patterns) { const ab = paint.get(p); if (!ab) continue; const share = s === 2 ? 1 : .4; total += share; for (let k = 0; k < 3; k++) mix[k] += ab[k] * share; }
       if (total) splat(w.x, w.y, 62, 1, mix.map(v => v / total)); else splat(w.x, w.y, 52, .8, [.2, .2, .19]);
     }
-    for (const p of patterns) if (byPattern.get(p.id)?.size) splat(p.x, p.y, 84, 1.1, paint.get(p.id));
+    if (colouring === 'topic') for (const p of patterns) if (byPattern.get(p.id)?.size) splat(p.x, p.y, 84, 1.1, paint.get(p.id));
     gl.bindTexture(gl.TEXTURE_2D, fieldTexture);
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA16F, nx, ny, 0, gl.RGBA, gl.FLOAT, field);
   }
@@ -262,7 +265,7 @@ window.MapView = (() => {
     ctx.save(); ctx.beginPath(); ctx.roundRect(x, y, cw, h, 2.5); ctx.clip(); ctx.fillStyle = w.paint; ctx.globalAlpha *= .85; ctx.fillRect(x, y, cw, 4); ctx.restore();   // a brush of its main pattern's paint
     ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
     ctx.font = `400 9.5px ${MONO}`; ctx.fillStyle = 'rgba(43,38,34,.7)';
-    const when = shortDay(w.date), room = inner - width(when, ctx.font) - 22;
+    const when = w.kind === 'said' ? shortDay(w.date).replace(/^\d+ /, '') : shortDay(w.date), room = inner - width(when, ctx.font) - 22;
     let src = source(w); if (width(src, ctx.font) > room) { while (src.length > 4 && width(src + '…', ctx.font) > room) src = src.slice(0, -1); src += '…'; }
     symbol(w.kind, x + pad + 5, y + pad + 5, 3.4);
     ctx.font = `400 9.5px ${MONO}`; ctx.fillStyle = 'rgba(43,38,34,.7)'; ctx.textAlign = 'left';
@@ -278,7 +281,7 @@ window.MapView = (() => {
   function draw(dt) {
     const z = cam.z;
     hits = [];
-    if (grow < 1) { grow = still ? 1 : Math.min(1, (clock - growStart) / 2600); grow = 1 - (1 - grow) ** 3; if (grow > .999) grow = 1; dirty = true; }
+    if (grow < 1) { const t = still ? 1 : Math.max(0, Math.min(1, (clock - growStart) / 2600)); grow = 1 - (1 - t) ** 3; if (grow > .999) grow = 1; dirty = true; }
     paintPaper();
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, W, H);
@@ -487,7 +490,7 @@ window.MapView = (() => {
     patterns.sort((a, b) => size(b.id) - size(a.id));
     for (const p of patterns) p.weight = size(p.id) / most;
     const paints = new Map(patterns.map(p => [p.id, css(p.rgb)]));
-    for (const w of works) w.paint = paints.get(w.patterns[0]?.[0]) || '#b9b4a8';
+    for (const w of works) w.paint = colouring === 'source' ? css(SOURCE[w.kind]) : paints.get(w.patterns[0]?.[0]) || '#b9b4a8';
     plans.clear(); wrapped.clear(); buildField(); dirty = true;
   }
   return {
@@ -513,6 +516,8 @@ window.MapView = (() => {
       if (ids.length === 1) { const w = at.get(ids[0]); if (w) fly({ x: w.x, y: w.y, z: Math.max(cam.z, Z_CARD + .3) }); }
       else fit(ids, { maxZoom: pattern ? 1.9 : 1.3 });
     },
+    setColouring(mode) { if (mode === colouring) return; colouring = mode; setWorks(works); if (!still) { grow = .3; growStart = performance.now() - 2600 * .11; } dirty = true; },
+    sourcePaint: () => Object.fromEntries(Object.entries(SOURCE).map(([k, rgb]) => [k, css(rgb)])),
     focusWorks(ids) { if (!ids) focusPatterns = null; else { focusPatterns = new Set(ids); focusPatterns.pattern = new Set(); } dirty = true; },
     focusPatterns(ids) { if (!ids) focusPatterns = null; else { focusPatterns = new Set(ids.flatMap(p => [...(byPattern.get(p) || [])])); focusPatterns.pattern = new Set(ids); } dirty = true; },
     fit, home, zoomAt,

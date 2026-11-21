@@ -17,6 +17,7 @@ const SUB = {
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const day = d => `${+d.slice(8, 10)} ${MONTHS[+d.slice(5, 7) - 1]} ${d.slice(0, 4)}`;
 const month = d => `${MONTHS[+d.slice(5, 7) - 1]} ${d.slice(0, 4)}`;
+const when = w => w.kind === 'said' ? month(w.date) : day(w.date);      // a call's exact day can point to the other person
 const plural = (n, kind) => `${n} ${KINDS[kind][n === 1 ? 0 : 1]}`;
 
 // ---- State
@@ -74,12 +75,12 @@ const srcLine = w => w.kind === 'post' ? esc(channel(w)) : esc(SUB[w.sub] || w.s
 function setCtx(key, label, href, ids) { ctxStore.set(key, { label, href, ids }); return key; }
 
 function row(w, relation) {
-  return `<a class="row-card" href="#/w/${w.id}" data-w="${w.id}">${glyph(w.kind)}<span class="rc-main"><span class="rc-title">${esc(w.title)}</span>${relation ? `<span class="rc-rel">${esc(relation)}</span>` : ''}<span class="rc-gloss">${esc(w.gloss)}</span></span><span class="rc-date">${srcLine(w)} · ${day(w.date)}</span></a>`;
+  return `<a class="row-card" href="#/w/${w.id}" data-w="${w.id}">${glyph(w.kind)}<span class="rc-main"><span class="rc-title">${esc(w.title)}</span>${relation ? `<span class="rc-rel">${esc(relation)}</span>` : ''}<span class="rc-gloss">${esc(w.gloss)}</span></span><span class="rc-date">${srcLine(w)} · ${when(w)}</span></a>`;
 }
 function card(w) {
   const quote = w.pull && w.kind !== 'tool' ? `<p class="c-pull">${esc(w.pull)}</p>` : `<p class="c-gloss">${esc(w.gloss)}</p>`;
   const foot = w.kind === 'post' && w.slack.replies ? `<span class="c-foot">${w.slack.replies} ${w.slack.replies === 1 ? 'reply' : 'replies'}</span>` : '';
-  return `<a class="card c-${w.kind}" href="#/w/${w.id}" data-w="${w.id}"><span class="c-src">${glyph(w.kind)}${srcLine(w)} · ${day(w.date)}</span><span class="c-title">${esc(w.title)}</span>${quote}${foot}</a>`;
+  return `<a class="card c-${w.kind}" href="#/w/${w.id}" data-w="${w.id}"><span class="c-src">${glyph(w.kind)}${srcLine(w)} · ${when(w)}</span><span class="c-title">${esc(w.title)}</span>${quote}${foot}</a>`;
 }
 const workList = (items, key) => `<div class="rows" data-ctx="${esc(key)}">${items.map(w => row(w)).join('')}</div>`;
 function spark(list) {
@@ -97,21 +98,27 @@ const kindSummary = list => `<p class="kinds">${kindCounts(list).map(([k, n]) =>
 
 // ---- The title block on the map
 const readerEl = $('#reader'), pop = $('#pop'), plate = $('#plate');
+let colouring = 'topic';
 function renderPlate() {
+  const paint = MapView.sourcePaint?.() || {};
+  const ownBox = !$('.tools #q');               // looks that still have a search box in the corner keep it
   plate.innerHTML = `<h1><a href="#/">Alejo Acelas</a></h1>
     <div class="plate-body">
       <p class="lede">I help high-impact organisations use AI so their existing work goes better.</p>
-      <p class="how">This is a map of what I've shared along the way. Works that share an idea sit close together, their colours run into each other, and the paint is deepest where there is most. Zoom in to read, and click anything to open it.</p>
-      <p class="legend">${kindCounts(works).map(([k, n]) => `<a class="legend-item" href="#/c/kind/${k}" data-kind="${k}">${glyph(k)}${plural(n, k)}</a>`).join('')}</p>
-      <p class="doors">${D.questions?.length ? '<a href="#/ask">Start from a question</a>' : ''}<a href="#/index">Read it as a list</a><button id="wander" title="Fly to a work at random (R)">Surprise me</button></p>
+      <p class="how">This is a map of what I've shared along the way. Things that share an idea sit close together. Zoom in to read.</p>
+      ${ownBox ? `<form class="ask-box" id="ask-form"><label class="sr" for="q">Ask a question about my work</label><input id="q" type="search" placeholder="Ask a question about my work" autocomplete="off" value="${esc($('#q')?.value || '')}"><kbd>/</kbd>
+        ${D.questions?.length ? `<div class="suggest"><span>People often ask</span>${D.questions.slice(0, 5).map(q => `<a href="#/ask/${q.id}" data-ps="${q.patterns.join(' ')}">${esc(q.question)}</a>`).join('')}</div>` : ''}</form>` : ''}
+      ${MapView.setColouring ? `<p class="colour-by"><span>Colour by</span><span class="seg" role="group" aria-label="Colour the map by"><button data-colour="topic" aria-pressed="${colouring === 'topic'}">Topic</button><button data-colour="source" aria-pressed="${colouring === 'source'}">Source</button></span></p>
+      ${colouring === 'source' ? `<p class="key">${kindCounts(works).map(([k, n]) => `<span><i style="background:${paint[k] || '#999'}"></i>${plural(n, k)}</span>`).join('')}</p>` : ''}` : ''}
+      <p class="doors"><a href="#/index">Read everything as a list</a></p>
     </div>`;
 }
 
 // ---- Hover previews
 let popTimer;
 function popHtml(el) {
-  if (el.w) { const w = W.get(el.w); return w && `<span class="pop-src">${glyph(w.kind)}${srcLine(w)} · ${day(w.date)}</span><b>${esc(w.title)}</b><span>${esc(w.gloss)}</span>`; }
-  if (el.p) { const p = P.get(el.p), list = pWorks(el.p).map(i => i[0]); return p && `<span class="pop-src">Pattern · ${list.length} works</span><b>${esc(p.label)}</b><span>${esc(p.summary.split(/(?<=\.)\s/)[0])}</span>`; }
+  if (el.w) { const w = W.get(el.w); return w && `<span class="pop-src">${glyph(w.kind)}${srcLine(w)} · ${when(w)}</span><b>${esc(w.title)}</b><span>${esc(w.gloss)}</span>`; }
+  if (el.p) { const p = P.get(el.p), list = pWorks(el.p).map(i => i[0]); return p && `<span class="pop-src">Topic · ${list.length} works</span><b>${esc(p.label)}</b><span>${esc(p.summary.split(/(?<=\.)\s/)[0])}</span>`; }
   if (el.a) { const a = A.get(el.a); return a && `<span class="pop-src">Area</span><b>${esc(a.label)}</b><span>${esc(a.blurb)}</span>`; }
 }
 function showPop(html, x, y, below) {
@@ -132,7 +139,7 @@ document.addEventListener('mouseover', e => {
   if (!el || el.closest('#pop')) return;
   if (el.dataset.p) MapView.focusPatterns([el.dataset.p]);
   clearTimeout(popTimer);
-  if (el.classList.contains('card') || el.classList.contains('row-card')) return;   // these already show their gloss
+  if (el.dataset.p || el.classList.contains('card') || el.classList.contains('row-card')) return;   // topics light up on the map instead; cards already show their gloss
   popTimer = setTimeout(() => { const r = el.getBoundingClientRect(); showPop(popHtml({ w: el.dataset.w, p: el.dataset.p }), r.left + r.width / 2, r.bottom, true); }, 280);
 });
 document.addEventListener('mouseout', e => {
@@ -165,7 +172,7 @@ function patternPage(id) {
   const related = (p.related || []).filter(r => P.has(r.id) && pWorks(r.id).length);
   const dates = list.map(w => w.date).sort();
   return { title: p.label, select: { works: list.map(w => w.id), pattern: id, related: related.map(r => r.id) },
-    html: head(`<a href="#/a/${p.area}">${esc(A.get(p.area)?.label || '')}</a> · Pattern · ${list.length} works · ${month(dates[0])} to ${month(dates.at(-1))}`, esc(p.label), `<p class="summary">${esc(p.summary)}</p>${spark(list)}${kindSummary(list)}`) +
+    html: head(`<a href="#/a/${p.area}">${esc(A.get(p.area)?.label || '')}</a> · Topic · ${list.length} works · ${month(dates[0])} to ${month(dates.at(-1))}`, esc(p.label), `<p class="summary">${esc(p.summary)}</p>${spark(list)}${kindSummary(list)}`) +
     `<section><h2>Start here</h2><div class="cards" data-ctx="${esc(key)}">${leadSet.map(card).join('')}</div></section>` +
     (related.length ? `<section><h2>Leads to</h2><ul class="related">${related.map(r => `<li>${pLink(r.id)}<span class="why">${esc(r.why)}</span><span class="n">${shared(r.id)} shared</span></li>`).join('')}</ul></section>` : '') +
     `<section><h2>All ${list.length}, newest first</h2>${workList(list, key)}</section>` };
@@ -176,11 +183,11 @@ function areaPage(id) {
   const ps = D.patterns.filter(p => p.area === id && pWorks(p.id).length);
   const all = [...new Set(ps.flatMap(p => pWorks(p.id).map(i => i[0])))];
   return { title: a.label, select: { works: all.map(w => w.id), related: ps.map(p => p.id) },
-    html: head(`Area · ${ps.length} patterns · ${all.length} works`, esc(a.label), `<p class="summary">${esc(a.blurb)}</p>${spark(all)}${kindSummary(all)}`) + patternBlocks(ps) };
+    html: head(`Area · ${ps.length} topics · ${all.length} works`, esc(a.label), `<p class="summary">${esc(a.blurb)}</p>${spark(all)}${kindSummary(all)}`) + patternBlocks(ps) };
 }
 
 function questionsPage() {
-  return { title: 'Start from a question', select: none, html: head('Questions people arrive with', 'Start from a question', '<p class="summary">Each one leads to the patterns that answer it. Point at a question to see where its answers sit on the map.</p>') +
+  return { title: 'Start from a question', select: none, html: head('Questions people arrive with', 'Start from a question', '<p class="summary">Each one leads to the topics that answer it. Point at a question to see where its answers sit on the map.</p>') +
     `<ul class="ask">${D.questions.map(q => `<li><a href="#/ask/${q.id}" data-ps="${q.patterns.join(' ')}">${esc(q.question)}</a></li>`).join('')}</ul>` };
 }
 function questionPage(id) {
@@ -188,7 +195,7 @@ function questionPage(id) {
   const ps = q.patterns.map(p => P.get(p)).filter(p => p && pWorks(p.id).length);
   const all = [...new Set(ps.flatMap(p => pWorks(p.id).map(i => i[0].id)))];
   return { title: q.question, select: { works: all, related: ps.map(p => p.id) },
-    html: head(`<a href="#/ask">Questions</a> · ${ps.length} patterns answer this one`, esc(q.question), q.answer ? `<p class="summary">${esc(q.answer)}</p>` : '') + patternBlocks(ps) };
+    html: head(`<a href="#/ask">Questions</a> · ${ps.length} topics answer this one`, esc(q.question), q.answer ? `<p class="summary">${esc(q.answer)}</p>` : '') + patternBlocks(ps) };
 }
 
 function arcPage(id) {
@@ -198,11 +205,11 @@ function arcPage(id) {
   const key = setCtx(`arc/${id}`, a.label, `#/arc/${id}`, steps.map(s => s[0].id));
   return { title: a.label, select: { works: steps.map(s => s[0].id) },
     html: head(`Arc · ${steps.length} steps · ${month(steps[0][0].date)} to ${month(steps.at(-1)[0].date)}`, esc(a.label), `<p class="summary">${esc(a.blurb)}</p>`) +
-    `<ol class="arc" data-ctx="${esc(key)}">${steps.map(([w, note]) => `<li><p class="arc-note"><time>${day(w.date)}</time>${esc(note)}</p>${row(w)}</li>`).join('')}</ol>` };
+    `<ol class="arc" data-ctx="${esc(key)}">${steps.map(([w, note]) => `<li><p class="arc-note"><time>${when(w)}</time>${esc(note)}</p>${row(w)}</li>`).join('')}</ol>` };
 }
 
 function indexPage() {
-  return { title: 'Everything as a list', select: none, html: head(`${works.length} works · ${D.patterns.length} patterns · ${D.areas.length} areas`, 'Everything as a list') +
+  return { title: 'Everything as a list', select: none, html: head(`${works.length} works · ${D.patterns.length} topics · ${D.areas.length} areas`, 'Everything as a list') +
     D.areas.map(a => {
       const ps = D.patterns.filter(p => p.area === a.id && pWorks(p.id).length);
       return ps.length ? `<section class="index-area"><h2><a href="#/a/${a.id}">${esc(a.label)}</a></h2><p class="summary small">${esc(a.blurb)}</p><ul class="related">${ps.map(p => `<li>${pLink(p.id)}<span class="n">${pWorks(p.id).length}</span></li>`).join('')}</ul></section>` : '';
@@ -231,8 +238,55 @@ function searchPage(q) {
   const ps = D.patterns.filter(p => pWorks(p.id).length && q.split(/\s+/).every(t => (p.label + ' ' + p.summary).toLowerCase().includes(t)));
   return { title: `Search: ${q}`, select: { works: list.length > 1 && list.length < 200 ? list.map(w => w.id) : [] },
     html: head(`Search · ${list.length} works`, `“${esc(q)}”`) +
-    (ps.length ? `<section><h2>Patterns</h2><ul class="related">${ps.map(p => `<li>${pLink(p.id)}<span class="n">${pWorks(p.id).length} works</span></li>`).join('')}</ul></section>` : '') +
+    (ps.length ? `<section><h2>Topics</h2><ul class="related">${ps.map(p => `<li>${pLink(p.id)}<span class="n">${pWorks(p.id).length} works</span></li>`).join('')}</ul></section>` : '') +
     `<section><h2>Works</h2>${list.length ? workList(list.slice(0, 150), k) : '<p class="summary small">Nothing matches. Try a tool name, or one word.</p>'}</section>` };
+}
+
+// A visitor's own question, answered from the works. The answer is written by a model on the site's
+// server, which is given only what the site already shows; the works it cites light up on the map.
+let asking = null;
+function answerPage(question) {
+  const words = question.toLowerCase().split(/\s+/).filter(t => t.length > 3);
+  const scored = works.map(w => [words.filter(t => w.search.includes(t)).length, w]).filter(x => x[0]).sort((a, b) => b[0] - a[0]).slice(0, 8).map(x => x[1]);
+  const k = setCtx('answer-matches', `matches for “${question}”`, `#/answer/${enc(question)}`, scored.map(w => w.id));
+  return { title: question, select: none, after: () => startAnswer(question),
+    html: head('You asked', esc(question)) + `<div class="answer" id="answer"><p class="waiting">Reading what I've shared<i></i><i></i><i></i></p></div>
+      <section id="cited" hidden><h2>Drawn from</h2><div class="rows" data-ctx="answer-cited"></div></section>` +
+      (scored.length ? `<section id="matches"><h2>Works that share your words</h2>${workList(scored, k)}</section>` : '') };
+}
+async function startAnswer(question) {
+  asking?.abort(); asking = new AbortController();
+  const box = $('#answer'), signal = asking.signal;
+  const fail = text => { box.innerHTML = `<p class="no-answer">${text}</p>`; };
+  if (location.protocol === 'file:') return fail('Written answers come from the site’s server, which isn’t running when the page is opened as a file. The works below share your words.');
+  try {
+    const res = await fetch('/api/ask', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ question }), signal });
+    if (!res.ok || !res.body) return fail(res.status === 429 ? 'That’s a lot of questions in a short time. Try again in a few minutes.' : 'The answer didn’t come through. The works below share your words.');
+    const reader = res.body.getReader(), decoder = new TextDecoder();
+    let text = '';
+    for (;;) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      text += decoder.decode(value, { stream: true });
+      showAnswer(box, text, false);
+    }
+    showAnswer(box, text, true);
+  } catch (e) { if (e.name !== 'AbortError') fail('The answer didn’t come through. The works below share your words.'); }
+}
+function showAnswer(box, text, done) {
+  const cited = [];
+  const html = esc(text.replace(/\[\[[^\]]*$/, '')).replace(/\s*\[\[([^\]]+)\]\]/g, (_, ids) => ids.split(/[,\s]+/).map(id => {
+    id = id.replace(/^topic:/, '');
+    if (W.has(id)) { if (!cited.includes(id)) cited.push(id); return `<a class="cite" href="#/w/${id}" data-w="${id}">${cited.indexOf(id) + 1}</a>`; }
+    return P.has(id) ? ` <a class="plink" href="#/p/${id}" data-p="${id}">${esc(P.get(id).label)}</a>` : '';
+  }).join(''));
+  box.innerHTML = html.split(/\n{2,}/).map(p => `<p>${p}</p>`).join('') + (done ? '' : '<span class="caret"></span>');
+  const list = $('#cited');
+  if (cited.length && list) {
+    list.hidden = false; setCtx('answer-cited', 'works behind the answer', location.hash, cited);
+    $('.rows', list).innerHTML = cited.map((id, n) => row(W.get(id)).replace('<span class="rc-main">', `<span class="rc-n">${n + 1}</span><span class="rc-main">`)).join('');
+    if (done) { MapView.select({ works: cited }); $('#matches')?.remove(); }
+  }
 }
 
 // The source, drawn to look like where it lives.
@@ -270,9 +324,10 @@ function viewer(w) {
   }
   if (w.kind === 'said') {
     const ex = w.said.excerpt, start = w.said.text.slice(0, 48);
-    const mine = text => text.includes(w.said.text) ? esc(text).replace(esc(w.said.text), `<mark>${esc(w.said.text)}</mark>`) : text.includes(start) ? `<mark>${esc(text)}</mark>` : esc(text);
+    const parts = w.said.text.split('…').map(t => t.trim()).filter(t => t.length > 12);      // a quote with cuts is found piece by piece
+    const mine = text => { let html = esc(text), hit = false; for (const part of parts) if (html.includes(esc(part))) { html = html.replace(esc(part), `<mark>${esc(part)}</mark>`); hit = true; } return hit ? html : text.includes(start) ? `<mark>${esc(text)}</mark>` : esc(text); };
     const around = ex ? `<section class="around"><h2>Around it in the call</h2><div class="excerpt">${ex.turns.map(t => t.me ? `<p class="t-me"><b>Alejo</b>${mine(t.me)}</p>` : `<p class="t-other"><b>${esc(ex.other)}</b>${esc(t.other)}</p>`).join('')}</div><p class="excerpt-note">My words are as I said them, with cuts marked. What the other person said is summarised and never quoted.</p></section>` : '';
-    return `<figure class="v-said"><span class="wave" aria-hidden="true">${Array.from({ length: 34 }, (_, i) => `<i style="height:${4 + Math.round(13 * Math.abs(Math.sin(i * 1.7 + w.id.length)))}px"></i>`).join('')}</span><blockquote>${esc(w.said.text)}</blockquote><figcaption>${esc(w.said.setting)} · ${day(w.date)}</figcaption></figure>${around}`;
+    return `<figure class="v-said"><span class="wave" aria-hidden="true">${Array.from({ length: 34 }, (_, i) => `<i style="height:${4 + Math.round(13 * Math.abs(Math.sin(i * 1.7 + w.id.length)))}px"></i>`).join('')}</span><blockquote>${esc(w.said.text)}</blockquote><figcaption>${esc(w.said.setting)} · ${when(w)}</figcaption></figure>${around}`;
   }
   return `<figure class="v-link"><p>${esc(w.gloss)}</p>${w.url ? `<a href="${esc(w.url)}" target="_blank" rel="noopener">${esc(w.url.replace(/^https?:\/\//, '').slice(0, 70))} ↗</a>` : ''}</figure>`;
 }
@@ -297,7 +352,7 @@ function workPage(id) {
   const k1 = setCtx(`links/${id}`, `linked from “${w.title}”`, `#/w/${id}`, links.map(x => x[0].id));
   const k2 = setCtx(`near/${id}`, `near “${w.title}”`, `#/w/${id}`, near.map(x => x.id));
   return { title: w.title, select: { works: [id], related: w.patterns.map(p => p[0]) },
-    html: `<header class="page-head work-head"><p class="kicker">${glyph(w.kind)}${esc(SUB[w.sub] || w.sub)} · ${day(w.date)}${step}</p><h1>${esc(w.title)}</h1>${w.gloss ? `<p class="summary">${esc(w.gloss)}</p>` : ''}</header>` +
+    html: `<header class="page-head work-head"><p class="kicker">${glyph(w.kind)}${esc(SUB[w.sub] || w.sub)} · ${when(w)}${step}</p><h1>${esc(w.title)}</h1>${w.gloss ? `<p class="summary">${esc(w.gloss)}</p>` : ''}</header>` +
     viewer(w) +
     (w.edited ? '<p class="edited">Edited to remove other people’s details.</p>' : '') +
     (w.patterns.length ? `<section><h2>Part of</h2><ul class="related partof">${w.patterns.map(([p, s]) => `<li class="s${s}">${pLink(p)}<span class="n">${pWorks(p).length} works</span></li>`).join('')}</ul></section>` : '') +
@@ -324,8 +379,11 @@ function route() {
   else if (kind === 'ask') page = a ? questionPage(a) : questionsPage();
   else if (kind === 'arc') page = arcPage(a);
   else if (kind === 'index') page = indexPage();
+  else if (kind === 'answer') page = answerPage(decodeURIComponent(a || ''));
   else if (kind === 'c') page = collectionPage(a, decodeURIComponent(b || ''));
-  else if (kind === 'q') { query = decodeURIComponent(a || '').toLowerCase(); if ($('#q').value.toLowerCase() !== query) $('#q').value = query; applyFilter(); page = searchPage(query); }
+  else if (kind === 'q') { query = decodeURIComponent(a || '').toLowerCase(); if ($('#q') && $('#q').value.toLowerCase() !== query) $('#q').value = query; applyFilter(); page = searchPage(query); }
+  if (kind !== 'answer') asking?.abort();
+  if (kind !== 'q' && query && document.activeElement?.id !== 'q') { query = ''; applyFilter(); }
   if (!page) {
     document.body.classList.remove('reading'); readerEl.hidden = true; document.title = 'Alejo Acelas'; trail.length = 0;
     MapView.setInset(0, plateRoom()); MapView.select({ works: [] });
@@ -341,6 +399,7 @@ function route() {
   document.title = `${page.title} · Alejo Acelas`;
   MapView.setInset(innerWidth > 860 ? readerEl.offsetWidth : 0);
   MapView.select(page.select);
+  page.after?.();
 }
 const plateRoom = () => innerWidth > 1100 ? plate.offsetWidth + 30 : 0;
 addEventListener('hashchange', route);
@@ -363,16 +422,24 @@ document.addEventListener('click', e => {
     $('.page-wrap', fig).hidden = live;
     return;
   }
-  if (t.id === 'wander') wander();
+  const colour = t.closest('[data-colour]');
+  if (colour) { colouring = colour.dataset.colour; MapView.setColouring?.(colouring); renderPlate(); return; }
   const zoom = t.closest('[data-zoom]');
   if (zoom) { const z = zoom.dataset.zoom; z === 'fit' ? MapView.home() : MapView.zoomAt(z === 'in' ? 1.7 : 1 / 1.7); }
 });
 document.addEventListener('change', e => { if (e.target.id === 'public') { publicOnly = e.target.checked; index(); MapView.setWorks(works); renderPlate(); route(); } });
 function wander() { const sorted = works.filter(w => w.patterns.length && matches(w)); const pool = sorted.length ? sorted : works; const w = pool[Math.floor(Math.random() * pool.length)]; if (w) { ctxKey = null; location.hash = `#/w/${w.id}`; } }
 
-const q = $('#q');
 let qTimer;
-q.addEventListener('input', () => {
+document.addEventListener('submit', e => {
+  if (e.target.id !== 'ask-form') return;
+  e.preventDefault(); clearTimeout(qTimer);
+  const asked = $('#q').value.trim();
+  if (asked.length > 2) { query = ''; applyFilter(); location.hash = `#/answer/${enc(asked)}`; $('#q').blur(); }
+});
+document.addEventListener('input', e => {
+  if (e.target.id !== 'q') return;
+  const q = e.target;
   query = q.value.trim().toLowerCase();
   applyFilter();
   clearTimeout(qTimer);
@@ -381,18 +448,22 @@ q.addEventListener('input', () => {
     else if (location.hash.startsWith('#/q/')) location.hash = '#/';
   }, 260);
 });
+document.addEventListener('keydown', e => {            // corner search boxes in the other looks have no form to submit
+  if (e.key === 'Enter' && e.target.id === 'q' && !e.target.form) { const asked = e.target.value.trim(); if (asked.length > 2) { clearTimeout(qTimer); query = ''; applyFilter(); location.hash = `#/answer/${enc(asked)}`; } }
+});
 document.addEventListener('keydown', e => {
   if (e.metaKey || e.ctrlKey || e.altKey) return;
   const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName);
+  const q = $('#q');
   if (e.key === 'Escape') {
-    if (typing && q.value) { q.value = ''; q.dispatchEvent(new Event('input')); }
-    else if (typing) q.blur();
+    if (typing && q?.value) { q.value = ''; q.dispatchEvent(new Event('input', { bubbles: true })); }
+    else if (typing) document.activeElement.blur();
     else if (location.hash.length > 2) location.hash = '#/';
     return;
   }
   if (typing) return;
   const reading = document.body.classList.contains('reading');
-  if (e.key === '/') { e.preventDefault(); q.focus(); q.select(); }
+  if (e.key === '/' && q) { e.preventDefault(); plate.classList.add('open'); q.focus(); q.select(); }
   else if (e.key === 'r') wander();
   else if (e.key === '+' || e.key === '=') MapView.zoomAt(1.6);
   else if (e.key === '-' || e.key === '_') MapView.zoomAt(1 / 1.6);
@@ -413,14 +484,15 @@ looks.addEventListener('click', e => { const a = e.target.closest('a'); if (a) {
 document.body.append(looks);
 
 index();
-renderPlate();
 MapView.init($('#map'), D, {
   onHover(h, x, y, cards) {
     clearTimeout(popTimer);
-    if (!h || (h.type === 'work' && cards)) return hidePop();
-    popTimer = setTimeout(() => showPop(popHtml({ [h.type[0]]: h.id }), x, y, false), h.type === 'work' ? 40 : 220);
+    if (!h || h.type !== 'work' || cards) return hidePop();        // only works get a preview; a topic's name already says what it is
+    popTimer = setTimeout(() => showPop(popHtml({ w: h.id }), x, y, false), 40);
   },
   onZoom(close) { document.body.classList.toggle('close-up', close); },
   onOpen(h) { hidePop(); if (h.type === 'work') ctxKey = null; location.hash = `#/${h.type[0]}/${h.id}`; },
 });
+renderPlate();
+plate.addEventListener('focusout', () => plate.classList.remove('open'));
 route();
