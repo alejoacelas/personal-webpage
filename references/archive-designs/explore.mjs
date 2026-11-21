@@ -37,6 +37,7 @@ function render(){
  const query=p[0]==='find'?p[1]||'':'';
  const group=items.filter(i=>(!region||i.region===region.id)&&(!sub||i.subtopic===sub.id));
  const related=entry?connections(entry):[];
+ const previous=entry&&byId.get(history.state?.fromEntry);
  const results=query?items.filter(i=>query.toLowerCase().trim().split(/\s+/).every(w=>[i.title,i.description,i.body,i.kind,...(i.tags||[])].join(' ').toLowerCase().includes(w))):entry?related.map(a=>a.i):group;
  const all=href(mode),parent=entry?href(mode,region.id,sub.id):sub?href(mode,region.id):all;
  const crumbs=[['Atlas',all],...(region?[[region.label,href(mode,region.id)]]:[]),...(sub?[[sub.label,href(mode,region.id,sub.id)]]:[])];
@@ -50,7 +51,7 @@ function render(){
  const reading=$('#reading');reading.hidden=!entry;
  if(entry){
   const body=esc(entry.body||entry.description).replaceAll('\\n','\n');
-  reading.innerHTML=(entry.kind==='Call excerpt'?`<blockquote>${body}</blockquote>`:`<p>${body}</p>`)+
+  reading.innerHTML=(previous?`<a class="came-from" href="${esc(itemPath(previous,mode))}">← From ${esc(previous.title)}</a>`:'')+(entry.kind==='Call excerpt'?`<blockquote>${body}</blockquote>`:`<p>${body}</p>`)+
    (entry.url?link(entry.url,entry.kind==='Repository'?'View repository':'Open Google Doc'):'')+
    (entry.links||[]).map(l=>'<p>'+link(l.url,l.label)+'</p>').join('')+'<h2 class="continuation">Explore from here</h2>';
  }
@@ -73,4 +74,12 @@ function render(){
 }
 document.querySelector('form').onsubmit=e=>{e.preventDefault();const value=$('#query').value.trim();if(value)navigate(href(currentMode,'find',value))};
 document.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>navigate(href(b.dataset.mode,...parts)));
-window.addEventListener('hashchange',render);render();
+window.addEventListener('hashchange',event=>{
+ const before=new URL(event.oldURL).hash.slice(1).split('/');
+ const after=location.hash.slice(1).split('/');
+ if(after[1]==='entry' && before[1]==='entry' && history.state==null){
+   const fromEntry=before[2]===after[2]?null:decodeURIComponent(before[2]);
+   if(fromEntry)history.replaceState({fromEntry},'');
+ }
+ render();
+});render();
