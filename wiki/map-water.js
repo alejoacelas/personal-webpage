@@ -530,6 +530,7 @@ window.MapView = (() => {
       if (ids.length === 1) { const w = at.get(ids[0]); if (w) fly({ x: w.x, y: w.y, z: Math.max(cam.z, Z_CARD + .3) }); }
       else fit(ids, { maxZoom: pattern ? 1.9 : 1.3 });
     },
+    tintOf: id => at.get(id)?.paint,                       // the paint of a work's main topic, for its preview
     peek(id) { const next = id && at.has(id) ? id : null; if (next !== peeked) { peeked = next; dirty = true; } },      // mark one work, as hovering it would
     around() {                                             // the topics nearest the middle of the view, nearest first
       const reach = Math.min(W - inset - insetLeft, H) / 2 / cam.z;

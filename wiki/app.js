@@ -151,10 +151,11 @@ function renderPlate() {
 
 // ---- Hover previews
 let popTimer;
+// A work's preview is its card arriving early: the same parts in the same order as the card on the map.
 function popHtml(el) {
-  if (el.w) { const w = W.get(el.w); return w && `<span class="pop-src">${glyph(w.kind)}${srcLine(w)} · ${when(w)}</span><b>${esc(w.title)}</b><span>${esc(w.gloss)}</span>`; }
-  if (el.p) { const p = P.get(el.p), list = pWorks(el.p).map(i => i[0]); return p && `<span class="pop-src">Topic · ${list.length} works</span><b>${esc(p.label)}</b><span>${esc(p.summary.split(/(?<=\.)\s/)[0])}</span>`; }
-  if (el.a) { const a = A.get(el.a); return a && `<span class="pop-src">Area</span><b>${esc(a.label)}</b><span>${esc(a.blurb)}</span>`; }
+  const w = W.get(el.w); if (!w) return '';
+  pop.style.setProperty('--tint', MapView.tintOf?.(w.id) || 'transparent');
+  return `<span class="pop-src">${glyph(w.kind)}${srcLine(w)}<span class="pop-date">${when(w)}</span></span><b>${esc(w.title)}</b><span class="pop-gloss">${esc(w.kind === 'said' && w.pull ? '“' + w.pull + '”' : w.gloss)}</span>`;
 }
 function showPop(html, x, y, below) {
   if (!html) return hidePop();
