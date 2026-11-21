@@ -8,7 +8,18 @@
     "body": "Umi keeps agent sessions in tabs and panes. A sidebar lets you move between them while keeping the terminals where you left them.",
     "url": "https://github.com/alejoacelas/umi",
     "links": [],
-    "topic": "Working with agents"
+    "topic": "Working with agents",
+    "region": "agents",
+    "subtopic": "agent-attention",
+    "tags": [
+      "parallel agents",
+      "attention",
+      "terminal"
+    ],
+    "related": [
+      "repo-2026-10-warp-agent",
+      "1794907853.133389"
+    ]
   },
   {
     "id": "repo-2026-10-warp-agent",
@@ -19,7 +30,18 @@
     "body": "A command-line tool puts Claude Code and Codex in selected Warp panes. A script can follow a session through several turns while its terminal stays visible.",
     "url": "https://github.com/alejoacelas/2026-10-warp-agent",
     "links": [],
-    "topic": "Working with agents"
+    "topic": "Working with agents",
+    "region": "agents",
+    "subtopic": "agent-attention",
+    "tags": [
+      "parallel agents",
+      "supervision",
+      "terminal"
+    ],
+    "related": [
+      "repo-umi",
+      "1794811870.172209"
+    ]
   },
   {
     "id": "call-coaching-questions",
@@ -30,7 +52,19 @@
     "kind": "Call note",
     "body": "“My plan is to use this call to just like ask you questions, figure out, and then shortly after the call, I'll send you kind of like an email with like some instructions and some ideas for us to try.”",
     "url": "",
-    "links": []
+    "links": [],
+    "region": "workflows",
+    "subtopic": "coaching-intake",
+    "tags": [
+      "coaching",
+      "interviews",
+      "project selection"
+    ],
+    "related": [
+      "1EuofQaVmkFFnK5REb681Gk5gFKI3v1U3O85vuc6YLlg",
+      "excerpt-adapt-the-interview",
+      "call-live-coaching"
+    ]
   },
   {
     "id": "call-measure-changed",
@@ -41,7 +75,19 @@
     "kind": "Call note",
     "body": "Paraphrased from a call.\n\nI want to find ways for people to tell me what they actually did differently after we spoke.",
     "url": "",
-    "links": []
+    "links": [],
+    "region": "learning",
+    "subtopic": "deliberate-practice",
+    "tags": [
+      "coaching",
+      "evidence",
+      "AI adoption"
+    ],
+    "related": [
+      "repo-uplift-modelling",
+      "159tncXDj-lS8zy40YB8WEuJWCkc8ov19duwgv7kOkBg",
+      "call-live-coaching"
+    ]
   },
   {
     "id": "call-inbox-intent",
@@ -52,7 +98,19 @@
     "kind": "Call note",
     "body": "Paraphrased from a call.\n\nI want the inbox to pick up new information without me reminding it that an email arrived. I also want to be able to skim the day’s tasks quickly.",
     "url": "",
-    "links": []
+    "links": [],
+    "region": "workflows",
+    "subtopic": "personal-workflows",
+    "tags": [
+      "inbox",
+      "attention",
+      "task lists"
+    ],
+    "related": [
+      "repo-agent-desk-setup",
+      "1794811870.172209",
+      "1794902411.285989"
+    ]
   },
   {
     "id": "call-community-question",
@@ -63,7 +121,19 @@
     "kind": "Call note",
     "body": "Paraphrased from a call.\n\nI asked people to introduce themselves with a question. Then I left room for someone to pick one up, with the last five minutes set aside for everyone to write down their parting thoughts.",
     "url": "",
-    "links": []
+    "links": [],
+    "region": "community",
+    "subtopic": "peer-learning",
+    "tags": [
+      "community calls",
+      "staff training",
+      "peer learning"
+    ],
+    "related": [
+      "1lo0t7od9A_RMptpalpKZrDGSDGW0Ots2gjJxI5OMypE",
+      "call-practice-workshop",
+      "1794830400.390989"
+    ]
   },
   {
     "id": "repo-automation-map",
@@ -74,7 +144,19 @@
     "body": "This single-file dashboard takes a process apart task by task. A prompt fills in the map, and the resulting HTML can travel with the assessment.",
     "url": "https://github.com/alejoacelas/automation-map",
     "links": [],
-    "topic": "Using AI at work"
+    "topic": "Using AI at work",
+    "region": "workflows",
+    "subtopic": "workflow-audits",
+    "tags": [
+      "workflow audit",
+      "automation",
+      "operations"
+    ],
+    "related": [
+      "1xuLpOdGa2b470lAIqMPMwg36wm1INq0PQy0TIhRABDk",
+      "repo-ai-task-map-template",
+      "call-time-for-improvements"
+    ]
   },
   {
     "id": "repo-ask-their-claude",
@@ -85,7 +167,19 @@
     "body": "The recipient’s assistant gathers the answer and prepares a report for its owner to review before sharing. The repository holds the common instructions that these prompts reference.",
     "url": "https://github.com/alejoacelas/ask-their-claude",
     "links": [],
-    "topic": "Using AI at work"
+    "topic": "Using AI at work",
+    "region": "agents",
+    "subtopic": "prompting",
+    "tags": [
+      "prompt design",
+      "privacy",
+      "evidence"
+    ],
+    "related": [
+      "1Wy-mFv1J0J56rziT3QBcxoM7EaI00JX21bEwUhBOlbc",
+      "repo-sharing-report-viewer",
+      "testing-prompts"
+    ]
   },
   {
     "id": "call-more-ideas",
@@ -96,7 +190,19 @@
     "kind": "Call note",
     "body": "“First, it's quicker to prompt if you just ask for the goal and then don't give the specifics so you can try more ideas.”",
     "url": "",
-    "links": []
+    "links": [],
+    "region": "agents",
+    "subtopic": "prompting",
+    "tags": [
+      "prompt design",
+      "intent",
+      "exploration"
+    ],
+    "related": [
+      "1789817231.908579",
+      "1793963939.881499",
+      "excerpt-let-it-suggest"
+    ]
   },
   {
     "id": "call-share-repo",
@@ -107,7 +213,19 @@
     "kind": "Call note",
     "body": "Paraphrased from a call.\n\nOnce a tool works, I want to be able to send a teammate one GitHub link. They can give it to their own coding agent and ask it to set the tool up.",
     "url": "",
-    "links": []
+    "links": [],
+    "region": "agents",
+    "subtopic": "reusable-skills",
+    "tags": [
+      "sharing",
+      "setup",
+      "coding agents"
+    ],
+    "related": [
+      "1789931174.127179",
+      "repo-ask-their-claude",
+      "repo-agent-desk-setup"
+    ]
   },
   {
     "id": "repo-2026-09-skill-review",
@@ -118,7 +236,19 @@
     "body": "A local review interface puts two outputs side by side. It saves judgments about individual passages and exports the decisions with the source versions.",
     "url": "https://github.com/alejoacelas/2026-09-skill-review",
     "links": [],
-    "topic": "Working with agents"
+    "topic": "Working with agents",
+    "region": "agents",
+    "subtopic": "reusable-skills",
+    "tags": [
+      "skills",
+      "feedback",
+      "testing"
+    ],
+    "related": [
+      "1789931174.127179",
+      "testing-prompts",
+      "repo-running-clipboard"
+    ]
   },
   {
     "id": "repo-uplift-modelling",
@@ -129,7 +259,19 @@
     "body": "Vary the reach of a tool, the rate at which tasks adopt it and the feedback between adopters. The curves illustrate the assumptions each model needs.",
     "url": "https://github.com/alejoacelas/uplift-modelling",
     "links": [],
-    "topic": "Thinking about AI"
+    "topic": "Thinking about AI",
+    "region": "learning",
+    "subtopic": "adoption-barriers",
+    "tags": [
+      "AI adoption",
+      "coaching",
+      "modelling"
+    ],
+    "related": [
+      "1793704230.839999",
+      "159tncXDj-lS8zy40YB8WEuJWCkc8ov19duwgv7kOkBg",
+      "call-measure-changed"
+    ]
   },
   {
     "id": "repo-trials",
@@ -140,7 +282,19 @@
     "body": "A reusable trial structure puts the question, the tests and the verdict in one place. It gives the next experiment a previous decision to build on.",
     "url": "https://github.com/alejoacelas/trials",
     "links": [],
-    "topic": "Tools for research"
+    "topic": "Tools for research",
+    "region": "tools",
+    "subtopic": "research-tools",
+    "tags": [
+      "testing",
+      "evidence",
+      "tool selection"
+    ],
+    "related": [
+      "repo-google-docs-agent-tools",
+      "call-explore-product",
+      "1787905004.081639"
+    ]
   },
   {
     "id": "call-time-for-improvements",
@@ -151,7 +305,19 @@
     "kind": "Call note",
     "body": "Paraphrased from a call.\n\nBefore proposing an automation, I ask how much time the person was already planning to spend improving that process over the next few weeks. It gives us a starting point for discussing the payoff.",
     "url": "",
-    "links": []
+    "links": [],
+    "region": "workflows",
+    "subtopic": "workflow-audits",
+    "tags": [
+      "workflow audit",
+      "priorities",
+      "recurring work"
+    ],
+    "related": [
+      "choosing-a-workflow",
+      "repo-automation-map",
+      "repo-ai-task-map-template"
+    ]
   },
   {
     "id": "repo-agent-desk-setup",
@@ -162,7 +328,19 @@
     "body": "The example includes Markdown filing conventions, a morning docket and the prompts that turn incoming material into drafts. Its sample records are fictional.",
     "url": "https://github.com/alejoacelas/agent-desk-setup",
     "links": [],
-    "topic": "Working with agents"
+    "topic": "Working with agents",
+    "region": "workflows",
+    "subtopic": "personal-workflows",
+    "tags": [
+      "task lists",
+      "delegation",
+      "work records"
+    ],
+    "related": [
+      "call-reconstruct-day",
+      "call-inbox-intent",
+      "1794811870.172209"
+    ]
   },
   {
     "id": "repo-ai-task-map-template",
@@ -173,7 +351,19 @@
     "body": "The prompts go from identifying repeated tasks to writing a structured entry for each one. The final step sketches a first implementation of the most promising task.",
     "url": "https://github.com/alejoacelas/ai-task-map-template",
     "links": [],
-    "topic": "Using AI at work"
+    "topic": "Using AI at work",
+    "region": "workflows",
+    "subtopic": "workflow-audits",
+    "tags": [
+      "workflow audit",
+      "automation",
+      "priorities"
+    ],
+    "related": [
+      "1xuLpOdGa2b470lAIqMPMwg36wm1INq0PQy0TIhRABDk",
+      "repo-automation-map",
+      "call-run-one-first"
+    ]
   },
   {
     "id": "call-reconstruct-day",
@@ -184,7 +374,18 @@
     "kind": "Call note",
     "body": "Paraphrased from a call.\n\nWhen I sit down to reflect, I often have to reconstruct what I actually did first. I wondered whether an agent could gather that record so I could spend the time deciding what mattered.",
     "url": "",
-    "links": []
+    "links": [],
+    "region": "workflows",
+    "subtopic": "personal-workflows",
+    "tags": [
+      "reflection",
+      "work records",
+      "evidence"
+    ],
+    "related": [
+      "repo-agent-desk-setup",
+      "159tncXDj-lS8zy40YB8WEuJWCkc8ov19duwgv7kOkBg"
+    ]
   },
   {
     "id": "repo-sharing-report-viewer",
@@ -195,7 +396,19 @@
     "body": "A prompt inserts structured findings into a standalone viewer. The reader can open the filled-in file directly.",
     "url": "https://github.com/alejoacelas/sharing-report-viewer",
     "links": [],
-    "topic": "Using AI at work"
+    "topic": "Using AI at work",
+    "region": "agents",
+    "subtopic": "prompting",
+    "tags": [
+      "evidence",
+      "privacy",
+      "sharing"
+    ],
+    "related": [
+      "repo-ask-their-claude",
+      "1Wy-mFv1J0J56rziT3QBcxoM7EaI00JX21bEwUhBOlbc",
+      "159tncXDj-lS8zy40YB8WEuJWCkc8ov19duwgv7kOkBg"
+    ]
   },
   {
     "id": "repo-07-30-docs-mcp",
@@ -206,7 +419,19 @@
     "body": "The implementation exposes document review operations to an assistant. It provides a concrete counterpart to the tests of what existing Docs connectors can do.",
     "url": "https://github.com/alejoacelas/07-30-docs-mcp",
     "links": [],
-    "topic": "Using AI at work"
+    "topic": "Using AI at work",
+    "region": "tools",
+    "subtopic": "writing-tools",
+    "tags": [
+      "Google Docs",
+      "suggested edits",
+      "connectors"
+    ],
+    "related": [
+      "repo-google-docs-agent-tools",
+      "1OgM0T1_WPyntA5j1cmZ6_abO-WFFNrbtSGNZEwi7eiI",
+      "repo-web-article-reviewer"
+    ]
   },
   {
     "id": "repo-web-article-reviewer",
@@ -217,7 +442,19 @@
     "body": "The pipeline looks for a source that warrants a specific update and places the proposed edit into a Google Doc for review.",
     "url": "https://github.com/alejoacelas/web-article-reviewer",
     "links": [],
-    "topic": "Tools for research"
+    "topic": "Tools for research",
+    "region": "tools",
+    "subtopic": "research-tools",
+    "tags": [
+      "evidence",
+      "writing",
+      "citations"
+    ],
+    "related": [
+      "repo-07-30-docs-mcp",
+      "1795189660.321559",
+      "repo-margin-comments"
+    ]
   },
   {
     "id": "repo-murmur",
@@ -228,7 +465,18 @@
     "body": "This Mac app transcribes speech on the device. A keyboard shortcut starts dictation and returns the text to the cursor.",
     "url": "https://github.com/alejoacelas/murmur",
     "links": [],
-    "topic": "Working with agents"
+    "topic": "Working with agents",
+    "region": "agents",
+    "subtopic": "prompting",
+    "tags": [
+      "dictation",
+      "prompt design",
+      "macOS"
+    ],
+    "related": [
+      "call-more-ideas",
+      "1789817231.908579"
+    ]
   },
   {
     "id": "repo-claude-onramp",
@@ -239,7 +487,19 @@
     "body": "The repository records attempts to teach delegation through practice. The writing and lesson structure are still being revised.",
     "url": "https://github.com/alejoacelas/claude-onramp",
     "links": [],
-    "topic": "Thinking about AI"
+    "topic": "Thinking about AI",
+    "region": "learning",
+    "subtopic": "getting-started",
+    "tags": [
+      "delegation",
+      "first projects",
+      "practice"
+    ],
+    "related": [
+      "1DYxPPJKHj7VpnWKu5ASGhw1U2e8a43T2Gmu6hPqynqo",
+      "1791477230.853239",
+      "call-live-coaching"
+    ]
   },
   {
     "id": "repo-margin-comments",
@@ -250,7 +510,19 @@
     "body": "The browser extension anchors a thread to the selected text. The discussion stays attached to the passage as people add replies.",
     "url": "https://github.com/alejoacelas/margin-comments",
     "links": [],
-    "topic": "Using AI at work"
+    "topic": "Using AI at work",
+    "region": "tools",
+    "subtopic": "writing-tools",
+    "tags": [
+      "annotation",
+      "feedback",
+      "writing"
+    ],
+    "related": [
+      "repo-running-clipboard",
+      "repo-07-30-docs-mcp",
+      "repo-web-article-reviewer"
+    ]
   },
   {
     "id": "call-practice-workshop",
@@ -261,7 +533,19 @@
     "kind": "Call note",
     "body": "Paraphrased from a call.\n\nI wanted to try a weekly or fortnightly session where people could bring real work and spend a few hours trying Claude Code, with someone nearby when they got stuck.",
     "url": "",
-    "links": []
+    "links": [],
+    "region": "community",
+    "subtopic": "peer-learning",
+    "tags": [
+      "workshops",
+      "peer learning",
+      "practice"
+    ],
+    "related": [
+      "1DYxPPJKHj7VpnWKu5ASGhw1U2e8a43T2Gmu6hPqynqo",
+      "1790271639.814419",
+      "call-community-question"
+    ]
   },
   {
     "id": "repo-google-docs-agent-tools",
@@ -272,7 +556,19 @@
     "body": "The repository pairs connector gaps with a methodology and sample runs. Checking the resulting document makes it possible to distinguish a completed edit from an assistant saying it made one.",
     "url": "https://github.com/alejoacelas/google-docs-agent-tools",
     "links": [],
-    "topic": "Tools for research"
+    "topic": "Tools for research",
+    "region": "tools",
+    "subtopic": "writing-tools",
+    "tags": [
+      "Google Docs",
+      "connectors",
+      "testing"
+    ],
+    "related": [
+      "1OgM0T1_WPyntA5j1cmZ6_abO-WFFNrbtSGNZEwi7eiI",
+      "repo-07-30-docs-mcp",
+      "repo-trials"
+    ]
   },
   {
     "id": "call-run-one-first",
@@ -283,7 +579,19 @@
     "kind": "Call note",
     "body": "Paraphrased from a call.\n\nI would first run the automation myself, all the way to an output I could use. That gives someone else a worked example to take over, especially when the same task needs doing a hundred times.",
     "url": "",
-    "links": []
+    "links": [],
+    "region": "workflows",
+    "subtopic": "workflow-audits",
+    "tags": [
+      "automation",
+      "recurring work",
+      "delegation"
+    ],
+    "related": [
+      "repo-ai-task-map-template",
+      "1xuLpOdGa2b470lAIqMPMwg36wm1INq0PQy0TIhRABDk",
+      "call-time-for-improvements"
+    ]
   },
   {
     "id": "call-explore-product",
@@ -294,7 +602,19 @@
     "kind": "Call note",
     "body": "Paraphrased from a call.\n\nI sometimes want an agent to read the documentation and then use the interface. I would like it to tell me which features it actually found when it clicked around.",
     "url": "",
-    "links": []
+    "links": [],
+    "region": "tools",
+    "subtopic": "browser-use",
+    "tags": [
+      "browser control",
+      "testing",
+      "tool selection"
+    ],
+    "related": [
+      "1787279790.021939",
+      "1794902411.285989",
+      "repo-trials"
+    ]
   },
   {
     "id": "call-live-coaching",
@@ -305,6 +625,18 @@
     "kind": "Call note",
     "body": "Paraphrased from a call.\n\nI started by asking how the person already used AI and where they got stuck. I wanted to solve something together on the call that would make them excited to try more on their own.",
     "url": "",
-    "links": []
+    "links": [],
+    "region": "workflows",
+    "subtopic": "coaching-intake",
+    "tags": [
+      "coaching",
+      "first projects",
+      "motivation"
+    ],
+    "related": [
+      "call-coaching-questions",
+      "1EuofQaVmkFFnK5REb681Gk5gFKI3v1U3O85vuc6YLlg",
+      "1793704230.839999"
+    ]
   }
 ]
