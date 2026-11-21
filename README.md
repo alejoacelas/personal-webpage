@@ -6,7 +6,8 @@ sites and things he said on calls.
 
 ## How it is built
 
-- `wiki/index.html`, `style.css`, `inks.css`, `app.js` and `map-inks.js` are the page.
+- `wiki/index.html`, `style.css`, `inks.css`, `app.js`, `search.js` and `map-inks.js`
+  are the page.
   It has no framework and every route is in the URL hash.
 - `wiki/data.publish.js` is the published data: each work's title, description, text
   and position on the map. `node wiki/build.mjs --release` writes it from a private,
@@ -15,9 +16,12 @@ sites and things he said on calls.
   remove other people's details. The build writes nothing if a private name, an email
   address, an invite link or a link to a left-out work remains.
 - `scripts/build.mjs` copies the page, the files it loads and the published data
-  into `dist/`. Vercel runs it on every push to `main`.
+  into `dist/`, and writes every work as plain text (`llms.txt`, `works.txt`,
+  `works/<id>.txt`, `topics/<id>.txt`) so AI assistants can read the site. Vercel runs
+  it on every push to `main`.
 - `api/rank.mjs` re-sorts search results by how well each answers the visitor's
-  question. The page keeps its own word-matching order when the endpoint is absent.
+  question, and `api/search.mjs` returns search results as plain text. The page keeps
+  its own word-matching order when the endpoints are absent.
 
 ## Commands
 
