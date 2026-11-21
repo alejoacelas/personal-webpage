@@ -309,7 +309,7 @@ function viewer(w) {
     return `<figure class="v-doc${isSheet ? ' sheet' : ''}">
       <figcaption><span class="doc-icon" aria-hidden="true"></span><b>${esc(w.title)}</b>
         ${d.gdoc && d.html ? `<span class="seg"><button data-docview="copy" aria-pressed="true">Copy</button><button data-docview="live" aria-pressed="false" data-gdoc="${esc(d.gdoc)}">Live</button></span>` : ''}
-        <a href="${esc(w.url)}" target="_blank" rel="noopener">Open in Google ${isSheet ? 'Sheets' : 'Docs'} ↗</a></figcaption>
+        ${w.url ? `<a href="${esc(w.url)}" target="_blank" rel="noopener">${/docs\.google\.com/.test(w.url) ? `Open in Google ${isSheet ? 'Sheets' : 'Docs'}` : `Open at ${esc(new URL(w.url).hostname.replace(/^www\./, ''))}`} ↗</a>` : ''}</figcaption>
       ${d.html ? `<div class="page-wrap clamp"><div class="page">${d.html}${d.cut ? '<p class="cut">The copy stops here. The rest is in the live doc.</p>' : ''}</div><button class="more" data-more>Show the whole document</button></div>` : `<div class="page-wrap"><div class="page stub"><p>${esc(w.gloss || 'No copy of this one is kept here.')}</p></div></div>`}
     </figure>`;
   }

@@ -212,8 +212,12 @@ for (const w of works) for (const l of w.links.filter(l => !l.back)) {
 }
 
 // ---- Nearby works: share patterns (rarer patterns count more) and named tools or organisations.
-const count = new Map();
-for (const w of works) for (const [p] of w.patterns) count.set(p, (count.get(p) || 0) + 1);
+// A topic needs at least three works showing. With fewer, its name and summary would describe works
+// the build has left out, so the topic is dropped and its works keep their other topics.
+const tally = () => { const n = new Map(); for (const w of works) for (const [p] of w.patterns) n.set(p, (n.get(p) || 0) + 1); return n; };
+const thin = new Set([...tally()].filter(([, n]) => n < 3).map(([p]) => p));
+for (const w of works) w.patterns = w.patterns.filter(([p]) => !thin.has(p));
+const count = tally();
 const mentionCount = new Map();
 for (const w of works) for (const m of new Set(w.mentions)) mentionCount.set(m, (mentionCount.get(m) || 0) + 1);
 const byPattern = new Map(), byMention = new Map();
