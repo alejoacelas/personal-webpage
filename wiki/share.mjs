@@ -78,7 +78,7 @@ export function applyEdits({ item, ann, repo, excerpt }, rec) {
 const EMAIL = /[\w.+-]*[A-Za-z0-9]@[\w-]+(?:\.[\w-]+)+/g;
 const EMAIL_OK = /^(git@|noreply@|no-reply@|.*@example\.(com|org)$|.*@anthropic\.com$|[\w.+-]+@\d)/;
 const INVITE = /(join\.slack\.com|slack\.com\/shared_invite|zoom\.us\/j\/|meet\.google\.com\/[a-z]|calendly\.com\/|cal\.com\/|tidycal\.com\/|savvycal\.com\/|calendar\.app\.google|calendar\.google\.com\/calendar\/appointments|chat\.whatsapp\.com)/;
-const PATH = /\/(?:Users|home)\/(?!alejo\b|you\b|me\b|username\b|user\b|\.\.\.|<)[A-Za-z][\w.-]*\//;
+const PATH = /\/(?:Users|home)\/(?!alejo\b|you\b|me\b|username\b|user\b|\.\.\.|<)[A-Za-z][\w.-]*\/|~\/best\/[\w.-]+\/[\w.-]+/;   // someone's home folder, or a folder in Alejo's own tree, which is named by client and project
 
 const APPS = /^(Google|Slack|GitHub|Zapier|Claude|Notion|Zoom|Linear|Asana)\b/;
 // Full names of private people: Slack members and the people files in desk. Alejo and bots are left out.
@@ -95,7 +95,16 @@ export async function privatePeople(src) {
 }
 
 // `published` is whatever will be shown for one work; every string in it is searched.
-export function problems(published, rec, people = []) {
+// The address a work lives at, in the form it would appear inside other works' text.
+export function addressOf(item) {
+  const url = item.url || '';
+  if (!url || item.kind === 'slack') return '';
+  const doc = url.match(/docs\.google\.com\/\w+\/d\/([\w-]{20,})/);
+  return doc ? doc[1] : url.replace(/^https?:\/\/(www\.)?/, '').replace(/[?#].*$/, '').replace(/\/$/, '');
+}
+
+// `blocked` lists addresses of works that are left out or shown without their link.
+export function problems(published, rec, people = [], blocked = []) {
   const found = [];
   const strings = allStrings(published);
   const has = re => strings.find(s => re.test(s));
@@ -106,7 +115,9 @@ export function problems(published, rec, people = []) {
     for (const m of s.match(EMAIL) || []) if (!EMAIL_OK.test(m) && !keep.has(m)) found.push(`email address ${m}`);
     const inv = s.match(INVITE); if (inv && !keep.has(inv[0])) found.push(`invite or booking link (${inv[0]})`);
     const p = s.match(PATH); if (p && !keep.has(p[0])) found.push(`file path ${p[0]}`);
+    const blog = s.match(/myea\.blog[\w/.-]*/); if (blog && !keep.has(blog[0])) found.push(`link to the personal blog, whose posts redirect to unedited documents (${blog[0]})`);
   }
+  for (const b of blocked) if (!keep.has(b) && strings.some(s => s.includes(b))) found.push(`link to a work that is left out or shown unlinked (${b})`);
   return [...new Set(found)];
 }
 
