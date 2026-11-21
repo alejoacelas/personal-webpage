@@ -98,7 +98,7 @@ function renderPlate() {
   plate.innerHTML = `<h1><a href="#/">Alejo Acelas</a></h1>
     <div class="plate-body">
       <p class="lede">I help high-impact organisations use AI so their existing work goes better.</p>
-      <p class="how">This is a map of what I've shared along the way. Works that share an idea sit close together, and the ground rises where there is most. Zoom in to read, and click anything to open it.</p>
+      <p class="how">This is a map of what I've shared along the way. Works that share an idea sit close together, their colours run into each other, and the paint is deepest where there is most. Zoom in to read, and click anything to open it.</p>
       <p class="legend">${kindCounts(works).map(([k, n]) => `<button class="legend-item${kindsOff.has(k) ? ' off' : ''}" data-kind="${k}" aria-pressed="${!kindsOff.has(k)}" title="Show or hide ${KINDS[k][1]}">${glyph(k)}${plural(n, k)}</button>`).join('')}</p>
       <p class="doors">${D.questions?.length ? '<a href="#/ask">Start from a question</a>' : ''}<a href="#/index">Read it as a list</a><button id="wander" title="Fly to a work at random (R)">Surprise me</button></p>
     </div>`;
