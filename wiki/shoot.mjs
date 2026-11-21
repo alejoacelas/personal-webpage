@@ -3,7 +3,7 @@
 // Each shot is [name, hash, width, height, script]; the script runs in the page and may return a value to print.
 //   node wiki/shoot.mjs index.html /tmp/shots '[["home","#/"],["near","#/",1440,900,"MapView.zoomAt(9)"]]'
 // Pass --frames to also print the median and worst frame time while zooming.
-import { chromium } from '../references/node_modules/playwright/index.mjs';
+import { chromium } from 'playwright';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
