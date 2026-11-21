@@ -487,7 +487,7 @@ function refine(text, entries) {
   }, 150);
 }
 function renderBar(keep) {
-  const text = barInput.value.trim(), level = bar.stack.at(-1), held = keep === true ? bar.rows[bar.sel]?.id : null;
+  const text = barInput.value.trim(), level = bar.stack.at(-1), held = keep === true && bar.moved ? bar.rows[bar.sel]?.id : null;
   let rows, total = 0, sorted = false;
   if (level?.q && (!text || text === level.q.question)) rows = questionResults(level.q);
   else if (level && !level.q) {
@@ -506,11 +506,11 @@ function renderBar(keep) {
       entries = apt.length >= 3 ? apt : [...judged, ...entries.filter(w => !(w.id in scores))];
     } else refine(text, entries);
     sorted = !!scores; total = entries.length;
-    rows = [...section('Topics', found.topics.slice(0, 3).map(topicRow)), ...section('Entries', entries.slice(0, 14).map(workRow))];
+    rows = [...section('Entries', entries.slice(0, 14).map(workRow)), ...section('Topics', found.topics.slice(0, 3).map(topicRow))];
     if (!rows.length) rows = [{ type: 'note', label: 'Nothing matches those words. Try fewer, or a tool’s name.' }];
   } else rows = suggestions();
   bar.rows = rows;
-  const same = held ? rows.findIndex(r => r.id === held) : -1;          // a re-sort keeps the highlighted entry highlighted
+  const same = held ? rows.findIndex(r => r.id === held) : -1;          // a re-sort keeps an entry the reader chose highlighted; otherwise the top one is
   bar.sel = same >= 0 ? same : Math.max(0, rows.findIndex(r => r.type !== 'section' && r.type !== 'note'));
   $('.bar-back', barEl).hidden = !bar.stack.length;
   barInput.placeholder = level && !level.q ? `Filter ${level.label.toLowerCase()}` : 'Ask a question, or type a few words';
@@ -532,7 +532,7 @@ function mark() {
 function move(step) {
   let n = bar.sel;
   do { n += step; } while (bar.rows[n] && (bar.rows[n].type === 'section' || bar.rows[n].type === 'note'));
-  if (bar.rows[n]) { bar.sel = n; mark(); }
+  if (bar.rows[n]) { bar.sel = n; bar.moved = true; mark(); }
 }
 function choose(r) {
   if (!r) return;
@@ -543,7 +543,7 @@ function choose(r) {
 function back() { bar.stack.pop(); barInput.value = ''; renderBar(); }
 function openBar() { if (bar.open) return; bar.open = true; bar.stack = []; barEl.hidden = false; barInput.value = ''; renderBar(); barInput.focus(); document.body.classList.add('asking'); }
 function closeBar() { bar.open = false; barInput.blur(); barEl.hidden = true; document.body.classList.remove('asking'); MapView.focusWorks?.(null); MapView.peek?.(null); MapView.focusPatterns(null); }
-barInput.addEventListener('input', () => renderBar());
+barInput.addEventListener('input', () => { bar.moved = false; renderBar(); });
 barInput.addEventListener('keydown', e => {
   if (e.key === 'ArrowDown' || (e.key === 'Tab' && !e.shiftKey)) { e.preventDefault(); move(1); }
   else if (e.key === 'ArrowUp' || (e.key === 'Tab' && e.shiftKey)) { e.preventDefault(); move(-1); }
@@ -552,7 +552,7 @@ barInput.addEventListener('keydown', e => {
   else if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); if (bar.stack.length) back(); else if (barInput.value) { barInput.value = ''; renderBar(); } else closeBar(); }
   else if (e.key === 'Backspace' && !barInput.value && bar.stack.length) { e.preventDefault(); back(); }
 });
-barEl.addEventListener('mousemove', e => { const el = e.target.closest('.bar-row'); if (el && +el.dataset.n !== bar.sel) { bar.sel = +el.dataset.n; mark(); } });
+barEl.addEventListener('mousemove', e => { const el = e.target.closest('.bar-row'); if (el && +el.dataset.n !== bar.sel) { bar.sel = +el.dataset.n; bar.moved = true; mark(); } });
 barEl.addEventListener('click', e => {
   if (e.target === barEl) return closeBar();
   if (e.target.closest('.bar-back')) { back(); barInput.focus(); return; }
