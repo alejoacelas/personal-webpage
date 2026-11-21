@@ -78,7 +78,7 @@ alejoacelas@gmail.com · https://calendly.com/alejoacelas/30m
 
   for (const p of D.patterns) {
     const list = inTopic(p.id), related = (p.related || []).filter(r => P.has(r.id));
-    files.set(`topics/${p.id}.txt`, `# ${p.label}\n\nA topic on alejoacelas.com (${D.areas.find(a => a.id === p.area)?.label}). ${list.length} works. On the map: ${base}/#/p/${p.id}\n\n${p.summary}\n${related.length ? `\nRelated topics:\n${related.map(r => `- [${P.get(r.id).label}](${base}/topics/${r.id}.txt): ${r.why}`).join('\n')}\n` : ''}\n---\n\n${list.map(w => work(w, '##')).join('\n\n---\n\n')}\n`);
+    files.set(`topics/${p.id}.txt`, `# ${p.label}\n\nA topic on alejoacelas.com (${D.areas.find(a => a.id === p.area)?.label}). ${list.length} works. On the map: ${base}/#/p/${p.id}\n\n${p.summary}\n${related.length ? `\nRelated topics:\n${related.map(r => `- [${P.get(r.id).label}](${base}/topics/${r.id}.txt): ${r.why}`).join('\n')}\n` : ''}\nThe works in this topic, newest first (date | kind | title | summary | address of the full text). Each is given in full further down; if this file is cut short, open the ones you need by address.\n\n${list.map(line).join('\n')}\n\n---\n\n${list.map(w => work(w, '##')).join('\n\n---\n\n')}\n`);
   }
   for (const w of works) files.set(`works/${w.id}.txt`, work(w) + '\n');
   files.set('llms-full.txt', `# Alejo Acelas: everything on alejoacelas.com as text\n\n${intro}\n\nIndex and topic files: ${base}/llms.txt\n\n---\n\n${works.map(w => work(w, '##')).join('\n\n---\n\n')}\n`);
@@ -87,9 +87,9 @@ alejoacelas@gmail.com · https://calendly.com/alejoacelas/30m
   const html = `<div class="sr" id="as-text">
 <h1>Alejo Acelas</h1>
 <p>${esc(intro)}</p>
-<p>This page is an interactive map that needs JavaScript. If you are an AI assistant or are reading without it, everything is available as plain text: start at <a href="/llms.txt">/llms.txt</a>, read the <a href="/works.txt">index of every work</a>, download <a href="/llms-full.txt">everything in one file</a>, or search with <code>GET /api/search?q=your+words</code>.</p>
+<p>This page is an interactive map that needs JavaScript. If you are an AI assistant or are reading without it, everything is available as plain text: start at <a href="${base}/llms.txt">${base}/llms.txt</a>, read the index of every work at <a href="${base}/works.txt">${base}/works.txt</a>, download everything in one file from <a href="${base}/llms-full.txt">${base}/llms-full.txt</a>, or search with <code>GET ${base}/api/search?q=your+words</code>.</p>
 <h2>Topics</h2>
-<ul>${D.patterns.map(p => `<li><a href="/topics/${p.id}.txt">${esc(p.label)}</a>: ${esc(p.summary.split(/(?<=\.)\s/)[0])}</li>`).join('')}</ul>
+<ul>${D.patterns.map(p => `<li><a href="${base}/topics/${p.id}.txt">${esc(p.label)}</a>: ${esc(p.summary.split(/(?<=\.)\s/)[0])}</li>`).join('')}</ul>
 <p>Contact: <a href="mailto:alejoacelas@gmail.com">alejoacelas@gmail.com</a>, <a href="https://calendly.com/alejoacelas/30m">calendly.com/alejoacelas/30m</a></p>
 </div>`;
   return { files, html };

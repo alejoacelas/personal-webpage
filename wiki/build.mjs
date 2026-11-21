@@ -247,7 +247,8 @@ if (existsSync(path.join(src, 'annotations-search'))) {
     for (const row of await json(`annotations-search/${f}`)) {
       const w = fromEdited ? byPublicId.get(row.id) : byId.get(row.id);
       // Phrases written before an edit could repeat what the edit removed, so an edited work only takes phrases written from its edited text.
-      if (w && (fromEdited ? !review && w.edited : review || !w.edited)) { w.asks = row.asks || []; w.words = row.words || []; }
+      // Phrases written from the published text also fill in for a work that has none yet (the weekly run writes them for new works).
+      if (w && (fromEdited ? !review && (w.edited || !w.asks?.length) : review || !w.edited)) { w.asks = row.asks || []; w.words = row.words || []; }
     }
   }
 }
