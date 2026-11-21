@@ -4,9 +4,24 @@
   "buildCommand": "node scripts/build.mjs",
   "outputDirectory": "dist",
   "functions": {
-    "api/*.mjs": { "includeFiles": "wiki/{data.publish.js,search.js,rank.mjs}" }
+    "api/*.mjs": {
+      "includeFiles": "wiki/{data.publish.js,search.js,rank.mjs}"
+    }
   },
   "headers": [
-    { "source": "/(.*)\\.txt", "headers": [{ "key": "Content-Type", "value": "text/plain; charset=utf-8" }] }
-  ]
+    {
+      "source": "/(.*)\\.txt",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
+        }
+      ]
+    }
+  ],
+  "git": {
+    "deploymentEnabled": {
+      "wiki": false
+    }
+  }
 }
