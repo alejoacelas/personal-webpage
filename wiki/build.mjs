@@ -157,7 +157,7 @@ for (const raw of items) {
     w.tool = g.missing || g.private ? { repo: g.repo, unavailable: true, private: !!g.private }
       : g.gist ? { gist: true, description: g.description, files: g.files.map(f => ({ name: f.name, html: /\.md$/i.test(f.name) ? md(f.content) : `<pre>${esc(f.content.slice(0, 8000))}</pre>` })) }
       : { repo: g.repo, description: g.description, language: g.language, stars: g.stars, pushed: g.pushed, homepage: g.homepage, readme: g.readme ? md(g.readme) : '' };
-    w.text = (g.description || '') + ' ' + (g.readme || '').slice(0, 3000);
+    w.text = g.private || g.missing ? '' : (g.description || '') + ' ' + (g.readme || '').slice(0, 3000);
   } else if (i.kind === 'doc') {
     const body = i.body.replace(/^\s*\[from\]\([^)]*\)\s*/, '').replace(/^# .+\n+(# .+\n)/, '$1');
     w.doc = { gdoc: gdocId(i.url), html: i.chars > 400 ? md(body) : '', cut: i.chars > i.body.length, chars: i.chars };
