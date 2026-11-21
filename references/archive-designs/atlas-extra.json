@@ -1,22 +1,5 @@
 [
   {
-    "id": "repo-umi",
-    "title": "Umi, a terminal for working with agents",
-    "kind": "Repository",
-    "date": "2026-11-21",
-    "description": "Keep Claude and Codex sessions in panes alongside the Markdown you’re editing.",
-    "body": "Umi is a macOS terminal with tabs, split panes and a Markdown editor. Each agent pane shows its session state. The command-line interface lets a session move panes and open a document in the editor.",
-    "url": "https://github.com/alejoacelas/umi",
-    "links": [],
-    "region": "agents",
-    "subtopic": "agent-attention",
-    "tags": [
-      "parallel sessions",
-      "macOS",
-      "terminals"
-    ]
-  },
-  {
     "id": "repo-running-clipboard",
     "title": "Collect comments in one paste",
     "kind": "Repository",
@@ -34,74 +17,6 @@
     ]
   },
   {
-    "id": "repo-automation-map",
-    "title": "A map of a recurring process",
-    "kind": "Repository",
-    "date": "2026-11-19",
-    "description": "Compare what AI handles today with what it could take on next.",
-    "body": "This single-file dashboard takes a structured list of tasks and groups them by phase. It opens with suggested tasks to try, shows the assumptions behind the ratings, and can export a shareable copy. A fictional application round illustrates the format.",
-    "url": "https://github.com/alejoacelas/automation-map",
-    "links": [],
-    "region": "workflows",
-    "subtopic": "workflow-audits",
-    "tags": [
-      "automation",
-      "task mapping",
-      "dashboard"
-    ]
-  },
-  {
-    "id": "repo-ask-their-claude",
-    "title": "Ask a colleague’s AI a question",
-    "kind": "Repository",
-    "date": "2026-11-18",
-    "description": "Reusable instructions for letting someone run a question against their own work and check the answer.",
-    "body": "The template separates the question from four shared guides. Those guides cover where to look, how to write the report, what to leave out and how to hand the result back to the person who ran it.",
-    "url": "https://github.com/alejoacelas/ask-their-claude",
-    "links": [],
-    "region": "agents",
-    "subtopic": "reusable-skills",
-    "tags": [
-      "templates",
-      "privacy",
-      "knowledge sharing"
-    ]
-  },
-  {
-    "id": "repo-sharing-report-viewer",
-    "title": "A portable reader for an AI report",
-    "kind": "Repository",
-    "date": "2026-11-04",
-    "description": "Turn a structured answer and its supporting quotes into one HTML file.",
-    "body": "The viewer reads report data embedded in the file. Readers can move between sections with the arrow keys, expand quotes, and inspect which sources the report used or missed. The public copy starts empty.",
-    "url": "https://github.com/alejoacelas/sharing-report-viewer",
-    "links": [],
-    "region": "community",
-    "subtopic": "peer-learning",
-    "tags": [
-      "reporting",
-      "evidence",
-      "knowledge sharing"
-    ]
-  },
-  {
-    "id": "repo-uplift-modelling",
-    "title": "What changes the shape of AI adoption?",
-    "kind": "Repository",
-    "date": "2026-10-16",
-    "description": "An interactive notebook about the assumptions inside adoption curves.",
-    "body": "Compare a model in which only some tasks are reachable with models in which tasks differ in difficulty or adoption encourages more adoption. The notebook lets you see how coaching changes each curve. The curves illustrate assumptions rather than measured effects.",
-    "url": "https://github.com/alejoacelas/uplift-modelling",
-    "links": [],
-    "region": "learning",
-    "subtopic": "adoption-barriers",
-    "tags": [
-      "adoption",
-      "coaching",
-      "modelling"
-    ]
-  },
-  {
     "id": "repo-call-clock",
     "title": "Pacing calls in five-minute blocks",
     "kind": "Repository",
@@ -116,40 +31,6 @@
       "calls",
       "timekeeping",
       "macOS"
-    ]
-  },
-  {
-    "id": "repo-trials",
-    "title": "A one-page verdict for a tool trial",
-    "kind": "Repository",
-    "date": "2026-10-08",
-    "description": "Choose the question before testing, then record where the tool works and fails.",
-    "body": "A reusable brief records the decision, versions, test cases and completion condition. The verdict template pairs each result with a run. Standard cases include rich documents, concurrent edits and a read–write round trip.",
-    "url": "https://github.com/alejoacelas/trials",
-    "links": [],
-    "region": "tools",
-    "subtopic": "research-tools",
-    "tags": [
-      "evaluation",
-      "templates",
-      "tool choice"
-    ]
-  },
-  {
-    "id": "repo-google-docs-agent-tools",
-    "title": "Testing Claude’s Google Docs connector",
-    "kind": "Repository",
-    "date": "2026-10-06",
-    "description": "The test fixture and recorded runs behind my report on everyday editing tasks.",
-    "body": "The repository includes a synthetic project plan, requests to run against it, and a harness for inspecting the resulting document. The October tests covered checkboxes, suggestions, comments and section moves.",
-    "url": "https://github.com/alejoacelas/google-docs-agent-tools",
-    "links": [],
-    "region": "tools",
-    "subtopic": "writing-tools",
-    "tags": [
-      "Google Docs",
-      "evaluation",
-      "editing"
     ]
   },
   {
@@ -232,23 +113,6 @@
     "tags": [
       "interviews",
       "iteration"
-    ]
-  },
-  {
-    "id": "excerpt-passive-inbox",
-    "title": "What I want an inbox assistant to notice",
-    "kind": "Call excerpt",
-    "date": "2026-11-20",
-    "description": "One design choice behind an inbox assistant.",
-    "body": "Which is just like it should collect all information passively. I don't want to like have to remind it that there's like an email that happened.",
-    "url": "",
-    "links": [],
-    "region": "workflows",
-    "subtopic": "personal-workflows",
-    "tags": [
-      "inbox",
-      "context",
-      "automation"
     ]
   }
 ]
