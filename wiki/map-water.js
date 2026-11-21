@@ -66,7 +66,7 @@ window.MapView = (() => {
     return out;
   }
   const dayOf = d => `${+d.slice(8, 10)} ${['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][+d.slice(5, 7) - 1]} ${d.slice(0, 4)}`;
-  const source = w => w.kind === 'post' ? '#' + w.slack.channel : w.kind === 'said' ? 'call excerpt' : ({ doc: 'Google Doc', sheet: 'Google Sheet', repo: 'repository', gist: 'gist', site: 'live site', file: 'link' })[w.sub] || w.sub;
+  const source = w => w.kind === 'post' ? (w.slack.channel === 'private-channel' ? 'a private channel' : '#' + w.slack.channel) : w.kind === 'said' ? 'call excerpt' : ({ doc: 'Google Doc', sheet: 'Google Sheet', repo: 'repository', gist: 'gist', site: 'live site', file: 'link' })[w.sub] || w.sub;
   const shortDay = d => `${+d.slice(8, 10)} ${['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][+d.slice(5, 7) - 1]} ’${d.slice(2, 4)}`;
 
   // ---- Pigments. Hue follows a pattern's position; patterns near the middle get earthier paint,

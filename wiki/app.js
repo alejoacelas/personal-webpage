@@ -50,7 +50,7 @@ const LENSES = [
   } },
   { id: 'source', label: 'By where it lives', rows() {
     const names = { doc: 'Google Docs', sheet: 'Google Sheets', repo: 'Repositories', gist: 'Gists', site: 'Live sites', file: 'Links' };
-    const rowOf = w => w.kind === 'post' ? '#' + w.slack.channel : names[w.sub] || (SUB[w.sub] || w.sub) + 's';
+    const rowOf = w => w.kind === 'post' ? channel(w).replace(/^a p/, 'A p') : names[w.sub] || (SUB[w.sub] || w.sub) + 's';
     const rows = new Map();
     for (const w of works) (rows.get(rowOf(w)) || rows.set(rowOf(w), []).get(rowOf(w))).push(w);
     return [...rows].sort((a, b) => b[1].length - a[1].length).map(([label, items]) => ({ key: label, label, items }));
@@ -66,10 +66,11 @@ const lens = id => LENSES.find(l => l.id === id);
 const rowsOf = id => lensCache[id] || (lensCache[id] = lens(id)?.rows() || []);
 
 // ---- Small pieces
+const channel = w => w.slack.channel === 'private-channel' ? 'a private channel' : '#' + w.slack.channel;
 const glyph = (kind, cls = '') => `<span class="glyph k-${kind} ${cls}" aria-hidden="true"></span>`;
 const matches = w => !query || query.split(/\s+/).every(t => w.search.includes(t));
 const pLink = id => P.has(id) ? `<a class="plink" href="#/p/${id}" data-p="${id}">${esc(P.get(id).label)}</a>` : '';
-const srcLine = w => w.kind === 'post' ? `#${esc(w.slack.channel)}` : esc(SUB[w.sub] || w.sub);
+const srcLine = w => w.kind === 'post' ? esc(channel(w)) : esc(SUB[w.sub] || w.sub);
 function setCtx(key, label, href, ids) { ctxStore.set(key, { label, href, ids }); return key; }
 
 function row(w, relation) {
@@ -239,7 +240,7 @@ function viewer(w) {
   if (w.kind === 'post') {
     const s = w.slack;
     return `<figure class="v-slack">
-      <figcaption><b># ${esc(s.channel)}</b><span>AI Uplift for EA Slack</span></figcaption>
+      <figcaption><b>${s.channel === 'private-channel' ? 'A private channel' : '# ' + esc(s.channel)}</b><span>AI Uplift for EA Slack</span></figcaption>
       ${s.replyingTo ? `<p class="v-context">Replying in a thread. ${esc(s.replyingTo)}</p>` : ''}
       ${s.messages.map((m, n) => `<div class="msg${n && s.startsThread ? ' follow' : ''}"><span class="avatar" aria-hidden="true">AA</span><div><p class="who"><b>Alejandro Acelas</b> <time>${day(m.time.slice(0, 10))}, ${m.time.slice(11)}</time></p><div class="text">${m.html}</div>${m.files.length ? `<p class="files">${m.files.map(f => `<span>${esc(f)} attached</span>`).join('')}</p>` : ''}${m.reactions.length ? `<p class="reactions">${m.reactions.map(([e, n]) => `<span>${e} ${n}</span>`).join('')}</p>` : ''}</div></div>`).join('')}
       <p class="v-foot">${s.replies && s.startsThread ? `<span class="replies">${s.replies} ${s.replies === 1 ? 'reply' : 'replies'}${s.others ? ` from ${s.others} ${s.others === 1 ? 'person' : 'people'}` : ''}</span>` : '<span></span>'}<a href="${esc(w.url)}" target="_blank" rel="noopener">Open in Slack ↗</a></p>
