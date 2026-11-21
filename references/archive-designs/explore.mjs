@@ -1,9 +1,9 @@
 import {items as base,ui} from './archive.mjs';
 import {renderMap} from './spatial.mjs';
-const [catalogue,added]=await Promise.all(['atlas-taxonomy.json','atlas-extra.json'].map(async name=>{
+const [catalogue,added,sources]=await Promise.all(['atlas-taxonomy.json','atlas-extra.json','atlas-sources.json'].map(async name=>{
  const r=await fetch('/'+name);if(!r.ok)throw Error('Could not load '+name);return r.json();
 }));
-const items=[...base.map(i=>({...i,...catalogue.items[i.id]})),...added];
+const items=[...base.map(i=>({...i,...catalogue.items[i.id]})),...sources,...added].sort((a,b)=>b.date.localeCompare(a.date));
 const regions=catalogue.regions, byId=new Map(items.map(i=>[i.id,i]));
 const $=s=>document.querySelector(s), esc=ui.esc;
 const info={
