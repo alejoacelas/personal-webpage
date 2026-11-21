@@ -13,12 +13,12 @@ const destination=path.join(cache,'review.json');
 let state;
 try{state=JSON.parse(await readFile(destination,'utf8'))}catch(err){if(err.code!=='ENOENT')throw err;state={favorite:'',notes:{}}}
 const ids=['atlas','edition','stream','cabinet','room'];
-const routes=new Map([['/','index.html'],['/archive.mjs','archive.mjs'],
+const routes=new Map([['/','explore.html'],['/explore','explore.html'],['/studies','index.html'],...['explore.css','explore.mjs','spatial.mjs','atlas-taxonomy.json','atlas-extra.json'].map(name=>['/'+name,name]),['/archive.mjs','archive.mjs'],
  ...ids.flatMap(id=>[['/'+id+'.html','prototype.html'],['/'+id+'.mjs',id+'.mjs']]),
  ['/historical-documents.json','historical-documents.json'],['/historical-posts.json','historical-posts.json'],
  ['/documents.json',path.join(repo,'content/documents.json')],['/feed.json',path.join(repo,'public/feed.json')]
 ]);
-const types={'.html':'text/html','.mjs':'text/javascript','.json':'application/json','.webp':'image/webp','.woff2':'font/woff2'};
+const types={'.css':'text/css','.html':'text/html','.mjs':'text/javascript','.json':'application/json','.webp':'image/webp','.woff2':'font/woff2'};
 let queue=Promise.resolve();
 http.createServer(async(req,res)=>{
  const finish=(code,body='',type='text/plain')=>{res.writeHead(code,{'Content-Type':type,'Cache-Control':'no-store','X-Content-Type-Options':'nosniff'});res.end(body)};
@@ -40,7 +40,7 @@ http.createServer(async(req,res)=>{
    return finish(200,JSON.stringify(state),'application/json');
   }
   if(req.method!=='GET')return finish(405);
-  const asset=routes.get(url.pathname)||(/^\/[a-z0-9-]+\.(?:webp|woff2)$/.test(url.pathname)&&url.pathname.slice(1));
+  const asset=(url.pathname==='/'&&url.searchParams.has('design')?'index.html':routes.get(url.pathname))||(/^\/[a-z0-9-]+\.(?:webp|woff2)$/.test(url.pathname)&&url.pathname.slice(1));
   if(!asset)return finish(404);
   const file=path.resolve(dir,asset);return finish(200,await readFile(file),types[path.extname(file)]);
  }catch(error){finish(error.code==='ENOENT'?404:500)}
