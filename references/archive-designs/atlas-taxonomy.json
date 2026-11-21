@@ -1,0 +1,489 @@
+{
+  "regions": [
+    {
+      "id": "workflows",
+      "label": "Finding work for AI",
+      "color": "#9b4d29",
+      "subjects": [
+        {
+          "id": "workflow-audits",
+          "label": "Auditing recurring work"
+        },
+        {
+          "id": "coaching-intake",
+          "label": "Choosing a coaching project"
+        },
+        {
+          "id": "personal-workflows",
+          "label": "Organising personal work"
+        }
+      ]
+    },
+    {
+      "id": "agents",
+      "label": "Delegation and control",
+      "color": "#3d6487",
+      "subjects": [
+        {
+          "id": "prompting",
+          "label": "Asking better questions"
+        },
+        {
+          "id": "reusable-skills",
+          "label": "Making skills reusable"
+        },
+        {
+          "id": "agent-attention",
+          "label": "Supervising parallel agents"
+        },
+        {
+          "id": "human-control",
+          "label": "Understanding what we control"
+        }
+      ]
+    },
+    {
+      "id": "tools",
+      "label": "Tools and integrations",
+      "color": "#356858",
+      "subjects": [
+        {
+          "id": "app-connections",
+          "label": "Connecting work apps"
+        },
+        {
+          "id": "browser-use",
+          "label": "Using the browser"
+        },
+        {
+          "id": "research-tools",
+          "label": "Tools for research"
+        },
+        {
+          "id": "writing-tools",
+          "label": "Writing and editing"
+        }
+      ]
+    },
+    {
+      "id": "learning",
+      "label": "Learning to use AI",
+      "color": "#874c66",
+      "subjects": [
+        {
+          "id": "deliberate-practice",
+          "label": "Practising deliberately"
+        },
+        {
+          "id": "getting-started",
+          "label": "Trying a first project"
+        },
+        {
+          "id": "adoption-barriers",
+          "label": "What holds people back"
+        }
+      ]
+    },
+    {
+      "id": "community",
+      "label": "The AI uplift community",
+      "color": "#796125",
+      "subjects": [
+        {
+          "id": "peer-learning",
+          "label": "Learning from peers"
+        },
+        {
+          "id": "channel-design",
+          "label": "Shaping the Slack channel"
+        }
+      ]
+    }
+  ],
+  "items": {
+    "1aBy72YNPTikWAfX2o5ikWAnGOzKI8qLaT_iZJDN3tPE": {
+      "region": "agents",
+      "subtopic": "human-control",
+      "tags": [
+        "human agency",
+        "uncertainty",
+        "delegation"
+      ],
+      "related": [
+        "1794811870.172209"
+      ],
+      "body": "Would it worry you to learn that nobody understood an operating system well enough to rebuild it, even if its engineers could keep improving it? This draft asks what “understanding” contributes when people already depend on institutions too complex for any one person to grasp.\n\nIts thought experiment holds outcomes steady. A chief executive can pull many levers and still be at a loss when things go wrong. A farmer can understand the risks of a winter without having much power over it. The open question is how much people value being able to anticipate failure, recover from it, or tell whether an intervention will work."
+    },
+    "1Wy-mFv1J0J56rziT3QBcxoM7EaI00JX21bEwUhBOlbc": {
+      "region": "agents",
+      "subtopic": "prompting",
+      "tags": [
+        "prompt design",
+        "evidence",
+        "privacy",
+        "coaching"
+      ],
+      "related": [
+        "159tncXDj-lS8zy40YB8WEuJWCkc8ov19duwgv7kOkBg",
+        "1xuLpOdGa2b470lAIqMPMwg36wm1INq0PQy0TIhRABDk",
+        "testing-prompts"
+      ],
+      "body": "A template for asking a colleague a question their own assistant can answer from their records. Start with the decision the answer will inform. For example, “What should we automate?” can become a request to list repeated tasks, count them and show a few instances. The person reading the evidence can then decide what to automate.\n\nThe guides cover choosing sources, counting consistently, quoting evidence and marking gaps. The colleague runs the prompt, can exclude sources before the search and reviews the private report before sharing it. Full conversations are a separate, optional choice."
+    },
+    "159tncXDj-lS8zy40YB8WEuJWCkc8ov19duwgv7kOkBg": {
+      "region": "workflows",
+      "subtopic": "workflow-audits",
+      "tags": [
+        "workflow audit",
+        "AI adoption",
+        "evidence",
+        "coaching"
+      ],
+      "related": [
+        "1xuLpOdGa2b470lAIqMPMwg36wm1INq0PQy0TIhRABDk",
+        "choosing-a-workflow",
+        "1EuofQaVmkFFnK5REb681Gk5gFKI3v1U3O85vuc6YLlg",
+        "1Wy-mFv1J0J56rziT3QBcxoM7EaI00JX21bEwUhBOlbc"
+      ],
+      "body": "This prompt compares the work a person spends time on with the work they already do with AI. It looks across six weeks of calendar events, messages, documents and AI chats, then groups the evidence under recurring responsibilities. For each one it counts calendar hours, active days and AI sessions, and follows a concrete example through the record.\n\nThe result is a private report showing where AI use is concentrated, where it is light and where the person had to correct its work. They can rule out sources at the start and choose what to share after reading it."
+    },
+    "1xuLpOdGa2b470lAIqMPMwg36wm1INq0PQy0TIhRABDk": {
+      "region": "workflows",
+      "subtopic": "workflow-audits",
+      "tags": [
+        "workflow audit",
+        "automation",
+        "operations",
+        "evidence"
+      ],
+      "related": [
+        "choosing-a-workflow",
+        "159tncXDj-lS8zy40YB8WEuJWCkc8ov19duwgv7kOkBg",
+        "1794902411.285989"
+      ],
+      "body": "This prompt follows recurring work from its trigger to its outcome, such as a form arriving and an application being processed. It asks an assistant to inspect six weeks of records for volume, steps that need a person and problems such as duplicated messages or stalled cases. It ranks processes by problems first, then volume.\n\nEach process gets a worked example drawn from the record, with inferred steps marked as such. The person running the prompt can exclude sources and review the private report before giving it to someone helping with automation."
+    },
+    "1OgM0T1_WPyntA5j1cmZ6_abO-WFFNrbtSGNZEwi7eiI": {
+      "region": "tools",
+      "subtopic": "writing-tools",
+      "tags": [
+        "Google Docs",
+        "connectors",
+        "testing",
+        "writing"
+      ],
+      "related": [
+        "1794902411.285989",
+        "1789553050.103399",
+        "testing-prompts"
+      ],
+      "body": "I gave fresh Claude Code sessions ordinary editing requests on a synthetic project plan, then inspected the document. An edit can look right while changing what a colleague sees later. For example, an indented line that looked like a nested bullet exported as a top-level item. A suggestion copied into the text looked accepted on the page but remained a direct edit in version history.\n\nThe draft records the requests, repeated runs and differences between Claude chat and Claude Code. It also records an edit that held up: both runs of a Markdown update preserved the comments, suggestions, heading link and header on this particular fixture."
+    },
+    "1lo0t7od9A_RMptpalpKZrDGSDGW0Ots2gjJxI5OMypE": {
+      "region": "community",
+      "subtopic": "peer-learning",
+      "tags": [
+        "staff training",
+        "community calls",
+        "AI adoption"
+      ],
+      "related": [
+        "1790271639.814419",
+        "1793704230.839999",
+        "1794830400.390989"
+      ],
+      "body": "A draft agenda for a short community call on helping staff get better at using AI. After introductions, most of the time is left for people to compare experiences. The questions are which improvements last, who would benefit most from training and which practices need little upkeep. The final poll asks what the group should discuss next and how often to meet."
+    },
+    "1EuofQaVmkFFnK5REb681Gk5gFKI3v1U3O85vuc6YLlg": {
+      "region": "workflows",
+      "subtopic": "coaching-intake",
+      "tags": [
+        "coaching",
+        "priorities",
+        "AI adoption"
+      ],
+      "related": [
+        "choosing-a-workflow",
+        "159tncXDj-lS8zy40YB8WEuJWCkc8ov19duwgv7kOkBg",
+        "1793704230.839999"
+      ],
+      "body": "Before a coaching call, I ask what AI already does that the person values, which of last week’s priorities received the least AI help and what work they expect to spend at least 40 hours on. That last question looks for a responsibility where extra effort could materially improve the result.\n\nThe answers help choose between practising basic agent capabilities and attempting one ambitious project. The form asks for about 15 minutes of preparation."
+    },
+    "1DYxPPJKHj7VpnWKu5ASGhw1U2e8a43T2Gmu6hPqynqo": {
+      "region": "learning",
+      "subtopic": "getting-started",
+      "tags": [
+        "workshops",
+        "coding agents",
+        "peer learning"
+      ],
+      "related": [
+        "1791477230.853239",
+        "1793219511.956899",
+        "1790271639.814419"
+      ],
+      "body": "An unfinished outline for a drop-in session where people bring a laptop and something they would like to try with a coding agent. Most of the time is for working on that project, pairing with someone or asking for help when stuck. Programming experience is optional.\n\nThe outline collects tools worth trying, leaves space for participants’ ideas and questions, and sketches the preparation needed. Several sections, including the timetable, are still blank."
+    },
+    "1795189660.321559": {
+      "region": "tools",
+      "subtopic": "research-tools",
+      "tags": [
+        "research papers",
+        "PDFs",
+        "evidence"
+      ],
+      "related": [
+        "1794902411.285989"
+      ]
+    },
+    "1794907853.133389": {
+      "region": "agents",
+      "subtopic": "agent-attention",
+      "tags": [
+        "attention",
+        "parallel agents",
+        "notifications"
+      ],
+      "related": [
+        "1794811870.172209"
+      ]
+    },
+    "1794902411.285989": {
+      "region": "tools",
+      "subtopic": "app-connections",
+      "tags": [
+        "connectors",
+        "browser control",
+        "automation"
+      ],
+      "related": [
+        "1789553050.103399",
+        "1787279790.021939",
+        "1OgM0T1_WPyntA5j1cmZ6_abO-WFFNrbtSGNZEwi7eiI"
+      ]
+    },
+    "1794830400.390989": {
+      "region": "community",
+      "subtopic": "channel-design",
+      "tags": [
+        "Slack",
+        "participation",
+        "community design"
+      ],
+      "related": [
+        "1788429620.744379",
+        "1793445948.142699",
+        "1lo0t7od9A_RMptpalpKZrDGSDGW0Ots2gjJxI5OMypE"
+      ]
+    },
+    "1793963939.881499": {
+      "region": "agents",
+      "subtopic": "prompting",
+      "tags": [
+        "prompt design",
+        "intent",
+        "correction"
+      ],
+      "related": [
+        "1789817231.908579",
+        "testing-prompts"
+      ]
+    },
+    "1793704230.839999": {
+      "region": "learning",
+      "subtopic": "adoption-barriers",
+      "tags": [
+        "AI adoption",
+        "motivation",
+        "coaching"
+      ],
+      "related": [
+        "1EuofQaVmkFFnK5REb681Gk5gFKI3v1U3O85vuc6YLlg",
+        "1792167902.125269",
+        "1lo0t7od9A_RMptpalpKZrDGSDGW0Ots2gjJxI5OMypE"
+      ]
+    },
+    "1794811870.172209": {
+      "region": "workflows",
+      "subtopic": "personal-workflows",
+      "tags": [
+        "task lists",
+        "delegation",
+        "attention"
+      ],
+      "related": [
+        "1794907853.133389",
+        "choosing-a-workflow"
+      ]
+    },
+    "1793445948.142699": {
+      "region": "community",
+      "subtopic": "channel-design",
+      "tags": [
+        "Slack",
+        "moderation",
+        "posting"
+      ],
+      "related": [
+        "1794830400.390989"
+      ]
+    },
+    "1793219511.956899": {
+      "region": "community",
+      "subtopic": "peer-learning",
+      "tags": [
+        "live builds",
+        "project ideas",
+        "peer learning"
+      ],
+      "related": [
+        "1DYxPPJKHj7VpnWKu5ASGhw1U2e8a43T2Gmu6hPqynqo"
+      ]
+    },
+    "1792167902.125269": {
+      "region": "learning",
+      "subtopic": "adoption-barriers",
+      "tags": [
+        "AI adoption",
+        "programming",
+        "skills"
+      ],
+      "related": [
+        "1793704230.839999",
+        "1787905004.081639",
+        "1791477230.853239"
+      ]
+    },
+    "1791477230.853239": {
+      "region": "learning",
+      "subtopic": "getting-started",
+      "tags": [
+        "coding agents",
+        "first projects",
+        "tool selection"
+      ],
+      "related": [
+        "1DYxPPJKHj7VpnWKu5ASGhw1U2e8a43T2Gmu6hPqynqo",
+        "1792167902.125269"
+      ]
+    },
+    "1790271639.814419": {
+      "region": "learning",
+      "subtopic": "deliberate-practice",
+      "tags": [
+        "practice",
+        "peer learning",
+        "tool selection"
+      ],
+      "related": [
+        "1787905004.081639",
+        "1lo0t7od9A_RMptpalpKZrDGSDGW0Ots2gjJxI5OMypE",
+        "1789931174.127179"
+      ]
+    },
+    "1789931174.127179": {
+      "region": "agents",
+      "subtopic": "reusable-skills",
+      "tags": [
+        "skills",
+        "iteration",
+        "testing"
+      ],
+      "related": [
+        "testing-prompts",
+        "1790271639.814419"
+      ]
+    },
+    "1789817231.908579": {
+      "region": "agents",
+      "subtopic": "prompting",
+      "tags": [
+        "prompt design",
+        "feedback",
+        "leading questions"
+      ],
+      "related": [
+        "1793963939.881499",
+        "1Wy-mFv1J0J56rziT3QBcxoM7EaI00JX21bEwUhBOlbc"
+      ]
+    },
+    "1789553050.103399": {
+      "region": "tools",
+      "subtopic": "app-connections",
+      "tags": [
+        "Slack",
+        "connectors",
+        "automation"
+      ],
+      "related": [
+        "1794902411.285989",
+        "1OgM0T1_WPyntA5j1cmZ6_abO-WFFNrbtSGNZEwi7eiI"
+      ]
+    },
+    "1788429620.744379": {
+      "region": "community",
+      "subtopic": "channel-design",
+      "tags": [
+        "Slack",
+        "invitations",
+        "community design"
+      ],
+      "related": [
+        "1794830400.390989"
+      ]
+    },
+    "1787905004.081639": {
+      "region": "learning",
+      "subtopic": "deliberate-practice",
+      "tags": [
+        "tool selection",
+        "hiring",
+        "practice"
+      ],
+      "related": [
+        "1790271639.814419",
+        "1792167902.125269"
+      ]
+    },
+    "1787279790.021939": {
+      "region": "tools",
+      "subtopic": "browser-use",
+      "tags": [
+        "browser control",
+        "AI adoption",
+        "setup"
+      ],
+      "related": [
+        "1794902411.285989",
+        "1793704230.839999"
+      ]
+    },
+    "choosing-a-workflow": {
+      "region": "workflows",
+      "subtopic": "workflow-audits",
+      "tags": [
+        "workflow audit",
+        "coaching",
+        "recurring work"
+      ],
+      "related": [
+        "1xuLpOdGa2b470lAIqMPMwg36wm1INq0PQy0TIhRABDk",
+        "1EuofQaVmkFFnK5REb681Gk5gFKI3v1U3O85vuc6YLlg",
+        "159tncXDj-lS8zy40YB8WEuJWCkc8ov19duwgv7kOkBg"
+      ]
+    },
+    "testing-prompts": {
+      "region": "agents",
+      "subtopic": "prompting",
+      "tags": [
+        "prompt design",
+        "testing",
+        "transcripts"
+      ],
+      "related": [
+        "1Wy-mFv1J0J56rziT3QBcxoM7EaI00JX21bEwUhBOlbc",
+        "1789931174.127179"
+      ]
+    }
+  }
+}
