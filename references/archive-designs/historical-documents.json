@@ -1,0 +1,26 @@
+[
+  {
+    "title": "Slack message announcing monthly call",
+    "url": "https://docs.google.com/document/d/1lo0t7od9A_RMptpalpKZrDGSDGW0Ots2gjJxI5OMypE/edit",
+    "date": "2026-11-17",
+    "kind": "Draft",
+    "description": "An agenda for discussing how staff learn to use AI and which practices stick.",
+    "topic": "Using AI at work"
+  },
+  {
+    "title": "Coaching | General-purpose",
+    "url": "https://docs.google.com/document/d/1EuofQaVmkFFnK5REb681Gk5gFKI3v1U3O85vuc6YLlg/edit",
+    "date": "2026-11-16",
+    "kind": "Template",
+    "description": "Three questions I ask before coaching to find where AI could make a difference to someone’s work.",
+    "topic": "Using AI at work"
+  },
+  {
+    "title": "Anyone Can Claude Code",
+    "url": "https://docs.google.com/document/d/1DYxPPJKHj7VpnWKu5ASGhw1U2e8a43T2Gmu6hPqynqo/edit",
+    "date": "2026-09-26",
+    "kind": "Draft",
+    "description": "An early workshop outline for trying a coding agent on a problem you bring.",
+    "topic": "Using AI at work"
+  }
+]
