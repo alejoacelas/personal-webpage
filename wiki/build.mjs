@@ -229,7 +229,8 @@ if (!review) {
   // Nothing is written if a private name, email address, invite link or file path is left.
   const people = await privatePeople(src);
   const found = [];
-  for (const w of data.works) for (const p of problems(w, { ...share.get(w.id), names: [...(share.get(w.id)?.names || []), ...(excerptNames.get(w.id) || [])] }, people)) found.push(`${w.id} (${w.title}): ${p}`);
+  const published = JSON.parse(serialized).works;   // as written, with hashed ids
+  for (const [n, w] of data.works.entries()) for (const p of problems(published[n], { ...share.get(w.id), names: [...(share.get(w.id)?.names || []), ...(excerptNames.get(w.id) || [])] }, people)) found.push(`${w.id} (${w.title}): ${p}`);
   const { works: _, map: __, ...rest } = data;
   for (const p of problems(rest, null, people)) found.push(`patterns, questions or arcs: ${p}`);
   const leftover = ids.filter(id => /[a-z]{3}/.test(id) && serialized.includes(id));
