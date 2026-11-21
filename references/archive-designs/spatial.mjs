@@ -1,6 +1,7 @@
 const svgNS = 'http://www.w3.org/2000/svg';
 const renders = new WeakMap();
-const safeColor = value => CSS.supports('color', value) ? value : '#d5bc88';
+const orbitColor = value => CSS.supports('color', value)
+  ? `color-mix(in srgb, ${value} 56%, #edf1ff)` : '#d5bc88';
 
 function element(tag, attributes = {}, text = '') {
   const el = document.createElementNS(svgNS, tag);
@@ -139,7 +140,7 @@ function orbitalPaths(background, all, w, h) {
     const ratio=.39+(i%4)*.10;
     const rx=Math.max(12,Math.hypot(tx,ty/ratio));
     const ring=element('ellipse',{cx,cy,rx,ry:rx*ratio,transform:`rotate(${angle*180/Math.PI} ${cx} ${cy})`,
-      fill:'none',stroke:safeColor(n.item.color),'stroke-width':1,opacity:.38});
+      fill:'none',stroke:orbitColor(n.item.color),'stroke-width':1,opacity:.38});
     background.append(ring);rings.set(n,ring);
   });
   // Companion points mark the far arc of each orbit at its true inclination.
@@ -150,7 +151,7 @@ function orbitalPaths(background, all, w, h) {
     const ratio=.39+(i%4)*.10, t=1.05+i*.32;
     const x=rx*Math.cos(t)-ry/ratio*Math.sin(t), y=rx*ratio*Math.sin(t)+ry*Math.cos(t);
     background.append(element('circle',{cx:cx+x*Math.cos(angle)-y*Math.sin(angle),cy:cy+x*Math.sin(angle)+y*Math.cos(angle),
-      r:2.4,fill:safeColor(n.item.color),opacity:.8}));
+      r:2.4,fill:orbitColor(n.item.color),opacity:.8}));
   });
   const hub=element('g',{transform:`translate(${cx} ${cy})`,fill:'none',stroke:'#e9d4a2'});
   [5,11,24,40].forEach((r,i)=>hub.append(element('circle',{r,opacity:[.94,.48,.17,.09][i],'stroke-width':i===1?2:1})));
@@ -248,7 +249,7 @@ export function renderMap(container,{mode,nodes,level,focus,onSelect,onUp}) {
     const size=w<570?15:w<850?16:19;
     const controls=[];
     plotted.forEach((n,i)=>{
-      const color=safeColor(n.item.color);
+      const color=orbitColor(n.item.color);
       const group=element('g',{role:'button',tabindex:'0',class:'territory','aria-label':n.item.label+(n.item.kind==='item'?'':', '+n.item.count+' items')});
       group.append(element('title',{},n.item.label));
       group.append(element('polygon',{class:'ground-hit',points:territory(n,plotted,w,h)}));
