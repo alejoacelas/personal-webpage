@@ -2,6 +2,7 @@
 // The sample and data.js stay out of this public repository.
 //   node wiki/build.mjs            what would be published: "ok" works and edited "edit" works
 //   node wiki/build.mjs --review   every work except those marked "no", for reviewing the marks
+//   node wiki/build.mjs --excerpts publish build that also shows the conversation around each call quote
 import { readFile, writeFile, readdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
@@ -175,15 +176,29 @@ for (const raw of items) {
   if (i.announced_in && !w.links.some(l => l.to === i.announced_in)) w.links.push({ to: i.announced_in, type: 'shared-in', why: '' });
   works.push(w);
 }
+// ---- Call quotes. The other person never agreed to appear, so a published quote says as little about them as it can:
+// the month only, a setting that names the kind of call and nothing about who it was with, and no excerpt of the
+// conversation unless the build is run with --excerpts (two rounds of checking each still found excerpts that
+// retold the other person's situation).
+const withExcerpts = review || process.argv.includes('--excerpts');
+const SETTING = { coaching: ['A coaching call', 'a coaching client'], scoping: ['A scoping call with an organisation', 'someone at the organisation'], intro: ['An intro call', 'the other person'], peer: ['A call with a peer', 'a peer'], advice: ['A conversation', 'the other person'] };
+function general(q) {
+  if (/as the one being coached/.test(q.setting)) return ['A coaching session, as the one being coached', 'a coach'];
+  if (/with a mentor$/.test(q.setting)) return ['A call with a mentor', 'a mentor'];
+  if (/group call/.test(q.setting)) return ['A group call with peers', 'peers on the call'];
+  return SETTING[q.call_kind] || ['A call', 'the other person'];
+}
 for (const raw of quotes) {
   const out = shown(raw);
   if (!out) continue;
   const { item: q, ann: a, marks } = out;
+  const [setting, label] = review ? [q.setting, out.excerpt?.other] : general(q);
+  const excerpt = withExcerpts && out.excerpt ? { ...out.excerpt, other: label } : null;
   works.push({
-    id: q.id, kind: 'said', sub: q.call_kind, date: review ? q.date : q.date.slice(0, 8) + '01',   // the day of a private call narrows who it was with
- url: '', title: a.title || firstWords(q.text, 60), gloss: a.gloss || '',
+    id: q.id, kind: 'said', sub: q.call_kind, date: review ? q.date : q.date.slice(0, 8) + '01', url: '',
+    title: a.title || firstWords(q.text, 60), gloss: a.gloss || '',
     pull: q.text, patterns: resolvePatterns({ ...a, id: q.id }), facets: a.facets || {}, links: a.links || [], mentions: a.mentions || [],
-    ...marks, said: { setting: q.setting, about: q.about, text: q.text, ...(out.excerpt ? { excerpt: out.excerpt } : {}) }, text: q.text,
+    ...marks, said: { setting, about: q.about, text: q.text, ...(excerpt ? { excerpt } : {}) }, text: q.text,
   });
 }
 works.sort((a, b) => a.date < b.date ? 1 : a.date > b.date ? -1 : 0);
