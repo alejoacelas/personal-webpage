@@ -31,18 +31,8 @@ pnpm-debug.log*
 .mcp.json
 .env*
 
-# References: screenshots are regenerated; Alejo's own screenshots and browsing state stay local
-references/shots/
-references/manual/
-references/state.json
-references/discover.log
-references/analysis/crops/
-
-# Wiki prototype: built from the private sample in desk
+# A build of every work that isn't left out, for checking the sharing marks. Never deployed.
 wiki/data.js
-
-# Trial of in-browser meaning search: downloaded models and vectors computed from the private sample
-wiki/semantic-data/
 
 # Stripe Projects state and credentials
 
