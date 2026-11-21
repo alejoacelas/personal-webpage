@@ -1,0 +1,655 @@
+[
+  {
+    "id": "1aBy72YNPTikWAfX2o5ikWAnGOzKI8qLaT_iZJDN3tPE",
+    "title": "gradual disempowerment?",
+    "body": "Would it worry you to learn that nobody understood an operating system well enough to rebuild it, even if its engineers could keep improving it? This draft asks what “understanding” contributes when people already depend on institutions too complex for any one person to grasp.\n\nIts thought experiment holds outcomes steady. A chief executive can pull many levers and still be at a loss when things go wrong. A farmer can understand the risks of a winter without having much power over it. The open question is how much people value being able to anticipate failure, recover from it, or tell whether an intervention will work.",
+    "description": "What do we lose when we can steer a system but no longer understand how it works?",
+    "kind": "Draft",
+    "date": "2026-11-21",
+    "url": "https://docs.google.com/document/d/1aBy72YNPTikWAfX2o5ikWAnGOzKI8qLaT_iZJDN3tPE/edit",
+    "links": []
+  },
+  {
+    "id": "1795189660.321559",
+    "title": "Checking a research paper with AI",
+    "body": "For those doing anything that looks like empirical research, The Metascience Observatory built some cool open source infrastructure to check papers (and has a nice comparison table with alternatives you could use for that as well.\n\nMight be worth asking your Claude Code to scan their repo and see what you can steal from there. The thing that most caught my eye is their tool for fetching  paper pdfs from a bunch of different (all legal!) sources and parsing it for AIs (getting images, linked datasets, etc.). Apparently it also lets you plug in your academic library subscriptions",
+    "description": "An open-source toolkit for checking papers, fetching PDFs and reading linked datasets.",
+    "kind": "Slack",
+    "date": "2026-11-20",
+    "url": "",
+    "links": [
+      {
+        "url": "https://metascienceobservatory.org/forensic-metascience-ai-toolkit",
+        "label": "comparison table"
+      },
+      {
+        "url": "https://github.com/The-Metascience-Observatory/forensic-metascience-ai-toolkit",
+        "label": "their repo"
+      },
+      {
+        "url": "https://github.com/The-Metascience-Observatory/fetchpdf",
+        "label": "tool for fetching  paper pdfs"
+      }
+    ]
+  },
+  {
+    "id": "testing-prompts",
+    "title": "How I test a prompt",
+    "body": "I try prompts on my own transcripts first. I want to see what comes back and how often the AI stops to ask me a question.",
+    "description": "I try prompts on my own transcripts first. I want to see what comes back and how often the AI stops to ask me a question.",
+    "kind": "Call note",
+    "date": "2026-11-20",
+    "url": "",
+    "links": []
+  },
+  {
+    "id": "1Wy-mFv1J0J56rziT3QBcxoM7EaI00JX21bEwUhBOlbc",
+    "title": "Ask their Claude: shared guides",
+    "body": "A template for asking a colleague a question their own assistant can answer from their records. Start with the decision the answer will inform. For example, “What should we automate?” can become a request to list repeated tasks, count them and show a few instances. The person reading the evidence can then decide what to automate.\n\nThe guides cover choosing sources, counting consistently, quoting evidence and marking gaps. The colleague runs the prompt, can exclude sources before the search and reviews the private report before sharing it. Full conversations are a separate, optional choice.",
+    "description": "How to ask a colleague a question their AI can help answer, and let them review what they share.",
+    "kind": "Template",
+    "date": "2026-11-18",
+    "url": "https://docs.google.com/document/d/1Wy-mFv1J0J56rziT3QBcxoM7EaI00JX21bEwUhBOlbc/edit",
+    "links": []
+  },
+  {
+    "id": "1lo0t7od9A_RMptpalpKZrDGSDGW0Ots2gjJxI5OMypE",
+    "title": "Slack message announcing monthly call",
+    "body": "A draft agenda for a short community call on helping staff get better at using AI. After introductions, most of the time is left for people to compare experiences. The questions are which improvements last, who would benefit most from training and which practices need little upkeep. The final poll asks what the group should discuss next and how often to meet.",
+    "description": "An agenda for discussing how staff learn to use AI and which practices stick.",
+    "kind": "Draft",
+    "date": "2026-11-17",
+    "url": "https://docs.google.com/document/d/1lo0t7od9A_RMptpalpKZrDGSDGW0Ots2gjJxI5OMypE/edit",
+    "links": []
+  },
+  {
+    "id": "1794907853.133389",
+    "title": "What makes switching between agents hard?",
+    "body": "In what ways is context-switching to manage AI agents different from other kinds of context-switching we do (inbox, messaging, etc.)? Is there anything to learn from the parallel?\n\nI’ve talked to people who shy away from running many agent sessions in parallel (a practice I eagerly recommend) because of the costs of context switching. But many of us are used to some context switching at work, and find ways to handle it without a large productivity hit and even have found ways to actively enjoy it (answering Slack is kind of addictive sometimes)\n\nI’d be curious for anyone here who has thought about which forms of context switching they enjoy/dislike most to say a bit about what the differences might be. Some that come to mind are:\n1. Many AI tasks involve keeping a long-standing picture of what’s going on, often over several hours (eg. what was I trying to do in this chat?)\n2. It’s hard to find and resume a previous thread of AI work (eg. I rarely ever resume an AI chat more than a week old, but replying to a week old email thread feels low-effort)\n3. AI tasks often intrude unexpectedly while I’m doing something else (eg., “here’s the document you asked for, I opened it on your browser” I hate ~all active notifications) \nThese also often suggest ways to make working with AI agents more pleasant (the implementation is left as an exercise to the reader). Is there any really good blog post/book on the topic of context-switching at work?",
+    "description": "Switching between agent sessions feels different from checking an inbox. I’m trying to understand why.",
+    "kind": "Slack",
+    "date": "2026-11-17",
+    "url": "",
+    "links": []
+  },
+  {
+    "id": "1794902411.285989",
+    "title": "What can’t your AI reach?",
+    "body": "Many of the biggest AI uplift wins come from asking “is there any information or system that I frequently use for work that is not easily accessible to AI?” and then having your AI / your colleague implement a connection that doesn’t require you to approve every action. Some examples:\n\n1. Access to your second Gmail / Drive account\n2. On Claude Team plans, allowing the “approve automatically” so that people don’t need to click “yes” every time their AI creates an Asana task\n3. Access to specialised software you use every week\n    a. Ashby for hiring and a custom script/mcp for actions only available through their API\n    b. Ramp and Xero for finances, restricting it to read-only if needed\n    c. Your favourite notes / task management / something else app\n4. Figuring out how to use browser control if there’s any group of relatively rote tasks you spend 2+ hours on every week\n5. …",
+    "description": "A question for finding useful integrations, from a second inbox to specialised software.",
+    "kind": "Slack",
+    "date": "2026-11-17",
+    "url": "",
+    "links": []
+  },
+  {
+    "id": "1EuofQaVmkFFnK5REb681Gk5gFKI3v1U3O85vuc6YLlg",
+    "title": "Coaching | General-purpose",
+    "body": "Before a coaching call, I ask what AI already does that the person values, which of last week’s priorities received the least AI help and what work they expect to spend at least 40 hours on. That last question looks for a responsibility where extra effort could materially improve the result.\n\nThe answers help choose between practising basic agent capabilities and attempting one ambitious project. The form asks for about 15 minutes of preparation.",
+    "description": "Three questions I ask before coaching to find where AI could make a difference to someone’s work.",
+    "kind": "Template",
+    "date": "2026-11-16",
+    "url": "https://docs.google.com/document/d/1EuofQaVmkFFnK5REb681Gk5gFKI3v1U3O85vuc6YLlg/edit",
+    "links": []
+  },
+  {
+    "id": "1794811870.172209",
+    "title": "Delegating from a task list",
+    "body": "I’d like to take on a few coaching clients to work on their tasks management systems and how to delegate work to AI from them. Some thoughts I have on this:\n\n1. I want agents to have done everything they can to solve the task / prepare for it before I start working on something\n2. Tasks vary greatly in how much input I want to give on them. Many things I just want to take an agent’s proposal and say just “yes” or “no, change X and then send”\n3. I’m coming up with ideas for valuable things to do all the time, and a big limiter on starting or executing on them is around reducing the friction on selecting which things to do and surfacing them in the right context\n    a. The “I have a flood of ideas” thing is particular to me because a bunch of my work is very self-directed, but it feels analogous to the problem of “I have too many external demands on my time and I need to triage through them”\n4. The stakes of task management feel higher now that AI agents can often do lots of work with very little additional input\nIf you’d be interested in receiving coaching from me and would consider spending some hours over the next weeks improving your task management system, just DM me here on Slack (or email me at alejoacelas@gmail.com if that’s easier)",
+    "description": "What I want agents to do before I sit down with a task.",
+    "kind": "Slack",
+    "date": "2026-11-16",
+    "url": "",
+    "links": []
+  },
+  {
+    "id": "1794830400.390989",
+    "title": "What makes a Slack channel worth joining?",
+    "body": "I plan to budget some time to spur a few extra AI-uplift-related Slack channels, and I would like people here to say what kind of content / discussion spaces they’d like to be part of (e.g., who’s there, what’s the topic and scope, etc.)\n\nI’d specially want input from people that only occasionally browse this channel or that don’t interact much in messages threads. What kinds of channels do you spend more time on? what makes you feel comfortable posting your ideas or questions?\n\nI might only spend more time on [creating new slack channels] if I get ideas from people and ideally some demand signal on them, so it would be great if you can take a few minutes to put your thoughts on this thread",
+    "description": "A question for people in the AI uplift community about where they like to talk.",
+    "kind": "Slack",
+    "date": "2026-11-16",
+    "url": "",
+    "links": []
+  },
+  {
+    "id": "159tncXDj-lS8zy40YB8WEuJWCkc8ov19duwgv7kOkBg",
+    "title": "Where AI fits in your work: a prompt to run (v1)",
+    "body": "This prompt compares the work a person spends time on with the work they already do with AI. It looks across six weeks of calendar events, messages, documents and AI chats, then groups the evidence under recurring responsibilities. For each one it counts calendar hours, active days and AI sessions, and follows a concrete example through the record.\n\nThe result is a private report showing where AI use is concentrated, where it is light and where the person had to correct its work. They can rule out sources at the start and choose what to share after reading it.",
+    "description": "A prompt that maps six weeks of work and shows where you already use AI.",
+    "kind": "Template",
+    "date": "2026-11-11",
+    "url": "https://docs.google.com/document/d/159tncXDj-lS8zy40YB8WEuJWCkc8ov19duwgv7kOkBg/edit",
+    "links": []
+  },
+  {
+    "id": "1xuLpOdGa2b470lAIqMPMwg36wm1INq0PQy0TIhRABDk",
+    "title": "Map your ops processes (prompt)",
+    "body": "This prompt follows recurring work from its trigger to its outcome, such as a form arriving and an application being processed. It asks an assistant to inspect six weeks of records for volume, steps that need a person and problems such as duplicated messages or stalled cases. It ranks processes by problems first, then volume.\n\nEach process gets a worked example drawn from the record, with inferred steps marked as such. The person running the prompt can exclude sources and review the private report before giving it to someone helping with automation.",
+    "description": "A prompt for tracing recurring work and finding the steps where it gets stuck.",
+    "kind": "Template",
+    "date": "2026-11-09",
+    "url": "https://docs.google.com/document/d/1xuLpOdGa2b470lAIqMPMwg36wm1INq0PQy0TIhRABDk/edit",
+    "links": []
+  },
+  {
+    "id": "1793963939.881499",
+    "title": "Ask the model to restate your intent",
+    "body": "Something I often prompt models with is:\n\n> restate in your words what you think it is I’m trying to achieve. Ignore the specifics of the requests I’ve made so far\nThe moments where that instruction feels more useful are when I just started a thing I don’t know what to do about (e.g, I dictated a bunch of ideas in dictation or just described the issue without offering solutions) or when I’ve done a few corrections to the model’s output and I feel that it’s still far from what I’d like. Most often the models are pretty good at inferring my intent, and will afterwards fixate much less on the specifics of what I asked them to do",
+    "description": "A prompt I use when the model follows my instructions but misses what I’m trying to do.",
+    "kind": "Slack",
+    "date": "2026-11-06",
+    "url": "",
+    "links": []
+  },
+  {
+    "id": "1793704230.839999",
+    "title": "What stops you getting more out of AI?",
+    "body": "I’m thinking these days about different approaches to help people get better at using AI, and I thought I'd run a quick survey.\n\nWhat’s the biggest thing stopping you from getting more out of AI at work?\n\n1. I don't consistently have ideas that would be worth 30+ minutes of my time to try (lack ideas)\n2. I consistently have ideas worth 30+ mins of your time, but I don't know how to get started on them (lack know-how)\n3. I have the ideas, I know how to get started, but I'm not setting aside time consistently to try them (lack motivation)\n4. I have ideas I consistently work on. I have a different bottleneck (other)\nI suggest you imagine you had already blocked the next 30 minutes to use AI for something outside of your usual use cases. where would you start? are you excited by the ideas? do you think you'll feel compelled to book another 30 minutes to keep working on it or try something new?\n\nAlso, would love to hear the thoughts of people who pick 4. do you have guesses for what's the main thing you could do now to get better at AI? is my breakdown sketchy?",
+    "description": "Is the bottleneck ideas, know-how, motivation, or something else?",
+    "kind": "Slack",
+    "date": "2026-11-03",
+    "url": "",
+    "links": []
+  },
+  {
+    "id": "1793445948.142699",
+    "title": "A rule for posting template messages",
+    "body": "Quick notice: If you have a template message you want to share here (ie., something you didn't write specifically for this channel), please check with me before posting it\n\nI'll have a Slack bot policing this rule, who will introduce itself below",
+    "description": "A moderation note for the AI uplift channel.",
+    "kind": "Slack",
+    "date": "2026-10-31",
+    "url": "",
+    "links": []
+  },
+  {
+    "id": "choosing-a-workflow",
+    "title": "Which workflow is worth an AI audit?",
+    "body": "When I’m doing an AI audit, I ask what work repeats and what the person would actually like help with. That second question helps me decide who to work with next.",
+    "description": "Two questions I ask before choosing a workflow to work on.",
+    "kind": "Call note",
+    "date": "2026-10-29",
+    "url": "",
+    "links": []
+  },
+  {
+    "id": "1793219511.956899",
+    "title": "What should I build on camera?",
+    "body": "okay, given that apparently I'm a youtuber now, I need some project ideas to record myself building\n\nwould love if people wrote in the thread things that you'd like to do / have someone do for you. A general prompt can be \"if you could manage a team of experts to do something for you, what would you ask them.\" I might come up with something otherwise, but it would be a treat if I manage to make something you guys can use\n\nso come on guys, go crazy, ask me for stuff",
+    "description": "A request for project ideas that would be useful to people in the channel.",
+    "kind": "Slack",
+    "date": "2026-10-28",
+    "url": "",
+    "links": []
+  },
+  {
+    "id": "1OgM0T1_WPyntA5j1cmZ6_abO-WFFNrbtSGNZEwi7eiI",
+    "title": "Gaps in Claude's Google Docs connector",
+    "body": "I gave fresh Claude Code sessions ordinary editing requests on a synthetic project plan, then inspected the document. An edit can look right while changing what a colleague sees later. For example, an indented line that looked like a nested bullet exported as a top-level item. A suggestion copied into the text looked accepted on the page but remained a direct edit in version history.\n\nThe draft records the requests, repeated runs and differences between Claude chat and Claude Code. It also records an edit that held up: both runs of a Markdown update preserved the comments, suggestions, heading link and header on this particular fixture.",
+    "description": "What happened when I tested suggestions, checkboxes and other everyday edits on a sample project plan.",
+    "kind": "Draft",
+    "date": "2026-10-21",
+    "url": "https://docs.google.com/document/d/1OgM0T1_WPyntA5j1cmZ6_abO-WFFNrbtSGNZEwi7eiI/edit",
+    "links": []
+  },
+  {
+    "id": "1792167902.125269",
+    "title": "Why are so many AI power users programmers?",
+    "body": "What should we make of the fact that AI power users are much less common outside of software and programming? Some possibilities\n\n1. There's many would-be power users whose day-to-day work is not AI-amenable enough for it to be worth their time to get better at AI\n2. Some of the necessary (though not sufficient skills) for becoming an AI power user are correlated with the skills prized in technical fields\n(1) would be very exciting if true, but (2) sounds plausible so possibly there's no residual to explain after (2) and other similar explanations.\n\nI'd be interested in anecdotes here. e.g., do you have friends who are noticeably better than their peers at using AI? what do they have in common?",
+    "description": "Two possible explanations for a gap between software and other fields.",
+    "kind": "Slack",
+    "date": "2026-10-16",
+    "url": "",
+    "links": []
+  },
+  {
+    "id": "1791477230.853239",
+    "title": "Why try a coding agent?",
+    "body": "I just thought of what might be my best argument for more people to try Claude Code / Codex:\n\n> If AI can do something, Claude Code / Codex can do it for you\nBasically all other AI products have like 10 different limitations you need to track in your head and the limitations change every month based on the new release and on whatever you org's team plan settings are and it all gets very tiresome. With coding agents on your computer, we all basically have the same thing. If you saw someone doing something cool on Twitter you know you should be able to replicate it yourself. I'm not saying it's for everyone, but many I'd still like many more people to give it a try, at least for some of your tasks",
+    "description": "My argument for trying Claude Code or Codex, including for work outside programming.",
+    "kind": "Slack",
+    "date": "2026-10-08",
+    "url": "",
+    "links": []
+  },
+  {
+    "id": "1DYxPPJKHj7VpnWKu5ASGhw1U2e8a43T2Gmu6hPqynqo",
+    "title": "Anyone Can Claude Code",
+    "body": "An unfinished outline for a drop-in session where people bring a laptop and something they would like to try with a coding agent. Most of the time is for working on that project, pairing with someone or asking for help when stuck. Programming experience is optional.\n\nThe outline collects tools worth trying, leaves space for participants’ ideas and questions, and sketches the preparation needed. Several sections, including the timetable, are still blank.",
+    "description": "An early workshop outline for trying a coding agent on a problem you bring.",
+    "kind": "Draft",
+    "date": "2026-09-26",
+    "url": "https://docs.google.com/document/d/1DYxPPJKHj7VpnWKu5ASGhw1U2e8a43T2Gmu6hPqynqo/edit",
+    "links": []
+  },
+  {
+    "id": "1790271639.814419",
+    "title": "How do you practise using AI?",
+    "body": "What do people here do to deliberately get better at AI?\n\nGiven how important it is for my job I would have thought I'd have more to say about this, but the only things I consistently do are:\n\n1. Sitting next to AI power users, looking at their screens, and asking them questions on what they're doing\n2. Push myself a bit to try new tools as I come across them\n3. Learning the gears and patterns of tools I expect to use often (eg., read through skills that friends recommend me, test the edges of Claude Tag and read its documentation, learn about the sandboxes used for Cowork/Claude Code in the Cloud)",
+    "description": "Three things I do deliberately when learning to use a tool.",
+    "kind": "Slack",
+    "date": "2026-09-24",
+    "url": "",
+    "links": []
+  },
+  {
+    "id": "1789931174.127179",
+    "title": "Turning a good session into a reusable skill",
+    "body": "Do you guys have tips for creating creating skills to help the model with \"can you do the thing we did last time, pls? you know, when you did the thing and I said it was good. That thing.\" kind of cases?\n\nHere's what I ended up doing for did for this skill to group messy files into folders and cut fluff from instruction files:\n\n1. I did the thing once in ~5 messages of back and forth\n2. Asked \"can we make a skill for it, nothing complicated\"\n3. It suggested lots of things, I picked and rephrased the ones that seemed broadly applicable\n4. Then I asked it to run it with fresh agents on some hand-picked folders\n5. Because the skill needs my input, I replied to the agents to pick among their suggestions\n6. I asked one of the agents for candidate additions to the skill, trimmed the one I liked, and called it a day\nAll this took quite a bit of back and forth. Maybe I should have asked for Codex to do the whole process upfront? Make a meta-skill to repeat the whole process next time?",
+    "description": "How I tested and refined a skill for tidying project folders.",
+    "kind": "Slack",
+    "date": "2026-09-20",
+    "url": "",
+    "links": [
+      {
+        "url": "https://github.com/alejoacelas/dotfiles/blob/db40a4813b69773c3a94e49c7e861e339eda406e/skills/simplify-projects/SKILL.md",
+        "label": "this skill"
+      }
+    ]
+  },
+  {
+    "id": "1789817231.908579",
+    "title": "Try asking a shorter question",
+    "body": "I hadn't tried this much before, but I've found prompting the models with very short open-ended questions quite useful. I feel forcing myself to ask shorter questions a good guard against leading models to particular answers. Some examples:\n\n1. \"how do you think I did on this call? mostly I'm looking for unexpected feedback [gdocs link]\"\n2. \"how would you suggest we simplify [project]\"\n3. After doing a couple rounds of edits: \"anything else?\"",
+    "description": "Three open-ended prompts I use to avoid leading a model.",
+    "kind": "Slack",
+    "date": "2026-09-19",
+    "url": "",
+    "links": []
+  },
+  {
+    "id": "1789553050.103399",
+    "title": "What’s missing from Slack connectors?",
+    "body": "I'm looking into building a custom Slack MCP, out of the sense that there's many features missing in the default Claude and ChatGPT data connectors (but which Slack lets you do through their API). I'd be curious if there's any features you miss in the Slack connectors you use. For example:\n\n1. Creating channels, adding and removing users. Inviting external users\n2. Having the AI send messages as a separate identity (e.g. \"Alejo's bot\")\n3. Set reminders, tag people\nAlso keen any annoyance you have with it, even if it's not a clear feature (e.g,. it's slow, you'd like to block it from posting in certain channels). If I make something I like I'll share it here once its done",
+    "description": "A few things I’d like an AI connector for Slack to be able to do.",
+    "kind": "Slack",
+    "date": "2026-09-16",
+    "url": "",
+    "links": []
+  },
+  {
+    "id": "1788429620.744379",
+    "title": "Inviting people to the AI uplift channel",
+    "body": "Btw, if you have one or a couple friends who you think would get value from this channel, you can leave their email on this thread and I'll sent them an invite by the end of the week\n\nOnly thing they need is an email connected to a paid Slack workspace (the ones that don't delete message history)",
+    "description": "An invitation I extended to people in the Slack community.",
+    "kind": "Slack",
+    "date": "2026-09-03",
+    "url": "",
+    "links": []
+  },
+  {
+    "id": "1787905004.081639",
+    "title": "How do you find new tools worth trying?",
+    "body": "This week I've started thinking that a core component of being an AI power user is simply having an large bag-of-tricks that you can apply to a problem.\n\nIf you're hiring for a generalist AI enablement person for your org, maybe you can learn a lot by asking \"list me all the different tools, frameworks, repos, tricks, that you've tried this week\", \"how did you find them?\", \"anyone that you liked? how did you try it out to get a signal of whether it was useful?\"",
+    "description": "Interview questions I’d ask someone applying for an AI enablement role.",
+    "kind": "Slack",
+    "date": "2026-08-28",
+    "url": "",
+    "links": []
+  },
+  {
+    "id": "1787279790.021939",
+    "title": "Why haven’t you tried browser use?",
+    "body": "Quick poll for the people here who use Claude for Chrome/browser use less than once a week. Is that because:\n\n1. I didn't know AI could click on and do things on websites for me\n2. I've heard of it, but I have not installed it or enabled it so far\n3. I've enabled it but haven't used it even once\n4. I tried it, but I didn't find much use for it\nIf you're at (2), I'm also very curious for the reasons for not trying it. Maybe the installation is still very buggy for some people? Maybe it seems risky/it's against your org's policies?",
+    "description": "A poll about the steps between hearing about a tool and using it regularly.",
+    "kind": "Slack",
+    "date": "2026-08-21",
+    "url": "",
+    "links": [
+      {
+        "url": "https://wow.pjh.is/journal/browser-use-is-very-good-now",
+        "label": "Claude for Chrome/browser use"
+      }
+    ]
+  },
+  {
+    "id": "repo-umi",
+    "title": "Umi",
+    "body": "Umi keeps agent sessions in tabs and panes. A sidebar lets you move between them while keeping the terminals where you left them.",
+    "description": "A Mac terminal for working with several coding agents.",
+    "kind": "Repository",
+    "date": "2026-11-21",
+    "url": "https://github.com/alejoacelas/umi",
+    "links": []
+  },
+  {
+    "id": "repo-2026-10-warp-agent",
+    "title": "Supervise agents in Warp",
+    "body": "A command-line tool puts Claude Code and Codex in selected Warp panes. A script can follow a session through several turns while its terminal stays visible.",
+    "description": "Start a session, wait for its reply and send a follow-up.",
+    "kind": "Repository",
+    "date": "2026-11-21",
+    "url": "https://github.com/alejoacelas/2026-10-warp-agent",
+    "links": []
+  },
+  {
+    "id": "call-coaching-questions",
+    "title": "Use the coaching call for questions",
+    "body": "“My plan is to use this call to just like ask you questions, figure out, and then shortly after the call, I'll send you kind of like an email with like some instructions and some ideas for us to try.”",
+    "description": "An experiment in separating discovery from implementation.",
+    "kind": "Call note",
+    "date": "2026-11-20",
+    "url": "",
+    "links": []
+  },
+  {
+    "id": "call-measure-changed",
+    "title": "Ask what changed after coaching",
+    "body": "Paraphrased from a call.\n\nI want to find ways for people to tell me what they actually did differently after we spoke.",
+    "description": "The evidence I want after a coaching session.",
+    "kind": "Call note",
+    "date": "2026-11-20",
+    "url": "",
+    "links": []
+  },
+  {
+    "id": "call-inbox-intent",
+    "title": "What I want from an AI inbox",
+    "body": "Paraphrased from a call.\n\nI want the inbox to pick up new information without me reminding it that an email arrived. I also want to be able to skim the day’s tasks quickly.",
+    "description": "Two design choices I would explain alongside the prompt.",
+    "kind": "Call note",
+    "date": "2026-11-20",
+    "url": "",
+    "links": []
+  },
+  {
+    "id": "call-community-question",
+    "title": "Open the call with one question each",
+    "body": "Paraphrased from a call.\n\nI asked people to introduce themselves with a question. Then I left room for someone to pick one up, with the last five minutes set aside for everyone to write down their parting thoughts.",
+    "description": "A format I tried for sharing AI-upskilling experience.",
+    "kind": "Call note",
+    "date": "2026-11-20",
+    "url": "",
+    "links": []
+  },
+  {
+    "id": "repo-automation-map",
+    "title": "Map a recurring process",
+    "body": "This single-file dashboard takes a process apart task by task. A prompt fills in the map, and the resulting HTML can travel with the assessment.",
+    "description": "See where AI already helps and where there is room for more.",
+    "kind": "Repository",
+    "date": "2026-11-19",
+    "url": "https://github.com/alejoacelas/automation-map",
+    "links": []
+  },
+  {
+    "id": "repo-ask-their-claude",
+    "title": "Ask a colleague’s AI a question",
+    "body": "The recipient’s assistant gathers the answer and prepares a report for its owner to review before sharing. The repository holds the common instructions that these prompts reference.",
+    "description": "A prompt someone can run against their own work history.",
+    "kind": "Repository",
+    "date": "2026-11-19",
+    "url": "https://github.com/alejoacelas/ask-their-claude",
+    "links": []
+  },
+  {
+    "id": "call-more-ideas",
+    "title": "Short prompts leave room to explore",
+    "body": "“First, it's quicker to prompt if you just ask for the goal and then don't give the specifics so you can try more ideas.”",
+    "description": "Why I sometimes give an agent only the goal.",
+    "kind": "Call note",
+    "date": "2026-11-19",
+    "url": "",
+    "links": []
+  },
+  {
+    "id": "call-share-repo",
+    "title": "Make the tool easy to pass along",
+    "body": "Paraphrased from a call.\n\nOnce a tool works, I want to be able to send a teammate one GitHub link. They can give it to their own coding agent and ask it to set the tool up.",
+    "description": "What I like about putting a working tool in a repository.",
+    "kind": "Call note",
+    "date": "2026-11-19",
+    "url": "",
+    "links": []
+  },
+  {
+    "id": "repo-2026-09-skill-review",
+    "title": "Compare two versions of a skill’s output",
+    "body": "A local review interface puts two outputs side by side. It saves judgments about individual passages and exports the decisions with the source versions.",
+    "description": "Mark the passages you would keep, move, rewrite or remove.",
+    "kind": "Repository",
+    "date": "2026-11-17",
+    "url": "https://github.com/alejoacelas/2026-09-skill-review",
+    "links": []
+  },
+  {
+    "id": "repo-uplift-modelling",
+    "title": "What changes the shape of AI adoption?",
+    "body": "Vary the reach of a tool, the rate at which tasks adopt it and the feedback between adopters. The curves illustrate the assumptions each model needs.",
+    "description": "An interactive notebook for exploring competing models of adoption.",
+    "kind": "Repository",
+    "date": "2026-11-17",
+    "url": "https://github.com/alejoacelas/uplift-modelling",
+    "links": []
+  },
+  {
+    "id": "repo-trials",
+    "title": "A one-page verdict for a tool trial",
+    "body": "A reusable trial structure puts the question, the tests and the verdict in one place. It gives the next experiment a previous decision to build on.",
+    "description": "Record the question before running the trial.",
+    "kind": "Repository",
+    "date": "2026-11-17",
+    "url": "https://github.com/alejoacelas/trials",
+    "links": []
+  },
+  {
+    "id": "call-time-for-improvements",
+    "title": "How much time would you invest in fixing this?",
+    "body": "Paraphrased from a call.\n\nBefore proposing an automation, I ask how much time the person was already planning to spend improving that process over the next few weeks. It gives us a starting point for discussing the payoff.",
+    "description": "A question I use to decide whether a workflow is worth improving.",
+    "kind": "Call note",
+    "date": "2026-11-09",
+    "url": "",
+    "links": []
+  },
+  {
+    "id": "repo-agent-desk-setup",
+    "title": "Inside an agent’s desk",
+    "body": "The example includes Markdown filing conventions, a morning docket and the prompts that turn incoming material into drafts. Its sample records are fictional.",
+    "description": "A worked example of a filing system for ongoing agent work.",
+    "kind": "Repository",
+    "date": "2026-11-07",
+    "url": "https://github.com/alejoacelas/agent-desk-setup",
+    "links": []
+  },
+  {
+    "id": "repo-ai-task-map-template",
+    "title": "Find the first task to automate",
+    "body": "The prompts go from identifying repeated tasks to writing a structured entry for each one. The final step sketches a first implementation of the most promising task.",
+    "description": "Turn a week of recurring work into a ranked shortlist.",
+    "kind": "Repository",
+    "date": "2026-11-05",
+    "url": "https://github.com/alejoacelas/ai-task-map-template",
+    "links": []
+  },
+  {
+    "id": "call-reconstruct-day",
+    "title": "Give the end-of-day reflection some evidence",
+    "body": "Paraphrased from a call.\n\nWhen I sit down to reflect, I often have to reconstruct what I actually did first. I wondered whether an agent could gather that record so I could spend the time deciding what mattered.",
+    "description": "A possible use for an agent when I cannot remember what filled the day.",
+    "kind": "Call note",
+    "date": "2026-11-05",
+    "url": "",
+    "links": []
+  },
+  {
+    "id": "repo-sharing-report-viewer",
+    "title": "Read an AI-generated sharing report",
+    "body": "A prompt inserts structured findings into a standalone viewer. The reader can open the filled-in file directly.",
+    "description": "Package a report as one HTML file.",
+    "kind": "Repository",
+    "date": "2026-11-04",
+    "url": "https://github.com/alejoacelas/sharing-report-viewer",
+    "links": []
+  },
+  {
+    "id": "repo-07-30-docs-mcp",
+    "title": "Leave real suggested edits from Claude",
+    "body": "The implementation exposes document review operations to an assistant. It provides a concrete counterpart to the tests of what existing Docs connectors can do.",
+    "description": "Google Docs comments, replies and suggested edits through an MCP server.",
+    "kind": "Repository",
+    "date": "2026-10-31",
+    "url": "https://github.com/alejoacelas/07-30-docs-mcp",
+    "links": []
+  },
+  {
+    "id": "repo-web-article-reviewer",
+    "title": "Refresh a published article",
+    "body": "The pipeline looks for a source that warrants a specific update and places the proposed edit into a Google Doc for review.",
+    "description": "Find claims whose evidence or links have changed.",
+    "kind": "Repository",
+    "date": "2026-10-31",
+    "url": "https://github.com/alejoacelas/web-article-reviewer",
+    "links": []
+  },
+  {
+    "id": "repo-murmur",
+    "title": "Murmur",
+    "body": "This Mac app transcribes speech on the device. A keyboard shortcut starts dictation and returns the text to the cursor.",
+    "description": "Dictate a prompt directly into the text field you are using.",
+    "kind": "Repository",
+    "date": "2026-10-31",
+    "url": "https://github.com/alejoacelas/murmur",
+    "links": []
+  },
+  {
+    "id": "repo-claude-onramp",
+    "title": "Designing an introduction to delegation",
+    "body": "The repository records attempts to teach delegation through practice. The writing and lesson structure are still being revised.",
+    "description": "Draft lessons and discarded approaches to introducing Claude.",
+    "kind": "Repository",
+    "date": "2026-10-31",
+    "url": "https://github.com/alejoacelas/claude-onramp",
+    "links": []
+  },
+  {
+    "id": "repo-margin-comments",
+    "title": "Comment in the margin of a web page",
+    "body": "The browser extension anchors a thread to the selected text. The discussion stays attached to the passage as people add replies.",
+    "description": "Select a passage on a page and start a discussion beside it.",
+    "kind": "Repository",
+    "date": "2026-10-27",
+    "url": "https://github.com/alejoacelas/margin-comments",
+    "links": []
+  },
+  {
+    "id": "call-practice-workshop",
+    "title": "Give people a place to practise",
+    "body": "Paraphrased from a call.\n\nI wanted to try a weekly or fortnightly session where people could bring real work and spend a few hours trying Claude Code, with someone nearby when they got stuck.",
+    "description": "An experiment I wanted to try with a recurring workshop.",
+    "kind": "Call note",
+    "date": "2026-10-12",
+    "url": "",
+    "links": []
+  },
+  {
+    "id": "repo-google-docs-agent-tools",
+    "title": "Test a Google Docs connector",
+    "body": "The repository pairs connector gaps with a methodology and sample runs. Checking the resulting document makes it possible to distinguish a completed edit from an assistant saying it made one.",
+    "description": "A test harness for ordinary editing requests on a synthetic project plan.",
+    "kind": "Repository",
+    "date": "2026-10-06",
+    "url": "https://github.com/alejoacelas/google-docs-agent-tools",
+    "links": []
+  },
+  {
+    "id": "call-run-one-first",
+    "title": "Run one repetition all the way through",
+    "body": "Paraphrased from a call.\n\nI would first run the automation myself, all the way to an output I could use. That gives someone else a worked example to take over, especially when the same task needs doing a hundred times.",
+    "description": "What I would hand over before scaling a recurring workflow.",
+    "kind": "Call note",
+    "date": "2026-09-11",
+    "url": "",
+    "links": []
+  },
+  {
+    "id": "call-explore-product",
+    "title": "Ask an agent to tour a product",
+    "body": "Paraphrased from a call.\n\nI sometimes want an agent to read the documentation and then use the interface. I would like it to tell me which features it actually found when it clicked around.",
+    "description": "A way to find out what a tool can actually do.",
+    "kind": "Call note",
+    "date": "2026-09-11",
+    "url": "",
+    "links": []
+  },
+  {
+    "id": "call-live-coaching",
+    "title": "Solve something together on the first call",
+    "body": "Paraphrased from a call.\n\nI started by asking how the person already used AI and where they got stuck. I wanted to solve something together on the call that would make them excited to try more on their own.",
+    "description": "My original test for a coaching session.",
+    "kind": "Call note",
+    "date": "2026-08-25",
+    "url": "",
+    "links": []
+  },
+  {
+    "id": "repo-running-clipboard",
+    "title": "Collect comments in one paste",
+    "body": "The Hammerspoon module binds Option+C to a small comment box. Each note keeps its selected passage. The clipboard accumulates them so the whole set can go into one message.",
+    "description": "Quote a selection, add a comment, and keep reading.",
+    "kind": "Repository",
+    "date": "2026-11-20",
+    "url": "https://github.com/alejoacelas/running-clipboard",
+    "links": []
+  },
+  {
+    "id": "repo-call-clock",
+    "title": "Pacing calls in five-minute blocks",
+    "body": "I built a small clock that stays above a call window. The ring shows progress through the current five-minute block and the counter shows how many blocks have passed.",
+    "description": "A floating Mac clock with a ring that fills once every five minutes.",
+    "kind": "Repository",
+    "date": "2026-10-13",
+    "url": "https://github.com/alejoacelas/call-clock",
+    "links": []
+  },
+  {
+    "id": "excerpt-ask-for-technical-options",
+    "title": "Ask for technical options you can understand",
+    "body": "And then I think one thing that's like very important is like figuring out a way of like asking the AI to like give you technical options in a language that you understand.",
+    "description": "A coaching habit for comparing implementation options.",
+    "kind": "Call excerpt",
+    "date": "2026-08-24",
+    "url": "",
+    "links": []
+  },
+  {
+    "id": "excerpt-ask-me-questions",
+    "title": "Let the model interview you",
+    "body": "Or sometimes just having a conversation of like, I don't know exactly how to specify this task. Can you kind of like ask me questions?",
+    "description": "A way to begin when the task is hard to specify.",
+    "kind": "Call excerpt",
+    "date": "2026-09-14",
+    "url": "",
+    "links": []
+  },
+  {
+    "id": "excerpt-let-it-suggest",
+    "title": "Let the model suggest a starting point",
+    "body": "And so for the things where you're not a world expert or where you don't have like a bunch of context, it's like very useful to just like let it start by suggesting things for you.",
+    "description": "How I start in a field I don’t know well.",
+    "kind": "Call excerpt",
+    "date": "2026-10-13",
+    "url": "",
+    "links": []
+  },
+  {
+    "id": "excerpt-who-wants-coaching",
+    "title": "Who wants another session?",
+    "body": "You have to figure out who's eager to work with you further.",
+    "description": "One question I use when deciding where coaching would help.",
+    "kind": "Call excerpt",
+    "date": "2026-10-29",
+    "url": "",
+    "links": []
+  },
+  {
+    "id": "excerpt-adapt-the-interview",
+    "title": "Change the interview as you learn",
+    "body": "And if you have like 20 calls, there's like enough space that you can iterate and find your way through.",
+    "description": "Why I keep revising the interview questions in a workflow audit.",
+    "kind": "Call excerpt",
+    "date": "2026-10-29",
+    "url": "",
+    "links": []
+  }
+]
