@@ -312,6 +312,7 @@ figure { margin: 22px 0 0; }
 .bar-meta { font-size: 12px; color: var(--faint); white-space: nowrap; padding-left: 8px; }
 .bar-foot { display: flex; gap: 18px; align-items: center; padding: 9px 16px; border-top: 1px solid #2b26221a; background: #faf7ef; font-size: 12px; color: var(--mute); }
 .bar-foot span { display: inline-flex; align-items: center; gap: 5px; }
+.bar-sorted { color: var(--faint); }
 .bar-all { margin-left: auto; }
 .asking .plate, .asking .zoom, .asking .hint, .asking .more-lists { margin: 14px 0 0; font-size: 13.5px; }
 .more-lists a { color: var(--mute); }

@@ -460,7 +460,7 @@ barEl.className = 'bar-backdrop'; barEl.hidden = true;
 barEl.innerHTML = `<div class="bar" role="dialog" aria-label="Ask a question">
   <div class="bar-input"><button class="bar-back" hidden title="Back (Backspace)">←</button><input id="bar-q" type="text" placeholder="Ask a question, or type a few words" autocomplete="off" spellcheck="false" aria-controls="bar-list"><kbd>esc</kbd></div>
   <div class="bar-list" id="bar-list" role="listbox"></div>
-  <div class="bar-foot"><span><kbd>↑</kbd><kbd>↓</kbd>move</span><span><kbd>↵</kbd>open</span><span class="bar-all" hidden><kbd>⌘</kbd><kbd>↵</kbd>see all <b></b> in the reader</span></div>
+  <div class="bar-foot"><span><kbd>↑</kbd><kbd>↓</kbd>move</span><span><kbd>↵</kbd>open</span><span class="bar-sorted" hidden>sorted by how well each answers</span><span class="bar-all" hidden><kbd>⌘</kbd><kbd>↵</kbd>see all <b></b> in the reader</span></div>
 </div>`;
 document.body.append(barEl);
 const barInput = $('#bar-q', barEl), barList = $('.bar-list', barEl);
@@ -497,24 +497,53 @@ function suggestions() {
   ]));
   return out;
 }
-function renderBar() {
-  const text = barInput.value.trim(), level = bar.stack.at(-1);
-  let rows, total = 0;
+// Ask the server to judge the top entries against the question. Without a server (the page opened as
+// a file) or if the call fails, the list simply keeps the order the browser gave it.
+const refined = new Map();
+let refineTimer, refining = null;
+function refine(text, entries) {
+  clearTimeout(refineTimer); refining?.abort();
+  if (location.protocol === 'file:' || terms(text).length < 2 || entries.length < 3) return;
+  refineTimer = setTimeout(async () => {
+    refining = new AbortController();
+    try {
+      const res = await fetch('/api/rank', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ question: text, ids: entries.slice(0, 30).map(w => w.id) }), signal: refining.signal });
+      if (!res.ok) return;
+      refined.set(text, (await res.json()).scores);
+      if (bar.open && barInput.value.trim() === text) renderBar(true);
+    } catch {}
+  }, 150);
+}
+function renderBar(keep) {
+  const text = barInput.value.trim(), level = bar.stack.at(-1), held = keep === true ? bar.rows[bar.sel]?.id : null;
+  let rows, total = 0, sorted = false;
   if (level?.q && (!text || text === level.q.question)) rows = questionResults(level.q);
   else if (level && !level.q) {
     rows = level.rows();
     if (text) { const want = terms(text); rows = rows.filter(r => r.type !== 'section' && want.every(t => terms(r.title + ' ' + (r.gloss || '')).some(x => x.startsWith(t)))); }
   } else if (text.length >= 2) {
     if (level?.q) bar.stack.pop();
-    const found = search(text); total = found.works.length;
-    rows = [...section('Topics', found.topics.slice(0, 3).map(topicRow)), ...section('Entries', found.works.slice(0, 14).map(x => workRow(x.w)))];
+    const found = search(text);
+    let entries = found.works.map(x => x.w);
+    // Words find the candidates at once; a moment later the top of the list is re-sorted by how well
+    // each entry answers the question, and entries judged off the point are dropped.
+    const scores = refined.get(text);
+    if (scores) {
+      const judged = entries.slice(0, 30).filter(w => w.id in scores).sort((a, b) => scores[b.id] - scores[a.id]);
+      const apt = judged.filter(w => scores[w.id] >= 1);
+      entries = apt.length >= 3 ? apt : [...judged, ...entries.filter(w => !(w.id in scores))];
+    } else refine(text, entries);
+    sorted = !!scores; total = entries.length;
+    rows = [...section('Topics', found.topics.slice(0, 3).map(topicRow)), ...section('Entries', entries.slice(0, 14).map(workRow))];
     if (!rows.length) rows = [{ type: 'note', label: 'Nothing matches those words. Try fewer, or a tool’s name.' }];
   } else rows = suggestions();
   bar.rows = rows;
-  bar.sel = Math.max(0, rows.findIndex(r => r.type !== 'section' && r.type !== 'note'));
+  const same = held ? rows.findIndex(r => r.id === held) : -1;          // a re-sort keeps the highlighted entry highlighted
+  bar.sel = same >= 0 ? same : Math.max(0, rows.findIndex(r => r.type !== 'section' && r.type !== 'note'));
   $('.bar-back', barEl).hidden = !bar.stack.length;
   barInput.placeholder = level && !level.q ? `Filter ${level.label.toLowerCase()}` : 'Ask a question, or type a few words';
   const all = $('.bar-all', barEl); all.hidden = !(total > 14); $('b', all).textContent = total;
+  $('.bar-sorted', barEl).hidden = !sorted;
   barList.innerHTML = rows.map((r, n) => r.type === 'section' ? `<p class="bar-section">${esc(r.label)}</p>` : r.type === 'note' ? `<p class="bar-note">${esc(r.label)}</p>`
     : `<a class="bar-row" role="option" data-n="${n}" ${r.href ? `href="${r.href}"` : 'href="#"'}>${r.glyph ? glyph(r.glyph) : `<span class="bar-mark" aria-hidden="true">${r.mark || ''}</span>`}<span class="bar-text"><span class="bar-title">${esc(r.title)}</span>${r.gloss ? `<span class="bar-gloss">${esc(r.gloss)}</span>` : ''}</span><span class="bar-meta">${esc(r.meta || '')}</span></a>`).join('');
   barList.scrollTop = 0;
@@ -542,7 +571,7 @@ function choose(r) {
 function back() { bar.stack.pop(); barInput.value = ''; renderBar(); }
 function openBar() { if (bar.open) return; bar.open = true; bar.stack = []; barEl.hidden = false; barInput.value = ''; renderBar(); barInput.focus(); document.body.classList.add('asking'); }
 function closeBar() { bar.open = false; barInput.blur(); barEl.hidden = true; document.body.classList.remove('asking'); MapView.focusWorks?.(null); MapView.peek?.(null); MapView.focusPatterns(null); }
-barInput.addEventListener('input', renderBar);
+barInput.addEventListener('input', () => renderBar());
 barInput.addEventListener('keydown', e => {
   if (e.key === 'ArrowDown' || (e.key === 'Tab' && !e.shiftKey)) { e.preventDefault(); move(1); }
   else if (e.key === 'ArrowUp' || (e.key === 'Tab' && e.shiftKey)) { e.preventDefault(); move(-1); }
