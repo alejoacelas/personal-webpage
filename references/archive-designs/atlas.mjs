@@ -1,8 +1,9 @@
 const regions = [
-  { topic: 'Using AI at work', id: 'work', question:'Where can AI help in my work?', start:'159tncXDj-lS8zy40YB8WEuJWCkc8ov19duwgv7kOkBg', color: '#c9e699', x: 24, y: 34, tilt: -13 },
-  { topic: 'Working with agents', id: 'agents', question:'How do I steer an AI agent?', start:'1793963939.881499', color: '#9edad8', x: 70, y: 25, tilt: 18 },
-  { topic: 'Tools for research', id: 'research', question:'How can I check a paper?', start:'1795189660.321559', color: '#e2b49b', x: 41, y: 75, tilt: -25 },
-  { topic: 'Thinking about AI', id: 'thinking', question:'What do we lose by delegating?', start:'1aBy72YNPTikWAfX2o5ikWAnGOzKI8qLaT_iZJDN3tPE', color: '#c6badf', x: 80, y: 70, tilt: 8 }
+  { topic: 'Using AI at work', id: 'work', question:'Where can AI help in my work?', start:'159tncXDj-lS8zy40YB8WEuJWCkc8ov19duwgv7kOkBg', color: '#c9e699', x: 19, y: 26, mx: 25, my: 14, tilt: -13 },
+  { topic: 'Working with agents', id: 'agents', question:'How do I steer an AI agent?', start:'1793963939.881499', color: '#9edad8', x: 53, y: 21, mx: 74, my: 26, tilt: 18 },
+  { topic: 'Tools for research', id: 'research', question:'How can I check a paper?', start:'1795189660.321559', color: '#e2b49b', x: 33, y: 73, mx: 25, my: 49, tilt: -25 },
+  { topic: 'Thinking about AI', id: 'thinking', question:'What do we lose by delegating?', start:'1aBy72YNPTikWAfX2o5ikWAnGOzKI8qLaT_iZJDN3tPE', color: '#c6badf', x: 85, y: 36, mx: 74, my: 64, tilt: 8 },
+  { topic: 'The AI uplift community', id: 'community', question:'Where do we share ideas?', start:'1794830400.390989', color:'#f0cb80', x:70, y:78, mx:25, my:84, tilt:21 }
 ];
 
 function contours(region, index, count) {
@@ -23,7 +24,7 @@ function contours(region, index, count) {
   }
   const scale = Math.min(1.25, .78 + Math.sqrt(count) / 8);
   return `<svg class="atlas-land" aria-hidden="true" viewBox="0 0 100 100" preserveAspectRatio="none"
-    style="--x:${region.x}%;--y:${region.y}%;--tilt:${region.tilt}deg;--scale:${scale};--color:${region.color}">
+    style="--x:${region.x}%;--y:${region.y}%;--mx:${region.mx}%;--my:${region.my}%;--tilt:${region.tilt}deg;--scale:${scale};--color:${region.color}">
     ${pixels.join('')}</svg>`;
 }
 
@@ -37,7 +38,7 @@ export default function atlas(items) {
     <div class="atlas-title"><h1>Topic atlas<span>.</span></h1><p>Pick a question to explore.</p></div>
     <nav class="atlas-map" aria-label="Choose a question"><div class="atlas-grid" aria-hidden="true"></div>
       ${active.map((r,i) => `${contours(r,i,r.entries.length)}
-        <a class="atlas-pin" href="#atlas-${r.id}" style="--x:${r.x}%;--y:${r.y}%;--color:${r.color}">
+        <a class="atlas-pin" href="#atlas-${r.id}" style="--x:${r.x}%;--y:${r.y}%;--mx:${r.mx}%;--my:${r.my}%;--color:${r.color}">
           <i aria-hidden="true"></i><span>${r.question}<small>${r.topic} · ${r.entries.length}</small></span>
         </a>`).join('')}
     </nav>
@@ -108,7 +109,7 @@ export const css = `
 .atlas-map::after { content:""; position:absolute; pointer-events:none; inset:6px; border:1px dashed #77938045; }
 .atlas-land { position:absolute; left:var(--x); top:var(--y); transform:translate(-50%,-50%) rotate(var(--tilt)) scale(var(--scale)); width:42%; height:77%; color:var(--color); opacity:.57; }
 .atlas-land polygon { fill:none; stroke:currentColor; stroke-width:.7px; }
-.atlas-pin { position:absolute; z-index:1; left:var(--x); top:var(--y); transform:translate(-50%,-50%); display:flex; align-items:center; gap:7px; text-decoration:none; color:#102c29; border-radius:3px; border:1px solid #102c29; box-shadow:2px 3px 0 #102c29; background:var(--color); padding:7px 11px; max-width:32%; text-wrap:balance; font:600 clamp(14px,1.45vw,21px)/1.1 system-ui,sans-serif; letter-spacing:-.045em; }
+.atlas-pin { position:absolute; z-index:1; left:var(--x); top:var(--y); transform:translate(-50%,-50%); display:flex; align-items:center; gap:7px; text-decoration:none; color:#102c29; border-radius:3px; border:1px solid #102c29; box-shadow:2px 3px 0 #102c29; background:var(--color); padding:7px 11px; max-width:27%; text-wrap:balance; font:600 clamp(14px,1.45vw,21px)/1.1 system-ui,sans-serif; letter-spacing:-.045em; }
 .atlas-pin i,.atlas-region h2 i { background:currentColor; width:7px; height:7px; transform:rotate(45deg); flex:none; }
 .atlas-pin small { display:block; margin-top:3px; font:10px/1 ui-monospace,monospace; letter-spacing:0; }
 .atlas-pin:hover,.atlas-pin:focus-visible { outline:2px solid var(--color); outline-offset:4px; color:#102c29; }
@@ -138,13 +139,10 @@ export const css = `
 @media(max-width:650px) {
  .atlas-title { display:block; }
  .atlas-title p { margin:10px 0 0; font-size:12px; }
- .atlas-map { height:300px; }
+ .atlas-map { height:390px; }
  .atlas-pin { width:43%; max-width:43%; white-space:normal; font-size:15px; }
- .atlas-pin:nth-of-type(2) { left:73%; }
- .atlas-pin:nth-of-type(3) { left:27%; }
- .atlas-pin:nth-of-type(4) { left:76%; }
- .atlas-land { width:53%; height:50%; }
- .atlas-land:nth-of-type(3) { left:27%; }
+ .atlas-pin,.atlas-land { left:var(--mx); top:var(--my); }
+ .atlas-land { width:54%; height:40%; }
  .atlas-explorer { grid-template-columns:1fr; gap:27px; padding-top:24px; }
 }
 `;

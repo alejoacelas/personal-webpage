@@ -11,7 +11,7 @@ const postInfo = {
   '1795189660.321559': ['Checking a research paper with AI', 'Tools for research', 'An open-source toolkit for checking papers, fetching PDFs and reading linked datasets.'],
   '1794907853.133389': ['What makes switching between agents hard?', 'Working with agents', 'Switching between agent sessions feels different from checking an inbox. I’m trying to understand why.'],
   '1794902411.285989': ['What can’t your AI reach?', 'Using AI at work', 'A question for finding useful integrations, from a second inbox to specialised software.'],
-  '1794830400.390989': ['What makes a Slack channel worth joining?', 'Thinking about AI', 'A question for people in the AI uplift community about where they like to talk.'],
+  '1794830400.390989': ['What makes a Slack channel worth joining?', 'The AI uplift community', 'A question for people in the AI uplift community about where they like to talk.'],
   '1793963939.881499': ['Ask the model to restate your intent', 'Working with agents', 'A prompt I use when the model follows my instructions but misses what I’m trying to do.'],
   '1793704230.839999': ['What stops you getting more out of AI?', 'Using AI at work', 'Is the bottleneck ideas, know-how, motivation, or something else?']
 };
