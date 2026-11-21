@@ -91,6 +91,36 @@ function position(nodes){
   for(const n of nodes){const x=n.x-cx,y=n.y-cy;xx+=x*x;yy+=y*y;xy+=x*y;}
   const angle=.5*Math.atan2(2*xy,xx-yy),c=Math.cos(angle),s=Math.sin(angle);
   for(const n of nodes){const x=n.x-cx,y=n.y-cy;n.x=x*c+y*s;n.y=-x*s+y*c;}
+  for(const n of nodes){n.baseX=n.x;n.baseY=n.y;}
+}
+
+function extent(nodes){
+  if(!nodes.length)return {x:0,y:0,w:1,h:1};
+  const left=Math.min(...nodes.map(n=>n.x-n.w/2)), right=Math.max(...nodes.map(n=>n.x+n.w/2));
+  const top=Math.min(...nodes.map(n=>n.y-n.h/2)), bottom=Math.max(...nodes.map(n=>n.y+n.h/2));
+  return {x:left,y:top,w:right-left,h:bottom-top};
+}
+
+function pack(nodes,aspect){
+  for(const n of nodes){
+    n.x=aspect<.95?n.baseY:n.baseX;
+    n.y=aspect<.95?-n.baseX:n.baseY;
+  }
+  let bounds=extent(nodes);
+  // Reorient the same topology for portrait screens and reclaim whitespace on
+  // ultrawide screens. Keep labels upright and resolve their boxes after each pass.
+  for(let pass=0;pass<3;pass++){
+    const stretch=Math.sqrt(aspect*bounds.h/bounds.w);
+    for(const n of nodes){n.x*=stretch;n.y/=stretch;}
+    separate(nodes);
+    bounds=extent(nodes);
+    if(Math.abs(Math.log(bounds.w/bounds.h/aspect))<.08)break;
+  }
+  return bounds;
+}
+
+function separate(nodes){
+  const N=nodes.length;
   for(let k=0;k<650;k++){
     let maxOverlap=0;
     for(let i=0;i<N;i++)for(let j=i+1;j<N;j++){
@@ -104,15 +134,14 @@ function position(nodes){
     }
     if(maxOverlap<.08)break;
   }
-  const left=Math.min(...nodes.map(n=>n.x-n.w/2)), right=Math.max(...nodes.map(n=>n.x+n.w/2));
-  const top=Math.min(...nodes.map(n=>n.y-n.h/2)), bottom=Math.max(...nodes.map(n=>n.y+n.h/2));
-  return {x:left,y:top,w:right-left,h:bottom-top};
+
 }
 
 export function mountGraph(container,{items,connections,onOpen}){
   const data=graphData(items,connections),{nodes,byId,edges}=data;
   measureLabels(nodes);
-  const bounds=position(nodes);
+  position(nodes);
+  let bounds=extent(nodes),layoutAspect=0;
   const surface=document.createElement('div');
   surface.className='constellation';
   surface.style.cssText='position:relative;width:100%;height:100%;overflow:hidden;isolation:isolate;background:'+paper+';touch-action:none;overscroll-behavior:contain;cursor:grab';
@@ -145,20 +174,20 @@ export function mountGraph(container,{items,connections,onOpen}){
   }
 
   for(const n of nodes){
-    const x=n.x-n.w/2,y=n.y-(n.lines.length-1)*8;
+    const x=-n.w/2,y=-(n.lines.length-1)*8;
     const el=svgElement('g',{role:'button',tabindex:0,'aria-label':n.item.title,'data-graph-id':n.item.id,class:'constellation-node'});
     el.style.cssText='cursor:pointer;outline:none';
     const fullTitle=svgElement('title');fullTitle.textContent=n.item.title;el.append(fullTitle);
-    el.append(svgElement('rect',{x:x-2,y:n.y-n.h/2-2,width:n.w+4,height:n.h+4,fill:'transparent'}));
+    el.append(svgElement('rect',{x:x-2,y:-n.h/2-2,width:n.w+4,height:n.h+4,fill:'transparent'}));
     const ring=svgElement('circle',{cx:x+3.5,cy:y,r:7.2,fill:'none',stroke:accent,'stroke-width':1.3,opacity:0});
     const dot=svgElement('circle',{cx:x+3.5,cy:y,r:3.1,fill:kindColors[n.item.kind]||'#6e7965',stroke:paper,'stroke-width':.8});
     const label=svgElement('text',{x:x+13,y:y+4.5,'font-family':'system-ui,sans-serif','font-size':14,'font-weight':500,
       fill:ink,stroke:paper,'stroke-width':4.5,'stroke-linejoin':'round','paint-order':'stroke fill','pointer-events':'none'});
     n.lines.forEach((line,i)=>{const span=svgElement('tspan',{x:x+13,dy:i?16:0});span.textContent=line;label.append(span);});
-    el.append(ring,dot,label);layer.append(el);Object.assign(n,{el,label,dot,ring,ax:x+3.5,ay:y});
+    el.append(ring,dot,label);layer.append(el);Object.assign(n,{el,label,dot,ring});
     el.addEventListener('pointerenter',e=>{if(e.pointerType!=='touch' && !drag){hovered=n.item.id;highlight();}},opt);
     el.addEventListener('pointerleave',()=>{if(hovered===n.item.id){hovered=null;highlight();}},opt);
-    el.addEventListener('focus',()=>{focused=n.item.id;highlight();},opt);
+    el.addEventListener('focus',()=>{focused=n.item.id;reveal(n);highlight();},opt);
     el.addEventListener('blur',()=>{if(focused===n.item.id){focused=null;highlight();}},opt);
     el.addEventListener('click',e=>{if(!suppressClick){e.stopPropagation();onOpen(n.item.id);}},opt);
     el.addEventListener('keydown',e=>{
@@ -205,8 +234,20 @@ export function mountGraph(container,{items,connections,onOpen}){
     links(false);links(true);
     layer.setAttribute('transform',`translate(${tx} ${ty}) scale(${zoom})`);
   }
+  function applyFit(){
+    const padding=Math.min(25,width*.035);
+    const aspect=(width-2*padding)/Math.max(1,height-2*padding);
+    if(!layoutAspect||Math.abs(Math.log(aspect/layoutAspect))>.05){
+      bounds=pack(nodes,aspect);layoutAspect=aspect;
+      for(const n of nodes){
+        n.el.setAttribute('transform',`translate(${n.x} ${n.y})`);
+        n.ax=n.x-n.w/2+3.5;n.ay=n.y-(n.lines.length-1)*8;
+      }
+    }
+    fitScale=Math.min((width-2*padding)/Math.max(bounds.w,1),(height-2*padding)/Math.max(bounds.h,1),1.65);
+  }
   function fit(){
-    fitted=true;
+    applyFit();fitted=true;
     zoom=fitScale;tx=(width-bounds.w*zoom)/2-bounds.x*zoom;ty=(height-bounds.h*zoom)/2-bounds.y*zoom;
     schedule();
   }
@@ -214,8 +255,6 @@ export function mountGraph(container,{items,connections,onOpen}){
     const newWidth=surface.clientWidth,newHeight=surface.clientHeight;
     if(newWidth<1||newHeight<1)return;
     const oldWidth=width,oldHeight=height;width=newWidth;height=newHeight;
-    const padding=Math.min(25,width*.035);
-    fitScale=Math.min((width-2*padding)/Math.max(bounds.w,1),(height-2*padding)/Math.max(bounds.h,1),1.65);
     if(fitted || !oldWidth)fit();
     else{tx+=(width-oldWidth)/2;ty+=(height-oldHeight)/2;schedule();}
   }
