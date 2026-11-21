@@ -1,0 +1,111 @@
+{
+  "channel": "too-much-ai",
+  "posts": [
+    {
+      "ts": "1794811870.172209",
+      "text": "I’d like to take on a few coaching clients to work on their tasks management systems and how to delegate work to AI from them. Some thoughts I have on this:\n\n1. I want agents to have done everything they can to solve the task / prepare for it before I start working on something\n2. Tasks vary greatly in how much input I want to give on them. Many things I just want to take an agent’s proposal and say just “yes” or “no, change X and then send”\n3. I’m coming up with ideas for valuable things to do all the time, and a big limiter on starting or executing on them is around reducing the friction on selecting which things to do and surfacing them in the right context\n    a. The “I have a flood of ideas” thing is particular to me because a bunch of my work is very self-directed, but it feels analogous to the problem of “I have too many external demands on my time and I need to triage through them”\n4. The stakes of task management feel higher now that AI agents can often do lots of work with very little additional input\nIf you’d be interested in receiving coaching from me and would consider spending some hours over the next weeks improving your task management system, just DM me here on Slack (or email me at alejoacelas@gmail.com if that’s easier)",
+      "links": [],
+      "title": "Delegating from a task list",
+      "description": "What I want agents to do before I sit down with a task.",
+      "topic": "Working with agents"
+    },
+    {
+      "ts": "1793445948.142699",
+      "text": "Quick notice: If you have a template message you want to share here (ie., something you didn't write specifically for this channel), please check with me before posting it\n\nI'll have a Slack bot policing this rule, who will introduce itself below",
+      "links": [],
+      "title": "A rule for posting template messages",
+      "description": "A moderation note for the AI uplift channel.",
+      "topic": "Using AI at work"
+    },
+    {
+      "ts": "1793219511.956899",
+      "text": "okay, given that apparently I'm a youtuber now, I need some project ideas to record myself building\n\nwould love if people wrote in the thread things that you'd like to do / have someone do for you. A general prompt can be \"if you could manage a team of experts to do something for you, what would you ask them.\" I might come up with something otherwise, but it would be a treat if I manage to make something you guys can use\n\nso come on guys, go crazy, ask me for stuff",
+      "links": [],
+      "title": "What should I build on camera?",
+      "description": "A request for project ideas that would be useful to people in the channel.",
+      "topic": "Using AI at work"
+    },
+    {
+      "ts": "1792167902.125269",
+      "text": "What should we make of the fact that AI power users are much less common outside of software and programming? Some possibilities\n\n1. There's many would-be power users whose day-to-day work is not AI-amenable enough for it to be worth their time to get better at AI\n2. Some of the necessary (though not sufficient skills) for becoming an AI power user are correlated with the skills prized in technical fields\n(1) would be very exciting if true, but (2) sounds plausible so possibly there's no residual to explain after (2) and other similar explanations.\n\nI'd be interested in anecdotes here. e.g., do you have friends who are noticeably better than their peers at using AI? what do they have in common?",
+      "links": [],
+      "title": "Why are so many AI power users programmers?",
+      "description": "Two possible explanations for a gap between software and other fields.",
+      "topic": "Thinking about AI"
+    },
+    {
+      "ts": "1791477230.853239",
+      "text": "I just thought of what might be my best argument for more people to try Claude Code / Codex:\n\n> If AI can do something, Claude Code / Codex can do it for you\nBasically all other AI products have like 10 different limitations you need to track in your head and the limitations change every month based on the new release and on whatever you org's team plan settings are and it all gets very tiresome. With coding agents on your computer, we all basically have the same thing. If you saw someone doing something cool on Twitter you know you should be able to replicate it yourself. I'm not saying it's for everyone, but many I'd still like many more people to give it a try, at least for some of your tasks",
+      "links": [],
+      "title": "Why try a coding agent?",
+      "description": "My argument for trying Claude Code or Codex, including for work outside programming.",
+      "topic": "Working with agents"
+    },
+    {
+      "ts": "1790271639.814419",
+      "text": "What do people here do to deliberately get better at AI?\n\nGiven how important it is for my job I would have thought I'd have more to say about this, but the only things I consistently do are:\n\n1. Sitting next to AI power users, looking at their screens, and asking them questions on what they're doing\n2. Push myself a bit to try new tools as I come across them\n3. Learning the gears and patterns of tools I expect to use often (eg., read through skills that friends recommend me, test the edges of Claude Tag and read its documentation, learn about the sandboxes used for Cowork/Claude Code in the Cloud)",
+      "links": [],
+      "title": "How do you practise using AI?",
+      "description": "Three things I do deliberately when learning to use a tool.",
+      "topic": "Using AI at work"
+    },
+    {
+      "ts": "1789931174.127179",
+      "text": "Do you guys have tips for creating creating skills to help the model with \"can you do the thing we did last time, pls? you know, when you did the thing and I said it was good. That thing.\" kind of cases?\n\nHere's what I ended up doing for did for this skill to group messy files into folders and cut fluff from instruction files:\n\n1. I did the thing once in ~5 messages of back and forth\n2. Asked \"can we make a skill for it, nothing complicated\"\n3. It suggested lots of things, I picked and rephrased the ones that seemed broadly applicable\n4. Then I asked it to run it with fresh agents on some hand-picked folders\n5. Because the skill needs my input, I replied to the agents to pick among their suggestions\n6. I asked one of the agents for candidate additions to the skill, trimmed the one I liked, and called it a day\nAll this took quite a bit of back and forth. Maybe I should have asked for Codex to do the whole process upfront? Make a meta-skill to repeat the whole process next time?",
+      "links": [
+        {
+          "url": "https://github.com/alejoacelas/dotfiles/blob/db40a4813b69773c3a94e49c7e861e339eda406e/skills/simplify-projects/SKILL.md",
+          "label": "this skill"
+        }
+      ],
+      "title": "Turning a good session into a reusable skill",
+      "description": "How I tested and refined a skill for tidying project folders.",
+      "topic": "Working with agents"
+    },
+    {
+      "ts": "1789817231.908579",
+      "text": "I hadn't tried this much before, but I've found prompting the models with very short open-ended questions quite useful. I feel forcing myself to ask shorter questions a good guard against leading models to particular answers. Some examples:\n\n1. \"how do you think I did on this call? mostly I'm looking for unexpected feedback [gdocs link]\"\n2. \"how would you suggest we simplify [project]\"\n3. After doing a couple rounds of edits: \"anything else?\"",
+      "links": [],
+      "title": "Try asking a shorter question",
+      "description": "Three open-ended prompts I use to avoid leading a model.",
+      "topic": "Working with agents"
+    },
+    {
+      "ts": "1789553050.103399",
+      "text": "I'm looking into building a custom Slack MCP, out of the sense that there's many features missing in the default Claude and ChatGPT data connectors (but which Slack lets you do through their API). I'd be curious if there's any features you miss in the Slack connectors you use. For example:\n\n1. Creating channels, adding and removing users. Inviting external users\n2. Having the AI send messages as a separate identity (e.g. \"Alejo's bot\")\n3. Set reminders, tag people\nAlso keen any annoyance you have with it, even if it's not a clear feature (e.g,. it's slow, you'd like to block it from posting in certain channels). If I make something I like I'll share it here once its done",
+      "links": [],
+      "title": "What’s missing from Slack connectors?",
+      "description": "A few things I’d like an AI connector for Slack to be able to do.",
+      "topic": "Using AI at work"
+    },
+    {
+      "ts": "1788429620.744379",
+      "text": "Btw, if you have one or a couple friends who you think would get value from this channel, you can leave their email on this thread and I'll sent them an invite by the end of the week\n\nOnly thing they need is an email connected to a paid Slack workspace (the ones that don't delete message history)",
+      "links": [],
+      "title": "Inviting people to the AI uplift channel",
+      "description": "An invitation I extended to people in the Slack community.",
+      "topic": "Using AI at work"
+    },
+    {
+      "ts": "1787905004.081639",
+      "text": "This week I've started thinking that a core component of being an AI power user is simply having an large bag-of-tricks that you can apply to a problem.\n\nIf you're hiring for a generalist AI enablement person for your org, maybe you can learn a lot by asking \"list me all the different tools, frameworks, repos, tricks, that you've tried this week\", \"how did you find them?\", \"anyone that you liked? how did you try it out to get a signal of whether it was useful?\"",
+      "links": [],
+      "title": "How do you find new tools worth trying?",
+      "description": "Interview questions I’d ask someone applying for an AI enablement role.",
+      "topic": "Using AI at work"
+    },
+    {
+      "ts": "1787279790.021939",
+      "text": "Quick poll for the people here who use Claude for Chrome/browser use less than once a week. Is that because:\n\n1. I didn't know AI could click on and do things on websites for me\n2. I've heard of it, but I have not installed it or enabled it so far\n3. I've enabled it but haven't used it even once\n4. I tried it, but I didn't find much use for it\nIf you're at (2), I'm also very curious for the reasons for not trying it. Maybe the installation is still very buggy for some people? Maybe it seems risky/it's against your org's policies?",
+      "links": [
+        {
+          "url": "https://wow.pjh.is/journal/browser-use-is-very-good-now",
+          "label": "Claude for Chrome/browser use"
+        }
+      ],
+      "title": "Why haven’t you tried browser use?",
+      "description": "A poll about the steps between hearing about a tool and using it regularly.",
+      "topic": "Using AI at work"
+    }
+  ]
+}
