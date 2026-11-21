@@ -281,6 +281,13 @@ figure { margin: 22px 0 0; }
 .edited { margin: 10px 0 0; font: 12px var(--mono); color: var(--mute); }
 .review label { display: inline-flex; gap: 8px; align-items: center; }
 
+/* A second small card, bottom left: how to reach him */
+.contact { position: fixed; left: 20px; bottom: 20px; display: grid; gap: 3px; padding: 12px 16px; background: #fdfbf5f7; box-shadow: 0 1px 0 #16130f14, 0 6px 20px #16130f1f; font: 500 14.5px/1.45 var(--display, var(--sans)); color: #16130f; }
+.contact a { text-decoration: underline; text-decoration-color: #16130f55; text-underline-offset: 3px; }
+.contact a:hover { text-decoration-color: currentColor; }
+.asking .contact { opacity: .35; transition: opacity .15s; }
+@media (max-width: 860px) { .contact { left: auto; right: 12px; bottom: 14px; padding: 9px 12px; font-size: 13px; } .reading .contact { display: none; } }
+
 /* The title block's three ways in */
 .doors { display: grid; gap: 0; margin: 16px 0 0; padding: 0; border-top: 0; font: 500 17px var(--text); }
 .doors a, .doors button { display: flex; align-items: center; justify-content: space-between; padding: 9px 0; border-top: 1px solid #2b262226; font: inherit; text-align: left; text-decoration: none; color: inherit; }
