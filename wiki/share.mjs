@@ -134,6 +134,7 @@ if (process.argv[1] === fileURLToPath(import.meta.url) && process.argv[2] === 'c
   const excerpts = new Map();
   for (const f of (await readdir(path.join(src, 'quotes'))).filter(f => f.startsWith('excerpts-') && f.endsWith('.json'))) for (const x of await read(`quotes/${f}`)) if (x.turns?.length) excerpts.set(x.id, x);
   const people = await privatePeople(src);
+  const current = await loadShare(src);
   let bad = 0, n = 0;
   const tally = {};
   for (const file of process.argv.slice(3)) {
@@ -143,6 +144,7 @@ if (process.argv[1] === fileURLToPath(import.meta.url) && process.argv[2] === 'c
     const got = new Set(recs.map(r => r.id));
     for (const id of want) if (!got.has(id)) { bad++; console.log(`MISSING ${id}: no record`); }
     for (const rec of recs) {
+      if (current.get(rec.id)?.file > path.basename(file)) continue;   // a later file replaces this record
       n++; tally[rec.share] = (tally[rec.share] || 0) + 1;
       const fail = msg => { bad++; console.log(`FAIL ${rec.id}: ${msg}`); };
       const item = items.get(rec.id);
