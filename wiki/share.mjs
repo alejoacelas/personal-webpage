@@ -1,7 +1,8 @@
 // Decides which works are published and applies the edits that make them publishable.
 // The marks live with the private sample, in share/*.json (see share/README.md there):
 // ok, edit, ask or no. Only ok works and edited "edit" works are published.
-//   node wiki/share.mjs check <share file> [...]   test records against the raw works
+//   node wiki/share.mjs check <share file> [...]       test records against the raw works
+//   node wiki/share.mjs published <id> [...]          what a visitor would see for these works
 import { readFile, readdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
@@ -124,7 +125,34 @@ export function problems(published, rec, people = [], blocked = []) {
   return [...new Set(found)];
 }
 
-// ---- Command line: test share records before the build uses them.
+// ---- Command line.
+//   node wiki/share.mjs published <id> [...]   what a visitor would see for these works, read from the last publish build
+if (process.argv[1] === fileURLToPath(import.meta.url) && process.argv[2] === 'published') {
+  const { createHash } = await import('node:crypto');
+  const file = path.join(path.dirname(fileURLToPath(import.meta.url)), 'data.js');
+  const data = JSON.parse((await readFile(file, 'utf8')).replace(/^window\.DATA = /, '').replace(/;\s*$/, ''));
+  if (data.works.some(w => w.share !== 'ok')) { console.error('wiki/data.js is a review build; run `node wiki/build.mjs` first.'); process.exit(1); }
+  const byId = new Map(data.works.map(w => [w.id, w]));
+  const plain = h => String(h || '').replace(/<a [^>]*href="([^"]*)"[^>]*>(.*?)<\/a>/g, '$2 ($1)').replace(/<\/(p|li|h\d|blockquote|pre|div)>/g, '\n').replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/\n{3,}/g, '\n\n').trim();
+  for (const id of process.argv.slice(3)) {
+    const w = byId.get('w' + createHash('sha256').update(id).digest('hex').slice(0, 10));
+    console.log('='.repeat(90) + `\nWORK ${id}`);
+    if (!w) { console.log('not in the publish build (left out, held, or unmarked)'); continue; }
+    const lines = [`kind: ${w.kind} · date shown: ${w.date}${w.edited ? ' · edited' : ''}`, `title: ${w.title}`, `gloss: ${w.gloss}`, `pull: ${w.pull}`];
+    if (w.url) lines.push(`link: ${w.url}`);
+    if (w.mentions?.length) lines.push(`mention tags: ${w.mentions.join(', ')}`);
+    for (const l of w.links || []) if (l.why) lines.push(`link note: ${l.why}`);
+    if (w.asks?.length || w.words?.length) lines.push(`search phrases: ${[...(w.asks || []), ...(w.words || [])].join(' | ')}`);
+    if (w.slack) { lines.push(`channel shown: #${w.slack.channel}`); if (w.slack.replyingTo) lines.push(`replying to: ${w.slack.replyingTo}`); w.slack.messages.forEach((m, n) => lines.push(`[message ${n}]\n${plain(m.html)}`)); }
+    if (w.doc?.html) lines.push(`[document]\n${plain(w.doc.html)}`);
+    if (w.tool) lines.push(`[repository or gist] ${w.tool.repo || ''} ${w.tool.description || ''}\n${plain(w.tool.readme)}\n${(w.tool.files || []).map(f => f.name + '\n' + plain(f.html)).join('\n')}`);
+    if (w.said) { lines.push(`setting: ${w.said.setting}`, `about: ${w.said.about}`, `[said]\n${w.said.text}`); if (w.said.excerpt) { lines.push(`[excerpt] the other person is labelled: ${w.said.excerpt.other}`); for (const t of w.said.excerpt.turns) lines.push(t.me !== undefined ? `  ALEJO: ${t.me}` : `  OTHER (summary): ${t.other}`); } }
+    console.log(lines.join('\n'));
+  }
+  process.exit(0);
+}
+
+//   node wiki/share.mjs check <share file> [...]   test share records against the raw works
 if (process.argv[1] === fileURLToPath(import.meta.url) && process.argv[2] === 'check') {
   const src = process.env.WIKI_DATA || path.join(os.homedir(), 'best/desk/requested/2026-11/2026-11-21-website-wiki');
   const read = async p => JSON.parse(await readFile(path.join(src, p), 'utf8'));

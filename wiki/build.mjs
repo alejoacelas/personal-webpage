@@ -3,6 +3,7 @@
 //   node wiki/build.mjs            what would be published: "ok" works and edited "edit" works
 //   node wiki/build.mjs --review   every work except those marked "no", for reviewing the marks
 //   node wiki/build.mjs --no-excerpts publish build without the conversation around each call quote
+//   node wiki/build.mjs --release  publish build that also writes wiki/data.publish.js, the copy the site deploys
 import { readFile, writeFile, readdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
@@ -278,6 +279,8 @@ if (!review) {
 }
 serialized = await permalinks({ serialized, internalIds: data.works.map(w => w.id), items, quotes, reassign: final?.reassign, src, record: !review && process.argv.includes('--release') });
 await writeFile(path.join(here, 'data.js'), 'window.DATA = ' + serialized + ';\n');
+// A release also writes the tracked copy the site is built from. Only this path, which has passed the checks above, ever writes it.
+if (!review && process.argv.includes('--release')) await writeFile(path.join(here, 'data.publish.js'), 'window.DATA = ' + serialized + ';\n');
 const kinds = {};
 for (const w of works) kinds[w.kind] = (kinds[w.kind] || 0) + 1;
 console.log(`${works.length} works`, kinds, `· ${data.patterns.length} patterns · ${areas.length} areas · ${dropped} left out · ${[...annotations.keys()].length} annotated`);
