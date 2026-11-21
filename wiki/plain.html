@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Alejo Acelas</title>
+<link rel="icon" href="../public/favicon.svg">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="plain.css">
+</head>
+<body class="plain">
+<canvas id="map" aria-label="A map of every work. The same works are listed under Read it as a list."></canvas>
+<header class="plate" id="plate"></header>
+<div class="tools">
+  <label class="search"><span class="sr">Search</span><input id="q" type="search" placeholder="Search" autocomplete="off"><kbd>/</kbd></label>
+</div>
+<div class="zoom" role="group" aria-label="Zoom">
+  <button data-zoom="in" title="Zoom in (+)">+</button>
+  <button data-zoom="out" title="Zoom out (−)">−</button>
+  <button data-zoom="fit" title="See the whole map (0)">⤢</button>
+</div>
+<p class="caption" id="caption" aria-live="polite"></p>
+<aside class="reader" id="reader" aria-live="polite" hidden></aside>
+<div id="pop" role="tooltip" hidden></div>
+<script src="data.js"></script>
+<script src="map-plain.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

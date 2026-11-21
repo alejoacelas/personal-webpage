@@ -121,9 +121,14 @@ export function layout({ works, patterns, areas }) {
     for (const p of patterns) if (p.area === a.id) { const n = pAt.get(p.id), c = count.get(p.id) + 1; x += n.x * c; y += n.y * c; t += c; }
     if (t) areaSpots[a.id] = [Math.round(x / t), Math.round(y / t)];
   }
+  let mx = 0, my = 0, mt = 0;
+  for (const n of pNodes) { const c = count.get(n.id) + 1; mx += n.x * c; my += n.y * c; mt += c; }
+  mx /= mt; my /= mt;
+  const reach = Math.max(...pNodes.map(n => Math.hypot(n.x - mx, n.y - my)));
+  const tint = Object.fromEntries(pNodes.map(n => [n.id, [Math.round((Math.atan2(n.y - my, n.x - mx) * 180 / Math.PI + 360 + 20) % 360), Math.round(Math.hypot(n.x - mx, n.y - my) / reach * 100) / 100]]));
   const round = n => [Math.round(n.x * 10) / 10, Math.round(n.y * 10) / 10];
   return {
-    width, height, land, rings, hills, territories, areas: areaSpots,
+    width, height, land, rings, hills, territories, areas: areaSpots, tint,
     patterns: Object.fromEntries(pNodes.map(n => [n.id, round(n)])),
     works: Object.fromEntries([...wNodes, ...looseNodes].map(n => [n.id, round(n)])),
     loose: looseNodes.length ? [Math.round(looseNodes[0].x), Math.round(looseNodes[0].y)] : null,
