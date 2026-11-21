@@ -61,7 +61,18 @@ function body(item){
     html+=esc(text.slice(0,pos))+anchor;text=text.slice(pos+l.label.length);
   }
   html+=esc(text);
-  html=html.split(/\n\s*\n/).map(p=>'<p>'+p.replaceAll('\n','<br>')+'</p>').join('');
+  html=html.split(/\n\s*\n/).map(paragraph=>{
+    const groups=[];
+    for(const line of paragraph.split('\n')){
+      const quoted=line.startsWith('&gt; ');
+      if(!groups.length||groups.at(-1).quoted!==quoted)groups.push({quoted,lines:[]});
+      groups.at(-1).lines.push(quoted?line.slice(5):line);
+    }
+    return groups.map(({quoted,lines})=>{
+      const paragraph='<p>'+lines.join('<br>')+'</p>';
+      return quoted?'<blockquote>'+paragraph+'</blockquote>':paragraph;
+    }).join('');
+  }).join('');
   if(item.kind==='Call excerpt'||(item.kind==='Call note'&&item.body.startsWith('“')))html='<blockquote>'+html+'</blockquote>';
   if(item.url)extra.push(source(item.url,item.kind==='Repository'?'View repository':'Open Google Doc'));
   return html+extra.map(a=>'<p>'+a+'</p>').join('');
