@@ -10,6 +10,7 @@ import { fileURLToPath } from 'node:url';
 import { marked } from 'marked';
 import { createHash } from 'node:crypto';
 import { layout } from './layout.mjs';
+import { permalinks } from './permalinks.mjs';
 import { loadShare, markOf, applyEdits, problems, privatePeople } from './share.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
@@ -78,12 +79,15 @@ const github = await maybe('corpus/github.json', {});
 const scheme = await maybe('scheme/scheme.json', { patterns: [], facets: [], link_types: [] });
 const final = await maybe('scheme/patterns.json', null);
 const quotes = [];
+const excerpts = new Map();
 const annotations = new Map();
 for (const dir of ['quotes', 'annotations']) {
   if (!existsSync(path.join(src, dir))) continue;
   for (const f of (await readdir(path.join(src, dir))).filter(f => f.endsWith('.json')).sort()) {
     const rows = await json(`${dir}/${f}`);
-    if (dir === 'quotes') quotes.push(...rows); else for (const a of rows) annotations.set(a.id, a);
+    if (dir === 'annotations') for (const a of rows) annotations.set(a.id, a);
+    else if (f.startsWith('quotes-')) quotes.push(...rows);
+    else if (f.startsWith('excerpts-')) for (const e of rows) if (e.turns?.length) excerpts.set(e.id, { other: e.other, turns: e.turns.map(t => t.who === 'alejo' ? { me: t.text } : { other: t.summary }) });
   }
 }
 
@@ -118,6 +122,8 @@ let dropped = 0;
 // ---- Which works are shown, and with which edits (share.mjs). --review keeps the rest for checking the marks.
 const review = process.argv.includes('--review');
 const share = await loadShare(src);
+// Channel names can carry a client's or a project's name; only the listed ones are shown.
+const openChannels = new Set(existsSync(path.join(src, 'share/channels.txt')) ? (await readFile(path.join(src, 'share/channels.txt'), 'utf8')).split(/\s+/) : []);
 function shown(raw) {
   const rec = share.get(raw.id), ann = annotations.get(raw.id) || {}, mark = markOf(annotations.get(raw.id), rec);
   if (mark === 'no' || (!review && mark !== 'ok' && mark !== 'edit')) { dropped++; return null; }
@@ -138,7 +144,7 @@ for (const raw of items) {
   };
   if (i.kind === 'slack') {
     w.slack = {
-      channel: i.channel, replies: i.replies, others: i.others, startsThread: i.starts_thread, replyingTo: a.replying_to || '',
+      channel: review || openChannels.has(i.channel) ? i.channel : 'private-channel', replies: i.replies, others: i.others, startsThread: i.starts_thread, replyingTo: a.replying_to || '',
       messages: i.messages.map(m => ({
         time: m.time, html: slackHtml(m.text),
         reactions: (m.reactions || []).map(r => [emoji(r.name), r.count]).filter(r => r[0]),
@@ -169,7 +175,7 @@ for (const raw of quotes) {
   works.push({
     id: q.id, kind: 'said', sub: q.call_kind, date: q.date, url: '', title: a.title || firstWords(q.text, 60), gloss: a.gloss || '',
     pull: q.text, patterns: resolvePatterns({ ...a, id: q.id }), facets: a.facets || {}, links: a.links || [], mentions: a.mentions || [],
-    ...marks, said: { setting: q.setting, about: q.about, text: q.text }, text: q.text,
+    ...marks, said: { setting: q.setting, about: q.about, text: q.text, ...(excerpts.has(q.id) ? { excerpt: excerpts.get(q.id) } : {}) }, text: q.text,
   });
 }
 works.sort((a, b) => a.date < b.date ? 1 : a.date > b.date ? -1 : 0);
@@ -228,6 +234,7 @@ if (!review) {
   for (const id of leftover) found.push(`id still readable: ${id}`);
   if (found.length) { console.error(found.join('\n') + `\n${found.length} problems. data.js not written.`); process.exit(1); }
 }
+serialized = await permalinks({ serialized, internalIds: data.works.map(w => w.id), items, quotes, reassign: final?.reassign, src, review });
 await writeFile(path.join(here, 'data.js'), 'window.DATA = ' + serialized + ';\n');
 const kinds = {};
 for (const w of works) kinds[w.kind] = (kinds[w.kind] || 0) + 1;
