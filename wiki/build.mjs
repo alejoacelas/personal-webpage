@@ -231,20 +231,29 @@ for (const w of works) {
 }
 
 const entries = await maybe('scheme/entries.json', { questions: [], arcs: [] });
-const questions = (entries.questions || []).map(q => ({ ...q, patterns: q.patterns.filter(p => patternIds.has(p)) })).filter(q => q.patterns.length);
+const questions = (entries.questions || []).map(q => ({ ...q, patterns: q.patterns.filter(p => count.get(p)) })).filter(q => q.patterns.length);
 const arcs = (entries.arcs || []).map(a => ({ ...a, steps: a.steps.filter(s => byId.has(s.work)) })).filter(a => a.steps.length > 1);
 const mentions = [...mentionCount].filter(([, n]) => n >= 4).sort((a, b) => b[1] - a[1]).slice(0, 60).map(([name]) => name);
 // Questions and plain words a visitor might type to find each work (written ahead of time by agents).
-if (existsSync(path.join(src, 'annotations-search'))) for (const f of (await readdir(path.join(src, 'annotations-search'))).filter(f => f.endsWith('.json'))) {
-  for (const row of await json(`annotations-search/${f}`)) { const w = byId.get(row.id);
-    // The phrases were written from the text as it was before any edit, so a published, edited work goes without them.
-    if (w && (review || !w.edited)) { w.asks = row.asks || []; w.words = row.words || []; } }
+if (existsSync(path.join(src, 'annotations-search'))) {
+  const publicId = id => 'w' + createHash('sha256').update(id).digest('hex').slice(0, 10);      // as in the publishing step below
+  const byPublicId = new Map(works.map(w => [publicId(w.id), w]));
+  for (const f of (await readdir(path.join(src, 'annotations-search'))).filter(f => /^(phrases|published)-.*\.json$/.test(f)).sort()) {
+    const fromEdited = f.startsWith('published-');
+    for (const row of await json(`annotations-search/${f}`)) {
+      const w = fromEdited ? byPublicId.get(row.id) : byId.get(row.id);
+      // Phrases written before an edit could repeat what the edit removed, so an edited work only takes phrases written from its edited text.
+      if (w && (fromEdited ? !review && w.edited : review || !w.edited)) { w.asks = row.asks || []; w.words = row.words || []; }
+    }
+  }
 }
 const map = layout({ works, patterns: patterns.filter(p => count.get(p.id)), areas: areas.filter(a => patterns.some(p => p.area === a.id && count.get(p.id))) });
 const data = {
   map,
   built: new Date().toISOString().slice(0, 10), dropped,
-  areas, patterns: patterns.filter(p => count.get(p.id)), facets: scheme.facets, mentions, questions, arcs,
+  areas: areas.filter(a => patterns.some(p => p.area === a.id && count.get(p.id))),
+  patterns: patterns.filter(p => count.get(p.id)).map(p => ({ ...p, related: (p.related || []).filter(r => count.get(r.id)), lead: (p.lead || []).filter(id => byId.has(id)) })),
+  facets: scheme.facets, mentions, questions, arcs,
   works: works.map(({ text, ...w }) => ({ ...w, search: (w.title + ' ' + w.gloss + ' ' + w.mentions.join(' ') + ' ' + text).toLowerCase().replace(/\s+/g, ' ').slice(0, 4000) })),
 };
 let serialized = JSON.stringify(data);

@@ -23,7 +23,8 @@ export async function permalinks({ serialized, internalIds, items, quotes, reass
   const now = new Map(out.works.map((w, n) => [source.get(internalIds[n]), w.id]));
   const redirects = {}, gone = {};
 
-  for (const [old, to] of Object.entries(reassign)) if (/^[a-z0-9-]+$/.test(old) && to.length && to[0] !== old) redirects['p/' + old] = 'p/' + to[0];
+  // A topic that was merged or renamed redirects, but only if it was ever published under the old name.
+  for (const [old, to] of Object.entries(reassign)) if (register.patterns[old] && to.length && to[0] !== old) redirects['p/' + old] = 'p/' + to[0];
   const livePatterns = new Set(out.patterns.map(p => p.id));
   for (const [id, entry] of Object.entries(register.patterns)) {
     if (livePatterns.has(id) || redirects['p/' + id]) continue;
