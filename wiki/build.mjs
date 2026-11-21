@@ -175,7 +175,8 @@ for (const raw of quotes) {
   if (!out) continue;
   const { item: q, ann: a, marks } = out;
   works.push({
-    id: q.id, kind: 'said', sub: q.call_kind, date: q.date, url: '', title: a.title || firstWords(q.text, 60), gloss: a.gloss || '',
+    id: q.id, kind: 'said', sub: q.call_kind, date: review ? q.date : q.date.slice(0, 8) + '01',   // the day of a private call narrows who it was with
+ url: '', title: a.title || firstWords(q.text, 60), gloss: a.gloss || '',
     pull: q.text, patterns: resolvePatterns({ ...a, id: q.id }), facets: a.facets || {}, links: a.links || [], mentions: a.mentions || [],
     ...marks, said: { setting: q.setting, about: q.about, text: q.text, ...(out.excerpt ? { excerpt: out.excerpt } : {}) }, text: q.text,
   });
