@@ -15,6 +15,7 @@ try{state=JSON.parse(await readFile(destination,'utf8'))}catch(err){if(err.code!
 const ids=['atlas','edition','stream','cabinet','room'];
 const routes=new Map([['/','index.html'],['/archive.mjs','archive.mjs'],
  ...ids.flatMap(id=>[['/'+id+'.html','prototype.html'],['/'+id+'.mjs',id+'.mjs']]),
+ ['/historical-documents.json','historical-documents.json'],['/historical-posts.json','historical-posts.json'],
  ['/documents.json',path.join(repo,'content/documents.json')],['/feed.json',path.join(repo,'public/feed.json')]
 ]);
 const types={'.html':'text/html','.mjs':'text/javascript','.json':'application/json','.webp':'image/webp','.woff2':'font/woff2'};
