@@ -514,7 +514,8 @@ void main() {
       const next = Math.exp(Math.log(cam.z) + (Math.log(zoomGoal) - Math.log(cam.z)) * Math.min(1, dt / 70));
       cam.z = Math.abs(next - zoomGoal) / zoomGoal < .002 ? zoomGoal : next;
       cam.x = anchor.wx - (anchor.sx - cx()) / cam.z; cam.y = anchor.wy - (anchor.sy - cy()) / cam.z;
-      if (cam.z === zoomGoal) zoomGoal = null; dirty = true;
+      if (cam.z === zoomGoal) { zoomGoal = null; if (cam.z > Z_CARD - .25 && cam.z < Z_CARD) zoomGoal = cam.z < Z_CARD - .125 ? Z_CARD - .25 : Z_CARD; }
+      dirty = true;
     }
     if (velocity && !drag) {
       cam.x -= velocity.x * dt / cam.z; cam.y -= velocity.y * dt / cam.z;
@@ -638,7 +639,7 @@ void main() {
     glcv.addEventListener('webglcontextlost', e => e.preventDefault());
     glcv.addEventListener('webglcontextrestored', () => { plateTex = []; focusTex = []; press(); dirty = true; });
   }
-  function zoomAt(factor, x = cx(), y = cy()) { atHome = false; tween = null; anchor = { sx: x, sy: y, wx: wx(x), wy: wy(y) }; zoomGoal = Math.max(zMin, Math.min(Z_MAX, (zoomGoal || cam.z) * factor)); }
+  function zoomAt(factor, x = cx(), y = cy()) { atHome = false; tween = null; anchor = { sx: x, sy: y, wx: wx(x), wy: wy(y) }; zoomGoal = Math.max(zMin, Math.min(Z_MAX, (zoomGoal || cam.z) * factor)); if (factor < 1 && zoomGoal <= zFit * 1.03) home(520); }
 
   // ---- What the page can ask of the map
   function setWorks(list) {

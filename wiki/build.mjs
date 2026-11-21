@@ -28,7 +28,7 @@ marked.use({
   gfm: true,
   renderer: {
     html({ text }) { return esc(text); },
-    link({ href, text, tokens }) { return `<a href="${esc(safeUrl(href))}" target="_blank" rel="noopener">${this.parser.parseInline(tokens)}</a>`; },
+    link({ href, text, tokens }) { const inner = this.parser.parseInline(tokens); return /^https?:\/\//.test(href) ? `<a href="${esc(href)}" target="_blank" rel="noopener">${inner}</a>` : inner; },   // a link to a file in the repository leads nowhere here
     image({ text }) { return `<span class="img-note">[image${text ? ': ' + esc(text) : ''}]</span>`; },
   },
 });

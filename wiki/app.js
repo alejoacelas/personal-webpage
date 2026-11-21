@@ -56,7 +56,7 @@ const LENSES = [
     for (const w of works) (rows.get(rowOf(w)) || rows.set(rowOf(w), []).get(rowOf(w))).push(w);
     return [...rows].sort((a, b) => b[1].length - a[1].length).map(([label, items]) => ({ key: label, label, items }));
   } },
-  ...D.facets.map(f => ({ id: f.id, label: f.question || f.label, rows() {
+  ...D.facets.map(f => ({ id: f.id, label: `By ${f.label.toLowerCase()}`, rows() {
     return f.values.map(v => ({ key: v.id, label: v.label, note: v.definition, items: works.filter(w => w.facets[f.id] === v.id) })).filter(r => r.items.length);
   } })),
   ...(D.mentions.length ? [{ id: 'names', label: 'By the tools and organisations named', rows() {
@@ -120,7 +120,11 @@ let popTimer;
 function popHtml(el) {
   const w = W.get(el.w); if (!w) return '';
   pop.style.setProperty('--tint', MapView.tintOf?.(w.id) || 'transparent');
-  return `<span class="pop-src">${glyph(w.kind)}${srcLine(w)}<span class="pop-date">${when(w)}</span></span><b>${esc(w.title)}</b><span class="pop-gloss">${esc(w.kind === 'said' && w.pull ? '“' + w.pull + '”' : w.gloss)}</span>`;
+  const source = w.kind === 'post' ? channel(w) : w.kind === 'said' ? 'call excerpt' : ({ doc: 'Google Doc', sheet: 'Google Sheet', repo: 'repository', gist: 'gist', site: 'live site', file: 'link' })[w.sub] || w.sub;
+  const date = `${w.kind === 'said' ? '' : +w.date.slice(8, 10) + ' '}${MONTHS[+w.date.slice(5, 7) - 1]} ’${w.date.slice(2, 4)}`;
+  const top = `<span class="pop-src">${glyph(w.kind)}${esc(source)}<span class="pop-date">${date}</span></span>`;
+  if (w.kind === 'said' && w.pull) return `${top}<span class="pop-quote">“${esc(w.pull)}”</span>`;
+  return `${top}<b${w.kind === 'tool' ? ' class="mono"' : ''}>${esc(w.title)}</b><span class="pop-gloss">${esc(w.gloss)}</span>`;
 }
 function showPop(html, x, y, below) {
   if (!html) return hidePop();
@@ -287,7 +291,7 @@ function viewer(w) {
       <p class="about">${esc(t.description || w.gloss)}</p><p class="repo-meta">${t.language ? `<span><i class="lang"></i>${esc(t.language)}</span>` : ''}${t.stars ? `<span>★ ${t.stars}</span>` : ''}${t.pushed ? `<span>Updated ${day(t.pushed)}</span>` : ''}${t.homepage ? `<a href="${esc(t.homepage)}" target="_blank" rel="noopener">${esc(t.homepage.replace(/^https?:\/\//, ''))}</a>` : ''}</p>
       ${t.readme ? `<div class="readme-wrap clamp"><p class="file">README.md</p><div class="readme">${t.readme}</div><button class="more" data-more>Show the whole README</button></div>` : ''}</figure>`;
   }
-  if (w.kind === 'site') {
+  if (w.kind === 'site' && w.url) {
     return `<figure class="v-site"><figcaption><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="url">${esc(w.url.replace(/^https?:\/\//, ''))}</span><a href="${esc(w.url)}" target="_blank" rel="noopener">Open ↗</a></figcaption><iframe src="${esc(w.url)}" loading="lazy" title="${esc(w.title)}" referrerpolicy="no-referrer" sandbox="allow-scripts allow-same-origin allow-forms"></iframe></figure>`;
   }
   if (w.kind === 'said') {
@@ -336,7 +340,8 @@ const missing = () => ({ title: 'Not found', select: none, html: head('', 'Nothi
 
 // ---- Routing
 function route() {
-  const [, kind, a, b] = decodeURI(location.hash.replace(/^#/, '')).split('/');
+  const plain = s => { try { return decodeURIComponent(s); } catch { return s; } };
+  const [, kind, a, b] = location.hash.replace(/^#/, '').split('/').map(plain);
   hidePop(); MapView.focusPatterns(null);
   const moved = D.redirects?.[`${kind}/${a}`];
   if (moved) { history.replaceState(null, '', '#/' + moved); return route(); }
@@ -351,8 +356,8 @@ function route() {
   else if (kind === 'index') page = indexPage();
   else if (kind === 'topics') page = topicsPage();
   else if (kind === 'sources') page = sourcesPage();
-  else if (kind === 'c') page = collectionPage(a, decodeURIComponent(b || ''));
-  else if (kind === 'q') page = searchPage(decodeURIComponent(a || ''));
+  else if (kind === 'c') page = collectionPage(a, b || '');
+  else if (kind === 'q' && (a || '').trim()) page = searchPage(a);
   if (!page) {
     document.body.classList.remove('reading'); readerEl.hidden = true; document.title = 'Alejo Acelas'; trail.length = 0;
     MapView.setInset(0, plateRoom()); MapView.select({ works: [] });
@@ -368,14 +373,16 @@ function route() {
   document.title = `${page.title} · Alejo Acelas`;
   MapView.setInset(innerWidth > 860 ? readerEl.offsetWidth : 0);
   MapView.select(page.select);
+  if (!page.select.works.length) MapView.home();
 }
-const plateRoom = () => innerWidth > 1100 ? plate.offsetWidth + 30 : 0;
+const plateRoom = () => innerWidth > 860 ? 402 : 0;          // the title box unfolded (372) plus its margins, even while it is folded
 addEventListener('hashchange', route);
 addEventListener('resize', () => document.body.classList.contains('reading') ? MapView.setInset(innerWidth > 860 ? readerEl.offsetWidth : 0) : MapView.setInset(0, plateRoom()));
 
 // ---- Events
 document.addEventListener('click', e => {
   const t = e.target;
+  if (t.closest?.('.page-body a[href="#"]')) { e.preventDefault(); return; }
   const link = t.closest('a[data-w]');
   if (link) { const holder = link.closest('[data-ctx]'); ctxKey = holder ? holder.dataset.ctx : null; }
   if (t.closest('[data-more]')) { t.closest('.clamp').classList.remove('clamp'); return; }
@@ -485,7 +492,7 @@ function renderBar(keep) {
   if (level?.q && (!text || text === level.q.question)) rows = questionResults(level.q);
   else if (level && !level.q) {
     rows = level.rows();
-    if (text) { const want = terms(text); rows = rows.filter(r => r.type !== 'section' && want.every(t => terms(r.title + ' ' + (r.gloss || '')).some(x => x.startsWith(t)))); }
+    if (text) { const want = terms(text); rows = rows.filter(r => r.type !== 'section' && want.every(t => terms(r.title + ' ' + (r.gloss || '')).some(x => x.startsWith(t)))); if (!rows.length) rows = [{ type: 'note', label: `Nothing in ${level.label.toLowerCase()} matches that.` }]; }
   } else if (text.length >= 2) {
     if (level?.q) bar.stack.pop();
     const found = search(text);
@@ -520,7 +527,7 @@ function mark() {
   for (const el of $$('.bar-row', barList)) { const on = +el.dataset.n === bar.sel; el.classList.toggle('sel', on); el.setAttribute('aria-selected', on); if (on) el.scrollIntoView({ block: 'nearest' }); }
   const r = bar.rows[bar.sel];
   MapView.peek?.(r?.type === 'work' ? r.id : null);
-  if (r?.type === 'topic') MapView.focusPatterns([r.id]); else if (bar.open && !bar.rows.some(x => x.type === 'work')) MapView.focusPatterns(null);
+  MapView.focusPatterns(r?.type === 'topic' ? [r.id] : null);
 }
 function move(step) {
   let n = bar.sel;
@@ -531,7 +538,7 @@ function choose(r) {
   if (!r) return;
   if (r.type === 'question') { bar.stack.push({ q: r.q }); barInput.value = r.q.question; renderBar(); barInput.select(); }
   else if (r.type === 'browse') { bar.stack.push({ label: r.label, rows: r.rows }); barInput.value = ''; renderBar(); }
-  else { ctxKey = setCtx('bar', 'what the bar listed', location.hash, bar.rows.filter(x => x.type === 'work').map(x => x.id)); closeBar(); location.hash = r.href; }
+  else { ctxKey = setCtx('bar', barInput.value.trim() ? `results for “${barInput.value.trim()}”` : 'what the bar listed', barInput.value.trim().length >= 2 ? `#/q/${enc(barInput.value.trim())}` : location.hash || '#/', bar.rows.filter(x => x.type === 'work').map(x => x.id)); closeBar(); location.hash = r.href; }
 }
 function back() { bar.stack.pop(); barInput.value = ''; renderBar(); }
 function openBar() { if (bar.open) return; bar.open = true; bar.stack = []; barEl.hidden = false; barInput.value = ''; renderBar(); barInput.focus(); document.body.classList.add('asking'); }
@@ -542,14 +549,15 @@ barInput.addEventListener('keydown', e => {
   else if (e.key === 'ArrowUp' || (e.key === 'Tab' && e.shiftKey)) { e.preventDefault(); move(-1); }
   else if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) { const text = barInput.value.trim(); if (text.length >= 2) { closeBar(); location.hash = `#/q/${enc(text)}`; } }
   else if (e.key === 'Enter') { e.preventDefault(); choose(bar.rows[bar.sel]); }
-  else if (e.key === 'Escape') { e.preventDefault(); if (bar.stack.length) back(); else if (barInput.value) { barInput.value = ''; renderBar(); } else closeBar(); }
+  else if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); if (bar.stack.length) back(); else if (barInput.value) { barInput.value = ''; renderBar(); } else closeBar(); }
   else if (e.key === 'Backspace' && !barInput.value && bar.stack.length) { e.preventDefault(); back(); }
 });
 barEl.addEventListener('mousemove', e => { const el = e.target.closest('.bar-row'); if (el && +el.dataset.n !== bar.sel) { bar.sel = +el.dataset.n; mark(); } });
 barEl.addEventListener('click', e => {
   if (e.target === barEl) return closeBar();
   if (e.target.closest('.bar-back')) { back(); barInput.focus(); return; }
-  const el = e.target.closest('.bar-row'); if (el) { e.preventDefault(); choose(bar.rows[+el.dataset.n]); barInput.focus(); }
+  const el = e.target.closest('.bar-row'); if (el) { e.preventDefault(); choose(bar.rows[+el.dataset.n]); }
+  if (bar.open) barInput.focus();
 });
 
 index();
