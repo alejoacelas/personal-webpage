@@ -45,7 +45,7 @@ function body(item){
 const $=s=>document.querySelector(s);
 const entryUrl=id=>'#entry/'+encodeURIComponent(id);
 const ordered=[...items].sort((a,b)=>a.title.localeCompare(b.title));
-let selected=null,needle='',matching=[];
+let selected=null,needle='',matching=[],zoomToSearch=false;
 $('#total').textContent=items.length+' entries';
 $('#titles').innerHTML=ordered.map(i=>`<a href="${entryUrl(i.id)}"><small>${ui.meta(i)}</small><strong>${esc(i.title)}</strong></a>`).join('');
 const graph=mountGraph($('#canvas'),{items,connections,onOpen:id=>{
@@ -73,8 +73,9 @@ function route(){
   $('#article').innerHTML=`<h2 class="reading-title" tabindex="-1">${esc(item.title)}</h2><div class="body">${body(item)}</div><section class="forks"><h3>Connected entries</h3>${connections[item.id].map(({to,reason})=>`<a class="fork" href="${entryUrl(to)}"><small>${esc(reason)}</small><strong>${esc(lookup.get(to).title)} ↗</strong></a>`).join('')}</section>`;
   window.scrollTo(0,0);$('#reading').scrollTop=0;
   $('.reading-title').focus({preventScroll:true});
-  requestAnimationFrame(()=>graph.locate(item.id));
+  if(zoomToSearch){requestAnimationFrame(()=>graph.locate(item.id));zoomToSearch=false}
 }
+$('#locate').onclick=()=>{if(selected)graph.locate(selected)};
 $('#close').onclick=()=>{location.hash='#home'};
 $('#out').onclick=()=>graph.zoom(1/1.45);$('#in').onclick=()=>graph.zoom(1.45);$('#fit').onclick=()=>graph.fit();
 function search(){
@@ -86,7 +87,7 @@ function search(){
  $('.matches').hidden=false;
 }
 $('#find').oninput=search;$('#find').onfocus=()=>{if(needle)search()};
-$('#find').onkeydown=e=>{if(e.key==='Enter'&&matching.length&&needle){e.preventDefault();location.hash=entryUrl(matching[0].id);if(matching[0].id===selected)resetSearch()}else if(e.key==='ArrowDown'){$('.matches a')?.focus();e.preventDefault()}};
-document.addEventListener('click',e=>{if(!e.target.closest('.search'))hideMatches();if(e.target.closest('.matches a'))resetSearch()});
+$('#find').onkeydown=e=>{if(e.key==='Enter'&&matching.length&&needle){e.preventDefault();zoomToSearch=true;location.hash=entryUrl(matching[0].id);if(matching[0].id===selected){graph.locate(selected);zoomToSearch=false;resetSearch()}}else if(e.key==='ArrowDown'){$('.matches a')?.focus();e.preventDefault()}};
+document.addEventListener('click',e=>{if(!e.target.closest('.search'))hideMatches();const result=e.target.closest('.matches a');if(result){zoomToSearch=true;if(result.hash===location.hash&&selected){graph.locate(selected);zoomToSearch=false}resetSearch()}});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(needle){resetSearch();$('#find').focus()}else if(selected)location.hash='#home'}});
 window.addEventListener('hashchange',route);route();
