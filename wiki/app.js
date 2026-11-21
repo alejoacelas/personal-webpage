@@ -143,7 +143,7 @@ const readerEl = $('#reader'), pop = $('#pop'), plate = $('#plate');
 function renderPlate() {
   plate.innerHTML = `<h1><a href="#/">Alejo Acelas</a></h1>
     <div class="plate-body">
-      <p class="lede">I help high-impact organisations use AI</p>
+      <p class="lede">I help high-impact orgs use AI</p>
       <p class="how">Click, hover, and zoom to see some of the work I've done</p>
       <p class="doors"><a href="#/topics">List by topic</a><a href="#/sources">List by source</a><button class="ask-button" id="ask">Ask a question<kbd>/</kbd></button></p>
     </div>`;
