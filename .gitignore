@@ -40,3 +40,6 @@ references/manual/
 references/state.json
 references/discover.log
 references/analysis/crops/
+
+# Wiki prototype: built from the private sample in desk
+wiki/data.js

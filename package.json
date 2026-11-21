@@ -3,5 +3,8 @@
   "private": true,
   "scripts": {
     "build": "node scripts/build.mjs"
+  },
+  "devDependencies": {
+    "marked": "^18.2.1"
   }
 }
