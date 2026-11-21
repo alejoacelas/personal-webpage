@@ -6,6 +6,9 @@ const [catalogue,added,sources]=await Promise.all(['atlas-taxonomy.json','atlas-
 const items=[...base.map(i=>({...i,...catalogue.items[i.id]})),...sources,...added].sort((a,b)=>b.date.localeCompare(a.date));
 const regions=catalogue.regions, byId=new Map(items.map(i=>[i.id,i]));
 const $=s=>document.querySelector(s), esc=ui.esc;
+const phone=matchMedia('(max-width:650px)');
+function sizeSearch(){ $('#query').placeholder=phone.matches?'Search':'Search the archive'; }
+phone.addEventListener('change',sizeSearch);sizeSearch();
 const info={
  workflows:'Find a recurring task and decide whether it is worth automating.',
  agents:'Give an agent a clear task, follow its progress, and know when to step in.',
