@@ -43,3 +43,6 @@ references/analysis/crops/
 
 # Wiki prototype: built from the private sample in desk
 wiki/data.js
+
+# Trial of in-browser meaning search: downloaded models and vectors computed from the private sample
+wiki/semantic-data/

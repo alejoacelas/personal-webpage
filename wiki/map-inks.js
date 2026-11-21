@@ -550,13 +550,15 @@ void main() {
   function fit(ids, { maxZoom = 1.5, ms } = {}) {
     const list = ids.map(i => at.get(i)).filter(Boolean); if (!list.length) return;
     const x0 = Math.min(...list.map(w => w.x)), x1 = Math.max(...list.map(w => w.x)), y0 = Math.min(...list.map(w => w.y)), y1 = Math.max(...list.map(w => w.y));
-    const z = Math.min(maxZoom, (W - inset - insetLeft - 150) / Math.max(1, x1 - x0 + 160), (H - insetTop - insetBottom - 190) / Math.max(1, y1 - y0 + 160));
+    const z = Math.min(maxZoom, Math.max(60, room() - 150) / Math.max(1, x1 - x0 + 160), Math.max(60, H - insetTop - insetBottom - 190) / Math.max(1, y1 - y0 + 160));
     fly({ x: (x0 + x1) / 2, y: (y0 + y1) / 2, z }, ms);
   }
   // The whole-map view is fitted to the works themselves, in whatever room the title block and reader leave.
+  // The room never counts as less than a sliver, so a reader as wide as the window cannot send the zoom to nothing.
+  const room = () => Math.max(120, W - inset - insetLeft);
   function homeView() {
     const xs = works.map(w => w.x), ys = works.map(w => w.y), x0 = Math.min(...xs) - 190, x1 = Math.max(...xs) + 190, y0 = Math.min(...ys) - 170, y1 = Math.max(...ys) + 170;
-    return { x: (x0 + x1) / 2, y: (y0 + y1) / 2, z: Math.min((W - inset - insetLeft) / (x1 - x0), (H - insetTop - insetBottom) / (y1 - y0)) };
+    return { x: (x0 + x1) / 2, y: (y0 + y1) / 2, z: Math.min(room() / (x1 - x0), Math.max(120, H - insetTop - insetBottom) / (y1 - y0)) };
   }
   function home(ms) { fly(homeView(), ms); atHome = true; }
   function resize() {

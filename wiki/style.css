@@ -46,7 +46,6 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; letter-spac
 .hint { position: fixed; right: 66px; bottom: 22px; margin: 0; font: italic 400 14px var(--text); color: #40342aa8; pointer-events: none; }
 .reading .hint { display: none; }
 
-.reading @media (max-width: 860px) { 
 .glyph { display: inline-block; flex: none; width: 1.15em; margin-right: 6px; text-align: center; font: 600 .95em/1 var(--mono); color: var(--k, var(--ink)); }
 .k-post { --k: var(--post); } .k-doc { --k: var(--doc); } .k-tool { --k: var(--tool); } .k-site { --k: var(--site); } .k-said { --k: var(--said); } .k-other { --k: var(--other); }
 .glyph.k-post::before { content: "#"; }
