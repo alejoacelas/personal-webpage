@@ -1,0 +1,30 @@
+[
+  {
+    "title": "gradual disempowerment?",
+    "url": "https://docs.google.com/document/d/1aBy72YNPTikWAfX2o5ikWAnGOzKI8qLaT_iZJDN3tPE/edit",
+    "date": "2026-11-21",
+    "kind": "Draft",
+    "description": "What do we lose when we can steer a system but no longer understand how it works?"
+  },
+  {
+    "title": "Where AI fits in your work: a prompt to run (v1)",
+    "url": "https://docs.google.com/document/d/159tncXDj-lS8zy40YB8WEuJWCkc8ov19duwgv7kOkBg/edit",
+    "date": "2026-11-11",
+    "kind": "Template",
+    "description": "A prompt that maps six weeks of work and shows where you already use AI."
+  },
+  {
+    "title": "Map your ops processes (prompt)",
+    "url": "https://docs.google.com/document/d/1xuLpOdGa2b470lAIqMPMwg36wm1INq0PQy0TIhRABDk/edit",
+    "date": "2026-11-09",
+    "kind": "Template",
+    "description": "A prompt for tracing recurring work and finding the steps where it gets stuck."
+  },
+  {
+    "title": "Gaps in Claude's Google Docs connector",
+    "url": "https://docs.google.com/document/d/1OgM0T1_WPyntA5j1cmZ6_abO-WFFNrbtSGNZEwi7eiI/edit",
+    "date": "2026-10-21",
+    "kind": "Draft",
+    "description": "What happened when I tested suggestions, checkboxes and other everyday edits on a sample project plan."
+  }
+]
