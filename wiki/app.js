@@ -77,6 +77,10 @@ const LENSES = [
     return [{ key: f.id, label: f.question || f.label, blurb: '',
       rows: f.values.map(v => ({ key: v.id, label: v.label, note: v.definition, href: `#/c/${f.id}/${v.id}`, items: oldestFirst(works.filter(w => w.facets[f.id] === v.id).map(w => [w, 2])) })).filter(r => r.items.length) }];
   } })),
+  ...(D.arcs?.length ? [{ id: 'arc', label: 'Arcs', groups() {
+    return [{ key: 'arc', label: 'How one thing led to the next', blurb: 'Chains of works in the order they happened.',
+      rows: D.arcs.map(a => ({ key: a.id, label: a.label, note: a.blurb, href: `#/arc/${a.id}`, items: a.steps.map(s => [W.get(s.work), 2]).filter(i => i[0]) })).filter(r => r.items.length > 1) }];
+  } }] : []),
   ...(D.mentions.length ? [{ id: 'names', label: 'Names', groups() {
     return [{ key: 'names', label: 'Tools and organisations the works name', blurb: '',
       rows: D.mentions.map(m => ({ key: m, label: m, href: `#/c/names/${enc(m)}`, items: oldestFirst(works.filter(w => w.mentions.includes(m)).map(w => [w, 2])) })).filter(r => r.items.length >= 3) }];
@@ -128,6 +132,7 @@ function renderMap() {
     <h1>Alejo Acelas</h1>
     <p class="lede">I help high-impact organisations use AI so their existing work goes better.</p>
     <p class="how">This is the work I've shared along the way, sorted from the bottom up into ${D.patterns.length} patterns that keep coming up. Each mark is one piece of work: hover to see it, click to open it.</p>
+    ${D.questions?.length ? `<div class="ask"><h2>Or start from a question</h2><ul>${D.questions.map(q => `<li><a href="#/ask/${q.id}" data-ps="${q.patterns.join(' ')}">${esc(q.question)}</a></li>`).join('')}</ul></div>` : ''}
     <p class="legend">${counts.map(([k, n]) => `<button class="legend-item${kindsOff.has(k) ? ' off' : ''}" data-kind="${k}" aria-pressed="${!kindsOff.has(k)}" title="Show or hide ${KINDS[k][1]}">${glyph(k)}${plural(n, k)}</button>`).join('')}</p>
   </section>`;
   mapEl.innerHTML = intro + `<div class="groups lens-${lensId}">` + groups.map(g => `<section class="group">
@@ -168,12 +173,13 @@ function brush(id) {
     if (c.dataset.w === id) c.classList.add('on'); else if (near.has(c.dataset.w)) c.classList.add('near');
   }
 }
-function brushPattern(id) {
+function brushPattern(id, many) {
   for (const r of $$('.row.hot,.row.warm', mapEl)) r.classList.remove('hot', 'warm');
-  mapEl.classList.toggle('brush-rows', !!id);
-  if (!id || lensId !== 'pattern') return;
-  const rel = new Set((P.get(id)?.related || []).map(r => r.id));
-  for (const r of $$('.row', mapEl)) { if (r.dataset.row === id) r.classList.add('hot'); else if (rel.has(r.dataset.row)) r.classList.add('warm'); }
+  mapEl.classList.toggle('brush-rows', !!(id || many));
+  if (!(id || many) || lensId !== 'pattern') return;
+  const hot = new Set(many || [id]);
+  const rel = new Set(many ? [] : (P.get(id)?.related || []).map(r => r.id));
+  for (const r of $$('.row', mapEl)) { if (hot.has(r.dataset.row)) r.classList.add('hot'); else if (rel.has(r.dataset.row)) r.classList.add('warm'); }
 }
 
 // ---- Hover previews for any link to a work or a pattern
@@ -196,6 +202,8 @@ function showPop(el) {
 }
 function hidePop() { clearTimeout(popTimer); pop.hidden = true; }
 document.addEventListener('mouseover', e => {
+  const ask = e.target.closest?.('[data-ps]');
+  if (ask) { brushPattern(null, ask.dataset.ps.split(' ')); return; }
   const el = e.target.closest?.('[data-w],[data-p]');
   if (!el || el.closest('#pop')) return;
   const inMap = !!el.closest('#map');
@@ -207,7 +215,7 @@ document.addEventListener('mouseover', e => {
   popTimer = setTimeout(() => showPop(el), inMap && el.dataset.w ? 60 : 280);
 });
 document.addEventListener('mouseout', e => {
-  const el = e.target.closest?.('[data-w],[data-p]');
+  const el = e.target.closest?.('[data-w],[data-p],[data-ps]');
   if (!el || el.contains(e.relatedTarget)) return;
   hidePop(); brush(null); brushPattern(null);
 });
@@ -238,12 +246,34 @@ function areaPage(id) {
   const all = new Set(ps.flatMap(p => pWorks(p.id).map(i => i[0])));
   current = { works: new Set([...all].map(w => w.id)), pattern: null, related: new Set(ps.map(p => p.id)) };
   return { title: a.label, html: head(`Area · ${ps.length} patterns · ${all.size} works`, esc(a.label), `<p class="summary">${esc(a.blurb)}</p>${spark([...all])}<p class="kinds">${kindSummary([...all])}</p>`) +
-    ps.map(p => {
-      const list = pWorks(p.id).map(i => i[0]);
-      const lead = ((p.lead || []).map(i => W.get(i)).filter(Boolean)).slice(0, 3);
-      const key = setCtx(`pattern/${p.id}`, p.label, `#/p/${p.id}`, list.sort((x, y) => y.date.localeCompare(x.date)).map(w => w.id));
-      return `<section class="area-pattern"><h2>${pLink(p.id)} <span class="n">${list.length}</span></h2><p class="summary small">${esc(p.summary)}</p>${workList(lead, key)}</section>`;
-    }).join('') };
+    patternBlocks(ps) };
+}
+
+function patternBlocks(ps) {
+  return ps.map(p => {
+    const list = pWorks(p.id).map(i => i[0]).sort((x, y) => y.date.localeCompare(x.date));
+    const lead = ((p.lead || []).map(i => W.get(i)).filter(Boolean)).slice(0, 3);
+    const key = setCtx(`pattern/${p.id}`, p.label, `#/p/${p.id}`, list.map(w => w.id));
+    return `<section class="area-pattern"><h2>${pLink(p.id)} <span class="n">${list.length}</span></h2><p class="summary small">${esc(p.summary)}</p>${workList(lead.length ? lead : list.slice(0, 3), key)}</section>`;
+  }).join('');
+}
+
+function questionPage(id) {
+  const q = (D.questions || []).find(q => q.id === id); if (!q) return missing();
+  const ps = q.patterns.map(p => P.get(p)).filter(p => p && pWorks(p.id).length);
+  const all = new Set(ps.flatMap(p => pWorks(p.id).map(i => i[0].id)));
+  current = { works: all, pattern: null, related: new Set(ps.map(p => p.id)) };
+  return { title: q.question, html: head(`Question · ${ps.length} patterns answer it`, esc(q.question), q.answer ? `<p class="summary">${esc(q.answer)}</p>` : '') + patternBlocks(ps) };
+}
+
+function arcPage(id) {
+  const a = (D.arcs || []).find(a => a.id === id); if (!a) return missing();
+  const steps = a.steps.map(s => [W.get(s.work), s.note]).filter(s => s[0]);
+  if (!steps.length) return missing();
+  const key = setCtx(`arc/${id}`, a.label, `#/arc/${id}`, steps.map(s => s[0].id));
+  current = { works: new Set(steps.map(s => s[0].id)), pattern: null, related: new Set() };
+  return { title: a.label, html: head(`Arc · ${steps.length} steps · ${month(steps[0][0].date)} to ${month(steps.at(-1)[0].date)}`, esc(a.label), `<p class="summary">${esc(a.blurb)}</p>`) +
+    `<ol class="arc" data-ctx="${esc(key)}">${steps.map(([w, note]) => `<li><p class="arc-note"><time>${day(w.date)}</time>${esc(note)}</p>${row(w)}</li>`).join('')}</ol>` };
 }
 
 function collectionPage(lensName, key) {
@@ -324,8 +354,17 @@ function workPage(id) {
     (w.patterns.length ? `<section><h2>Part of</h2><ul class="related partof">${w.patterns.map(([p, s]) => `<li class="s${s}">${pLink(p)}<span class="n">${pWorks(p).length} works</span></li>`).join('')}</ul></section>` : '') +
     (links.length ? `<section><h2>Linked</h2><div class="rows" data-ctx="${esc(k1)}">${links.map(([o, l]) => row(o, l.label)).join('')}</div></section>` : '') +
     (near.length ? `<section><h2>Nearby</h2>${workList(near, k2)}</section>` : '') +
+    arcsOf(id) +
     (names.length ? `<section><h2>Names</h2><p class="tags">${names.map(m => `<a href="#/c/names/${enc(m)}">${esc(m)}</a>`).join('')}</p></section>` : '') +
     (w.share !== 'ok' ? `<p class="review">Review note, not part of the site: an agent marked this “check” before publishing${w.shareReason ? ` (${esc(w.shareReason)})` : ''}.</p>` : '') };
+}
+function arcsOf(id) {
+  const on = (D.arcs || []).filter(a => a.steps.some(s => s.work === id));
+  if (!on.length) return '';
+  return `<section><h2>One step in</h2><ul class="related">${on.map(a => {
+    const at = a.steps.findIndex(s => s.work === id);
+    return `<li><a class="plink" href="#/arc/${a.id}">${esc(a.label)}</a><span class="why">Step ${at + 1} of ${a.steps.length}. ${esc(a.steps[at].note || '')}</span></li>`;
+  }).join('')}</ul></section>`;
 }
 const missing = () => ({ title: 'Not found', html: head('', 'Nothing here', '<p class="summary">That link points at something this sample does not have.</p>') });
 
@@ -337,6 +376,8 @@ function route() {
   if (kind === 'p') page = patternPage(a);
   else if (kind === 'a') page = areaPage(a);
   else if (kind === 'w') page = workPage(a);
+  else if (kind === 'ask') page = questionPage(a);
+  else if (kind === 'arc') page = arcPage(a);
   else if (kind === 'c') page = collectionPage(a, decodeURIComponent(b || ''));
   else if (kind === 'q') { query = decodeURIComponent(a || '').toLowerCase(); if ($('#q').value.toLowerCase() !== query) $('#q').value = query; page = searchPage(query); }
   if (kind !== 'q' && query && document.activeElement !== $('#q')) { /* keep the filter while browsing results */ }
@@ -379,7 +420,7 @@ document.addEventListener('click', e => {
   if (t.id === 'wander') wander();
 });
 document.addEventListener('change', e => { if (e.target.id === 'public') { publicOnly = e.target.checked; index(); renderMap(); route(); } });
-function wander() { const pool = works.filter(w => w.patterns.length && matches(w)); const w = pool[Math.floor(Math.random() * pool.length)]; if (w) { ctxKey = null; location.hash = `#/w/${w.id}`; } }
+function wander() { const sorted = works.filter(w => w.patterns.length && matches(w)); const pool = sorted.length ? sorted : works; const w = pool[Math.floor(Math.random() * pool.length)]; if (w) { ctxKey = null; location.hash = `#/w/${w.id}`; } }
 
 const q = $('#q');
 let qTimer;

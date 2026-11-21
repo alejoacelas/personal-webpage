@@ -183,10 +183,13 @@ for (const w of works) {
   w.near = [...score].filter(([id]) => !linked.has(id)).sort((a, b) => b[1] - a[1]).slice(0, 6).map(([id]) => id);
 }
 
+const entries = await maybe('scheme/entries.json', { questions: [], arcs: [] });
+const questions = (entries.questions || []).map(q => ({ ...q, patterns: q.patterns.filter(p => patternIds.has(p)) })).filter(q => q.patterns.length);
+const arcs = (entries.arcs || []).map(a => ({ ...a, steps: a.steps.filter(s => byId.has(s.work)) })).filter(a => a.steps.length > 1);
 const mentions = [...mentionCount].filter(([, n]) => n >= 4).sort((a, b) => b[1] - a[1]).slice(0, 60).map(([name]) => name);
 const data = {
   built: new Date().toISOString().slice(0, 10), dropped,
-  areas, patterns: patterns.filter(p => count.get(p.id)), facets: scheme.facets, mentions,
+  areas, patterns: patterns.filter(p => count.get(p.id)), facets: scheme.facets, mentions, questions, arcs,
   works: works.map(({ text, ...w }) => ({ ...w, search: (w.title + ' ' + w.gloss + ' ' + w.mentions.join(' ') + ' ' + text).toLowerCase().replace(/\s+/g, ' ').slice(0, 4000) })),
 };
 await writeFile(path.join(here, 'data.js'), 'window.DATA = ' + JSON.stringify(data) + ';\n');
