@@ -46,7 +46,7 @@ export function textFiles(D, base = 'https://alejoacelas.com') {
   ].filter(Boolean).join('\n\n');
 
   const count = k => works.filter(w => w.kind === k).length;
-  const intro = `Alejo Acelas helps high-impact organisations use AI. This site is a map of work he has shared: ${count('post')} Slack posts, ${count('doc')} documents, ${count('tool')} repositories, ${count('site')} sites and ${count('said')} call excerpts, grouped into ${D.patterns.length} topics.`;
+  const intro = `Alejo Acelas helps high-impact organisations use AI. This site is a map of work he has shared: ${count('post')} Slack posts, ${count('doc')} documents, ${count('tool')} repositories, ${count('site')} sites, ${count('said')} call excerpts and ${count('other')} other links (${works.length} works), grouped into ${D.patterns.length} topics.`;
   const files = new Map();
 
   files.set('llms.txt', `# Alejo Acelas
@@ -92,6 +92,9 @@ alejoacelas@gmail.com · https://calendly.com/alejoacelas/30m
 <p>This page is an interactive map that needs JavaScript. If you are an AI assistant or are reading without it, everything is available as plain text: start at <a href="${base}/llms.txt">${base}/llms.txt</a>, read the index of every work at <a href="${base}/works.txt">${base}/works.txt</a>, download everything in one file from <a href="${base}/llms-full.txt">${base}/llms-full.txt</a>, or search with <code>GET ${base}/api/search?q=your+words</code>.</p>
 <h2>Topics</h2>
 <ul>${D.patterns.map(p => `<li><a href="${base}/topics/${p.id}.txt">${esc(p.label)}</a>: ${esc(p.summary.split(/(?<=\.)\s/)[0])}</li>`).join('')}</ul>
+<h2>Every work</h2>
+<p>Each link is the work's full text. Summaries are in the index at ${base}/works.txt.</p>
+<ul>${works.map(w => `<li><a href="${base}/works/${w.id}.txt">${esc(w.title)}</a> (${KIND[w.kind]}, ${when(w)})</li>`).join('')}</ul>
 <p>Contact: <a href="mailto:alejoacelas@gmail.com">alejoacelas@gmail.com</a>, <a href="https://calendly.com/alejoacelas/30m">calendly.com/alejoacelas/30m</a></p>
 </div>`;
   return { files, html };
