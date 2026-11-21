@@ -1,0 +1,692 @@
+{
+  "1794907853.133389": [
+    {
+      "to": "repo-umi",
+      "reason": "See how I keep each agent’s workspace in place."
+    },
+    {
+      "to": "1793963939.881499",
+      "reason": "Returning to a thread? Ask what the agent thinks you wanted."
+    },
+    {
+      "to": "1794811870.172209",
+      "reason": "Decide which tasks are worth interrupting you for."
+    }
+  ],
+  "repo-umi": [
+    {
+      "to": "repo-2026-10-warp-agent",
+      "reason": "Compare moving between panes with following a session from a script."
+    },
+    {
+      "to": "1794907853.133389",
+      "reason": "Read why it can be hard to return to an older agent session."
+    },
+    {
+      "to": "call-inbox-intent",
+      "reason": "Consider what an agent should bring back for you to skim."
+    }
+  ],
+  "1793963939.881499": [
+    {
+      "to": "excerpt-ask-me-questions",
+      "reason": "Let the agent ask when even you haven’t pinned down the goal."
+    },
+    {
+      "to": "1789817231.908579",
+      "reason": "See examples of prompts that leave the answer open."
+    },
+    {
+      "to": "testing-prompts",
+      "reason": "Try the prompt on a conversation you already know."
+    }
+  ],
+  "1aBy72YNPTikWAfX2o5ikWAnGOzKI8qLaT_iZJDN3tPE": [
+    {
+      "to": "excerpt-ask-for-technical-options",
+      "reason": "Try asking for a choice you can explain yourself."
+    },
+    {
+      "to": "1794811870.172209",
+      "reason": "See where I still want a say when delegating from my task list."
+    }
+  ],
+  "1Wy-mFv1J0J56rziT3QBcxoM7EaI00JX21bEwUhBOlbc": [
+    {
+      "to": "repo-ask-their-claude",
+      "reason": "Inspect the shared instructions the prompt points to."
+    },
+    {
+      "to": "repo-sharing-report-viewer",
+      "reason": "See how the recipient can read the resulting report."
+    },
+    {
+      "to": "1xuLpOdGa2b470lAIqMPMwg36wm1INq0PQy0TIhRABDk",
+      "reason": "Try a question about a specific recurring process."
+    }
+  ],
+  "159tncXDj-lS8zy40YB8WEuJWCkc8ov19duwgv7kOkBg": [
+    {
+      "to": "1xuLpOdGa2b470lAIqMPMwg36wm1INq0PQy0TIhRABDk",
+      "reason": "Zoom in from six weeks of work to the steps in one process."
+    },
+    {
+      "to": "call-time-for-improvements",
+      "reason": "Ask whether the work is worth changing."
+    },
+    {
+      "to": "repo-automation-map",
+      "reason": "See how a process can be drawn once its steps are known."
+    }
+  ],
+  "1xuLpOdGa2b470lAIqMPMwg36wm1INq0PQy0TIhRABDk": [
+    {
+      "to": "repo-automation-map",
+      "reason": "Turn the steps you found into a map."
+    },
+    {
+      "to": "call-run-one-first",
+      "reason": "Try one case from trigger to outcome before expanding."
+    },
+    {
+      "to": "repo-ai-task-map-template",
+      "reason": "Use the shortlist to plan a first implementation."
+    }
+  ],
+  "1OgM0T1_WPyntA5j1cmZ6_abO-WFFNrbtSGNZEwi7eiI": [
+    {
+      "to": "repo-google-docs-agent-tools",
+      "reason": "Inspect the runs behind the connector findings."
+    },
+    {
+      "to": "repo-07-30-docs-mcp",
+      "reason": "See an implementation of the review operations the tests probe."
+    }
+  ],
+  "1lo0t7od9A_RMptpalpKZrDGSDGW0Ots2gjJxI5OMypE": [
+    {
+      "to": "call-community-question",
+      "reason": "Hear how I opened the discussion on the call."
+    },
+    {
+      "to": "call-measure-changed",
+      "reason": "Consider what to ask staff after they try a new practice."
+    }
+  ],
+  "1EuofQaVmkFFnK5REb681Gk5gFKI3v1U3O85vuc6YLlg": [
+    {
+      "to": "call-coaching-questions",
+      "reason": "Hear what I wanted to reserve the actual call for."
+    },
+    {
+      "to": "choosing-a-workflow",
+      "reason": "Use two questions to narrow the candidate projects."
+    }
+  ],
+  "1DYxPPJKHj7VpnWKu5ASGhw1U2e8a43T2Gmu6hPqynqo": [
+    {
+      "to": "call-practice-workshop",
+      "reason": "See the recurring workshop format I wanted to try."
+    },
+    {
+      "to": "repo-claude-onramp",
+      "reason": "Compare a group workshop with a self-guided introduction."
+    }
+  ],
+  "1795189660.321559": [
+    {
+      "to": "repo-web-article-reviewer",
+      "reason": "Go from checking a paper to checking the claims in an article."
+    },
+    {
+      "to": "repo-trials",
+      "reason": "Give the research tool a specific question to pass or fail."
+    }
+  ],
+  "1794902411.285989": [
+    {
+      "to": "1789553050.103399",
+      "reason": "See which gaps came up when I looked at Slack."
+    },
+    {
+      "to": "1OgM0T1_WPyntA5j1cmZ6_abO-WFFNrbtSGNZEwi7eiI",
+      "reason": "Compare a second app where I tested what the connector could edit."
+    },
+    {
+      "to": "1787279790.021939",
+      "reason": "Explore using the browser when an app lacks an integration."
+    }
+  ],
+  "1794830400.390989": [
+    {
+      "to": "1793445948.142699",
+      "reason": "See one concrete choice about which posts belong."
+    },
+    {
+      "to": "1788429620.744379",
+      "reason": "Read how people originally invited others into the channel."
+    },
+    {
+      "to": "call-community-question",
+      "reason": "Compare a Slack thread with a live round of questions."
+    }
+  ],
+  "1793704230.839999": [
+    {
+      "to": "repo-uplift-modelling",
+      "reason": "Explore how different barriers change an adoption curve."
+    },
+    {
+      "to": "1EuofQaVmkFFnK5REb681Gk5gFKI3v1U3O85vuc6YLlg",
+      "reason": "Turn an individual’s bottleneck into a coaching conversation."
+    }
+  ],
+  "1794811870.172209": [
+    {
+      "to": "call-inbox-intent",
+      "reason": "See what I want to skim at the start of the day."
+    },
+    {
+      "to": "repo-agent-desk-setup",
+      "reason": "Look inside the filing system behind a morning docket."
+    },
+    {
+      "to": "1794907853.133389",
+      "reason": "Read what happens when several agents need attention at once."
+    }
+  ],
+  "1793445948.142699": [
+    {
+      "to": "1794830400.390989",
+      "reason": "See the wider discussion about what people want to find in the channel."
+    },
+    {
+      "to": "1793219511.956899",
+      "reason": "Read a post written specifically to invite ideas from that audience."
+    }
+  ],
+  "1793219511.956899": [
+    {
+      "to": "call-practice-workshop",
+      "reason": "Compare watching a build with trying one alongside other people."
+    },
+    {
+      "to": "repo-ai-task-map-template",
+      "reason": "Find a concrete build idea among the tasks you already repeat."
+    }
+  ],
+  "1792167902.125269": [
+    {
+      "to": "1791477230.853239",
+      "reason": "Read the case for trying a coding agent outside software work."
+    },
+    {
+      "to": "1793704230.839999",
+      "reason": "Compare programming experience with ideas, time and motivation."
+    }
+  ],
+  "1791477230.853239": [
+    {
+      "to": "1DYxPPJKHj7VpnWKu5ASGhw1U2e8a43T2Gmu6hPqynqo",
+      "reason": "Bring a real problem to a first coding-agent workshop."
+    },
+    {
+      "to": "excerpt-ask-for-technical-options",
+      "reason": "Get a technical recommendation you can understand before acting."
+    }
+  ],
+  "1790271639.814419": [
+    {
+      "to": "call-practice-workshop",
+      "reason": "See how practising alongside others could become a regular session."
+    },
+    {
+      "to": "1789931174.127179",
+      "reason": "Turn a successful experiment into something you can repeat."
+    }
+  ],
+  "1789931174.127179": [
+    {
+      "to": "repo-2026-09-skill-review",
+      "reason": "Compare two outputs to decide which parts the skill should preserve."
+    },
+    {
+      "to": "call-share-repo",
+      "reason": "Make the result easier for a teammate to install."
+    }
+  ],
+  "1789817231.908579": [
+    {
+      "to": "call-more-ideas",
+      "reason": "Hear why shorter prompts let me try more ideas."
+    },
+    {
+      "to": "excerpt-let-it-suggest",
+      "reason": "Let the model propose a starting point before you steer it."
+    }
+  ],
+  "1789553050.103399": [
+    {
+      "to": "1OgM0T1_WPyntA5j1cmZ6_abO-WFFNrbtSGNZEwi7eiI",
+      "reason": "See a connector gap investigated with actual edit tests."
+    },
+    {
+      "to": "1794902411.285989",
+      "reason": "Use the same question to look for missing access in other apps."
+    }
+  ],
+  "1788429620.744379": [
+    {
+      "to": "1794830400.390989",
+      "reason": "See what people were being invited to help shape."
+    },
+    {
+      "to": "1lo0t7od9A_RMptpalpKZrDGSDGW0Ots2gjJxI5OMypE",
+      "reason": "Read an example of a discussion the community convened."
+    }
+  ],
+  "1787905004.081639": [
+    {
+      "to": "repo-trials",
+      "reason": "Test whether a new tool deserves a place in your toolkit."
+    },
+    {
+      "to": "1790271639.814419",
+      "reason": "See how watching another person work can reveal tools to try."
+    }
+  ],
+  "1787279790.021939": [
+    {
+      "to": "call-explore-product",
+      "reason": "Try a concrete first task for an agent in the browser."
+    },
+    {
+      "to": "1794902411.285989",
+      "reason": "Find a routine task whose app the agent cannot otherwise reach."
+    }
+  ],
+  "choosing-a-workflow": [
+    {
+      "to": "call-time-for-improvements",
+      "reason": "Check how much effort improving the process would justify."
+    },
+    {
+      "to": "1xuLpOdGa2b470lAIqMPMwg36wm1INq0PQy0TIhRABDk",
+      "reason": "Trace the chosen workflow through actual examples."
+    }
+  ],
+  "testing-prompts": [
+    {
+      "to": "repo-2026-09-skill-review",
+      "reason": "Compare two versions when the first run disappoints."
+    },
+    {
+      "to": "1Wy-mFv1J0J56rziT3QBcxoM7EaI00JX21bEwUhBOlbc",
+      "reason": "Read a prompt designed to gather evidence before someone shares it."
+    },
+    {
+      "to": "repo-murmur",
+      "reason": "Try dictating the next version when you revise the wording."
+    }
+  ],
+  "repo-2026-10-warp-agent": [
+    {
+      "to": "repo-umi",
+      "reason": "See the Mac terminal I built around working with agent sessions."
+    },
+    {
+      "to": "1794907853.133389",
+      "reason": "Explore why starting more sessions makes resuming them harder."
+    }
+  ],
+  "call-coaching-questions": [
+    {
+      "to": "1EuofQaVmkFFnK5REb681Gk5gFKI3v1U3O85vuc6YLlg",
+      "reason": "See what I ask before we meet."
+    },
+    {
+      "to": "excerpt-adapt-the-interview",
+      "reason": "Hear how I think about changing the interview after several calls."
+    }
+  ],
+  "call-measure-changed": [
+    {
+      "to": "159tncXDj-lS8zy40YB8WEuJWCkc8ov19duwgv7kOkBg",
+      "reason": "Compare what someone reports with evidence from their working week."
+    },
+    {
+      "to": "repo-uplift-modelling",
+      "reason": "Explore how coaching might change who adopts a tool and how quickly."
+    }
+  ],
+  "call-inbox-intent": [
+    {
+      "to": "repo-agent-desk-setup",
+      "reason": "Look inside a worked example of a morning docket."
+    },
+    {
+      "to": "1794811870.172209",
+      "reason": "See which decisions I would put back in front of a person."
+    }
+  ],
+  "call-community-question": [
+    {
+      "to": "1lo0t7od9A_RMptpalpKZrDGSDGW0Ots2gjJxI5OMypE",
+      "reason": "Read the agenda for the staff-upskilling discussion."
+    },
+    {
+      "to": "1794830400.390989",
+      "reason": "Compare a live round of questions with a discussion in Slack."
+    },
+    {
+      "to": "repo-call-clock",
+      "reason": "See the small timer I use to pace sections of a call."
+    }
+  ],
+  "repo-automation-map": [
+    {
+      "to": "1xuLpOdGa2b470lAIqMPMwg36wm1INq0PQy0TIhRABDk",
+      "reason": "Gather evidence for the steps that go into the map."
+    },
+    {
+      "to": "repo-ai-task-map-template",
+      "reason": "Choose a first automation from the recurring tasks you find."
+    }
+  ],
+  "repo-ask-their-claude": [
+    {
+      "to": "1Wy-mFv1J0J56rziT3QBcxoM7EaI00JX21bEwUhBOlbc",
+      "reason": "Read the prompt that a colleague actually runs."
+    },
+    {
+      "to": "repo-sharing-report-viewer",
+      "reason": "Inspect the HTML viewer used to present a sharing report."
+    }
+  ],
+  "call-more-ideas": [
+    {
+      "to": "1789817231.908579",
+      "reason": "Read the short, open-ended questions I tried."
+    },
+    {
+      "to": "1793963939.881499",
+      "reason": "If the agent guesses wrong, ask it to restate your goal."
+    }
+  ],
+  "call-share-repo": [
+    {
+      "to": "repo-ask-their-claude",
+      "reason": "See a set of prompt instructions people can share by link."
+    },
+    {
+      "to": "1789931174.127179",
+      "reason": "Work out which parts of a good session belong in a reusable skill."
+    }
+  ],
+  "repo-2026-09-skill-review": [
+    {
+      "to": "1789931174.127179",
+      "reason": "Read the problem that makes comparing skill outputs worthwhile."
+    },
+    {
+      "to": "repo-running-clipboard",
+      "reason": "Collect passage-level feedback while reading outside the review tool."
+    }
+  ],
+  "repo-uplift-modelling": [
+    {
+      "to": "1793704230.839999",
+      "reason": "Compare the model’s assumptions with the barriers people describe."
+    },
+    {
+      "to": "call-measure-changed",
+      "reason": "Ask what evidence after coaching could distinguish the possibilities."
+    },
+    {
+      "to": "1792167902.125269",
+      "reason": "Consider why adoption might differ across occupations."
+    }
+  ],
+  "repo-trials": [
+    {
+      "to": "repo-google-docs-agent-tools",
+      "reason": "See a tool tested against the documents it actually produced."
+    },
+    {
+      "to": "1787905004.081639",
+      "reason": "Find candidates for the next trial."
+    },
+    {
+      "to": "call-explore-product",
+      "reason": "Give a browser agent the first tour of a candidate product."
+    }
+  ],
+  "call-time-for-improvements": [
+    {
+      "to": "choosing-a-workflow",
+      "reason": "Pair the time-budget question with the person’s own priorities."
+    },
+    {
+      "to": "repo-automation-map",
+      "reason": "Find the particular step where an improvement could pay off."
+    }
+  ],
+  "repo-agent-desk-setup": [
+    {
+      "to": "call-reconstruct-day",
+      "reason": "See one reason to retain a record of completed work."
+    },
+    {
+      "to": "call-inbox-intent",
+      "reason": "Read what I want a docket or inbox to make easy."
+    }
+  ],
+  "repo-ai-task-map-template": [
+    {
+      "to": "call-run-one-first",
+      "reason": "Test one repetition before investing in the full automation."
+    },
+    {
+      "to": "1xuLpOdGa2b470lAIqMPMwg36wm1INq0PQy0TIhRABDk",
+      "reason": "Check the proposed task against six weeks of actual work."
+    }
+  ],
+  "call-reconstruct-day": [
+    {
+      "to": "repo-agent-desk-setup",
+      "reason": "Inspect a filing system that records work as it happens."
+    },
+    {
+      "to": "159tncXDj-lS8zy40YB8WEuJWCkc8ov19duwgv7kOkBg",
+      "reason": "Extend a one-day reflection into a six-week audit."
+    }
+  ],
+  "repo-sharing-report-viewer": [
+    {
+      "to": "1Wy-mFv1J0J56rziT3QBcxoM7EaI00JX21bEwUhBOlbc",
+      "reason": "See what someone is asked to review before they share the report."
+    },
+    {
+      "to": "repo-ask-their-claude",
+      "reason": "Inspect the instructions used to collect an answer."
+    }
+  ],
+  "repo-07-30-docs-mcp": [
+    {
+      "to": "repo-web-article-reviewer",
+      "reason": "See a use for suggested edits when refreshing an article."
+    },
+    {
+      "to": "1OgM0T1_WPyntA5j1cmZ6_abO-WFFNrbtSGNZEwi7eiI",
+      "reason": "Read which everyday review operations exposed connector gaps."
+    },
+    {
+      "to": "1794902411.285989",
+      "reason": "Use the Docs example to look for other missing integrations."
+    }
+  ],
+  "repo-web-article-reviewer": [
+    {
+      "to": "1795189660.321559",
+      "reason": "Explore tools for inspecting the papers behind a claim."
+    },
+    {
+      "to": "repo-07-30-docs-mcp",
+      "reason": "See how a proposed correction becomes a suggested edit in Docs."
+    }
+  ],
+  "repo-murmur": [
+    {
+      "to": "call-more-ideas",
+      "reason": "Once you can dictate quickly, try giving only the goal."
+    },
+    {
+      "to": "excerpt-ask-me-questions",
+      "reason": "Talk through a task you cannot specify in one prompt."
+    }
+  ],
+  "repo-claude-onramp": [
+    {
+      "to": "1DYxPPJKHj7VpnWKu5ASGhw1U2e8a43T2Gmu6hPqynqo",
+      "reason": "Compare drafted lessons with a bring-your-own-problem workshop."
+    },
+    {
+      "to": "call-live-coaching",
+      "reason": "See how the first exercise can come from a person’s real work."
+    }
+  ],
+  "repo-margin-comments": [
+    {
+      "to": "repo-running-clipboard",
+      "reason": "Compare a shared comment thread with gathering notes for one message."
+    },
+    {
+      "to": "repo-07-30-docs-mcp",
+      "reason": "See how an assistant can leave a similar anchored comment in Docs."
+    }
+  ],
+  "call-practice-workshop": [
+    {
+      "to": "1DYxPPJKHj7VpnWKu5ASGhw1U2e8a43T2Gmu6hPqynqo",
+      "reason": "Read a concrete outline for a hands-on session."
+    },
+    {
+      "to": "1790271639.814419",
+      "reason": "See the practice habits I hoped a workshop would support."
+    },
+    {
+      "to": "call-community-question",
+      "reason": "Compare practising together with sharing questions on a call."
+    }
+  ],
+  "repo-google-docs-agent-tools": [
+    {
+      "to": "1OgM0T1_WPyntA5j1cmZ6_abO-WFFNrbtSGNZEwi7eiI",
+      "reason": "Read the findings in draft form."
+    },
+    {
+      "to": "repo-07-30-docs-mcp",
+      "reason": "Inspect code for making actual review edits in a document."
+    }
+  ],
+  "call-run-one-first": [
+    {
+      "to": "repo-ai-task-map-template",
+      "reason": "Turn the tested task into a written plan for a first version."
+    },
+    {
+      "to": "call-share-repo",
+      "reason": "Consider how someone else will set up the result."
+    }
+  ],
+  "call-explore-product": [
+    {
+      "to": "repo-trials",
+      "reason": "Turn the product tour into a decision about whether to use it."
+    },
+    {
+      "to": "1787279790.021939",
+      "reason": "See why people hesitate before letting an agent use a browser."
+    }
+  ],
+  "call-live-coaching": [
+    {
+      "to": "1EuofQaVmkFFnK5REb681Gk5gFKI3v1U3O85vuc6YLlg",
+      "reason": "Look at the questions that surface a real problem before the call."
+    },
+    {
+      "to": "call-coaching-questions",
+      "reason": "Compare that early hands-on format with my later interview-first experiment."
+    }
+  ],
+  "repo-running-clipboard": [
+    {
+      "to": "repo-margin-comments",
+      "reason": "Leave the discussion on the page when others need to reply."
+    },
+    {
+      "to": "repo-2026-09-skill-review",
+      "reason": "Compare and annotate two versions of the same output."
+    }
+  ],
+  "repo-call-clock": [
+    {
+      "to": "call-community-question",
+      "reason": "See a call format with time reserved for parting thoughts."
+    },
+    {
+      "to": "call-coaching-questions",
+      "reason": "See how I wanted to spend the interview portion of a coaching session."
+    }
+  ],
+  "excerpt-ask-for-technical-options": [
+    {
+      "to": "1aBy72YNPTikWAfX2o5ikWAnGOzKI8qLaT_iZJDN3tPE",
+      "reason": "Explore why understanding the choices matters even when a system works."
+    },
+    {
+      "to": "excerpt-let-it-suggest",
+      "reason": "Ask for possible starting points before narrowing the choice."
+    }
+  ],
+  "excerpt-ask-me-questions": [
+    {
+      "to": "1793963939.881499",
+      "reason": "Check whether the conversation has captured your intent."
+    },
+    {
+      "to": "call-coaching-questions",
+      "reason": "See a similar discovery process in a human coaching interview."
+    }
+  ],
+  "excerpt-let-it-suggest": [
+    {
+      "to": "1789817231.908579",
+      "reason": "Try example questions that avoid steering the answer."
+    },
+    {
+      "to": "excerpt-ask-for-technical-options",
+      "reason": "Ask the model to make the options understandable before you choose."
+    }
+  ],
+  "excerpt-who-wants-coaching": [
+    {
+      "to": "choosing-a-workflow",
+      "reason": "Ask which repeated task the person actually wants help with."
+    },
+    {
+      "to": "call-measure-changed",
+      "reason": "Check what the person did differently after the session."
+    }
+  ],
+  "excerpt-adapt-the-interview": [
+    {
+      "to": "call-coaching-questions",
+      "reason": "See one change I tried to the structure of the call."
+    },
+    {
+      "to": "excerpt-who-wants-coaching",
+      "reason": "Use willingness to continue as a clue about whom to work with."
+    }
+  ]
+}
