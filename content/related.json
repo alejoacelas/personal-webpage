@@ -1,0 +1,311 @@
+{
+  "1aBy72YNPTikWAfX2o5ikWAnGOzKI8qLaT_iZJDN3tPE": [
+    "excerpt-ask-for-technical-options",
+    "repo-uplift-modelling"
+  ],
+  "1795189660.321559": [
+    "repo-web-article-reviewer",
+    "call-share-repo"
+  ],
+  "testing-prompts": [
+    "repo-2026-09-skill-review",
+    "excerpt-ask-me-questions"
+  ],
+  "1Wy-mFv1J0J56rziT3QBcxoM7EaI00JX21bEwUhBOlbc": [
+    "repo-ask-their-claude",
+    "repo-sharing-report-viewer",
+    "repo-ai-task-map-template"
+  ],
+  "1lo0t7od9A_RMptpalpKZrDGSDGW0Ots2gjJxI5OMypE": [
+    "call-community-question",
+    "call-measure-changed",
+    "call-practice-workshop"
+  ],
+  "1794907853.133389": [
+    "repo-umi",
+    "repo-2026-10-warp-agent",
+    "call-inbox-intent"
+  ],
+  "1794902411.285989": [
+    "1789553050.103399",
+    "1OgM0T1_WPyntA5j1cmZ6_abO-WFFNrbtSGNZEwi7eiI",
+    "1787279790.021939"
+  ],
+  "1EuofQaVmkFFnK5REb681Gk5gFKI3v1U3O85vuc6YLlg": [
+    "call-coaching-questions",
+    "call-live-coaching",
+    "159tncXDj-lS8zy40YB8WEuJWCkc8ov19duwgv7kOkBg"
+  ],
+  "1794811870.172209": [
+    "call-inbox-intent",
+    "repo-agent-desk-setup",
+    "repo-2026-10-warp-agent"
+  ],
+  "1794830400.390989": [
+    "1788429620.744379",
+    "1793445948.142699",
+    "1lo0t7od9A_RMptpalpKZrDGSDGW0Ots2gjJxI5OMypE"
+  ],
+  "159tncXDj-lS8zy40YB8WEuJWCkc8ov19duwgv7kOkBg": [
+    "1Wy-mFv1J0J56rziT3QBcxoM7EaI00JX21bEwUhBOlbc",
+    "call-reconstruct-day",
+    "1xuLpOdGa2b470lAIqMPMwg36wm1INq0PQy0TIhRABDk"
+  ],
+  "1xuLpOdGa2b470lAIqMPMwg36wm1INq0PQy0TIhRABDk": [
+    "repo-automation-map",
+    "repo-ai-task-map-template",
+    "choosing-a-workflow"
+  ],
+  "1793963939.881499": [
+    "excerpt-ask-me-questions",
+    "1789817231.908579",
+    "repo-murmur"
+  ],
+  "1793704230.839999": [
+    "1787279790.021939",
+    "1EuofQaVmkFFnK5REb681Gk5gFKI3v1U3O85vuc6YLlg",
+    "repo-uplift-modelling"
+  ],
+  "1793445948.142699": [
+    "1794830400.390989",
+    "1789553050.103399"
+  ],
+  "choosing-a-workflow": [
+    "call-time-for-improvements",
+    "1xuLpOdGa2b470lAIqMPMwg36wm1INq0PQy0TIhRABDk",
+    "excerpt-who-wants-coaching"
+  ],
+  "1793219511.956899": [
+    "1DYxPPJKHj7VpnWKu5ASGhw1U2e8a43T2Gmu6hPqynqo",
+    "call-live-coaching"
+  ],
+  "1OgM0T1_WPyntA5j1cmZ6_abO-WFFNrbtSGNZEwi7eiI": [
+    "repo-google-docs-agent-tools",
+    "repo-07-30-docs-mcp"
+  ],
+  "1792167902.125269": [
+    "repo-uplift-modelling",
+    "1791477230.853239",
+    "1793704230.839999"
+  ],
+  "1791477230.853239": [
+    "1DYxPPJKHj7VpnWKu5ASGhw1U2e8a43T2Gmu6hPqynqo",
+    "1792167902.125269",
+    "call-share-repo"
+  ],
+  "1DYxPPJKHj7VpnWKu5ASGhw1U2e8a43T2Gmu6hPqynqo": [
+    "call-practice-workshop",
+    "repo-claude-onramp",
+    "1791477230.853239"
+  ],
+  "1790271639.814419": [
+    "1787905004.081639",
+    "call-explore-product",
+    "call-practice-workshop"
+  ],
+  "1789931174.127179": [
+    "repo-2026-09-skill-review",
+    "call-run-one-first",
+    "repo-agent-desk-setup"
+  ],
+  "1789817231.908579": [
+    "call-more-ideas",
+    "1793963939.881499",
+    "excerpt-let-it-suggest"
+  ],
+  "1789553050.103399": [
+    "1794902411.285989",
+    "1793445948.142699",
+    "1OgM0T1_WPyntA5j1cmZ6_abO-WFFNrbtSGNZEwi7eiI"
+  ],
+  "1788429620.744379": [
+    "1794830400.390989",
+    "1lo0t7od9A_RMptpalpKZrDGSDGW0Ots2gjJxI5OMypE",
+    "1793219511.956899"
+  ],
+  "1787905004.081639": [
+    "repo-trials",
+    "1790271639.814419",
+    "call-explore-product"
+  ],
+  "1787279790.021939": [
+    "1793704230.839999",
+    "call-explore-product",
+    "1794902411.285989"
+  ],
+  "repo-umi": [
+    "1794907853.133389",
+    "repo-2026-10-warp-agent",
+    "repo-agent-desk-setup"
+  ],
+  "repo-2026-10-warp-agent": [
+    "repo-umi",
+    "1794907853.133389",
+    "1794811870.172209"
+  ],
+  "call-coaching-questions": [
+    "1EuofQaVmkFFnK5REb681Gk5gFKI3v1U3O85vuc6YLlg",
+    "call-live-coaching",
+    "excerpt-adapt-the-interview"
+  ],
+  "call-measure-changed": [
+    "excerpt-who-wants-coaching",
+    "repo-trials",
+    "1lo0t7od9A_RMptpalpKZrDGSDGW0Ots2gjJxI5OMypE"
+  ],
+  "call-inbox-intent": [
+    "1794811870.172209",
+    "1794907853.133389",
+    "repo-agent-desk-setup"
+  ],
+  "call-community-question": [
+    "1lo0t7od9A_RMptpalpKZrDGSDGW0Ots2gjJxI5OMypE",
+    "repo-call-clock",
+    "call-practice-workshop"
+  ],
+  "repo-automation-map": [
+    "1xuLpOdGa2b470lAIqMPMwg36wm1INq0PQy0TIhRABDk",
+    "repo-sharing-report-viewer",
+    "call-run-one-first"
+  ],
+  "repo-ask-their-claude": [
+    "1Wy-mFv1J0J56rziT3QBcxoM7EaI00JX21bEwUhBOlbc",
+    "repo-sharing-report-viewer",
+    "159tncXDj-lS8zy40YB8WEuJWCkc8ov19duwgv7kOkBg"
+  ],
+  "call-more-ideas": [
+    "1789817231.908579",
+    "excerpt-let-it-suggest",
+    "1793963939.881499"
+  ],
+  "call-share-repo": [
+    "1791477230.853239",
+    "repo-ask-their-claude",
+    "1795189660.321559"
+  ],
+  "repo-2026-09-skill-review": [
+    "1789931174.127179",
+    "testing-prompts",
+    "repo-running-clipboard"
+  ],
+  "repo-uplift-modelling": [
+    "1792167902.125269",
+    "1787279790.021939",
+    "1793704230.839999"
+  ],
+  "repo-trials": [
+    "1787905004.081639",
+    "repo-google-docs-agent-tools",
+    "call-run-one-first"
+  ],
+  "call-time-for-improvements": [
+    "choosing-a-workflow",
+    "repo-ai-task-map-template",
+    "1EuofQaVmkFFnK5REb681Gk5gFKI3v1U3O85vuc6YLlg"
+  ],
+  "repo-agent-desk-setup": [
+    "1794811870.172209",
+    "call-inbox-intent",
+    "call-reconstruct-day"
+  ],
+  "repo-ai-task-map-template": [
+    "1xuLpOdGa2b470lAIqMPMwg36wm1INq0PQy0TIhRABDk",
+    "call-time-for-improvements",
+    "call-run-one-first"
+  ],
+  "call-reconstruct-day": [
+    "159tncXDj-lS8zy40YB8WEuJWCkc8ov19duwgv7kOkBg",
+    "repo-agent-desk-setup",
+    "1Wy-mFv1J0J56rziT3QBcxoM7EaI00JX21bEwUhBOlbc"
+  ],
+  "repo-sharing-report-viewer": [
+    "repo-ask-their-claude",
+    "1Wy-mFv1J0J56rziT3QBcxoM7EaI00JX21bEwUhBOlbc",
+    "repo-automation-map"
+  ],
+  "repo-07-30-docs-mcp": [
+    "1OgM0T1_WPyntA5j1cmZ6_abO-WFFNrbtSGNZEwi7eiI",
+    "repo-google-docs-agent-tools",
+    "repo-margin-comments"
+  ],
+  "repo-web-article-reviewer": [
+    "1795189660.321559",
+    "repo-07-30-docs-mcp",
+    "call-run-one-first"
+  ],
+  "repo-murmur": [
+    "1793963939.881499",
+    "repo-running-clipboard",
+    "repo-umi"
+  ],
+  "repo-claude-onramp": [
+    "1DYxPPJKHj7VpnWKu5ASGhw1U2e8a43T2Gmu6hPqynqo",
+    "call-practice-workshop",
+    "1794811870.172209"
+  ],
+  "repo-margin-comments": [
+    "repo-running-clipboard",
+    "repo-07-30-docs-mcp",
+    "repo-2026-09-skill-review"
+  ],
+  "call-practice-workshop": [
+    "1DYxPPJKHj7VpnWKu5ASGhw1U2e8a43T2Gmu6hPqynqo",
+    "1790271639.814419",
+    "call-live-coaching"
+  ],
+  "repo-google-docs-agent-tools": [
+    "1OgM0T1_WPyntA5j1cmZ6_abO-WFFNrbtSGNZEwi7eiI",
+    "repo-07-30-docs-mcp",
+    "repo-trials"
+  ],
+  "call-run-one-first": [
+    "1789931174.127179",
+    "repo-ai-task-map-template",
+    "call-share-repo"
+  ],
+  "call-explore-product": [
+    "1787279790.021939",
+    "repo-google-docs-agent-tools",
+    "1790271639.814419"
+  ],
+  "call-live-coaching": [
+    "call-coaching-questions",
+    "1EuofQaVmkFFnK5REb681Gk5gFKI3v1U3O85vuc6YLlg",
+    "excerpt-who-wants-coaching"
+  ],
+  "repo-running-clipboard": [
+    "repo-margin-comments",
+    "repo-2026-09-skill-review",
+    "repo-murmur"
+  ],
+  "repo-call-clock": [
+    "call-community-question",
+    "1lo0t7od9A_RMptpalpKZrDGSDGW0Ots2gjJxI5OMypE",
+    "call-coaching-questions"
+  ],
+  "excerpt-ask-for-technical-options": [
+    "1aBy72YNPTikWAfX2o5ikWAnGOzKI8qLaT_iZJDN3tPE",
+    "excerpt-ask-me-questions",
+    "excerpt-let-it-suggest"
+  ],
+  "excerpt-ask-me-questions": [
+    "1793963939.881499",
+    "testing-prompts",
+    "excerpt-ask-for-technical-options"
+  ],
+  "excerpt-let-it-suggest": [
+    "call-more-ideas",
+    "1789817231.908579",
+    "excerpt-ask-for-technical-options"
+  ],
+  "excerpt-who-wants-coaching": [
+    "call-measure-changed",
+    "choosing-a-workflow",
+    "call-live-coaching"
+  ],
+  "excerpt-adapt-the-interview": [
+    "call-coaching-questions",
+    "choosing-a-workflow",
+    "call-measure-changed"
+  ]
+}
