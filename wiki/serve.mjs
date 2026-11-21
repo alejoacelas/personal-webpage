@@ -41,10 +41,12 @@ http.createServer(async (req, res) => {
       console.log(`asked (${question.length} characters): first words after ${first} ms, done after ${Date.now() - started} ms`);
       return res.end();
     }
-    const file = path.join(here, path.normalize(url.pathname === '/' ? 'index.html' : url.pathname).replace(/^(\.\.[/\\])+/, ''));
-    const outside = file.startsWith(path.join(here, '..', 'public')) ? false : !file.startsWith(here);
-    if (outside) return res.writeHead(403).end();
+    // Files come from this folder; the favicon lives in ../public.
+    const name = path.normalize(url.pathname === '/' ? 'index.html' : url.pathname).replace(/^[/\\]+/, '').replace(/^(\.\.[/\\])+/, '');
+    const file = name === 'public/favicon.svg' ? path.join(here, '..', name) : path.join(here, name);
+    if (!file.startsWith(path.join(here, '..'))) return res.writeHead(403).end();
+    const body = await readFile(file);                 // read before answering, so a missing file is a clean 404
     res.writeHead(200, { 'Content-Type': types[path.extname(file)] || 'application/octet-stream', 'Cache-Control': 'no-store' });
-    res.end(await readFile(file));
-  } catch (e) { res.writeHead(e.code === 'ENOENT' ? 404 : 500).end(); }
+    res.end(body);
+  } catch (e) { if (!res.headersSent) res.writeHead(e.code === 'ENOENT' || e.code === 'EISDIR' ? 404 : 500); res.end(); }
 }).listen(port, '127.0.0.1', () => console.log(`http://localhost:${port}`));
