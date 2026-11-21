@@ -46,3 +46,6 @@ wiki/data.js
 
 # Trial of in-browser meaning search: downloaded models and vectors computed from the private sample
 wiki/semantic-data/
+
+# Stripe Projects state and credentials
+.projects/
