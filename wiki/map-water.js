@@ -344,16 +344,20 @@ window.MapView = (() => {
 
     // Pattern names, written over the paint.
     ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-    for (const p of patterns) {
-      const hot = hotPattern === p.id, near = sel.related.has(p.id) || focusPatterns?.pattern?.has?.(p.id);
-      const want = shown.has('p:' + p.id) || hot || near ? (z >= Z_CARD ? .9 : 1) : 0;
+    // Names that fit come first; names called up by a question or a selection are added where there is still room.
+    const taken = [], clear = b => !taken.some(t => b[0] < t[2] && b[2] > t[0] && b[1] < t[3] && b[3] > t[1]);
+    for (const p of [...patterns.filter(p => shown.has('p:' + p.id)), ...patterns.filter(p => !shown.has('p:' + p.id))]) {
+      const hot = hotPattern === p.id, near = sel.related.has(p.id) || focusPatterns?.pattern?.has?.(p.id), planned = shown.has('p:' + p.id);
+      if (!planned && !hot && near) { const f = patternFont(p, z), sz = patternSize(p, z), ls = wrap(p.label, f, sz * 9.5, 3), wd = Math.max(...ls.map(l => width(l, f))), b = [sx(p.x) - wd / 2 - 4, sy(p.y) - ls.length * sz * .6, sx(p.x) + wd / 2 + 4, sy(p.y) + ls.length * sz * .6]; if (!clear(b)) { fade.set('p:' + p.id, 0); continue; } }
+      const want = planned || hot || near ? (z >= Z_CARD ? .9 : 1) : 0;
       const t = shownAmount('p:' + p.id, want, dt) * arrived;
       if (t < .02) continue;
       const font = patternFont(p, z), size = patternSize(p, z), lines = wrap(p.label, font, size * 9.5, 3), x = sx(p.x), y = sy(p.y);
       ctx.font = font; ctx.globalAlpha = t * (quiet > .5 && !hot && !near ? .5 : 1);
       let wide = 0;
       lines.forEach((l, i) => { halo(l, x, y + (i - (lines.length - 1) / 2) * size * 1.12, hot ? RUST : '#221d19', 3.8); wide = Math.max(wide, width(l, font)); });
-      hits.push({ type: 'pattern', id: p.id, box: [x - wide / 2 - 4, y - lines.length * size * .6, x + wide / 2 + 4, y + lines.length * size * .6] });
+      const box = [x - wide / 2 - 4, y - lines.length * size * .6, x + wide / 2 + 4, y + lines.length * size * .6];
+      taken.push(box); hits.push({ type: 'pattern', id: p.id, box });
     }
     ctx.globalAlpha = 1;
     if (M.loose && z > zFit * 1.2 && works.some(w => !w.patterns.length)) { ctx.font = `italic 500 13px ${TEXT}`; ctx.globalAlpha = .7 * arrived; halo('not yet sorted', sx(M.loose[0]), sy(M.loose[1]) - 46 * z - 8, INK); ctx.globalAlpha = 1; }
