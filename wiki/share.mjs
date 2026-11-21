@@ -111,7 +111,7 @@ if (process.argv[1] === fileURLToPath(import.meta.url) && process.argv[2] === 'c
   const read = async p => JSON.parse(await readFile(path.join(src, p), 'utf8'));
   const items = new Map((await readFile(path.join(src, 'corpus/items.jsonl'), 'utf8')).trim().split('\n').map(l => JSON.parse(l)).map(i => [i.id, i]));
   const anns = new Map();
-  for (const dir of ['quotes', 'annotations']) for (const f of (await readdir(path.join(src, dir))).filter(f => f.endsWith('.json')).sort()) {
+  for (const dir of ['quotes', 'annotations']) for (const f of (await readdir(path.join(src, dir))).filter(f => f.endsWith('.json') && (dir !== 'quotes' || f.startsWith('quotes-'))).sort()) {
     for (const r of await read(`${dir}/${f}`)) if (dir === 'quotes') items.set(r.id, { ...r, kind: 'said' }); else anns.set(r.id, r);
   }
   const github = existsSync(path.join(src, 'corpus/github.json')) ? await read('corpus/github.json') : {};

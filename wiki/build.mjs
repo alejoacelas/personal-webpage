@@ -80,6 +80,7 @@ const scheme = await maybe('scheme/scheme.json', { patterns: [], facets: [], lin
 const final = await maybe('scheme/patterns.json', null);
 const quotes = [];
 const excerpts = new Map();
+const excerptNames = new Map();   // names seen in the raw passage around a quote; the publish check looks for them
 const annotations = new Map();
 for (const dir of ['quotes', 'annotations']) {
   if (!existsSync(path.join(src, dir))) continue;
@@ -87,7 +88,7 @@ for (const dir of ['quotes', 'annotations']) {
     const rows = await json(`${dir}/${f}`);
     if (dir === 'annotations') for (const a of rows) annotations.set(a.id, a);
     else if (f.startsWith('quotes-')) quotes.push(...rows);
-    else if (f.startsWith('excerpts-')) for (const e of rows) if (e.turns?.length) excerpts.set(e.id, { other: e.other, turns: e.turns.map(t => t.who === 'alejo' ? { me: t.text } : { other: t.summary }) });
+    else if (f.startsWith('excerpts-')) for (const e of rows) if (e.turns?.length) excerptNames.set(e.id, e.names || []), excerpts.set(e.id, { other: e.other, turns: e.turns.map(t => t.who === 'alejo' ? { me: t.text } : { other: t.summary }) });
   }
 }
 
@@ -228,7 +229,7 @@ if (!review) {
   // Nothing is written if a private name, email address, invite link or file path is left.
   const people = await privatePeople(src);
   const found = [];
-  for (const w of data.works) for (const p of problems(w, share.get(w.id), people)) found.push(`${w.id} (${w.title}): ${p}`);
+  for (const w of data.works) for (const p of problems(w, { ...share.get(w.id), names: [...(share.get(w.id)?.names || []), ...(excerptNames.get(w.id) || [])] }, people)) found.push(`${w.id} (${w.title}): ${p}`);
   const { works: _, map: __, ...rest } = data;
   for (const p of problems(rest, null, people)) found.push(`patterns, questions or arcs: ${p}`);
   const leftover = ids.filter(id => /[a-z]{3}/.test(id) && serialized.includes(id));
