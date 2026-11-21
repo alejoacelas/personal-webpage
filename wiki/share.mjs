@@ -9,7 +9,7 @@ import os from 'node:os';
 import { fileURLToPath } from 'node:url';
 
 const MARKS = new Set(['ok', 'edit', 'ask', 'no']);
-const EDIT_KEYS = new Set(['replace', 'drop_messages', 'drop_from', 'drop_link', 'keep_link', 'drop_excerpt', 'title', 'gloss', 'pull', 'replying_to']);
+const EDIT_KEYS = new Set(['replace', 'drop_messages', 'drop_from', 'drop_link', 'keep_link', 'drop_excerpt', 'body', 'url', 'title', 'gloss', 'pull', 'replying_to']);
 const ANN_TEXT = ['title', 'gloss', 'pull', 'replying_to'];
 
 // Later files win, so corrections go in a file that sorts last.
@@ -40,6 +40,9 @@ export function applyEdits({ item, ann, repo, excerpt }, rec) {
   const e = rec.edits || {};
   for (const k of Object.keys(e)) if (!EDIT_KEYS.has(k)) throw new Error(`${rec.id}: unknown edit "${k}"`);
   let work = structuredClone({ item, ann: ann || {}, repo: repo || null, excerpt: e.drop_excerpt ? null : excerpt || null });
+  // A published version replaces the working copy: its text, and the address it lives at.
+  if (typeof e.body === 'string') { work.item.body = e.body; work.item.chars = e.body.length; }
+  if (typeof e.url === 'string') work.item.url = e.url;
   if (e.drop_messages?.length) {
     const n = work.item.messages?.length || 0;
     for (const i of e.drop_messages) if (!(i >= 0 && i < n)) throw new Error(`${rec.id}: no message ${i} to drop`);
@@ -70,7 +73,7 @@ export function applyEdits({ item, ann, repo, excerpt }, rec) {
   }
   // An edited document never links to its unedited original, unless the edits removed only Alejo's own details (keep_link).
   const bodyEdited = e.replace?.length || e.drop_from || e.drop_messages?.length;
-  if (e.drop_link || (bodyEdited && !e.keep_link && ['doc', 'sheet', 'file'].includes(work.item.kind))) { work.item.url = ''; work.unlinked = true; }
+  if (e.drop_link || (bodyEdited && !e.keep_link && !e.url && ['doc', 'sheet', 'file'].includes(work.item.kind))) { work.item.url = ''; work.unlinked = true; }
   return work;
 }
 

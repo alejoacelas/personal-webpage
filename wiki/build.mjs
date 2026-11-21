@@ -2,7 +2,7 @@
 // The sample and data.js stay out of this public repository.
 //   node wiki/build.mjs            what would be published: "ok" works and edited "edit" works
 //   node wiki/build.mjs --review   every work except those marked "no", for reviewing the marks
-//   node wiki/build.mjs --excerpts publish build that also shows the conversation around each call quote
+//   node wiki/build.mjs --no-excerpts publish build without the conversation around each call quote
 import { readFile, writeFile, readdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
@@ -177,10 +177,9 @@ for (const raw of items) {
   works.push(w);
 }
 // ---- Call quotes. The other person never agreed to appear, so a published quote says as little about them as it can:
-// the month only, a setting that names the kind of call and nothing about who it was with, and no excerpt of the
-// conversation unless the build is run with --excerpts (two rounds of checking each still found excerpts that
-// retold the other person's situation).
-const withExcerpts = review || process.argv.includes('--excerpts');
+// the month only, and a setting that names the kind of call and nothing about who it was with. The conversation
+// around a quote is shown with the other person's turns as one-line summaries; --no-excerpts leaves it out.
+const withExcerpts = !process.argv.includes('--no-excerpts');
 const SETTING = { coaching: ['A coaching call', 'a coaching client'], scoping: ['A scoping call with an organisation', 'someone at the organisation'], intro: ['An intro call', 'the other person'], peer: ['A call with a peer', 'a peer'], advice: ['A conversation', 'the other person'] };
 function general(q) {
   if (/as the one being coached/.test(q.setting)) return ['A coaching session, as the one being coached', 'a coach'];
