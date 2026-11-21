@@ -1,0 +1,57 @@
+/* Overprinted inks: the map is a print; everything that floats on it is a plain sheet of the same paper.
+   Loaded after style.css, and only overrides what floats on the map. */
+.inks {
+  --key: #16130f; --sheet: #f4efe3; --slip: #fdfbf5;
+  --display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif; --text: var(--display);
+  --map-paper: var(--sheet); --map-ink: var(--key); --accent: #2a5db0;
+  --post: var(--key); --doc: var(--key); --tool: var(--key); --site: var(--key); --said: var(--key); --other: var(--key);
+  background: var(--sheet);
+}
+/* The reader keeps its own colours. */
+.inks .reader { --accent: #a4461f; --post: #611f69; --doc: #3f74c9; --tool: #2a6b52; --site: #1f8a84; --said: #c28a17; --other: #8f8d82; }
+.inks .grain { display: none; }                 /* the press already prints the paper's grain */
+
+/* Title block */
+.inks .plate { border: 0; outline: 0; background: #fdfbf5f7; box-shadow: 0 1px 0 #16130f14, 0 14px 40px #16130f26; padding: 21px 24px 12px; backdrop-filter: none; }
+.inks .plate h1 { font: 700 33px/1.05 var(--display); letter-spacing: -.028em; }
+.inks .lede { font: 500 17.5px/1.32 var(--display); letter-spacing: -.008em; margin: 11px 0 0; text-wrap: balance; }
+.inks .how { font: 400 14.5px/1.45 var(--display); color: #16130fb0; margin: 8px 0 0; }
+.inks .doors { font: 500 15.5px var(--display); margin-top: 14px; }
+.inks .doors a, .inks .doors button { border-top-color: #16130f1f; }
+.inks .doors kbd { color: #16130f8c; border-color: #16130f33; }
+.inks.reading .plate, .inks.close-up .plate:not(:hover):not(:focus-within) { padding: 11px 16px 10px; }
+.inks.reading .plate h1, .inks.close-up .plate:not(:hover):not(:focus-within) h1 { font-size: 21px; }
+
+.inks .zoom { border: 0; background: #fdfbf5f7; box-shadow: 0 1px 0 #16130f14, 0 6px 20px #16130f1f; }
+.inks .zoom button + button { border-top-color: #16130f1a; }
+.inks .zoom button:hover { background: #16130f0f; color: var(--key); }
+.inks .hint { font: 400 12.5px var(--display); color: #16130f8c; }
+
+/* Hover preview: the work's card arriving early. It matches the cards drawn on the map, part for part. */
+.inks #pop { width: 236px; gap: 0; padding: 6.5px 10px 8px; background: var(--slip); color: var(--key); border-radius: 2.5px; border-top: 3.5px solid var(--tint, transparent);
+  box-shadow: 0 0 0 .8px #16130f42, 0 6px 17px #16130f4d; font: 600 12.5px/15px var(--display); }
+.inks #pop .pop-src { font: 400 10px/13px var(--display); color: #16130fa8; margin-bottom: 4px; }
+.inks #pop .glyph { --k: var(--key); width: auto; margin-right: 5px; font: 700 11px/13px "Space Grotesk", var(--display); }
+.inks #pop .glyph::before { font: inherit; letter-spacing: 0; position: static; }
+.inks #pop .glyph.k-said::before { position: relative; top: .3em; }
+.inks #pop .glyph.k-other::before { font-size: 1.7em; line-height: 0; }
+.inks #pop b { font: 600 12.5px/15px var(--display); letter-spacing: 0; }
+.inks #pop .pop-gloss { font: 400 11.5px/14px var(--display); color: #16130fc7; margin-top: 5px; }
+
+/* The bar */
+.inks .bar-backdrop { background: #f4efe380; }
+.inks .bar { background: var(--slip); box-shadow: 0 0 0 1px #16130f1f, 0 24px 70px #16130f38, 0 4px 14px #16130f1c; font-family: var(--display); }
+.inks .bar-input { border-bottom-color: #16130f1a; }
+.inks .bar-input input { font: 400 19px var(--display); color: var(--key); }
+.inks .bar-input input::placeholder { color: #16130f66; }
+.inks .bar-section { font-family: var(--display); color: #16130f85; }
+.inks .bar-row { color: var(--key); }
+.inks .bar-row.sel { background: #16130f12; }
+.inks .bar-title { font-weight: 600; letter-spacing: -.005em; }
+.inks .bar-gloss, .inks .bar-note { color: #16130f99; }
+.inks .bar-meta { color: #16130f85; }
+.inks .bar-foot { border-top-color: #16130f1a; background: #f8f5ec; color: #16130f99; }
+.inks .bar kbd, .inks .bar-back { background: #16130f0d; color: #16130f99; }
+
+/* Where the reader meets the map */
+.inks .reader { border-left: 0; box-shadow: -1px 0 0 #16130f24, -22px 0 50px #16130f2b; }

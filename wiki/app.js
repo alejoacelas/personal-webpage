@@ -558,14 +558,6 @@ barEl.addEventListener('click', e => {
   const el = e.target.closest('.bar-row'); if (el) { e.preventDefault(); choose(bar.rows[+el.dataset.n]); barInput.focus(); }
 });
 
-// Prototype only: switch between the looks being compared, keeping the place you are at.
-const LOOKS = [['index.html', 'Watercolour'], ['nebula.html', 'Nebula'], ['inks.html', 'Overprinted inks'], ['stipple.html', 'Stippling']];
-const looks = document.createElement('nav');
-looks.className = 'looks'; looks.setAttribute('aria-label', 'Compare looks');
-looks.innerHTML = '<span>Look</span>' + LOOKS.map(([file, name]) => `<a href="${file}" ${location.pathname.endsWith(file) || (file === 'index.html' && location.pathname.endsWith('/')) ? 'aria-current="page"' : ''}>${name}</a>`).join('');
-looks.addEventListener('click', e => { const a = e.target.closest('a'); if (a) { e.preventDefault(); location.href = a.getAttribute('href') + location.hash; } });
-document.body.append(looks);
-
 index();
 MapView.init($('#map'), D, {
   onHover(h, x, y, cards) {
