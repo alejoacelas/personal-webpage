@@ -88,7 +88,7 @@ ${(D.questions || []).map(q => `- ${q.question} See: ${q.patterns.map(id => `[${
 
 ## Contact
 
-alejoacelas@gmail.com · https://www.linkedin.com/in/alejandro-acelas/ · https://calendly.com/alejoacelas/30m
+alejoacelas@gmail.com · https://www.linkedin.com/in/alejoacelas/ · https://calendly.com/alejoacelas/30m
 `);
 
   files.set('works.txt', `# Every work on alejoacelas.com, newest first\n\nFormat: date | kind | title | summary | address of the full text. See ${base}/llms.txt for how the site is organised.\n\n${works.map(line).join('\n')}\n`);
@@ -110,7 +110,7 @@ alejoacelas@gmail.com · https://www.linkedin.com/in/alejandro-acelas/ · https:
 <h2>Every work</h2>
 <p>Each link is the work's full text. Summaries are in the index at ${base}/works.txt.</p>
 <ul>${works.map(w => `<li><a href="${address(w)}">${esc(w.title)}</a> (${KIND[w.kind]}, ${when(w)})</li>`).join('')}</ul>
-<p>Contact: <a href="mailto:alejoacelas@gmail.com">alejoacelas@gmail.com</a>, <a href="https://www.linkedin.com/in/alejandro-acelas/">linkedin.com/in/alejandro-acelas</a>, <a href="https://calendly.com/alejoacelas/30m">calendly.com/alejoacelas/30m</a></p>
+<p>Contact: <a href="mailto:alejoacelas@gmail.com">alejoacelas@gmail.com</a>, <a href="https://www.linkedin.com/in/alejoacelas/">linkedin.com/in/alejoacelas</a>, <a href="https://calendly.com/alejoacelas/30m">calendly.com/alejoacelas/30m</a></p>
 </div>`;
   return { files, html };
 }
