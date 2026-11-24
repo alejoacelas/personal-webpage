@@ -61,7 +61,7 @@ export function textFiles(D, base = 'https://alejoacelas.com') {
   ].filter(Boolean).join('\n\n');
 
   const count = k => works.filter(w => w.kind === k).length;
-  const intro = `Alejo Acelas helps high-impact organisations use AI. This site is a map of work he has shared: ${count('post')} Slack posts, ${count('doc')} documents, ${count('tool')} repositories, ${count('site')} sites, ${count('said')} call excerpts and ${count('other')} other links (${works.length} works), grouped into ${D.patterns.length} topics.`;
+  const intro = `Alejo Acelas helps high-impact organisations use AI better. This site is a map of work he has shared: ${count('post')} Slack posts, ${count('doc')} documents, ${count('tool')} repositories, ${count('site')} sites, ${count('said')} call excerpts and ${count('other')} other links (${works.length} works), grouped into ${D.patterns.length} topics.`;
   const files = new Map();
 
   files.set('llms.txt', `# Alejo Acelas
