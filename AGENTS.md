@@ -11,7 +11,7 @@ his docket showing what it held back and what went out.
 
 The run's brief, the sharing criteria, the annotation briefs and the private sample
 are in the private desk folder
-`~/best/desk/requested/2026-11/2026-11-21-website-wiki`; start with its `README.md`.
+`~/best/systems/desk/requested/2026-11/2026-11-21-website-wiki`; start with its `README.md`.
 
 ## Secrets
 
