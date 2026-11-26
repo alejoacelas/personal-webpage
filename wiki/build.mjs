@@ -16,7 +16,7 @@ import { permalinks } from './permalinks.mjs';
 import { loadShare, markOf, applyEdits, problems, privatePeople, addressOf } from './share.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-const src = process.env.WIKI_DATA || path.join(os.homedir(), 'best/desk/requested/2026-11/2026-11-21-website-wiki');
+const src = process.env.WIKI_DATA || path.join(os.homedir(), 'best/systems/desk/requested/2026-11/2026-11-21-website-wiki');
 const json = async p => JSON.parse(await readFile(path.join(src, p), 'utf8'));
 const maybe = async (p, fallback) => existsSync(path.join(src, p)) ? json(p) : fallback;
 

@@ -91,7 +91,7 @@ export async function privatePeople(src) {
   const add = n => { n = String(n || '').trim(); if (/^\p{Lu}[\p{L}'’.-]+(?: [\p{L}'’.-]+)+$/u.test(n) && !/^Alej(o|andro) Acelas/.test(n) && !APPS.test(n)) names.add(n); };
   const users = path.join(src, 'corpus/slack_users.json');
   if (existsSync(users)) Object.values(JSON.parse(await readFile(users, 'utf8'))).forEach(add);
-  const people = process.env.WIKI_PEOPLE || path.join(os.homedir(), 'best/desk/people');
+  const people = process.env.WIKI_PEOPLE || path.join(os.homedir(), 'best/systems/desk/people');
   if (existsSync(people)) for (const f of (await readdir(people)).filter(f => f.endsWith('.md'))) {
     add(((await readFile(path.join(people, f), 'utf8')).match(/^name:\s*["']?([^"'\n]+)/m) || [])[1]);
   }
@@ -154,7 +154,7 @@ if (process.argv[1] === fileURLToPath(import.meta.url) && process.argv[2] === 'p
 
 //   node wiki/share.mjs check <share file> [...]   test share records against the raw works
 if (process.argv[1] === fileURLToPath(import.meta.url) && process.argv[2] === 'check') {
-  const src = process.env.WIKI_DATA || path.join(os.homedir(), 'best/desk/requested/2026-11/2026-11-21-website-wiki');
+  const src = process.env.WIKI_DATA || path.join(os.homedir(), 'best/systems/desk/requested/2026-11/2026-11-21-website-wiki');
   const read = async p => JSON.parse(await readFile(path.join(src, p), 'utf8'));
   const items = new Map((await readFile(path.join(src, 'corpus/items.jsonl'), 'utf8')).trim().split('\n').map(l => JSON.parse(l)).map(i => [i.id, i]));
   const anns = new Map();
